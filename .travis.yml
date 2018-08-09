@@ -10,7 +10,7 @@ before_script:
   - pip install pycodestyle
   - pip install .
   - cp sampleproj/manage.py manage.py
-  - python manage.py migrate --noinput --setings=sampleproj.settings
+  - python manage.py migrate --noinput
   - npm install mocha
   - npm install jquery
   - npm install jsdom@10
