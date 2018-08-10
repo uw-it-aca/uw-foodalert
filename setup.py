@@ -13,6 +13,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'django==1.11',
+        'django-webpack-loader',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
@@ -32,4 +33,3 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
 )
-
