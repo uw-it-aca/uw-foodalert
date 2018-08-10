@@ -14,7 +14,19 @@ before_script:
   - npm install mocha
   - npm install jquery
   - npm install jsdom@10
+  - npm install webpack
+  - npm install webpack-bundle-tracker
+  - npm install webpack-cli
+  - npm install vue
+  - npm install vue-loader
+  - npm install less
+  - npm install node-sass
+  - npm install style-loader
+  - npm install css-loader
+  - npm install sass-loader
+  - npm install less-loader
 script:
+  - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings
 after_script:
