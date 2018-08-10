@@ -105,7 +105,6 @@ venv.bak/
 
 #node stuff
 node_modules/
-package-lock.json
 
 #webpack stuff
 sampleproj/webpack-stats.json

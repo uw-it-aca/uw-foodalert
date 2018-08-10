@@ -11,20 +11,7 @@ before_script:
   - pip install .
   - cp sampleproj/manage.py manage.py
   - python manage.py migrate --noinput
-  - npm install mocha
-  - npm install jquery
-  - npm install jsdom@10
-  - npm install webpack
-  - npm install webpack-bundle-tracker
-  - npm install webpack-cli
-  - npm install vue
-  - npm install vue-loader
-  - npm install less
-  - npm install node-sass
-  - npm install style-loader
-  - npm install css-loader
-  - npm install sass-loader
-  - npm install less-loader
+  - npm install
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
