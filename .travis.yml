@@ -14,7 +14,7 @@ before_script:
   - npm install
   - npm list
 script:
-  - npx webpack
+  - ./node_modules/.bin/webpack --config webpack.config.js
   - pycodestyle foodalert/ --exclude=migrations
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings
 after_script:
