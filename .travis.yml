@@ -1,0 +1,22 @@
+sudo: false
+language: python
+python:
+  - "3.6"
+install:
+  - python setup.py -q install
+before_script:
+  - pip install coverage
+  - pip install python-coveralls
+  - pip install pycodestyle
+  - pip install .
+  - cp sampleproj/manage.py manage.py
+  - python manage.py migrate --noinput
+  - npm install
+  - npm list
+script:
+  - npx webpack
+  - pycodestyle foodalert/ --exclude=migrations
+  - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings
+after_script:
+  - coveralls
+

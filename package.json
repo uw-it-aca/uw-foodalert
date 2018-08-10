@@ -1,0 +1,35 @@
+{
+  "name": "uw-foodalert",
+  "version": "1.0.0",
+  "description": "an app to send notifications about leftover food",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "css-loader": "^1.0.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "node-sass": "^4.9.3",
+    "sass": "^1.10.4",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "vue": "^2.5.17",
+    "vue-loader": "^15.3.0",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.16.5",
+    "webpack-bundle-tracker": "^0.3.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "docker-compose run app python manage.py test foodalert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uw-it-aca/uw-foodalert.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/uw-it-aca/uw-foodalert/issues"
+  },
+  "homepage": "https://github.com/uw-it-aca/uw-foodalert#readme"
+}

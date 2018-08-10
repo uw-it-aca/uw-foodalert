@@ -1,0 +1,22 @@
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+    </head>
+
+    <body>
+        <h1> Hello World Body </h1>
+        <p> templates do live update </p>
+        <p> They really do </p>
+
+        <div id="app">
+            <test-comp> </test-comp>
+            [[ message ]]
+            <hello-world></hello-world>
+        </div>
+
+
+        {% render_bundle 'main' %}
+    </body>
+</html>
