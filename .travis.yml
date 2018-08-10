@@ -11,7 +11,8 @@ before_script:
   - pip install .
   - cp sampleproj/manage.py manage.py
   - python manage.py migrate --noinput
-  - npm install
+  - npm install -g
+  - npm list
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
