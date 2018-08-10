@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#node stuff
+node_modules/
+package-lock.json
+
+#webpack stuff
+sampleproj/webpack-stats.json
+foodalert/static/foodalert/bundles
