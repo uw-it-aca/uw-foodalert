@@ -1,5 +1,7 @@
 "use strict";
 import Vue from 'vue';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HelloWorld from "./components/hello-world.vue";
 
 require('../css/styles.css');

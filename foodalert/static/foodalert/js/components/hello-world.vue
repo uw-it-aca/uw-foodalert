@@ -1,5 +1,5 @@
 <template>
-    <p> This is a hello world component. {{ dynamic_content }}</p>
+    <p class="alert alert-primary"> This is a hello world component. {{ dynamic_content }}</p>
 </template>
 
 <script>
