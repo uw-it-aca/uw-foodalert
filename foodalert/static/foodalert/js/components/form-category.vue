@@ -1,6 +1,6 @@
 <template>
     <section class="form-category container">
-        <h3 class="row"><i class="fas fa-utensils"></i> {{ section_name  }} </h3>
+        <h3 class="row"><font-awesome-icon class="category-icon" icon="utensils" />&nbsp; {{ section_name  }} </h3>
         <labelled-textarea></labelled-textarea>
         <labelled-textarea></labelled-textarea>
     </section>
@@ -12,7 +12,8 @@
     export default {
         data: function () {
             return {
-                section_name: "test name"
+                section_name: "test name",
+                icon_name: "utensils"
             };
         },
         components: {

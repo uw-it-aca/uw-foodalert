@@ -25,7 +25,7 @@ SECRET_KEY = 'c^*q8l682i__vs4*+0k=)731!lcu(+zcl_4f!^us%ingm$@cdf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['coconut.aca.uw.edu', 'localhost']
 
 
 # Application definition

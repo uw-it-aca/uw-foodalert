@@ -1,8 +1,8 @@
 <template>
     <div class="form-group row labelled-textarea">
-        <label class="" :for="id"> <b v-if="isOptional">Optional:</b> {{ label_text }}
+        <label :for="id"> <b v-if="isOptional">Optional:</b> {{ label_text }}
         <br />
-        <span :for="id" v-if="moreInfo" class=""> {{ sub_label}} </span>
+        <span :for="id" v-if="moreInfo" class="text-muted"> {{ sub_label}} </span>
         </label>
         <textarea :id="id" class="form-control form-control-lg col-12"> </textarea>
         <span>{{ num_characters }} characters left</span>
