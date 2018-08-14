@@ -10,7 +10,7 @@ before_script:
   - pip install pycodestyle
   - pip install .
   - cp sampleproj/manage.py manage.py
-  - python manage.py migrate --noinput
+  - python manage.py syncdb --noinput
   - npm install
   - npm list
 script:
