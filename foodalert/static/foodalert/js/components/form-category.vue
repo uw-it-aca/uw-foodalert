@@ -1,8 +1,7 @@
 <template>
-    <section class="form-category container">
-        <h3 class="row"><font-awesome-icon class="category-icon" icon="utensils" />&nbsp; {{ section_name  }} </h3>
-        <labelled-textarea></labelled-textarea>
-        <labelled-textarea></labelled-textarea>
+    <section class="form-category container" :aria-labelledby="'category-heading' + id">
+        <h3 class="row" :id="'category-heading' + id"><font-awesome-icon class="category-icon" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
+        <labelled-textarea v-for="field in fields" v-bind="field"></labelled-textarea>
     </section>
 </template>
 
@@ -10,14 +9,31 @@
     import LabelledTextarea from './labelled-textarea.vue';
 
     export default {
-        data: function () {
+        props: {
+            sectionName: String,
+            iconName: String,
+            fields: Object,
+        },
+        data() {
             return {
-                section_name: "test name",
-                icon_name: "utensils"
-            };
+                id: null,
+            }
         },
         components: {
             LabelledTextarea,
+        },
+        mounted() {
+            this.id = this._uid;
         }
     }
 </script>
+
+<style scoped>
+    section {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .category-icon {
+        padding-top: 10px;
+    }
+</style>
