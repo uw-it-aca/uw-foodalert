@@ -6,7 +6,7 @@
                 <em v-if="subLabel" class="text-muted"> {{ subLabel}} </em>
             </template>
             <b-form-textarea :rows="2" :placeholder="exampleText":id="'textarea-' + id" size="lg" v-model="text"> </b-form-textarea>
-            <span>{{ numCharacters }} characters left</span>
+            <span>{{ this.maxChars - this.text.length }} characters left</span>
         </b-form-group>
         <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
     </b-container>
@@ -20,12 +20,15 @@
             isOptional: Boolean,
             exampleText: String,
             warningText: String,
+            maxChars: {
+                default: 100,
+                type: Number,
+            },
         },
         data: function () {
             return {
                 id: null,
                 isOptional: true,
-                numCharacters: 100,
                 text: "",
             }
         },
