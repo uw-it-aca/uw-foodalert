@@ -6,21 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <script>
-            var fieldsA = [
-                { labelText: "for test 1", subLabel: "sube label 1" },
-                { labelText: "for test 2", isOptional: true },
-            ];
-
-            var fieldsB = [
-                { labelText: "for test 3", subLabel: "sube label 1" },
-                { labelText: "for test 4", isOptional: true },
-            ];
-        </script>
         <div id="app">
-            <form-category section-name="test 1" icon-name="utensils" :fields="fieldsA"></form-category>
-            <hr>
-            <form-category section-name="test 2" icon-name="utensils" :fields="fieldsB"></form-category>
+            {% block vue %}
+
+            {% endblock %}
         </div>
 
         {% render_bundle 'main' %}

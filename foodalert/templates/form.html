@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block vue %}
+<form-category section-name="test 1" icon-name="utensils">
+    <labelled-textarea label-text="for test 1" sub-label="sub label 1" example-text="e.g Test example"></labelled-textarea>
+    <p> example text </p>
+    <labelled-textarea label-text="for test 2" is-optional="true"></labelled-textarea>
+</form-category>
+<hr>
+<form-category section-name="test 2" icon-name="utensils">
+    <labelled-textarea label-text="for test 1" sub-label="sub label 1" example-text="e.g Test example"></labelled-textarea>
+    <labelled-textarea label-text="for test 2" is-optional="true" warning-text="Warning"></labelled-textarea>
+</form-category>
+<agreement-popup></agreement-popup>
+{% endblock %}

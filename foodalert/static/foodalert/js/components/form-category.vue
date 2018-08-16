@@ -1,8 +1,8 @@
 <template>
-    <section class="form-category container" :aria-labelledby="'category-heading' + id">
-        <h3 class="row" :id="'category-heading' + id"><font-awesome-icon class="category-icon" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
-        <labelled-textarea v-for="field in fields" v-bind="field"></labelled-textarea>
-    </section>
+    <b-container class="form-category" :aria-labelledby="'category-heading-' + id">
+        <h3 :id="'category-heading-' + id"><font-awesome-icon class="category-icon" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
+        <slot></slot>
+    </b-container>
 </template>
 
 <script>
@@ -12,7 +12,6 @@
         props: {
             sectionName: String,
             iconName: String,
-            fields: Object,
         },
         data() {
             return {
