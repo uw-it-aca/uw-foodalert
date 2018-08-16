@@ -1,6 +1,6 @@
 <template>
-    <b-container class="form-category" :aria-labelledby="'category-heading-' + id">
-        <h3 :id="'category-heading-' + id"><font-awesome-icon class="category-icon" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
+    <b-container class="form-category my-3" :aria-labelledby="'category-heading-' + id">
+        <h3 :id="'category-heading-' + id"><font-awesome-icon class="category-icon pt-1" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
         <slot></slot>
     </b-container>
 </template>
@@ -26,13 +26,3 @@
         }
     }
 </script>
-
-<style scoped>
-    section {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    .category-icon {
-        padding-top: 10px;
-    }
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid>
+    <b-container fluid class="px-0">
         <b-form-group class="labelled-textarea" :label-for="'textarea-' + id">
             <template slot="label">
                 <strong v-if="isOptional">Optional:</strong> {{ labelText }} <br />
