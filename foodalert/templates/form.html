@@ -1,15 +1,84 @@
 {% extends "base.html" %}
+{% block header %}
+<div class="container pt-3">
+    <h1 class="h4">Create Food Notification</h1>
+</div>
+<hr>
+{% endblock %}
 
 {% block vue %}
-<form-category section-name="test 1" icon-name="utensils">
-    <labelled-textarea label-text="for test 1" sub-label="sub label 1" example-text="e.g Test example"></labelled-textarea>
-    <p> example text </p>
-    <labelled-textarea label-text="for test 2" is-optional="true"></labelled-textarea>
+<b-nav v-if="navVisible" class="foodalert-sticky foodalert-navbar w-100 shadow-sm border-bottom py-2" fill>
+    <b-nav-item class="foodalert-navbar-active"> Event </b-nav-item>
+    <b-nav-item> Food </b-nav-item>
+    <b-nav-item> Time </b-nav-item>
+    <b-nav-item> Location </b-nav-item>
+</b-nav>
+<form-category section-name="Event" icon-name="calendar">
+    <labelled-input
+        label-text="What was the occasion?"
+        example-text="e.g FIUTS weekly meeting">
+    </labelled-input>
 </form-category>
 <hr>
-<form-category section-name="test 2" icon-name="utensils">
-    <labelled-textarea label-text="for test 1" sub-label="sub label 1" example-text="e.g Test example"></labelled-textarea>
-    <labelled-textarea label-text="for test 2" is-optional="true" warning-text="Warning"></labelled-textarea>
+<form-category section-name="Food" icon-name="utensils">
+    <labelled-input
+        label-text="What type of food?"
+        sub-label="Describe the food, cuisine, whther it's hot or cold, etc."
+        example-text="e.g Hot Indian buffet food">
+    </labelled-input>
+    <labelled-input
+        label-text="How much is left?"
+        example-text="e.g. 2 large. ABout 8 full meals">
+    </labelled-input>
+    <labelled-input
+        label-text="Do students need containers?"
+        sub-label="If so, add a message here."
+        example-text="e.g. bring tupperware"
+        is-optional>
+    </labelled-input>
+    <script>
+        var allergens = ["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"];
+    </script>
+    <labelled-input
+        input-type="checkbox"
+        label-text="Do you know your food contains any of these allergens?"
+        :boxes="allergens"
+        is-optional>
+    </labelled-input>
 </form-category>
+<hr>
+<form-category section-name="Time" icon-name="clock">
+    <p>Food will be available starting when you send the notification.</p>
+    <labelled-input
+        label-text="When will the food stop being available?"
+        example-text="e.g 3:30 PM"
+        warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts"
+        :rows="1">
+    </labelled-input>
+</form-category>
+<hr>
+<form-category section-name="Location" icon-name="map-marker-alt">
+    <labelled-input
+        label-text="Where will the food be located?"
+        sub-label="Building name and abbreviation, room name and/or number."
+        example-text="e.g HUB 130"
+        :rows="1">
+    </labelled-input>
+    <labelled-input
+        label-text="Any other details to help people find you?"
+        example-text="e.g door is by north stairs"
+        is-optional>
+    </labelled-input>
+</form-category>
+<form-category section-name="Terms and Conditions" icon-name="clipboard-check">
+    <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
+    <labelled-input
+        input-type="checkbox"
+        :boxes="['I agree to the terms and conditions']">
+    </labelled-input>
+</form-category>
+<b-container class="mb-3 d-flex justify-content-end">
+    <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
+</b-container>
 <agreement-popup></agreement-popup>
 {% endblock %}

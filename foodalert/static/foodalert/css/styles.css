@@ -1,0 +1,13 @@
+.foodalert-sticky {
+    position: fixed;
+    top: 0;
+}
+
+.foodalert-navbar {
+    background-color: #FFFFFF;
+    z-index: 100;
+}
+
+.foodalert-navbar-active {
+    font-weight: bold;
+}
