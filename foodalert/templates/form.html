@@ -6,20 +6,27 @@
 <hr>
 {% endblock %}
 
+
 {% block vue %}
-<b-nav v-if="navVisible" class="foodalert-sticky foodalert-navbar w-100 shadow-sm border-bottom py-2" fill>
-    <b-nav-item class="foodalert-navbar-active"> Event </b-nav-item>
-    <b-nav-item> Food </b-nav-item>
-    <b-nav-item> Time </b-nav-item>
-    <b-nav-item> Location </b-nav-item>
+<b-nav v-if="navVisible" @click="console.log('test')" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
+    <b-nav-item href="#event" class="foodalert-navbar-active"> Event </b-nav-item>
+    <b-nav-item href="#food"> Food </b-nav-item>
+    <b-nav-item href="#time"> Time </b-nav-item>
+    <b-nav-item href="#location"> Location </b-nav-item>
 </b-nav>
+
 <form-category section-name="Event" icon-name="calendar">
+    <script>
+        window.onscroll = function () {
+            app.__vue__._data.navVisible = window.scrollY>document.getElementById('event').offsetTop - 3;
+        };
+    </script>
     <labelled-input
         label-text="What was the occasion?"
         example-text="e.g FIUTS weekly meeting">
     </labelled-input>
+    <hr>
 </form-category>
-<hr>
 <form-category section-name="Food" icon-name="utensils">
     <labelled-input
         label-text="What type of food?"
@@ -45,8 +52,8 @@
         :boxes="allergens"
         is-optional>
     </labelled-input>
+    <hr>
 </form-category>
-<hr>
 <form-category section-name="Time" icon-name="clock">
     <p>Food will be available starting when you send the notification.</p>
     <labelled-input
@@ -55,8 +62,8 @@
         warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts"
         :rows="1">
     </labelled-input>
+    <hr>
 </form-category>
-<hr>
 <form-category section-name="Location" icon-name="map-marker-alt">
     <labelled-input
         label-text="Where will the food be located?"
@@ -69,6 +76,7 @@
         example-text="e.g door is by north stairs"
         is-optional>
     </labelled-input>
+    <hr>
 </form-category>
 <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
     <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
@@ -76,9 +84,13 @@
         input-type="checkbox"
         :boxes="['I agree to the terms and conditions']">
     </labelled-input>
+    <hr>
 </form-category>
 <b-container class="mb-3 d-flex justify-content-end">
     <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
 </b-container>
+
+
+
 <agreement-popup></agreement-popup>
 {% endblock %}

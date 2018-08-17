@@ -38,6 +38,4 @@ var app = new Vue({
     },
 });
 
-window.onscroll = function () {
-    app.navVisible = window.scrollY;
-};
+

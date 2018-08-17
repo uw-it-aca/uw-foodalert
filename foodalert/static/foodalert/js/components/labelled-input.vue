@@ -32,6 +32,7 @@
                 </span>
                 <span v-else> &nbsp; </span>
             </span>
+            <span v-else> &nbsp; </span>
         </b-form-group>
         <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
     </b-container>
