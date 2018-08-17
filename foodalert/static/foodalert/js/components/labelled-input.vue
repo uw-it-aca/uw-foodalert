@@ -1,0 +1,72 @@
+<template>
+    <b-container fluid class="px-0 py-1">
+        <b-form-group class="labelled-textarea" :label-for="'textarea-' + id">
+            <template slot="label">
+                <strong v-if="isOptional">Optional:</strong> {{ labelText }} <br />
+                <em v-if="subLabel" class="text-muted"> {{ subLabel}} </em>
+            </template>
+            <b-form-textarea
+                v-if="inputType=='textarea'"
+                :rows="rows"
+                :placeholder="exampleText"
+                :id="'textarea-' + id"
+                size="lg"
+                v-model="text">
+            </b-form-textarea>
+            <b-form-checkbox-group
+                v-else-if="inputType=='checkbox'"
+                v-model="checked"
+                :id="'checkbox-' + id">
+                <b-row
+                    v-for="box in boxes"
+                    class="mx-0">
+                    <b-form-checkbox :value="box"> {{ box }} </b-form-checkbox><br>
+                </b-row>
+            </b-form-checkbox-group>
+            <span
+                v-if="inputType == 'textarea'"
+                class="text-right w-100">
+                <span
+                    v-if="this.text.length > 0">
+                    {{ this.maxChars - this.text.length }} characters left
+                </span>
+                <span v-else> &nbsp; </span>
+            </span>
+        </b-form-group>
+        <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
+    </b-container>
+</template>
+
+<script>
+    export default {
+        props: {
+            inputType: {
+                type: String,
+                default: "textarea",
+            },
+            labelText: String,
+            subLabel: String,
+            isOptional: Boolean,
+            exampleText: String,
+            warningText: String,
+            boxes: Array,
+            maxChars: {
+                default: 100,
+                type: Number,
+            },
+            rows: {
+                type: Number,
+                default: 2
+            }
+        },
+        data: function () {
+            return {
+                id: null,
+                text: "",
+            }
+        },
+        mounted() {
+            this.id = this._uid;
+        }
+    }
+</script>
