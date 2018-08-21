@@ -23,10 +23,11 @@
     </script>
     <labelled-input
         label-text="What was the occasion?"
-        example-text="e.g FIUTS weekly meeting">
+        example-text="e.g FIUTS weekly club meeting">
     </labelled-input>
-    <hr>
+    <!--<hr>-->
 </form-category>
+<hr>
 <form-category section-name="Food" icon-name="utensils">
     <labelled-input
         label-text="What type of food?"
@@ -35,12 +36,13 @@
     </labelled-input>
     <labelled-input
         label-text="How much is left?"
-        example-text="e.g. 2 large. ABout 8 full meals">
+        example-text="e.g. 2 large trays. About 8 full meals"
+        rows="2">
     </labelled-input>
     <labelled-input
         label-text="Do students need containers?"
         sub-label="If so, add a message here."
-        example-text="e.g. bring tupperware"
+        example-text="e.g. Bring tupperware"
         is-optional>
     </labelled-input>
     <script>
@@ -52,32 +54,34 @@
         :boxes="allergens"
         is-optional>
     </labelled-input>
-    <hr>
+    <!--<hr>-->
 </form-category>
+<hr>
 <form-category section-name="Time" icon-name="clock">
     <p>Food will be available starting when you send the notification.</p>
     <labelled-input
         label-text="When will the food stop being available?"
         example-text="e.g 3:30 PM"
-        warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts"
-        :rows="1">
+        warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts">
     </labelled-input>
-    <hr>
+    <!--<hr>-->
 </form-category>
+<hr>
 <form-category section-name="Location" icon-name="map-marker-alt">
     <labelled-input
         label-text="Where will the food be located?"
-        sub-label="Building name and abbreviation, room name and/or number."
-        example-text="e.g HUB 130"
-        :rows="1">
+        sub-label="Building name and room / room number."
+        example-text="e.g HUB 130">
     </labelled-input>
     <labelled-input
         label-text="Any other details to help people find you?"
-        example-text="e.g door is by north stairs"
-        is-optional>
+        example-text="e.g Use stairs near front desk"
+        is-optional
+        rows="2">
     </labelled-input>
-    <hr>
+    <!--<hr>-->
 </form-category>
+<hr>
 <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
     <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
     <labelled-input
@@ -86,7 +90,7 @@
     </labelled-input>
     <hr>
 </form-category>
-<b-container class="mb-3 d-flex justify-content-end">
+<b-container class="mb-4 d-flex justify-content-end">
     <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
 </b-container>
 
