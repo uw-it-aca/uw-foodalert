@@ -5,6 +5,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
+  mode: 'development',
   context: __dirname,
   entry: './foodalert/static/foodalert/js/main',
   output: {

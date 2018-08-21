@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="container pt-3">
+    <h1 class=""> Preview </h1>
+</div>
+<hr>
+{% endblock %}
+
+{% block vue %}
+<b-container class="py-3">
+    <p><b>Here is some text</b> about notification preivews. The first bit is bolded</p>
+
+    <b-container class="border rounded mt-5 mb-3 py-3">
+        <p> This is a preview of the notification. It will be displayed like this </p>
+    </b-container>
+
+    <a><font-awesome-icon icon="chevron-left"></font-awesome-icon> Edit notification</a>
+</b-container>
+{% endblock %}
