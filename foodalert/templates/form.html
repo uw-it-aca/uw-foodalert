@@ -32,7 +32,7 @@
     <labelled-input
         label-text="How much is left?"
         example-text="e.g. 2 large trays. About 8 full meals"
-        rows="2">
+        :rows="2">
     </labelled-input>
     <labelled-input
         label-text="Do students need containers?"
@@ -69,7 +69,7 @@
         label-text="Any other details to help people find you?"
         example-text="e.g Use stairs near front desk"
         is-optional
-        rows="2">
+        :rows="2">
     </labelled-input>
     <!--<hr>-->
 </form-category>
@@ -88,5 +88,13 @@
 
 
 
-<agreement-popup></agreement-popup>
+<agreement-popup
+    intro-text="Thank you for sharing food"
+    main-text="Do you have a food distribution permit?"
+    primary-text="Blah"
+    secondary-text="Blah"
+    info-text="If your food is not on this list, you need a permit to share it"
+    link-text="how to get a permit"
+    link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit">
+</agreement-popup>
 {% endblock %}

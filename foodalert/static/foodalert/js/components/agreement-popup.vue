@@ -1,27 +1,36 @@
 <template>
-    <b-modal id="modal1" title="Bootstrap-Vue" v-model="modalShow" hide-header hide-footer>
+    <b-modal
+        :id="'modal-' + this.id"
+        title=""
+        v-model="modalShow"
+        no-close-on-backdrop
+        no-close-on-esc
+        hide-header-close
+        footer-class="d-flex justify-content-center"
+        header-border-variant="none"
+        footer-border-variant="none">
+        <template slot="modal-header">
+            <a v-if="canBack" ><font-awesome-icon icon="chevron-left"></font-awesome-icon> Back </a>
+        </template>
+
         <div class="text-center">
-
-            <h4 class="text-center">Thanks for sharing leftover food!</h4>
+            <p v-if="introText" class="h5 text-center"> {{ introText }} </p>
             <br>
-            <h4 class="text-center">Do you have a Food Distribution Permit?</h4>
+            <p class="h5 text-center"> {{ mainText }} </p>
             <br>
-
-            <!-- <b-container class="border py-4">
-                <p class="text-center"> I have a food permit </p>
-                <b-form-input id="input-large" size="lg" type="text" placeholder="Enter number" aria-label="Permit Number" class="text-center border-0"></b-form-input>
-                <b-button size="lg" class="mx-auto" variant="success">Create Notification</b-button>
-            </b-container>
-            <a class="text-center"> How to get permit </a> -->
-
-            <div
-                v-if="primaryText">
-                <b-button class="px-5" size="lg" variant="secondary">No</b-button>
-                <b-button class="px-5 ml-2" size="lg" variant="primary">Yes</b-button>
-            </div>
-            <div
-            <!-- <a class="text-center"> View list </a> -->
         </div>
+
+        <template slot="modal-footer">
+            <div>
+                <div class="d-flex justify-content-center">
+                    <b-button v-if="secondaryText" class="px-5" size="lg" variant="secondary">{{ secondaryText }}</b-button>
+                    <b-button v-if="primaryText" class="px-5 ml-2" size="lg" variant="primary" @click="modalShow = false">{{ primaryText }}</b-button>
+                </div>
+                <br>
+                <p v-if="infoText" class="d-block text-center w-100"> {{ infoText }} </p>
+                <a v-if="linkText" :href="linkLocation" class="d-block text-center"> {{ linkText }} </a>
+            </div>
+        </template>
     </b-modal>
 </template>
 
@@ -29,13 +38,23 @@
 <script>
     export default {
         props: {
+            mainText: String,
+            introText: String,
+            infoText: String,
+            linkText: String,
+            linkLocation: String,
             primaryText: String,
             secondaryText: String,
+            canBack: Boolean,
         },
         data() {
             return {
                 modalShow: true,
+                id: null,
             }
+        },
+        mounted() {
+            this.id = this._uid;
         }
     }
 </script>
