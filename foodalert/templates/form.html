@@ -8,19 +8,14 @@
 
 
 {% block vue %}
-<b-nav v-if="navVisible" @click="console.log('test')" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
-    <b-nav-item href="#event" class="foodalert-navbar-active"> Event </b-nav-item>
-    <b-nav-item href="#food"> Food </b-nav-item>
-    <b-nav-item href="#time"> Time </b-nav-item>
-    <b-nav-item href="#location"> Location </b-nav-item>
+<b-nav v-if="$store.state.navVisible" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
+    <b-nav-item href="#event" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Event'} "> Event </b-nav-item>
+    <b-nav-item href="#food" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Food'} "> Food </b-nav-item>
+    <b-nav-item href="#time" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Time'} "> Time </b-nav-item>
+    <b-nav-item href="#location" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Location'} "> Location </b-nav-item>
 </b-nav>
 
-<form-category section-name="Event" icon-name="calendar">
-    <script>
-        window.onscroll = function () {
-            app.__vue__._data.navVisible = window.scrollY>document.getElementById('event').offsetTop - 3;
-        };
-    </script>
+<form-category section-name="Event" icon-name="calendar" :scroll-y="scrollY">
     <labelled-input
         label-text="What was the occasion?"
         example-text="e.g FIUTS weekly club meeting">
@@ -28,7 +23,7 @@
     <!--<hr>-->
 </form-category>
 <hr>
-<form-category section-name="Food" icon-name="utensils">
+<form-category section-name="Food" icon-name="utensils" :scroll-y="scrollY">
     <labelled-input
         label-text="What type of food?"
         sub-label="Describe the food, cuisine, whther it's hot or cold, etc."
@@ -45,19 +40,16 @@
         example-text="e.g. Bring tupperware"
         is-optional>
     </labelled-input>
-    <script>
-        var allergens = ["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"];
-    </script>
     <labelled-input
         input-type="checkbox"
         label-text="Do you know your food contains any of these allergens?"
-        :boxes="allergens"
+        :boxes='["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"]'
         is-optional>
     </labelled-input>
     <!--<hr>-->
 </form-category>
 <hr>
-<form-category section-name="Time" icon-name="clock">
+<form-category section-name="Time" icon-name="clock" :scroll-y="scrollY">
     <p>Food will be available starting when you send the notification.</p>
     <labelled-input
         label-text="When will the food stop being available?"
@@ -67,7 +59,7 @@
     <!--<hr>-->
 </form-category>
 <hr>
-<form-category section-name="Location" icon-name="map-marker-alt">
+<form-category section-name="Location" icon-name="map-marker-alt" :scroll-y="scrollY">
     <labelled-input
         label-text="Where will the food be located?"
         sub-label="Building name and room / room number."

@@ -109,3 +109,6 @@ node_modules/
 #webpack stuff
 sampleproj/webpack-stats.json
 foodalert/static/foodalert/bundles
+
+# vim stuff
+*.swp

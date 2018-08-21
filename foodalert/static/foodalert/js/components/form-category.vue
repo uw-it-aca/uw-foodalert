@@ -10,15 +10,20 @@
         props: {
             sectionName: String,
             iconName: String,
-        },
-        computed: {
-            containerId: function() {
-                return this.sectionName.toLowerCase().split(' ').join('-');
-            }
+            scrollY: Number,
         },
         data() {
             return {
                 id: null,
+                containerId: this.sectionName.toLowerCase().split(' ').join('-'),
+            }
+        },
+        watch: {
+            scrollY: function() {
+                var domRect = document.getElementById(this.containerId).getBoundingClientRect();
+                if(this.$store.state.currentCat != this.sectionName && domRect.top < 0 && domRect.bottom > 0) {
+                    this.$store.commit('setCurrentCat', this.sectionName);
+                }
             }
         },
         mounted() {

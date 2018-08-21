@@ -1,5 +1,6 @@
 "use strict";
 import Vue from 'vue';
+import Vuex from 'vuex';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -19,6 +20,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 require('../css/styles.css');
 
+import {store} from './store.js';
+
 import LabelledInput from './components/labelled-input.vue';
 import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
@@ -26,15 +29,27 @@ import AgreePop from './components/agreement-popup.vue';
 var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
-    data: function() {
+    store,
+    data() {
         return {
-            navVisible: false,
+            scrollY: window.scrollY,
         }
     },
     components: {
         'labelled-input': LabelledInput,
         'form-category': FormCategory,
         'agreement-popup': AgreePop,
+    },
+    methods: {
+        handleScroll() {
+            this.scrollY = window.scrollY;
+        },
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
 });
 

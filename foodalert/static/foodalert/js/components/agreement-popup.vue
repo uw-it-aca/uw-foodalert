@@ -1,9 +1,5 @@
 <template>
-    <b-modal id="modal1" title="Bootstrap-Vue" v-model="modalShow">
-        <template slot="modal-header">
-            &#8203;
-        </template>
-
+    <b-modal id="modal1" title="Bootstrap-Vue" v-model="modalShow" hide-header hide-footer>
         <div class="text-center">
 
             <h4 class="text-center">Thanks for sharing leftover food!</h4>
@@ -26,10 +22,6 @@
             <div
             <!-- <a class="text-center"> View list </a> -->
         </div>
-
-        <template slot="modal-footer">
-            &#8203;
-        </template>
     </b-modal>
 </template>
 

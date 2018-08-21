@@ -64,6 +64,7 @@
             return {
                 id: null,
                 text: "",
+                checked: "",
             }
         },
         mounted() {
