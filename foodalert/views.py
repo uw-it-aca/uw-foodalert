@@ -20,3 +20,7 @@ class SignupView(TemplateView):
 
 class UpdateView(TemplateView):
     template_name = 'update.html'
+
+
+class EndedView(TemplateView):
+    template_name = 'ended.html'
