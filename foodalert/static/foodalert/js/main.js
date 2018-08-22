@@ -25,6 +25,7 @@ import {store} from './store.js';
 import LabelledInput from './components/labelled-input.vue';
 import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
+import PopContainer from './components/popup-container.vue';
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -39,6 +40,7 @@ var app = new Vue({
         'labelled-input': LabelledInput,
         'form-category': FormCategory,
         'agreement-popup': AgreePop,
+        'popup-container': PopContainer,
     },
     methods: {
         handleScroll() {

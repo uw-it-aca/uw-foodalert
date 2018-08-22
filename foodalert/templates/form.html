@@ -86,15 +86,46 @@
     <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
 </b-container>
 
-
-
-<agreement-popup
-    intro-text="Thank you for sharing food"
-    main-text="Do you have a food distribution permit?"
-    primary-text="Blah"
-    secondary-text="Blah"
-    info-text="If your food is not on this list, you need a permit to share it"
-    link-text="how to get a permit"
-    link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit">
-</agreement-popup>
+<popup-container
+    :modal-show="$store.getters.modalShow"
+    :mode="$store.getters.modalMode">
+    <agreement-popup
+        slot="default"
+        intro-text="Thank you for sharing leftover food"
+        main-text="Do you have a food distribution permit?"
+        primary-text="Yes"
+        secondary-text="No"
+        :primary-action="$store.commit.bind(this, 'claimPermit')"
+        :secondary-action="$store.commit.bind(this, 'claimSafeFood')">
+    </agreement-popup>
+    <agreement-popup
+        slot="permit"
+        input-type="number"
+        primary-store-mutation="setPermitNumber"
+        main-text="Enter your permit number"
+        primary-text="Continue"
+        can-back>
+    </agreement-popup>
+    <agreement-popup
+        slot="safeList"
+        input-type="checkbox"
+        :checkbox-options="[
+            {
+                text: 'Food A',
+                value: 'foodA'
+            },
+            {
+                text: 'Food B',
+                value: 'foodB'
+            }
+        ]"
+        primary-store-mutation="setSafeFoods"
+        main-text="Is the food you are sharng listed below?"
+        primary-text="Continue"
+        info-text="If your food is not on this list, you need a permit to share it"
+        link-text="how to get a permit"
+        link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
+        can-back>
+    </agreement-popup>
+</popup-container>
 {% endblock %}
