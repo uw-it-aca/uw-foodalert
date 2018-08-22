@@ -5,13 +5,22 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUtensils, faChevronLeft, faCalendar, faClock, faMapMarkerAlt, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+    faUtensils,
+    faChevronLeft,
+    faCalendar,
+    faClock,
+    faMapMarkerAlt,
+    faClipboardCheck,
+    faBell,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUtensils)
 library.add(faChevronLeft)
 library.add(faCalendar)
 library.add(faClock)
+library.add(faBell)
 library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 Vue.use(BootstrapVue);
@@ -26,6 +35,7 @@ import LabelledInput from './components/labelled-input.vue';
 import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
 import PopContainer from './components/popup-container.vue';
+import SignupTemplate from './components/signup-template.vue';
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -41,6 +51,7 @@ var app = new Vue({
         'form-category': FormCategory,
         'agreement-popup': AgreePop,
         'popup-container': PopContainer,
+        'signup-template': SignupTemplate,
     },
     methods: {
         handleScroll() {
