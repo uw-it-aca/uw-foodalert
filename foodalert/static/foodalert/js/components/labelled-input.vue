@@ -24,7 +24,7 @@
                 </b-row>
             </b-form-checkbox-group>
             <span
-                v-if="inputType == 'textarea'"
+                v-if="(inputType == 'textarea') && !noCharCount"
                 class="text-right w-100">
                 <span
                     v-if="this.text.length > 0">
@@ -32,7 +32,7 @@
                 </span>
                 <span v-else> &nbsp; </span>
             </span>
-            <span v-else> &nbsp; </span>
+            <span v-else-if="!noPadding"> &nbsp; </span>
         </b-form-group>
         <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
     </b-container>
@@ -64,6 +64,14 @@
             rows: {
                 type: Number,
                 default: 1
+            },
+            noPadding: {
+                type: Boolean,
+                default: false,
+            },
+            noCharCount: {
+                type: Boolean,
+                default: false,
             }
         },
         data: function () {
