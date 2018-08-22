@@ -84,6 +84,9 @@
                 this.$store.commit(this.primaryStoreMutation, this.value);
             }
         },
+        mounted() {
+            this.value = null;
+        },
     }
 </script>
 
