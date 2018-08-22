@@ -1,6 +1,6 @@
 <template>
     <b-container fluid class="px-0 py-1">
-        <b-form-group class="labelled-textarea" :label-for="'textarea-' + id">
+        <b-form-group class="labelled-textarea mb-0" :label-for="'textarea-' + id">
             <template slot="label">
                 <strong v-if="isOptional">Optional:</strong> {{ labelText }} <br />
                 <em v-if="subLabel" class="text-muted"> {{ subLabel}} </em>
@@ -34,7 +34,7 @@
             </span>
             <span v-else-if="!noPadding"> &nbsp; </span>
         </b-form-group>
-        <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
+        <b-alert v-if="warningText" show variant="primary" placement="bottom" class="mt-1"> {{warningText}} </b-alert>
     </b-container>
 </template>
 

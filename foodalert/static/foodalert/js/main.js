@@ -36,6 +36,7 @@ import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
 import PopContainer from './components/popup-container.vue';
 import SignupTemplate from './components/signup-template.vue';
+import UpdateTemplate from './components/update-template.vue';
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -52,6 +53,7 @@ var app = new Vue({
         'agreement-popup': AgreePop,
         'popup-container': PopContainer,
         'signup-template': SignupTemplate,
+        'update-template': UpdateTemplate,
     },
     methods: {
         handleScroll() {

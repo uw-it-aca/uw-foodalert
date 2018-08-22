@@ -1,7 +1,9 @@
 <template>
     <b-container :id="containerId"  class="form-category my-3" :aria-labelledby="'category-heading-' + id">
         <h3 class="h5 pt-2 pb-3" :id="'category-heading-' + id"><font-awesome-icon class="category-icon" :icon="iconName" />&nbsp; {{ sectionName  }} </h3>
-        <slot></slot>
+        <b-container class="ml-1 pl-4">
+            <slot></slot>
+        </b-container>
     </b-container>
 </template>
 
