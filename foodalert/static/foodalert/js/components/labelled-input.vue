@@ -10,7 +10,7 @@
                 :rows="rows"
                 :placeholder="exampleText"
                 :id="'textarea-' + id"
-                size="lg"
+                size="md"
                 v-model="text">
             </b-form-textarea>
             <b-form-checkbox-group
@@ -44,6 +44,12 @@
             inputType: {
                 type: String,
                 default: "textarea",
+                validator: function (value) {
+                    return [
+                        'textarea',
+                        'checkbox',
+                    ].indexOf(value) !== -1;
+                }
             },
             labelText: String,
             subLabel: String,
