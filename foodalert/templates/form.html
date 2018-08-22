@@ -104,7 +104,8 @@
         primary-store-mutation="setPermitNumber"
         main-text="Enter your permit number"
         primary-text="Continue"
-        can-back>
+        can-back
+        :back-action="$store.commit.bind(this, 'relinquishPermit')">
     </agreement-popup>
     <agreement-popup
         slot="safeList"
@@ -125,7 +126,8 @@
         info-text="If your food is not on this list, you need a permit to share it"
         link-text="how to get a permit"
         link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
-        can-back>
+        can-back
+        :back-action="$store.commit.bind(this, 'relinquishSafeFood')">
     </agreement-popup>
 </popup-container>
 {% endblock %}

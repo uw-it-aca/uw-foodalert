@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a v-if="canBack" class="ml-0"><font-awesome-icon icon="chevron-left"></font-awesome-icon> Back </a>
+        <a v-if="canBack" class="ml-0" @click="backAction"><font-awesome-icon icon="chevron-left"></font-awesome-icon> Back </a>
         <p v-if="introText" class="h5 text-center mb-3 text-center"> {{ introText }} </p>
         <p class="h5 text-center mb-3"> {{ mainText }} </p>
         <b-form-group>
@@ -68,6 +68,7 @@
             canBack: Boolean,
             primaryAction: Function,
             secondaryAction: Function,
+            backAction: Function,
             primaryStoreMutation: String,
         },
         data() {
