@@ -16,3 +16,7 @@ class PreView(TemplateView):
 
 class SignupView(TemplateView):
     template_name = 'signup.html'
+
+
+class UpdateView(TemplateView):
+    template_name = 'update.html'

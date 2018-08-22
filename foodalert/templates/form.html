@@ -76,12 +76,11 @@
 <hr>
 <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
     <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
-    <labelled-input
-        input-type="checkbox"
-        :boxes="['I agree to the terms and conditions']">
-    </labelled-input>
-    <hr>
+    <b-form-checkbox>
+        I agree to the terms and conditions
+    </b-form-checkbox>
 </form-category>
+<hr>
 <b-container class="mb-4 d-flex justify-content-end">
     <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
 </b-container>
