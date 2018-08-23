@@ -84,6 +84,11 @@
                 this.$store.commit(this.primaryStoreMutation, this.value);
             }
         },
+        mounted() {
+            if (this.inputType == 'checkbox') {
+                this.value = [];
+            }
+        },
     }
 </script>
 
