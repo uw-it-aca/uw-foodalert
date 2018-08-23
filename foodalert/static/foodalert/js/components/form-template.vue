@@ -1,21 +1,20 @@
 <template>
-    <div>
-        <b-nav v-if="$store.state.navVisible" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
-            <b-nav-item href="#event" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Event'} "> Event </b-nav-item>
-            <b-nav-item href="#food" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Food'} "> Food </b-nav-item>
-            <b-nav-item href="#time" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Time'} "> Time </b-nav-item>
-            <b-nav-item href="#location" :class="{ 'foodalert-navbar-active' : $store.state.currentCat == 'Location'} "> Location </b-nav-item>
+    <b-container fluid class="p-0">
+        <b-nav v-if="navVisible" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
+            <b-nav-item href="#event" :class="{'foodalert-navbar-active': categories['Event']} "> Event </b-nav-item>
+            <b-nav-item href="#food" :class="{'foodalert-navbar-active': categories['Food']} "> Food </b-nav-item>
+            <b-nav-item href="#time" :class="{'foodalert-navbar-active': categories['Time']} "> Time </b-nav-item>
+            <b-nav-item href="#location" :class="{'foodalert-navbar-active': categories['Location']} "> Location </b-nav-item>
         </b-nav>
 
-        <form-category section-name="Event" icon-name="calendar" :scroll-y="scrollY">
+        <form-category section-name="Event" icon-name="calendar" :active.sync="categories['Event']">
             <labelled-input
                 label-text="What was the occasion?"
                 example-text="e.g FIUTS weekly club meeting">
             </labelled-input>
-            <!--<hr>-->
         </form-category>
         <hr>
-        <form-category section-name="Food" icon-name="utensils" :scroll-y="scrollY">
+        <form-category section-name="Food" icon-name="utensils" :active.sync="categories['Food']">
             <labelled-input
                 label-text="What type of food?"
                 sub-label="Describe the food, cuisine, whther it's hot or cold, etc."
@@ -38,10 +37,9 @@
                 :boxes='allergens'
                 is-optional>
             </labelled-input>
-            <!--<hr>-->
         </form-category>
         <hr>
-        <form-category section-name="Time" icon-name="clock" :scroll-y="scrollY">
+        <form-category section-name="Time" icon-name="clock" :active.sync="categories['Time']">
             <p>Food will be available starting when you send the notification.</p>
             <labelled-input
                 label-text="When will the food stop being available?"
@@ -51,17 +49,7 @@
             <!--<hr>-->
         </form-category>
         <hr>
-        <form-category section-name="Time" icon-name="clock" :scroll-y="scrollY">
-            <p>Food will be available starting when you send the notification.</p>
-            <labelled-input
-                label-text="When will the food stop being available?"
-                example-text="e.g 3:30 PM"
-                warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts">
-            </labelled-input>
-            <!--<hr>-->
-        </form-category>
-        <hr>
-        <form-category section-name="Location" icon-name="map-marker-alt" :scroll-y="scrollY">
+        <form-category section-name="Location" icon-name="map-marker-alt" :active.sync="categories['Location']">
             <labelled-input
                 label-text="Where will the food be located?"
                 sub-label="Building name and room / room number."
@@ -78,12 +66,11 @@
         <hr>
         <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
             <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
-            <labelled-input
-                input-type="checkbox"
-                :boxes="['I agree to the terms and conditions']">
-            </labelled-input>
-            <hr>
+            <b-form-checkbox>
+                I agree to the terms and conditions
+            </b-form-checkbox>
         </form-category>
+        <hr>
         <b-container class="mb-4 d-flex justify-content-end">
             <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
         </b-container>
@@ -93,28 +80,25 @@
             :mode="$store.getters.modalMode">
             <agreement-popup
                 slot="default"
-                key="default"
                 intro-text="Thank you for sharing leftover food"
                 main-text="Do you have a food distribution permit?"
                 primary-text="Yes"
                 secondary-text="No"
-                :primary-action="claimPermit"
-                :secondary-action="claimSafeFood">
+                :primary-action="$store.commit.bind(this, 'claimPermit')"
+                :secondary-action="$store.commit.bind(this, 'claimSafeFood')">
             </agreement-popup>
             <agreement-popup
                 slot="permit"
                 input-type="number"
-                key="permit"
                 primary-store-mutation="setPermitNumber"
                 main-text="Enter your permit number"
                 primary-text="Continue"
                 can-back
-                :back-action="relinquishPermit">
+                :back-action="$store.commit.bind(this, 'relinquishPermit')">
             </agreement-popup>
             <agreement-popup
                 slot="safeList"
                 input-type="checkbox"
-                key="safe-food"
                 :checkbox-options="safeFoods"
                 primary-store-mutation="setSafeFoods"
                 main-text="Is the food you are sharng listed below?"
@@ -123,10 +107,10 @@
                 link-text="how to get a permit"
                 link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
                 can-back
-                :back-action="relinquishSafeFood">
+                :back-action="$store.commit.bind(this, 'relinquishSafeFood')">
             </agreement-popup>
         </popup-container>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -136,8 +120,16 @@
     import AgreePop from './agreement-popup.vue';
     export default {
         props: {
-            scrollY: Number,
             allergens: Array,
+        },
+        computed: {
+            navVisible: function () {
+                var ret = false;
+                for (var cat in this.categories) {
+                    ret = ret || this.categories[cat];
+                }
+                return ret;
+            }
         },
         data() {
             return {
@@ -147,6 +139,12 @@
                     { text: "Food C", value: "foodC"},
                     { text: "Food D", value: "foodD"},
                 ],
+                categories: {
+                    Event: false,
+                    Food: false,
+                    Time: false,
+                    Location: false,
+                },
             }
         },
         methods: {
