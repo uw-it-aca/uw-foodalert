@@ -50,11 +50,11 @@
         </form-category>
         <hr>
         <b-container>
-            <b-button
-                variant="primary"
-                class="float-right mb-3">
+            <b-link
+                class="btn btn-primary float-right mb-3"
+                href="#">
                 Sign Up
-            </b-button>
+            </b-link>
         </b-container>
     </b-container>
 </template>
