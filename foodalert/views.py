@@ -22,5 +22,9 @@ class UpdateView(TemplateView):
     template_name = 'update.html'
 
 
+class SubscribedView(TemplateView):
+    template_name = 'subscribed.html'
+
+
 class EndedView(TemplateView):
     template_name = 'ended.html'
