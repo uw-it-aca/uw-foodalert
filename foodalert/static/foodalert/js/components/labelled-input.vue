@@ -2,7 +2,7 @@
     <b-container fluid class="px-0 py-1">
         <b-form-group class="labelled-textarea mb-0" :label-for="'textarea-' + id">
             <template slot="label">
-                <strong v-if="isOptional">Optional:</strong> {{ labelText }} <br />
+                <strong v-if="isOptional" class="text-secondary font-italic" >Optional:</strong> {{ labelText }} <br />
                 <em v-if="subLabel" class="text-muted"> {{ subLabel}} </em>
             </template>
             <b-form-textarea
