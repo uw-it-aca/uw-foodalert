@@ -52,7 +52,7 @@
         <b-container>
             <b-link
                 class="btn btn-primary float-right mb-3"
-                href="#">
+                href="/subscribed">
                 Sign Up
             </b-link>
         </b-container>
