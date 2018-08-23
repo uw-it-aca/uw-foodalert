@@ -27,7 +27,7 @@
 
 
             <template slot="modal-footer">
-                <b-button class="btn-lg mx-auto mb-2" variant="primary"> Send 'No Food Left' </b-button>
+                <b-link class="btn btn-lg btn-primary mx-auto mb-2" href="/ended"> Send 'No Food Left' </b-link>
                 <a href="#" @click="modalShowing = false" class="mx-auto"> Cancel </a>
             </template>
         </b-modal>

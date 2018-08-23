@@ -82,7 +82,7 @@
 </form-category>
 <hr>
 <b-container class="mb-4 d-flex justify-content-end">
-    <b-btn variant="primary" size="lg" class="float-right py-2">Preview Notification</b-btn>
+    <b-link href="/preview" class="float-right btn btn-primary btn-lg py-2">Preview Notification</b-btn>
 </b-container>
 
 <popup-container
@@ -99,6 +99,7 @@
     </agreement-popup>
     <agreement-popup
         slot="permit"
+        key="permit"
         input-type="number"
         primary-store-mutation="setPermitNumber"
         main-text="Enter your permit number"
@@ -108,6 +109,7 @@
     </agreement-popup>
     <agreement-popup
         slot="safeList"
+        key="SafeList"
         input-type="checkbox"
         :checkbox-options="[
             {
@@ -128,5 +130,24 @@
         can-back
         :back-action="$store.commit.bind(this, 'relinquishSafeFood')">
     </agreement-popup>
+    <b-container
+        slot="safeListConfirmation">
+        <p class="text-center">You can share the foods you checked on this list </p>
+        <p
+            class="text-center"
+            v-for="food in ['Wrapped Sandwhiches', 'Nonperishable Soup']">
+            <strong> [[food]] </strong>
+        </p>
+        <p>
+            You cannot share anything that is not on that list unless you have
+            a food distribution permit.
+        </p>
+        <b-button
+            variant="primary"
+            class="w-100"
+            @click="$store.commit('acceptSafeListTerms')">
+            I Understand
+        </b-button>
+    </b-container>
 </popup-container>
 {% endblock %}
