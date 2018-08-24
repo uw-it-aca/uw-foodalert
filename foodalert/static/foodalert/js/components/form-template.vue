@@ -17,7 +17,7 @@
         <form-category section-name="Food" icon-name="utensils" :active.sync="categories['Food']">
             <labelled-input
                 label-text="What type of food?"
-                sub-label="Describe the food, cuisine, whther it's hot or cold, etc."
+                sub-label="Describe the food, cuisine, whether it's hot or cold, etc."
                 example-text="e.g Hot Indian buffet food">
             </labelled-input>
             <labelled-input
@@ -46,7 +46,6 @@
                 example-text="e.g 3:30 PM"
                 warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts">
             </labelled-input>
-            <!--<hr>-->
         </form-category>
         <hr>
         <form-category section-name="Location" icon-name="map-marker-alt" :active.sync="categories['Location']">
@@ -61,7 +60,6 @@
                 is-optional
                 :rows="2">
             </labelled-input>
-            <!--<hr>-->
         </form-category>
         <hr>
         <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
@@ -72,7 +70,7 @@
         </form-category>
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
-            <b-btn variant="primary" size="lg" class="float-right">Preview Notification</b-btn>
+            <b-link href="/preview" class="float-right btn btn-primary btn-lg py-2"> Preview Notification </b-link>
         </b-container>
 
         <popup-container
@@ -80,8 +78,8 @@
             :mode="$store.getters.modalMode">
             <agreement-popup
                 slot="default"
-                intro-text="Thank you for sharing leftover food"
-                main-text="Do you have a food distribution permit?"
+                intro-text="Thank you for sharing leftover food!"
+                main-text="Do you have a Food Distribution Permit?"
                 primary-text="Yes"
                 secondary-text="No"
                 :primary-action="$store.commit.bind(this, 'claimPermit')"
@@ -101,14 +99,33 @@
                 input-type="checkbox"
                 :checkbox-options="safeFoods"
                 primary-store-mutation="setSafeFoods"
-                main-text="Is the food you are sharng listed below?"
+                main-text="Is the food you are sharing listed below?"
                 primary-text="Continue"
-                info-text="If your food is not on this list, you need a permit to share it"
-                link-text="how to get a permit"
+                info-text="If your food is NOT on this list, you need a permit to share it"
+                link-text="How to get a Permit"
                 link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
                 can-back
                 :back-action="$store.commit.bind(this, 'relinquishSafeFood')">
             </agreement-popup>
+            <b-container
+                slot="safeListConfirmation">
+                <p class="text-center">You can share the foods you checked on this list </p>
+                <p
+                    class="text-center"
+                    v-for="food in $store.state.safeFoodList">
+                    <strong> {{food}} </strong>
+                </p>
+                <p>
+                    You cannot share anything that is not on that list unless you have
+                    a food distribution permit.
+                </p>
+                <b-button
+                    variant="primary"
+                    class="w-100"
+                    @click="$store.commit('acceptSafeListTerms')">
+                    I Understand
+                </b-button>
+            </b-container>
         </popup-container>
     </b-container>
 </template>
