@@ -8,18 +8,22 @@ var store = new Vuex.Store({
         permitNumber: null,
         onSafeList: false,
         safeFoodList: [],
+        acceptedSafeListTerms: false,
     },
     getters: {
         modalShow(state) {
             //show the model so long as one of the field sets is incomplete
             return (!state.claimsPermit || !state.permitNumber) &&
-                   (!state.onSafeList || state.safeFoodList.length == 0);
+                   (!state.onSafeList || state.safeFoodList.length == 0 || !state.acceptedSafeListTerms);
         },
         modalMode (state) {
             if (state.claimsPermit) {
                 return "permit";
             }
             if (state.onSafeList) {
+                if (state.safeFoodList.length) {
+                    return "safeListConfirmation";
+                }
                 return "safeList";
             }
             return "default";
@@ -43,6 +47,9 @@ var store = new Vuex.Store({
         },
         setSafeFoods (state, foods) {
             state.safeFoodList = foods;
+        },
+        acceptSafeListTerms (state) {
+            state.acceptedSafeListTerms = true;
         },
     }
 })

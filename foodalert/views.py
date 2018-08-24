@@ -12,3 +12,19 @@ class HomeView(TemplateView):
 
 class PreView(TemplateView):
     template_name = 'preview.html'
+
+
+class SignupView(TemplateView):
+    template_name = 'signup.html'
+
+
+class UpdateView(TemplateView):
+    template_name = 'update.html'
+
+
+class SubscribedView(TemplateView):
+    template_name = 'subscribed.html'
+
+
+class EndedView(TemplateView):
+    template_name = 'ended.html'

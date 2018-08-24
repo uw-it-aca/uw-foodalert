@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <a v-if="canBack" class="ml-0" @click="backAction"><font-awesome-icon icon="chevron-left"></font-awesome-icon> Back </a>
-        <p v-if="introText" class="h5 text-center mb-3 text-center"> {{ introText }} </p>
+    <div class="px-4">
+        <a v-if="canBack" class="ml-0 mb-4" @click="backAction"><font-awesome-icon icon="chevron-left"></font-awesome-icon> Back </a>
+        <p v-if="canBack"><br></p>
+        <p v-if="introText" class="h5 text-center mt-4 mb-5 text-center font-weight-light"> &nbsp; {{ introText }}</p>
         <p class="h5 text-center mb-3"> {{ mainText }} </p>
         <b-form-group>
             <b-form-input
@@ -38,8 +39,8 @@
             </b-button>
         </div>
         <br>
-        <p v-if="infoText" class="d-block text-center w-100 text-center"> {{ infoText }} </p>
-        <a v-if="linkText" :href="linkLocation" class="d-block text-center"> {{ linkText }} </a>
+        <p v-if="infoText" class="d-block text-center w-100 text-center mt-4 mb-3 font-italic"> {{ infoText }} </p>
+        <a v-if="linkText" :href="linkLocation" class="d-block text-center mb-3"> {{ linkText }} </a>
     </div>
 </template>
 
@@ -85,7 +86,9 @@
             }
         },
         mounted() {
-            this.value = null;
+            if (this.inputType == 'checkbox') {
+                this.value = [];
+            }
         },
     }
 </script>

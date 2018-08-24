@@ -1,8 +1,8 @@
 <template>
     <b-container fluid class="px-0 py-1">
-        <b-form-group class="labelled-textarea" :label-for="'textarea-' + id">
+        <b-form-group class="labelled-textarea mb-0" :label-for="'textarea-' + id">
             <template slot="label">
-                <strong v-if="isOptional">Optional:</strong> {{ labelText }} <br />
+                <strong v-if="isOptional" class="text-secondary font-italic" >Optional:</strong> {{ labelText }} <br />
                 <em v-if="subLabel" class="text-muted"> {{ subLabel}} </em>
             </template>
             <b-form-textarea
@@ -24,7 +24,7 @@
                 </b-row>
             </b-form-checkbox-group>
             <span
-                v-if="inputType == 'textarea'"
+                v-if="(inputType == 'textarea') && !noCharCount"
                 class="text-right w-100">
                 <span
                     v-if="this.text.length > 0">
@@ -32,9 +32,9 @@
                 </span>
                 <span v-else> &nbsp; </span>
             </span>
-            <span v-else> &nbsp; </span>
+            <span v-else-if="!noPadding"> &nbsp; </span>
         </b-form-group>
-        <b-alert v-if="warningText" show variant="primary" placement="bottom"> {{warningText}} </b-alert>
+        <b-alert v-if="warningText" show variant="primary" placement="bottom" class="mt-1"> {{warningText}} </b-alert>
     </b-container>
 </template>
 
@@ -64,6 +64,14 @@
             rows: {
                 type: Number,
                 default: 1
+            },
+            noPadding: {
+                type: Boolean,
+                default: false,
+            },
+            noCharCount: {
+                type: Boolean,
+                default: false,
             }
         },
         data: function () {
