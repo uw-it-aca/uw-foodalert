@@ -10,26 +10,47 @@
 <script>
     export default {
         props: {
+            active: {
+                type: Boolean,
+                default: false,
+            },
             sectionName: String,
             iconName: String,
-            scrollY: Number,
         },
         data() {
             return {
                 id: null,
                 containerId: this.sectionName.toLowerCase().split(' ').join('-'),
+                scrollY: null,
             }
         },
         watch: {
             scrollY: function() {
                 var domRect = document.getElementById(this.containerId).getBoundingClientRect();
-                if(this.$store.state.currentCat != this.sectionName && domRect.top < 0 && domRect.bottom > 0) {
-                    this.$store.commit('setCurrentCat', this.sectionName);
+                if (domRect.top < 0 && domRect.bottom > 0) {
+                    if (!this.active){
+                        this.$emit('update:active', true);
+                    }
+                } else {
+                    if (this.active) {
+                        this.$emit('update:active', false);
+                    }
                 }
             }
         },
         mounted() {
             this.id = this._uid;
-        }
+        },
+        methods: {
+            handleScroll() {
+                this.scrollY = window.scrollY;
+            },
+        },
+        created() {
+            window.addEventListener('scroll', this.handleScroll);
+        },
+        destroyed() {
+            window.removeEventListener('scroll', this.handleScroll);
+        },
     }
 </script>

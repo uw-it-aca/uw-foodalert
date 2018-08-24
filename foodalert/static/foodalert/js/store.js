@@ -4,8 +4,6 @@ Vue.use(Vuex);
 
 var store = new Vuex.Store({
     state: {
-        navVisible: true,
-        currentCat: "",
         claimsPermit: false,
         permitNumber: null,
         onSafeList: false,
@@ -52,15 +50,6 @@ var store = new Vuex.Store({
         },
         acceptSafeListTerms (state) {
             state.acceptedSafeListTerms = true;
-        },
-        showNav (state) {
-            state.navVisible = true;
-        },
-        hideNav (state) {
-            state.navVisible = false;
-        },
-        setCurrentCat (state, id) {
-            state.currentCat = id;
         },
     }
 })

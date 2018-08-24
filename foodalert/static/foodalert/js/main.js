@@ -35,6 +35,7 @@ import LabelledInput from './components/labelled-input.vue';
 import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
 import PopContainer from './components/popup-container.vue';
+import FormTemplate from './components/form-template.vue';
 import SignupTemplate from './components/signup-template.vue';
 import UpdateTemplate from './components/update-template.vue';
 
@@ -52,6 +53,7 @@ var app = new Vue({
         'form-category': FormCategory,
         'agreement-popup': AgreePop,
         'popup-container': PopContainer,
+        'form-template': FormTemplate,
         'signup-template': SignupTemplate,
         'update-template': UpdateTemplate,
     },
