@@ -106,6 +106,9 @@ venv.bak/
 #node stuff
 node_modules/
 
+# jest stuff
+coverage/
+
 #webpack stuff
 sampleproj/webpack-stats.json
 foodalert/static/foodalert/bundles

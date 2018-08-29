@@ -74,8 +74,8 @@
         </b-container>
 
         <popup-container
-            :modal-show="$store.getters.modalShow"
-            :mode="$store.getters.modalMode">
+            :modal-show="modalShow"
+            :mode="modalMode">
             <agreement-popup
                 slot="default"
                 intro-text="Thank you for sharing leftover food!"
@@ -146,6 +146,29 @@
                     ret = ret || this.categories[cat];
                 }
                 return ret;
+            },
+            modalShow: function() {
+                //show the model so long as one of the field sets is incomplete
+                return (
+                    (!this.$store.state.claimsPermit || !this.$store.state.permitNumber) &&
+                    (
+                        !this.$store.state.onSafeList ||
+                        this.$store.state.safeFoodList.length == 0 ||
+                        !this.$store.state.acceptedSafeListTerms
+                    )
+                );
+            },
+            modalMode: function() {
+                if (this.$store.state.claimsPermit) {
+                    return "permit";
+                }
+                if (this.$store.state.onSafeList) {
+                    if (this.$store.state.safeFoodList.length) {
+                        return "safeListConfirmation";
+                    }
+                    return "safeList";
+                }
+                return "default";
             }
         },
         data() {
