@@ -13,6 +13,7 @@ before_script:
   - python manage.py migrate --noinput
   - npm install
   - npm list
+  - gem install coveralls-lcov
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
