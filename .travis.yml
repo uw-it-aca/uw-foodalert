@@ -16,7 +16,7 @@ before_script:
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
-  - jest --coverage && cat ./coverage/lcov.info | coveralls
+  - npx jest --coverage && cat ./coverage/lcov.info | coveralls
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings.travis
 after_script:
   - coveralls
