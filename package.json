@@ -29,7 +29,14 @@
     "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
-    "jest": "^23.5.0"
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0-rc.4",
+    "@vue/test-utils": "^1.0.0-beta.24",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "babel-preset-vue": "^2.0.2",
+    "jest": "^23.5.0",
+    "vue-jest": "^2.6.0"
   },
   "scripts": {
     "test": "docker-compose run app python manage.py test foodalert"
@@ -43,5 +50,18 @@
   "bugs": {
     "url": "https://github.com/uw-it-aca/uw-foodalert/issues"
   },
-  "homepage": "https://github.com/uw-it-aca/uw-foodalert#readme"
+  "homepage": "https://github.com/uw-it-aca/uw-foodalert#readme",
+  "jest": {
+    "moduleNameMapper": {
+      "^vue$": "vue/dist/vue.common.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js": "<rootDir>/node_modules/babel-jest"
+    }
+  }
 }

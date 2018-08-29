@@ -2,6 +2,33 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
+var mutations = {
+    claimPermit (state) {
+        state.claimsPermit = true;
+    },
+    relinquishPermit (state) {
+        state.claimsPermit = false;
+    },
+    setPermitNumber (state, permitNumber) {
+        state.permitNumber = permitNumber;
+    },
+    claimSafeFood (state) {
+        state.onSafeList = true;
+    },
+    relinquishSafeFood (state) {
+        state.onSafeList = false;
+    },
+    setSafeFoods (state, foods) {
+        state.safeFoodList = foods;
+    },
+    acceptSafeListTerms (state) {
+        state.acceptedSafeListTerms = true;
+    },
+    rejectSafeListTerms (state) {
+        state.acceptedSafeListTerms = false;
+    },
+}
+
 var store = new Vuex.Store({
     state: {
         claimsPermit: false,
@@ -10,48 +37,7 @@ var store = new Vuex.Store({
         safeFoodList: [],
         acceptedSafeListTerms: false,
     },
-    getters: {
-        modalShow(state) {
-            //show the model so long as one of the field sets is incomplete
-            return (!state.claimsPermit || !state.permitNumber) &&
-                   (!state.onSafeList || state.safeFoodList.length == 0 || !state.acceptedSafeListTerms);
-        },
-        modalMode (state) {
-            if (state.claimsPermit) {
-                return "permit";
-            }
-            if (state.onSafeList) {
-                if (state.safeFoodList.length) {
-                    return "safeListConfirmation";
-                }
-                return "safeList";
-            }
-            return "default";
-        }
-    },
-    mutations: {
-        claimPermit (state) {
-            state.claimsPermit = true;
-        },
-        relinquishPermit (state) {
-            state.claimsPermit = false;
-        },
-        setPermitNumber (state, permitNumber) {
-            state.permitNumber = permitNumber;
-        },
-        claimSafeFood (state) {
-            state.onSafeList = true;
-        },
-        relinquishSafeFood (state) {
-            state.onSafeList = false;
-        },
-        setSafeFoods (state, foods) {
-            state.safeFoodList = foods;
-        },
-        acceptSafeListTerms (state) {
-            state.acceptedSafeListTerms = true;
-        },
-    }
+    mutations: mutations,
 })
 
-export {store};
+export {store, mutations};

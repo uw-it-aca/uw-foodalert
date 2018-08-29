@@ -13,10 +13,12 @@ before_script:
   - python manage.py migrate --noinput
   - npm install
   - npm list
+  - gem install coveralls-lcov
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
+  - npx jest --coverage && coveralls-lcov -v -n ./coverage/lcov.info > js-coverage.json
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings.travis
 after_script:
-  - coveralls
+  - coveralls --merge=js-coverage.json
 
