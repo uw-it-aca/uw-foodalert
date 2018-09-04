@@ -11,6 +11,7 @@ before_script:
   - pip install .
   - cp sampleproj/manage.py manage.py
   - python manage.py migrate --noinput
+  - python manage.py syncdb
   - npm install
   - npm list
 script:
