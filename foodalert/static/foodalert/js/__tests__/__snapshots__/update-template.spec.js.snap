@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update Tempalte renders correctly textarea 1`] = `
+<div
+  class="px-4 pt-3 container"
+>
+  <p>
+    <strong>
+      Thanks for Sharing! Here's what's next:
+    </strong>
+  </p>
+   
+  <p
+    class="mt-4"
+  >
+     Let people know when food runs out 
+  </p>
+   
+  <button
+    class="btn w-100 mb-3 py-2 btn-primary"
+    type="button"
+  >
+     No Food Left 
+  </button>
+   
+  <div
+    class="px-0 py-1 mt-3 container-fluid"
+  >
+    <div
+      aria-labelledby="__BVID__3__BV_label_"
+      class="labelled-textarea mb-0 b-form-group form-group"
+      id="__BVID__3"
+      role="group"
+    >
+      <label
+        class="col-form-label pt-0"
+        for="textarea-null"
+        id="__BVID__3__BV_label_"
+      >
+        <strong
+          class="text-secondary font-italic"
+        >
+          Optional:
+        </strong>
+         Notify people if plans change 
+        <br />
+         
+        <!---->
+      </label>
+      <div
+        class=""
+      >
+         
+        <textarea
+          class="form-control form-control-md"
+          id="textarea-null"
+          placeholder="e.g. We moved to HUB 230! Still 4 more sandwiches"
+          rows="2"
+          wrap="soft"
+        />
+         
+        <span
+          class="text-right w-100"
+        >
+          <span>
+               
+          </span>
+        </span>
+        <!---->
+        <!---->
+        <!---->
+      </div>
+    </div>
+     
+    <!---->
+  </div>
+   
+  <button
+    class="btn w-100 mb-3 py-2 btn-secondary"
+    type="button"
+  >
+     Send Update 
+  </button>
+   
+  <div
+    class="text-center"
+  >
+    <div
+      id="__BVID__5___BV_modal_outer_"
+    >
+      <div
+        aria-hidden="true"
+        class="modal fade"
+        id="__BVID__5"
+        role="dialog"
+        style="display: none;"
+      >
+        <div
+          class="modal-dialog modal-md"
+        >
+          <div
+            aria-describedby="__BVID__5___BV_modal_body_"
+            aria-labelledby="__BVID__5___BV_modal_header_"
+            class="modal-content"
+            role="document"
+            tabindex="-1"
+          >
+            <header
+              class="modal-header border-0"
+              id="__BVID__5___BV_modal_header_"
+            >
+              <h5
+                class="modal-title"
+              />
+              <button
+                aria-label="Close"
+                class="close"
+                type="button"
+              >
+                ×
+              </button>
+            </header>
+            <div
+              class="modal-body"
+              id="__BVID__5___BV_modal_body_"
+            >
+              <p
+                class="h5 pb-3"
+              >
+                 Are you sure you'd like to notify student's there's 
+                <strong>
+                   no food left
+                </strong>
+                ? 
+              </p>
+               
+              <blockquote
+                class="border rounded mb-0 mx-3 p-3 text-left bg-light"
+              >
+                Update: No Food left! “Hot Indian buffet food leftover
+        from from FIUTs weekly meeting” is all gone.
+              </blockquote>
+               
+            </div>
+            <footer
+              class="modal-footer border-0 d-flex flex-column"
+              id="__BVID__5___BV_modal_footer_"
+            >
+              <a
+                class="btn btn-lg btn-primary mx-auto mb-2"
+                href="/ended"
+                target="_self"
+              >
+                 Send 'No Food Left' 
+              </a>
+               
+              <a
+                class="mx-auto"
+                href="#"
+              >
+                 Cancel 
+              </a>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>
+`;

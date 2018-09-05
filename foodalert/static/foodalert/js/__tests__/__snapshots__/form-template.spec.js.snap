@@ -1,0 +1,730 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form Template renders correctly textarea 1`] = `
+<div
+  class="p-0 container-fluid"
+>
+  <!---->
+   
+  <div
+    aria-labelledby="category-heading-null"
+    class="form-category my-3 container"
+    id="event"
+  >
+    <h3
+      class="h5 pt-2 pb-3 pl-1"
+      id="category-heading-null"
+    >
+      <svg
+        aria-hidden="true"
+        class="category-icon svg-inline--fa fa-calendar fa-w-14"
+        data-icon="calendar"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 448 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class=""
+          d="M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 12-5.4 12-12z"
+          fill="currentColor"
+        />
+      </svg>
+         Event 
+    </h3>
+     
+    <div
+      class="ml-2 pl-4 container"
+    >
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__6__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__6"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__6__BV_label_"
+          >
+            <!---->
+             What was the occasion? 
+            <br />
+             
+            <!---->
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g FIUTS weekly club meeting"
+              rows="1"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+    </div>
+  </div>
+   
+  <hr />
+   
+  <div
+    aria-labelledby="category-heading-null"
+    class="form-category my-3 container"
+    id="food"
+  >
+    <h3
+      class="h5 pt-2 pb-3 pl-1"
+      id="category-heading-null"
+    >
+      <svg
+        aria-hidden="true"
+        class="category-icon svg-inline--fa fa-utensils fa-w-13"
+        data-icon="utensils"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 416 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class=""
+          d="M207.9 15.2c.8 4.7 16.1 94.5 16.1 128.8 0 52.3-27.8 89.6-68.9 104.6L168 486.7c.7 13.7-10.2 25.3-24 25.3H80c-13.7 0-24.7-11.5-24-25.3l12.9-238.1C27.7 233.6 0 196.2 0 144 0 109.6 15.3 19.9 16.1 15.2 19.3-5.1 61.4-5.4 64 16.3v141.2c1.3 3.4 15.1 3.2 16 0 1.4-25.3 7.9-139.2 8-141.8 3.3-20.8 44.7-20.8 47.9 0 .2 2.7 6.6 116.5 8 141.8.9 3.2 14.8 3.4 16 0V16.3c2.6-21.6 44.8-21.4 48-1.1zm119.2 285.7l-15 185.1c-1.2 14 9.9 26 23.9 26h56c13.3 0 24-10.7 24-24V24c0-13.2-10.7-24-24-24-82.5 0-221.4 178.5-64.9 300.9z"
+          fill="currentColor"
+        />
+      </svg>
+         Food 
+    </h3>
+     
+    <div
+      class="ml-2 pl-4 container"
+    >
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__10__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__10"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__10__BV_label_"
+          >
+            <!---->
+             What type of food? 
+            <br />
+             
+            <em
+              class="text-muted"
+            >
+               Describe the food, cuisine, whether it's hot or cold, etc. 
+            </em>
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g Hot Indian buffet food"
+              rows="1"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+       
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__13__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__13"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__13__BV_label_"
+          >
+            <!---->
+             How much is left? 
+            <br />
+             
+            <!---->
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g. 2 large trays. About 8 full meals"
+              rows="2"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+       
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__16__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__16"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__16__BV_label_"
+          >
+            <strong
+              class="text-secondary font-italic"
+            >
+              Optional:
+            </strong>
+             Do students need containers? 
+            <br />
+             
+            <em
+              class="text-muted"
+            >
+               If so, add a message here. 
+            </em>
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g. Bring tupperware"
+              rows="1"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+       
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__19__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__19"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__19__BV_label_"
+          >
+            <strong
+              class="text-secondary font-italic"
+            >
+              Optional:
+            </strong>
+             Do you know your food contains any of these allergens? 
+            <br />
+             
+            <!---->
+          </label>
+          <div
+            class=""
+          >
+             
+            <div
+              class=""
+              id="checkbox-null"
+              role="group"
+              tabindex="-1"
+            />
+             
+            <span>
+                 
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+    </div>
+  </div>
+   
+  <hr />
+   
+  <div
+    aria-labelledby="category-heading-null"
+    class="form-category my-3 container"
+    id="time"
+  >
+    <h3
+      class="h5 pt-2 pb-3 pl-1"
+      id="category-heading-null"
+    >
+      <svg
+        aria-hidden="true"
+        class="category-icon svg-inline--fa fa-clock fa-w-16"
+        data-icon="clock"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class=""
+          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm57.1 350.1L224.9 294c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h48c6.6 0 12 5.4 12 12v137.7l63.5 46.2c5.4 3.9 6.5 11.4 2.6 16.8l-28.2 38.8c-3.9 5.3-11.4 6.5-16.8 2.6z"
+          fill="currentColor"
+        />
+      </svg>
+         Time 
+    </h3>
+     
+    <div
+      class="ml-2 pl-4 container"
+    >
+      <p>
+        Food will be available starting when you send the notification.
+      </p>
+       
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__23__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__23"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__23__BV_label_"
+          >
+            <!---->
+             When will the food stop being available? 
+            <br />
+             
+            <!---->
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g 3:30 PM"
+              rows="1"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <div
+          aria-atomic="true"
+          aria-live="polite"
+          class="mt-1 alert alert-primary"
+          placement="bottom"
+          role="alert"
+        >
+          <!---->
+           Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts 
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <hr />
+   
+  <div
+    aria-labelledby="category-heading-null"
+    class="form-category my-3 container"
+    id="location"
+  >
+    <h3
+      class="h5 pt-2 pb-3 pl-1"
+      id="category-heading-null"
+    >
+      <svg
+        aria-hidden="true"
+        class="category-icon svg-inline--fa fa-map-marker-alt fa-w-12"
+        data-icon="map-marker-alt"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class=""
+          d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"
+          fill="currentColor"
+        />
+      </svg>
+         Location 
+    </h3>
+     
+    <div
+      class="ml-2 pl-4 container"
+    >
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__28__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__28"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__28__BV_label_"
+          >
+            <!---->
+             Where will the food be located? 
+            <br />
+             
+            <em
+              class="text-muted"
+            >
+               Building name and room / room number. 
+            </em>
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g HUB 130"
+              rows="1"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+       
+      <div
+        class="px-0 py-1 container-fluid"
+      >
+        <div
+          aria-labelledby="__BVID__31__BV_label_"
+          class="labelled-textarea mb-0 b-form-group form-group"
+          id="__BVID__31"
+          role="group"
+        >
+          <label
+            class="col-form-label pt-0"
+            for="textarea-null"
+            id="__BVID__31__BV_label_"
+          >
+            <strong
+              class="text-secondary font-italic"
+            >
+              Optional:
+            </strong>
+             Any other details to help people find you? 
+            <br />
+             
+            <!---->
+          </label>
+          <div
+            class=""
+          >
+             
+            <textarea
+              class="form-control form-control-md"
+              id="textarea-null"
+              placeholder="e.g Use stairs near front desk"
+              rows="2"
+              wrap="soft"
+            />
+             
+            <span
+              class="text-right w-100"
+            >
+              <span>
+                   
+              </span>
+            </span>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+         
+        <!---->
+      </div>
+    </div>
+  </div>
+   
+  <hr />
+   
+  <div
+    aria-labelledby="category-heading-null"
+    class="form-category my-3 container"
+    id="terms-and-conditions"
+  >
+    <h3
+      class="h5 pt-2 pb-3 pl-1"
+      id="category-heading-null"
+    >
+      <svg
+        aria-hidden="true"
+        class="category-icon svg-inline--fa fa-clipboard-check fa-w-12"
+        data-icon="clipboard-check"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class=""
+          d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM192 40c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm121.2 231.8l-143 141.8c-4.7 4.7-12.3 4.6-17-.1l-82.6-83.3c-4.7-4.7-4.6-12.3.1-17L99.1 285c4.7-4.7 12.3-4.6 17 .1l46 46.4 106-105.2c4.7-4.7 12.3-4.6 17 .1l28.2 28.4c4.7 4.8 4.6 12.3-.1 17z"
+          fill="currentColor"
+        />
+      </svg>
+         Terms and Conditions 
+    </h3>
+     
+    <div
+      class="ml-2 pl-4 container"
+    >
+      <p>
+        A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list
+      </p>
+       
+      <div
+        class="custom-control custom-checkbox custom-control-inline"
+      >
+        <input
+          autocomplete="off"
+          class="custom-control-input"
+          id="__BVID__34"
+          true-value="true"
+          type="checkbox"
+          value="true"
+        />
+        <label
+          class="custom-control-label"
+          for="__BVID__34"
+        >
+          
+            I agree to the terms and conditions
+        
+        </label>
+      </div>
+    </div>
+  </div>
+   
+  <hr />
+   
+  <div
+    class="mb-4 d-flex justify-content-end container"
+  >
+    <a
+      class="float-right btn btn-primary btn-lg py-2"
+      href="/preview"
+      target="_self"
+    >
+       Preview Notification 
+    </a>
+  </div>
+   
+  <div>
+    <div
+      id="modal-null___BV_modal_outer_"
+    >
+      <div
+        aria-hidden="true"
+        class="modal fade"
+        id="modal-null"
+        role="dialog"
+        style="display: none;"
+      >
+        <div
+          class="modal-dialog modal-md"
+        >
+          <div
+            aria-describedby="modal-null___BV_modal_body_"
+            class="modal-content"
+            role="document"
+            tabindex="-1"
+          >
+            <!---->
+            <div
+              class="modal-body"
+              id="modal-null___BV_modal_body_"
+            >
+              <div
+                class="px-4"
+              >
+                <!---->
+                 
+                <!---->
+                 
+                <p
+                  class="h5 text-center mt-4 mb-5 text-center font-weight-light"
+                >
+                     Thank you for sharing leftover food!
+                </p>
+                 
+                <p
+                  class="h5 text-center mb-3"
+                >
+                   Do you have a Food Distribution Permit? 
+                </p>
+                 
+                <fieldset
+                  class="b-form-group form-group"
+                  id="__BVID__39"
+                  role="group"
+                >
+                  <!---->
+                  <div
+                    class=""
+                    role="group"
+                  >
+                    <!---->
+                    <!---->
+                    <!---->
+                  </div>
+                </fieldset>
+                 
+                <div
+                  class="d-flex justify-content-center"
+                >
+                  <button
+                    class="btn px-5 btn-secondary btn-lg"
+                    type="button"
+                  >
+                    
+            No
+        
+                  </button>
+                   
+                  <button
+                    class="btn btn-primary btn-lg px-5 ml-2"
+                    type="button"
+                  >
+                    
+            Yes
+        
+                  </button>
+                </div>
+                 
+                <br />
+                 
+                <!---->
+                 
+                <!---->
+              </div>
+                 
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>
+`;

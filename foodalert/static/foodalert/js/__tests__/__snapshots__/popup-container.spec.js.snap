@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Labelled Input renders correctly textarea 1`] = `
+<div>
+  <div
+    id="modal-null___BV_modal_outer_"
+  >
+    <div
+      aria-hidden="true"
+      class="modal fade"
+      id="modal-null"
+      role="dialog"
+      style="display: none;"
+    >
+      <div
+        class="modal-dialog modal-md"
+      >
+        <div
+          aria-describedby="modal-null___BV_modal_body_"
+          class="modal-content"
+          role="document"
+          tabindex="-1"
+        >
+          <!---->
+          <div
+            class="modal-body"
+            id="modal-null___BV_modal_body_"
+          />
+          <!---->
+        </div>
+      </div>
+    </div>
+    <!---->
+  </div>
+</div>
+`;
