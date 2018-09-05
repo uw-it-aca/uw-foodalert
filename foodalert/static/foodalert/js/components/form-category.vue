@@ -14,7 +14,10 @@
                 type: Boolean,
                 default: false,
             },
-            sectionName: String,
+            sectionName: {
+                type: String,
+                required: true
+            },
             iconName: String,
         },
         data() {
