@@ -13,7 +13,7 @@ Before you set up your local build you should have the following installed:
 * Docker
 
 ### Installing
-First, clone this gihub repository:
+First, clone this github repository:
 
 `git clone https://github.com/uw-it-aca/uw-foodalert.git`
 
@@ -34,7 +34,7 @@ Use docker-compose to build the app container:
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
 
-To run the python tests: `docker-compose run app python manage.py test foodalert`.
+To run the python tests: `docker-compose run --rm app python manage.py test foodalert`.
 
 To run the Javascript tests: `npx jest`.
 
