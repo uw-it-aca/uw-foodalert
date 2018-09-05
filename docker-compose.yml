@@ -10,6 +10,6 @@ services:
       - ./sampleproj:/app/sampleproj/
       - ./foodalert:/app/foodalert
     ports:
-      - "8000:8000"
-    command: bash -c "python manage.py migrate --settings=sampleproj.settings.local && python manage.py runserver 0.0.0.0:8000 --settings=sampleproj.settings.local"
+      - "${PORT:-8000}:8000"
+    command: bash -c "python manage.py migrate --settings=sampleproj.settings.local && python manage.py runserver 0:8000 --settings=sampleproj.settings.local"
 
