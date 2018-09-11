@@ -5,70 +5,31 @@ from django.contrib.postgres.fields import JSONField
 
 
 class Notification(models.Model):
-    notification_id = models.CharField(max_length=40, default=None)
     location = models.CharField(max_length=40)
+    location_details = models.CharField(max_length=100, blank=True, null=True)
     event = models.CharField(max_length=40)
-    created = models.DateTimeField(auto_now_add=True)
-    end_time = models.DateTimeField()
-    content = JSONField()
-    host = models.ForeignKey('Person')
-    parent_notification = models.ForeignKey('Notification', default=None)
-    host_permit_number = models.CharField(max_length=40, default=None)
-    host_browser = models.CharField(max_length=40)
-
-    def __init__(self, *args, **kwargs):
-        food_list = self.foods.all()
-
-    def json_data(self):
-        return {
-            "Notification": {
-                "NotificationID": self.notification_id,
-                "Location": self.location,
-                "Event": self.event,
-                "Host": self.host,
-                "Created": self.created.isoformat() if (
-                    self.created is not None) else None,
-                "EndTime": self.end_time.isoformat() if (
-                    self.end_time is not None) else None,
-                "Content": self.content,
-                "FoodList": self.food_list if (
-                    self.food_list is not None) else None,
-                "PermitNumber": self.host_permit_number if (
-                    self.host_permit_number is not None) else None,
-
-            }
-        }
+    created_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    food_served = models.CharField(max_length=100)
+    amount_of_food_left = models.CharField(max_length=100)
+    bring_container = models.BooleanField(default=False)
+    safe_foods = models.ForeignKey('SafeFood', related_name='safe_foods')
+    allergens = models.ForeignKey('Allergen', related_name='allergens')
+    host = models.ForeignKey(User, on_delete=models.CASCADE)
+    host_permit_number = models.CharField(max_length=40, blank=True, null=True)
+    host_user_agent = models.CharField(max_length=40)
 
 
-class Subscription(models.Model):
-    net_id = models.CharField(max_length=40, default=None)
-    sms_contact = models.CharField(max_length=20, default=None)
-    email_contact = models.CharField(max_length=60, default=None)
-
-    def json_data(self):
-        return {
-            "Subscription": {
-                "NetID": self.net_id,
-                "SMS": self.sms_contact,
-                "Email": self.email_contact
-            }
-        }
+class Update(models.Model):
+    text = models.CharField(max_length=100)
+    parent_notification = models.ForeignKey('Notification')
 
 
-class Person(models.Model):
-    # Uses Django User model with an added "active_message" field
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    active_message = models.CharField(max_length=40, default=None)
-
-    def json_data(self):
-        return {
-            "Person": {
-                "NetID": self.user.email,
-                "ActiveMessage": self.active_message
-            }
-        }
+class SafeFood(models.Model):
+    notification = models.ManyToManyField(Notification)
+    name = models.CharField(max_length=30)
 
 
-class Foods(models.Model):
-    notification = models.ManyToManyField(Notification, related_name='foods')
-    food_name = models.CharField(max_length=30)
+class Allergen(models.Model):
+    notification = models.ManyToManyField(Notification)
+    name = models.CharField(max_length=30)

@@ -15,6 +15,7 @@ setup(
         'django==1.11',
         'django-webpack-loader',
         'psycopg2',
+        'djangorestframework',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
