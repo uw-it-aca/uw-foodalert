@@ -1,16 +1,16 @@
-[{
+{
  "location": "UW Campus",
- "location_details": null,
+ "location_details": "North Campus",
  "event": "UW Event",
- "created_time": "1",
- "end_time": null,
+ "created_time": "2018-09-13T19:25:40.440859Z",
+ "end_time": "2018-09-13T19:23:06.508534Z",
  "food_served": "Food",
  "amount_of_food_left": "No Food",
  "host": 1,
  "bring_container": false,
  "safe_foods": null,
  "allergens": null,
- "host_permit_number": null,
+ "host_permit_number": "12345",
  "host_user_agent": "browser"
- }]
+}
 

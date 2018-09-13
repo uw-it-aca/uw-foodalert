@@ -2,6 +2,7 @@
     "location": "UW Campus",
     "location_details": null,
     "event": "UW Event",
+    "created_time": "1",
     "end_time": null,
     "food_served": "Food",
     "amount_of_food_left": "No Food",
