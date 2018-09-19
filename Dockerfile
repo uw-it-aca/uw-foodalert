@@ -7,5 +7,6 @@ ADD . /app/
 WORKDIR /app
 
 # install python dependency packages (via setup.py) on container
+RUN apt-get update && apt-get install -y libxmlsec1-dev
 RUN pip install -r requirements.txt
 COPY sampleproj/manage.py /app/manage.py
