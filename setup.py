@@ -14,7 +14,7 @@ setup(
     install_requires=[
         'django==1.11',
         'django-webpack-loader',
-        'UW-Django-SAML2',
+        'UW-Django-SAML2<1.0',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
