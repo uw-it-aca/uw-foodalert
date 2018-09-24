@@ -1,46 +1,34 @@
 <template>
     <b-container fluid class="p-0">
-        <form-category section-name="Event" icon-name="calendar">
+        <form-category>
             <labelled-input
-                label-text="What was the occasion?"
-                example-text="e.g FIUTS weekly club meeting">
-            </labelled-input>
-        </form-category>
-        <hr>
-        <form-category section-name="Food" icon-name="utensils">
-            <labelled-input
-                label-text="What type of food?"
-                sub-label="Describe the food, cuisine, whether it's hot or cold, etc."
-                example-text="e.g Hot Indian buffet food">
-            </labelled-input>
-            <labelled-input
-                label-text="How much is left?"
-                example-text="e.g. 2 large trays. About 8 full meals"
+                label-text="Describe the food and event"
+                example-text="hot indian food FIUTS weekly club meeting"
                 :rows="2">
             </labelled-input>
             <labelled-input
-                label-text="Do students need containers?"
-                sub-label="If so, add a message here."
-                example-text="e.g. Bring tupperware"
-                is-optional>
+                label-text="Quantity"
+                example-text="About 8 full meals"
+                :rows="2">
             </labelled-input>
+            <labelled-input
+                label-text="End Time"
+                input-type="time"
+                example-text="6:00 PM">
+            </labelled-input>
+        </form-category>
+        <hr>
+        <form-category section-name="Food Specifications">
             <labelled-input
                 input-type="checkbox"
-                label-text="Do you know your food contains any of these allergens?"
-                :boxes='allergens'
-                is-optional>
+                label-text="Does the food contain?"
+                :boxes='allergens'>
             </labelled-input>
-        </form-category>
-        <hr>
-        <form-category section-name="Time" icon-name="clock">
-            <p>Food will be available starting when you send the notification.</p>
             <labelled-input
-                label-text="When will the food stop being available?"
-                example-text="e.g 3:30 PM"
-                warning-text="Keep in mind that food can't legally sit out unrefrigerated for more than 2 hours from the time the event starts">
+                input-type="buttons"
+                label-text="Do students need to bring containers?">
             </labelled-input>
         </form-category>
-        <hr>
         <form-category section-name="Location" icon-name="map-marker-alt">
             <labelled-input
                 label-text="Where will the food be located?"
@@ -54,12 +42,8 @@
                 :rows="2">
             </labelled-input>
         </form-category>
-        <hr>
-        <form-category section-name="Terms and Conditions" icon-name="clipboard-check">
-            <p>A brief statement about the liability that the host is taking on while posting this food, and an agreement that they have a food ditstribution permit or the food is on the "Safe to Share" list</p>
-            <b-form-checkbox>
-                I agree to the terms and conditions
-            </b-form-checkbox>
+        <form-category section-name="Preview">
+            <p>{{NotificationText}}</p>
         </form-category>
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
