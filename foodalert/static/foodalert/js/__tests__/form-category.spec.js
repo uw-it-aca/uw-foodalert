@@ -35,7 +35,6 @@ describe('Form Category', function () {
             var wrapper = mount(FormCategory, {
                 propsData: {
                     sectionName: "Section Name",
-                    iconName: "utensils",
                 }
             });
             expect(wrapper.element).toMatchSnapshot();

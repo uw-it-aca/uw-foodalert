@@ -12,8 +12,6 @@ describe('Labelled Input', function () {
             var wrapper = mount(LabelledInput, {
                 propsData: {
                     labelText: "Label Text",
-                    subLabel: "Sublabel",
-                    isOptional: true,
                     exampleText: "Example Text",
                     warningText: "Warning Text",
                 }
@@ -26,8 +24,30 @@ describe('Labelled Input', function () {
                 propsData: {
                     type: "checkbox",
                     labelText: "Label Text",
-                    subLabel: "Sublabel",
-                    isOptional: true,
+                    exampleText: "Example Text",
+                    warningText: "Warning Text",
+                }
+            });
+            expect(wrapper.element).toMatchSnapshot();
+        })
+
+        test('time', function () {
+            var wrapper = mount(LabelledInput, {
+                propsData: {
+                    type: "time",
+                    labelText: "Label Text",
+                    exampleText: "Example Text",
+                    warningText: "Warning Text",
+                }
+            });
+            expect(wrapper.element).toMatchSnapshot();
+        })
+
+        test('buttons', function () {
+            var wrapper = mount(LabelledInput, {
+                propsData: {
+                    type: "buttons",
+                    labelText: "Label Text",
                     exampleText: "Example Text",
                     warningText: "Warning Text",
                 }

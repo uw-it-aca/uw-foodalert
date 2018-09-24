@@ -25,6 +25,7 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
    
   <div
     class="px-0 py-1 mt-3 container-fluid"
+    is-optional=""
   >
     <div
       aria-labelledby="__BVID__3__BV_label_"
@@ -37,15 +38,9 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
         for="textarea-null"
         id="__BVID__3__BV_label_"
       >
-        <strong
-          class="text-secondary font-italic"
-        >
-          Optional:
-        </strong>
-         Notify people if plans change 
+        
+            Notify people if plans change 
         <br />
-         
-        <!---->
       </label>
       <div
         class=""
@@ -58,14 +53,6 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
           rows="2"
           wrap="soft"
         />
-         
-        <span
-          class="text-right w-100"
-        >
-          <span>
-               
-          </span>
-        </span>
         <!---->
         <!---->
         <!---->
