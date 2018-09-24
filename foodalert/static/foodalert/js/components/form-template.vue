@@ -4,17 +4,25 @@
             <labelled-input
                 label-text="Describe the food and event"
                 example-text="hot indian food FIUTS weekly club meeting"
-                :rows="2">
+                :rows="2"
+                store-commit="updateFoodEvent">
             </labelled-input>
             <labelled-input
                 label-text="Quantity"
                 example-text="About 8 full meals"
-                :rows="2">
+                :rows="2"
+                store-commit="updateQuantitiy">
             </labelled-input>
             <labelled-input
                 label-text="End Time"
                 input-type="time"
-                example-text="6:00 PM">
+                example-text="6:00 PM"
+                store-commit="updateEndTime">
+            </labelled-input>
+            <labelled-input
+                label-text="Location"
+                example-text="e.g HUB 130"
+                store-commit="updateLocation">
             </labelled-input>
         </form-category>
         <hr>
@@ -22,28 +30,17 @@
             <labelled-input
                 input-type="checkbox"
                 label-text="Does the food contain?"
-                :boxes='allergens'>
+                :boxes='allergens'
+                store-commit="updateAllergens">
             </labelled-input>
             <labelled-input
                 input-type="buttons"
-                label-text="Do students need to bring containers?">
-            </labelled-input>
-        </form-category>
-        <form-category section-name="Location" icon-name="map-marker-alt">
-            <labelled-input
-                label-text="Where will the food be located?"
-                sub-label="Building name and room / room number."
-                example-text="e.g HUB 130">
-            </labelled-input>
-            <labelled-input
-                label-text="Any other details to help people find you?"
-                example-text="e.g Use stairs near front desk"
-                is-optional
-                :rows="2">
+                label-text="Do students need to bring containers?"
+                store-commit="updateNeedContainer">
             </labelled-input>
         </form-category>
         <form-category section-name="Preview">
-            <p>{{NotificationText}}</p>
+            <p v-html="previewText"></p>
         </form-category>
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
@@ -115,6 +112,7 @@
     export default {
         props: {
             allergens: Array,
+            previewText: String,
         },
         computed: {
             navVisible: function () {

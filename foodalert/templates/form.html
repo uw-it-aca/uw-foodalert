@@ -9,6 +9,7 @@
 
 {% block vue %}
 <form-template
-    :allergens='["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"]'>
+    :allergens='["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"]'
+    :preview-text="$store.getters.previewText">
 </form-template>
 {% endblock %}
