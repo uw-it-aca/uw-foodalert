@@ -57,17 +57,6 @@ var app = new Vue({
         'signup-template': SignupTemplate,
         'update-template': UpdateTemplate,
     },
-    methods: {
-        handleScroll() {
-            this.scrollY = window.scrollY;
-        },
-    },
-    created() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
 });
 
 

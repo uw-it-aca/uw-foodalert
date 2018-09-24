@@ -1,20 +1,13 @@
 <template>
     <b-container fluid class="p-0">
-        <b-nav v-if="navVisible" class="foodalert-sticky foodalert-navbar w-100 d-sm-none shadow-sm border-bottom py-2" fill>
-            <b-nav-item href="#event" :class="{'foodalert-navbar-active': categories['Event']} "> Event </b-nav-item>
-            <b-nav-item href="#food" :class="{'foodalert-navbar-active': categories['Food']} "> Food </b-nav-item>
-            <b-nav-item href="#time" :class="{'foodalert-navbar-active': categories['Time']} "> Time </b-nav-item>
-            <b-nav-item href="#location" :class="{'foodalert-navbar-active': categories['Location']} "> Location </b-nav-item>
-        </b-nav>
-
-        <form-category section-name="Event" icon-name="calendar" :active.sync="categories['Event']">
+        <form-category section-name="Event" icon-name="calendar">
             <labelled-input
                 label-text="What was the occasion?"
                 example-text="e.g FIUTS weekly club meeting">
             </labelled-input>
         </form-category>
         <hr>
-        <form-category section-name="Food" icon-name="utensils" :active.sync="categories['Food']">
+        <form-category section-name="Food" icon-name="utensils">
             <labelled-input
                 label-text="What type of food?"
                 sub-label="Describe the food, cuisine, whether it's hot or cold, etc."
@@ -39,7 +32,7 @@
             </labelled-input>
         </form-category>
         <hr>
-        <form-category section-name="Time" icon-name="clock" :active.sync="categories['Time']">
+        <form-category section-name="Time" icon-name="clock">
             <p>Food will be available starting when you send the notification.</p>
             <labelled-input
                 label-text="When will the food stop being available?"
@@ -48,7 +41,7 @@
             </labelled-input>
         </form-category>
         <hr>
-        <form-category section-name="Location" icon-name="map-marker-alt" :active.sync="categories['Location']">
+        <form-category section-name="Location" icon-name="map-marker-alt">
             <labelled-input
                 label-text="Where will the food be located?"
                 sub-label="Building name and room / room number."
@@ -179,12 +172,6 @@
                     { text: "Food C", value: "foodC"},
                     { text: "Food D", value: "foodD"},
                 ],
-                categories: {
-                    Event: false,
-                    Food: false,
-                    Time: false,
-                    Location: false,
-                },
             }
         },
         methods: {
