@@ -1,16 +1,28 @@
 [{
- "location": "UW Campus",
- "location_details": null,
- "event": "UW Event",
- "created_time": "1",
- "end_time": null,
- "food_served": "Food",
- "amount_of_food_left": "No Food",
- "host": 1,
- "bring_container": false,
- "safe_foods": null,
- "allergens": null,
- "host_permit_number": null,
- "host_user_agent": "browser"
- }]
+    "id": "2",
+    "location": {
+        "main": "UW Campus",
+        "detail": null
+    },
+    "event": "UW Event",
+    "time": {
+        "created": "1",
+        "ended": null
+    },
+    "food": {
+        "served": "Food",
+        "amount": "No Food",
+        "allergens": null
+    },
+    "bringContainers": false,
+    "foodServiceInfo": {
+        "permitNumber": null,
+        "safeToShareFood": null
+    },
+    "host": {
+        "hostID": 1,
+        "netID": "testuser@test.com",
+        "userAgent": "browser"
+    }
+}]
 

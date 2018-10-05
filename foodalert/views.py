@@ -5,8 +5,11 @@ from django.views.generic import TemplateView
 from foodalert.models import Notification, Update
 from foodalert.serializers import NotificationSerializer, UpdateSerializer
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
+
 
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
@@ -16,6 +19,19 @@ class NotificationDetail(generics.RetrieveAPIView):
 class NotificationList(generics.ListCreateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            data = serializer.data
+            return Response(
+                data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            print("failed to post")
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateDetail(generics.RetrieveAPIView):
