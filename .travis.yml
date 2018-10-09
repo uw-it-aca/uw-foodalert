@@ -7,6 +7,7 @@ services:
 install:
   - python setup.py -q install
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - pip install coverage
   - pip install python-coveralls
   - pip install pycodestyle
@@ -15,7 +16,6 @@ before_script:
   - python manage.py migrate --noinput
   - npm install
   - npm list
-  - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
