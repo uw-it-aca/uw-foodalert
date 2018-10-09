@@ -2,6 +2,8 @@ sudo: false
 language: python
 python:
   - "3.6"
+services:
+  - postgresql
 install:
   - python setup.py -q install
 before_script:
@@ -13,6 +15,7 @@ before_script:
   - python manage.py migrate --noinput
   - npm install
   - npm list
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
