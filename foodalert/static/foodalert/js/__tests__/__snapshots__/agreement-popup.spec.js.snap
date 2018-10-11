@@ -1,0 +1,252 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Agreement Popup renders correctly checkbox 1`] = `
+<div
+  class="px-4"
+>
+  <a
+    class="ml-0 mb-4"
+  >
+    <svg
+      aria-hidden="true"
+      class="svg-inline--fa fa-chevron-left fa-w-10"
+      data-icon="chevron-left"
+      data-prefix="fas"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class=""
+        d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"
+        fill="currentColor"
+      />
+    </svg>
+     Back 
+  </a>
+   
+  <p>
+    <br />
+  </p>
+   
+  <p
+    class="h5 text-center mt-4 mb-5 text-center font-weight-light"
+  >
+       Intro Text
+  </p>
+   
+  <p
+    class="h5 text-center mb-3"
+  >
+     Main TExt 
+  </p>
+   
+  <fieldset
+    class="b-form-group form-group"
+    id="__BVID__6"
+    role="group"
+  >
+    <!---->
+    <div
+      class=""
+      role="group"
+    >
+      <!---->
+       
+      <div
+        class="ml-5 custom-controls-stacked"
+        id="__BVID__7"
+        role="group"
+        tabindex="-1"
+      >
+        <div
+          class="custom-control custom-checkbox"
+        >
+          <input
+            autocomplete="off"
+            class="custom-control-input"
+            id="__BVID__7__BV_check_0_opt_"
+            name="__BVID__7"
+            true-value="Option 1"
+            type="checkbox"
+            value="Option 1"
+          />
+          <label
+            class="custom-control-label"
+            for="__BVID__7__BV_check_0_opt_"
+          >
+            <span>
+              Option 1
+            </span>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox"
+        >
+          <input
+            autocomplete="off"
+            class="custom-control-input"
+            id="__BVID__7__BV_check_1_opt_"
+            name="__BVID__7"
+            true-value="Option 2"
+            type="checkbox"
+            value="Option 2"
+          />
+          <label
+            class="custom-control-label"
+            for="__BVID__7__BV_check_1_opt_"
+          >
+            <span>
+              Option 2
+            </span>
+          </label>
+        </div>
+      </div>
+      <!---->
+      <!---->
+      <!---->
+    </div>
+  </fieldset>
+   
+  <div
+    class="d-flex justify-content-center"
+  >
+    <button
+      class="btn px-5 btn-secondary btn-lg"
+      type="button"
+    >
+      
+            Secondary Text
+        
+    </button>
+     
+    <button
+      class="btn btn-primary btn-lg px-5 ml-2"
+      type="button"
+    >
+      
+            Primary Text
+        
+    </button>
+  </div>
+   
+  <br />
+   
+  <p
+    class="d-block text-center w-100 text-center mt-4 mb-3 font-italic"
+  >
+     Info Text 
+  </p>
+   
+  <a
+    class="d-block text-center mb-3"
+    href="www.linklocation.com"
+  >
+     Link Text 
+  </a>
+</div>
+`;
+
+exports[`Agreement Popup renders correctly textarea 1`] = `
+<div
+  class="px-4"
+>
+  <a
+    class="ml-0 mb-4"
+  >
+    <svg
+      aria-hidden="true"
+      class="svg-inline--fa fa-chevron-left fa-w-10"
+      data-icon="chevron-left"
+      data-prefix="fas"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class=""
+        d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"
+        fill="currentColor"
+      />
+    </svg>
+     Back 
+  </a>
+   
+  <p>
+    <br />
+  </p>
+   
+  <p
+    class="h5 text-center mt-4 mb-5 text-center font-weight-light"
+  >
+       Intro Text
+  </p>
+   
+  <p
+    class="h5 text-center mb-3"
+  >
+     Main TExt 
+  </p>
+   
+  <fieldset
+    class="b-form-group form-group"
+    id="__BVID__2"
+    role="group"
+  >
+    <!---->
+    <div
+      class=""
+      role="group"
+    >
+      <input
+        class="text-center mb-3 border-0 form-control"
+        id="__BVID__3"
+        placeholder="40569503"
+        type="number"
+      />
+       
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+    </div>
+  </fieldset>
+   
+  <div
+    class="d-flex justify-content-center"
+  >
+    <button
+      class="btn px-5 btn-secondary btn-lg"
+      type="button"
+    >
+      
+            Secondary Text
+        
+    </button>
+     
+    <button
+      class="btn btn-primary btn-lg px-5 ml-2"
+      type="button"
+    >
+      
+            Primary Text
+        
+    </button>
+  </div>
+   
+  <br />
+   
+  <p
+    class="d-block text-center w-100 text-center mt-4 mb-3 font-italic"
+  >
+     Info Text 
+  </p>
+   
+  <a
+    class="d-block text-center mb-3"
+    href="www.linklocation.com"
+  >
+     Link Text 
+  </a>
+</div>
+`;
