@@ -19,11 +19,6 @@ class NotificationTest(TestCase):
                                             password="test")
 
     def setUp(self):
-        # Reset notification ID sequence for testing with id's
-        cursor = connection.cursor()
-        sql = "SELECT setval(sequence_name, 1), " \
-            "sequence_name FROM information_schema.sequences;"
-        cursor.execute(sql)
         # Set up a test notification with arbitrary field values
         notification = Notification.objects.create(
             location="UW Campus",
@@ -58,6 +53,7 @@ class NotificationTest(TestCase):
         # Convert response to JSON
         actual_json = response.json()
         # Set the created time to match as this field is dynamic/based on time
+        expected_json[0]["id"] = actual_json[0]["id"]
         expected_json[0]["time"]["created"] = actual_json[0]["time"]["created"]
         # Assert that the content is a list with a single notification entry
         self.assertEqual(len(actual_json), 1)
@@ -82,6 +78,7 @@ class NotificationTest(TestCase):
         # Convert response to JSON as the actual json
         actual_json = response.json()
         # Set the created time to match as this field is dynamic/based on time
+        expected_json["id"] = actual_json["id"]
         expected_json["time"]["created"] = actual_json["time"]["created"]
         self.assertEqual(expected_json, actual_json)
 
@@ -132,6 +129,7 @@ class NotificationTest(TestCase):
         # Convert the response to JSON as the actual json
         actual_json = response.json()
         # Set the created time to match as this field is dynamic/based on time
+        expected_json["id"] = actual_json["id"]
         expected_json["time"]["created"] = actual_json["time"]["created"]
         self.assertEqual(expected_json, actual_json)
 
@@ -171,6 +169,21 @@ class NotificationTest(TestCase):
         response = client.post(
                 "/notification/",
                 data=json.dumps(invalid_payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 400)
+
+    def test_post_incomplete_payload(self):
+        """
+        Attempts to post an incomplete payload that does not have the
+        required fields
+        """
+        incomplete_payload = {}
+
+        client = Client()
+        response = client.post(
+                "/notification/",
+                data=json.dumps(incomplete_payload),
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 400)

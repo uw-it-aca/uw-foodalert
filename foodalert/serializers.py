@@ -43,6 +43,27 @@ class NotificationSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
+        if 'location' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a location field"})
+        if 'event' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have an event field"})
+        if 'time' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a time field"})
+        if 'food' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a food field"})
+        if 'host' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a host field"})
+        if 'foodServiceInfo' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a foodServiceInfo field"})
+        if 'bringContainers' not in data:
+            raise ValidationError({
+                "Bad Request": "Post data must have a bringContainers field"})
         ret = {
             'location': data["location"]["main"],
             'location_details': data["location"]["detail"],
