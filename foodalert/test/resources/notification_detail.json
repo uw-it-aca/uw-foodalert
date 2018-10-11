@@ -1,0 +1,27 @@
+{
+    "id": "2",
+    "location": {
+        "main": "UW Campus",
+        "detail": null
+    },
+    "event": "UW Event",
+    "time": {
+        "created": "1",
+        "ended": null
+    },
+    "food": {
+        "served": "Food",
+        "amount": "No Food",
+        "allergens": null
+    },
+    "bringContainers": false,
+    "foodServiceInfo": {
+        "permitNumber": null,
+        "safeToShareFood": null
+    },
+    "host": {
+        "hostID": 1,
+        "netID": "testuser@test.com",
+        "userAgent": "browser"
+    }
+}

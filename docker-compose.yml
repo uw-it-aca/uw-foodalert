@@ -9,7 +9,10 @@ services:
     volumes:
       - ./sampleproj:/app/sampleproj/
       - ./foodalert:/app/foodalert
+    links:
+      - db
     ports:
       - "${PORT:-8000}:8000"
     command: bash -c "python manage.py migrate --settings=sampleproj.settings.base && python manage.py runserver 0:8000 --settings=sampleproj.settings.base"
-
+  db:
+    image: postgres

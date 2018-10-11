@@ -1,0 +1,28 @@
+{
+    "id": "3",
+    "location": {
+        "main": "UW Campus",
+        "detail": "North Campus"
+    },
+    "event": "UW Event",
+    "time": {
+        "created": "2018-09-13T19:25:40.440859Z",
+        "ended": "2018-09-13T19:23:06.508534Z"
+    },
+    "food": {
+        "served": "Food",
+        "amount": "No Food",
+        "allergens": null
+    },
+    "bringContainers": false,
+    "foodServiceInfo": {
+        "permitNumber": "12345",
+        "safeToShareFood": null
+    },
+    "host": {
+        "hostID": 1,
+        "netID": "testuser@test.com",
+        "userAgent": "browser"
+    }
+}
+
