@@ -6,8 +6,7 @@
         </b-container>
         <hr>
         <form-category
-            section-name="Notification Method"
-            icon-name="bell">
+            section-name="Notification Method">
             <b-form-checkbox-group
                 :options="['Email','SMS/Text']"
                 stacked
@@ -31,8 +30,7 @@
         </form-category>
         <hr>
         <form-category
-            section-name="Terms of Agreement"
-            icon-name="clipboard-check">
+            section-name="Terms of Agreement">
             <p>
                 <strong> Food Safety </strong>
                 <br>
