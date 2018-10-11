@@ -2,9 +2,12 @@ sudo: false
 language: python
 python:
   - "3.6"
+services:
+  - postgresql
 install:
   - python setup.py -q install
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - pip install coverage
   - pip install python-coveralls
   - pip install pycodestyle
