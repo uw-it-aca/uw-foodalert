@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = 'c^*q8l682i__vs4*+0k=)731!lcu(+zcl_4f!^us%ingm$@cdf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webpack_loader',
     'foodalert',
+    'uw_saml',
     'rest_framework',
 ]
 
@@ -128,10 +130,28 @@ STATIC_URL = '/static/'
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'foodalert/bundles/', # must end with slash
+        'BUNDLE_DIR_NAME': 'foodalert/bundles/',  # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
     }
+}
+
+LOGIN_URL = reverse_lazy('saml_login')
+
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
+
+MOCK_SAML_ATTRIBUTES = {
+    'uwnetid': ['javerage'],
+    'affiliations': ['student', 'member'],
+    'eppn': ['javerage@washington.edu'],
+    'scopedAffiliations': ['student@washington.edu', 'member@washington.edu'],
+    'isMemberOf': ['u_test_host', 'u_test_student', 'u_test_admin'],
+}
+
+FOODALERT_AUTHZ_GROUPS = {
+    'create': 'u_test_host',
+    'subscribe': 'u_test_student',
+    'audit': 'u_test_admin'
 }

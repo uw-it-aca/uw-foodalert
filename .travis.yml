@@ -5,6 +5,7 @@ python:
 services:
   - postgresql
 install:
+  - sudo apt-get update && sudo apt-get install -y libxmlsec1-dev
   - python setup.py -q install
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres

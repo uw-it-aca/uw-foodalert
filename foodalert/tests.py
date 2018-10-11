@@ -14,4 +14,4 @@ class ViewTests(TestCase):
 
     def test_index_page(self):
         response = self.client.get('/')
-        self.assertIs(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
