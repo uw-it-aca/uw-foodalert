@@ -1,10 +1,16 @@
+import os
 import json
 from django.test import TestCase, Client
 from django.db import connection
 from django.contrib.auth.models import User
 
+import foodalert
 from foodalert.models import *
 from foodalert.serializers import *
+
+RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
+                            'test',
+                            'resources')
 
 
 class NotificationTest(TestCase):
@@ -42,7 +48,7 @@ class NotificationTest(TestCase):
         the expeced datato what is actually returned from get_notification
         """
         # Load expected_json mock resource to compare to the actual
-        path = '/app/foodalert/test/resources/notification_list.json'
+        path = os.path.join(RESOURCE_DIR, 'notification_list.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
         client = Client()
@@ -66,7 +72,7 @@ class NotificationTest(TestCase):
         and compares the expected data to the response data
         """
         # Load mock JSON for a single notification detail
-        path = '/app/foodalert/test/resources/notification_detail.json'
+        path = os.path.join(RESOURCE_DIR, 'notification_detail.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
         client = Client()
@@ -88,7 +94,7 @@ class NotificationTest(TestCase):
         request is successful and the response json is matches the request data
         """
         # Load mock JSON for a typical notification post response
-        path = '/app/foodalert/test/resources/notification_post_response.json'
+        path = os.path.join(RESOURCE_DIR, 'notification_post_response.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
         # Test the post with a valid payload (all fields necessary are there)
