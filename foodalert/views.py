@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
+from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update
 from foodalert.serializers import NotificationSerializer, UpdateSerializer
 from rest_framework import generics
@@ -15,7 +16,6 @@ from rest_framework import status
 # Create your views here.
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
-subscribe_group = settings.FOODALERT_AUTHZ_GROUPS['subscribe']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 
@@ -67,12 +67,12 @@ class UpdateView(TemplateView):
     template_name = 'update.html'
 
 
-@method_decorator(group_required(subscribe_group), name='dispatch')
+@method_decorator(login_required(), name='dispatch')
 class SignupView(TemplateView):
     template_name = 'signup.html'
 
 
-@method_decorator(group_required(subscribe_group), name='dispatch')
+@method_decorator(login_required(), name='dispatch')
 class SubscribedView(TemplateView):
     template_name = 'subscribed.html'
 
