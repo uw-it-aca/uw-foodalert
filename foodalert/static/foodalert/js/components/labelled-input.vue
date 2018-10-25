@@ -7,18 +7,20 @@
             <b-form-textarea
                 v-if="inputType=='textarea'"
                 :rows="rows"
+                :class="{hasError: v.$error}"
                 :placeholder="exampleText"
                 :id="'textarea-' + id"
                 size="md"
-                v-model="text"
+                v-model="v.$model"
                 @input="updateStore($event)">
             </b-form-textarea>
             <b-form-input
                 v-else-if="inputType=='time'"
+                :class="{hasError: v.$error}"
                 :placeholder="exampleText"
                 :id="'time-input-' + id"
                 size="md"
-                v-model="text"
+                v-model="v.$model"
                 @input="updateStore($event)">
             </b-form-input>
             <b-form-checkbox-group
@@ -47,6 +49,15 @@
 <script>
     export default {
         props: {
+            v: {
+                default: function() {
+                   return {
+                       $model: "",
+                       $error: false
+                   }
+                },
+                type: Object
+            },
             inputType: {
                 type: String,
                 default: "textarea",
