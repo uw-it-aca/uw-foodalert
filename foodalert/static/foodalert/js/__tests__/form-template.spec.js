@@ -3,6 +3,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import BootstrapVue from 'bootstrap-vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 Vue.use(BootstrapVue);
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
