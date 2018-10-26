@@ -40,6 +40,8 @@ import PopContainer from './components/popup-container.vue';
 import FormTemplate from './components/form-template.vue';
 import SignupTemplate from './components/signup-template.vue';
 import UpdateTemplate from './components/update-template.vue';
+import PreviewTemplate from './components/preview-template.vue';
+import AuditTemplate from './components/audit-template.vue';
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -58,6 +60,8 @@ var app = new Vue({
         'form-template': FormTemplate,
         'signup-template': SignupTemplate,
         'update-template': UpdateTemplate,
+        'preview-template': PreviewTemplate,
+        'audit-template': AuditTemplate,
     },
 });
 

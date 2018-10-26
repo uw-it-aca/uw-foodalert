@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^update/$', UpdateView.as_view(), name='update'),
     url(r'^signup/$', SignupView.as_view(), name='signup'),
     url(r'^preview/$', PreView.as_view(), name='preview'),
+    url(r'^audit/$', AuditView.as_view(), name='audit'),
     url(r'^$', HomeView.as_view(), name='index'),
     url(r'^notification/$', NotificationList.as_view(),
         name='notificaion_list'),

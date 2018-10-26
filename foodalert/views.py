@@ -80,3 +80,7 @@ class SubscribedView(TemplateView):
 @method_decorator(group_required(create_group), name='dispatch')
 class EndedView(TemplateView):
     template_name = 'ended.html'
+
+@method_decorator(group_required(create_group), name='dispatch')
+class AuditView(TemplateView):
+    template_name = 'audit.html'

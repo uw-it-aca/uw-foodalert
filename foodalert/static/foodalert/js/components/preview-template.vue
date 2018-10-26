@@ -1,0 +1,32 @@
+<template>
+    <b-container class="py-3 px-4">
+        <p><b>UW students and community members </b> will recieve your notification.</p>
+
+        <blockquote class="border rounded mb-3 p-3 text-left bg-light">
+            <p> Hot Indian buffet food leftover from from FIUTs weekly meeting.
+                <br>2 large trays, probably 8 full meals.
+                <br>Available Today, 12:30-2:30PM. HUB 130. 
+                <br>Vegetarian options available.
+                <br>Bring tupperware.</p>
+        </blockquote>
+
+        <a href="/"><font-awesome-icon icon="chevron-left"></font-awesome-icon> Edit Notification</a>
+        <a href="/update" class="mt-5 btn btn-primary btn-lg float-right"> Send Notification </a>
+    </b-container>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+
+            }
+        },
+        components: {
+
+        },
+        computed: {
+
+        }
+    }
+</script>
