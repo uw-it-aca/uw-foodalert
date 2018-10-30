@@ -21,6 +21,7 @@
                 :id="'time-input-' + id"
                 size="md"
                 v-model="v.$model"
+                type="time"
                 @input="updateStore($event)">
             </b-form-input>
             <b-form-checkbox-group

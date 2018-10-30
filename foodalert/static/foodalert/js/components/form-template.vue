@@ -72,7 +72,7 @@
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
                     :disabled="$v.form.$invalid"
-                    href="/preview"
+                    @click="buildRequest"
                     class="float-right btn btn-primary btn-lg py-2"> Preview Notification </b-link>
         </b-container>
 
@@ -225,6 +225,36 @@
             },
             relinquishSafeFood() {
                 this.$store.commit('relinquishSafeFood');
+            },
+            buildRequest() {
+                alert("bulding request");
+                var payload = {
+                     "location": {
+                          "main": this.$store.state.location.substring(0, 10),
+                          "detail": this.$store.state.location
+                     },
+                     "event": "Placeholder event",
+                     "time": {
+                         "created": new Date(),
+                         "ended": new Date((new Date()).toString().substring(0,16) + this.$store.state.endTime + ":00")
+                     },
+                     "food": {
+                         "served": this.$store.state.foodEvent,
+                         "amount": this.$store.state.foodQuantity,
+                         "allergens": this.$store.state.allergens.toString()
+                     },
+                     "bringContainers": this.$store.state.needContainer,
+                     "foodServiceInfo": {
+                         "permitNumber": this.$store.state.permitNumber,
+                         "safeToShareFood": this.$store.state.safeFoodList.toString()
+                     },
+                     "host": {
+                         "hostID": "Placeholder ID",
+                         "netID": "Placeholder netID",
+                         "userAgent": navigator.userAgent
+                     }
+                };
+                console.log(payload);
             },
         },
         components: {
