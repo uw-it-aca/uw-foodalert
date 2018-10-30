@@ -1,6 +1,8 @@
 "use strict";
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 Vue.use(BootstrapVue);
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'

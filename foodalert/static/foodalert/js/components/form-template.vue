@@ -1,50 +1,79 @@
 <template>
     <b-container fluid class="p-0">
-        <form-category>
-            <labelled-input
-                label-text="Describe the food and event"
-                example-text="hot indian food FIUTS weekly club meeting"
-                :rows="2"
-                store-commit="updateFoodEvent">
-            </labelled-input>
-            <labelled-input
-                label-text="Quantity"
-                example-text="About 8 full meals"
-                :rows="2"
-                store-commit="updateQuantitiy">
-            </labelled-input>
-            <labelled-input
-                label-text="End Time"
-                input-type="time"
-                example-text="6:00 PM"
-                store-commit="updateEndTime">
-            </labelled-input>
-            <labelled-input
-                label-text="Location"
-                example-text="e.g HUB 130"
-                store-commit="updateLocation">
-            </labelled-input>
-        </form-category>
-        <hr>
-        <form-category section-name="Food Specifications">
-            <labelled-input
-                input-type="checkbox"
-                label-text="Does the food contain?"
-                :boxes='allergens'
-                store-commit="updateAllergens">
-            </labelled-input>
-            <labelled-input
-                input-type="buttons"
-                label-text="Do students need to bring containers?"
-                store-commit="updateNeedContainer">
-            </labelled-input>
-        </form-category>
-        <form-category section-name="Preview">
-            <p v-html="previewText"></p>
-        </form-category>
+        <b-form>
+            <form-category>
+                <labelled-input
+                    label-text="Describe the food and event"
+                    example-text="hot indian food FIUTS weekly club meeting"
+                    :rows="2"
+                    v-model.trim="form.description"
+                    :v="$v.form.description"
+                    store-commit="updateFoodEvent">
+                </labelled-input>
+                <div v-if="$v.form.description.$error">
+                    <p v-if="!$v.form.description.required" class="hasError">Description of food is required</p>
+                    <p v-if="!$v.form.description.maxLength" class="hasError">The description must be shorter than 100 characters</p>
+                </div>
+                <labelled-input
+                    label-text="Quantity"
+                    example-text="About 8 full meals"
+                    :rows="2"
+                    v-model.trim="form.quantity"
+                    :v="$v.form.quantity"
+                    store-commit="updateQuantitiy">
+                </labelled-input>
+                <div v-if="$v.form.quantity.$error">
+                    <p v-if="!$v.form.quantity.required" class="hasError">Quantity of food is required</p>
+                    <p v-if="!$v.form.quantity.maxLength" class="hasError">The quantity must be shorter than 100 characters</p>
+                </div>
+                <labelled-input
+                    label-text="End Time"
+                    input-type="time"
+                    example-text="6:00 PM"
+                    v-model.trim="form.time"
+                    :v="$v.form.time"
+                    store-commit="updateEndTime">
+                </labelled-input>
+                <div v-if="$v.form.time.$error">
+                    <p v-if="!$v.form.time.required" class="hasError">A designated end time is required</p>
+                    <p v-if="!$v.form.time.maxLength" class="hasError">The time entry must be shorter than 20 characters</p>
+                </div>
+                <labelled-input
+                    label-text="Location"
+                    example-text="e.g HUB 130"
+                    v-model.trim="form.location"
+                    :v="$v.form.location"
+                    store-commit="updateLocation">
+                </labelled-input>
+                <div v-if="$v.form.location.$error">
+                    <p v-if="!$v.form.location.required" class="hasError">A designated location is required</p>
+                    <p v-if="!$v.form.location.maxLength" class="hasError">Description must be shorter than 40 characters</p>
+                </div>
+            </form-category>
+            <hr>
+            <form-category section-name="Food Specifications">
+                <labelled-input
+                    input-type="checkbox"
+                    label-text="Does the food contain?"
+                    :boxes='allergens'
+                    store-commit="updateAllergens">
+                </labelled-input>
+                <labelled-input
+                    input-type="buttons"
+                    label-text="Do students need to bring containers?"
+                    store-commit="updateNeedContainer">
+                </labelled-input>
+            </form-category>
+            <form-category section-name="Preview">
+                <p v-html="previewText"></p>
+            </form-category>
+        </b-form>
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
-            <b-link href="/preview" class="float-right btn btn-primary btn-lg py-2"> Preview Notification </b-link>
+            <b-link type="submit"
+                    :disabled="$v.form.$invalid"
+                    href="/preview"
+                    class="float-right btn btn-primary btn-lg py-2"> Preview Notification </b-link>
         </b-container>
 
         <popup-container
@@ -109,6 +138,8 @@
     import LabelledInput from './labelled-input.vue';
     import PopupContainer from './popup-container.vue';
     import AgreePop from './agreement-popup.vue';
+    import { validationMixin } from "vuelidate"
+    import { required, maxLength } from "vuelidate/lib/validators"
     export default {
         props: {
             allergens: Array,
@@ -154,6 +185,32 @@
                     { text: "Food C", value: "foodC"},
                     { text: "Food D", value: "foodD"},
                 ],
+                form : {
+                    description: "",
+                    quantity: "",
+                    time: "",
+                    location: ""
+                }
+            }
+        },
+        validations: {
+            form: {
+                description: {
+                    required,
+                    maxLength: maxLength(100)
+                },
+                quantity: {
+                    required,
+                    maxLength: maxLength(100)
+                },
+                time: {
+                    required,
+                    maxLength: maxLength(20)
+                },
+                location: {
+                    required,
+                    maxLength: maxLength(40)
+                },
             }
         },
         methods: {

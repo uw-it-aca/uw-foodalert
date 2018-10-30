@@ -16,17 +16,29 @@
             <labelled-input
                 label-text="Email"
                 input-type="textarea"
+                :v="$v.form.email"
+                v-model.trim="form.email"
                 v-if="inputTypes.indexOf('Email') !== -1"
                 no-padding
                 no-char-count>
             </labelled-input>
+            <div v-if="$v.form.email.$error">
+                <p v-if="!$v.form.email.email" class="hasError">Email must be in correct email format (e.g. abc@xyz.com)</p>
+                <p v-if="!$v.form.email.required" class="hasError">Please provide an email or unselect the email checkbox</p>
+            </div>
             <labelled-input
                 label-text="SMS/Text Number"
                 input-type="textarea"
+                :v="$v.form.sms"
+                v-model.trim="form.sms"
                 v-if="inputTypes.indexOf('SMS/Text') !== -1"
                 no-padding
                 no-char-count>
             </labelled-input>
+            <div v-if="$v.form.sms.$error">
+                <p v-if="!$v.form.sms.required" class="hasError">Please provide a number or unselect the sms checkbox</p>
+                <p v-if="!$v.form.sms.phoneNum" class="hasError">Number must be in correct number format (e.g. 123-123-1234)</p>
+            </div>
         </form-category>
         <hr>
         <form-category
@@ -49,6 +61,7 @@
         <hr>
         <b-container>
             <b-link
+                :disabled="$v.form.$invalid || this.inputTypes.length === 0 || !this.agreement"
                 class="btn btn-primary float-right mb-3"
                 href="/subscribed">
                 Sign Up
@@ -60,17 +73,75 @@
 <script>
     import FormCategory from './form-category.vue';
     import LabelledInput from './labelled-input.vue';
+    import { validationMixin } from "vuelidate"
+    import { required, email, helpers } from "vuelidate/lib/validators"
+    const phoneNum = helpers.regex('phoneNum', /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
 
     export default {
         data() {
             return {
                 inputTypes: [],
                 agreement: false,
+                form: {
+                    email: "",
+                    sms: ""
+                }
             }
         },
         components: {
             'form-category': FormCategory,
             'labelled-input': LabelledInput,
+        },
+        validations() {
+            if (this.inputTypes.indexOf('SMS/Text') !== -1 && this.inputTypes.indexOf('Email') !== -1) {
+                return {
+                    form: {
+                        email: {
+                            required,
+                            email
+                        },
+                        sms: {
+                            required,
+                            phoneNum
+                        }
+                    }
+                }
+            } else if (this.inputTypes.indexOf('SMS/Text') == -1 && this.inputTypes.indexOf('Email') !== -1) {
+                return {
+                    form: {
+                        email: {
+                            required,
+                            email
+                        },
+                        sms: {
+
+                        }
+                    }
+                }
+            } else if (this.inputTypes.indexOf('SMS/Text') !== -1 && this.inputTypes.indexOf('Email') == -1) {
+                return {
+                    form: {
+                        sms: {
+                            required,
+                            phoneNum
+                        },
+                        email: {
+
+                        }
+                    }
+                }
+            } else {
+                return {
+                    form: {
+                        email: {
+
+                        },
+                        sms: {
+
+                        }
+                    }
+                }
+            }
         }
     }
 </script>

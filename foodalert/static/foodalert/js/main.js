@@ -1,6 +1,7 @@
 "use strict";
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Vuelidate from 'vuelidate'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -24,6 +25,7 @@ library.add(faBell)
 library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 Vue.use(BootstrapVue);
+Vue.use(Vuelidate)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
