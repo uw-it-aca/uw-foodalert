@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from foodalert.test.test_notification import NotificationTest
+from foodalert.test.test_subscription import SubscriptionTest
 
 # Create your tests here.
 

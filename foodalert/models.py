@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
@@ -20,6 +21,12 @@ class Notification(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     host_permit_number = models.CharField(max_length=40, blank=True, null=True)
     host_user_agent = models.CharField(max_length=40, blank=False)
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, blank=False)
+    email = models.EmailField(blank=True)
+    sms_number = PhoneNumberField(blank=True)
 
 
 class Update(models.Model):

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'foodalert',
     'uw_saml',
     'rest_framework',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [
