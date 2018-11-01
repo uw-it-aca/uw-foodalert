@@ -28,6 +28,10 @@ class Subscription(models.Model):
     email = models.EmailField(blank=True)
     sms_number = PhoneNumberField(blank=True)
 
+    @property
+    def netid(self):
+        return self.user.email
+
 
 class Update(models.Model):
     text = models.CharField(max_length=100)

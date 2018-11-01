@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
-from foodalert.models import Notification, Update, SafeFood, Allergen
+from foodalert.models import Notification, Update, SafeFood, Allergen,\
+        Subscription
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -113,3 +114,8 @@ class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
         fields = ('notification', 'name')
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields= ('id', 'netid', 'sms_number', 'email')

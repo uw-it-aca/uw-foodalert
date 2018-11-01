@@ -43,3 +43,15 @@ class SubscriptionTest(TestCase):
         )
         self.assertEqual(sub.email, email)
         self.assertEqual(sub.sms_number, sms)
+
+    def test_create_subscription(self):
+        pass
+
+    def test_read_subscription(self):
+        pass
+
+    def test_update_subscription(self):
+        pass
+
+    def test_delete_subscription(self):
+        pass
