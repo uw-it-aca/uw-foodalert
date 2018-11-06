@@ -4,6 +4,7 @@ from foodalert.test.test_subscription import SubscriptionTest
 
 # Create your tests here.
 
+
 class ViewTests(TestCase):
     client = Client()
 

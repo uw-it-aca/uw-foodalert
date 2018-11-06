@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^updates/(?P<pk>[0-9]+)/$',
         UpdateDetail.as_view(), name='update_detail'),
     url(r'^subscription/$', SubscriptionList.as_view(),
-            name='subscription_list'),
+        name='subscription_list'),
     url(r'^subscription/(?P<pk>[0-9]+)/$',
         SubscriptionDetail.as_view(), name='update_detail'),
 ]

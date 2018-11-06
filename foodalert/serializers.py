@@ -115,10 +115,11 @@ class AllergenSerializer(serializers.ModelSerializer):
         model = Allergen
         fields = ('notification', 'name')
 
+
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields= ('id', 'netid', 'sms_number', 'email')
+        fields = ('id', 'netid', 'sms_number', 'email')
 
     def to_internal_value(self, data):
         ret = {
