@@ -131,5 +131,22 @@ class SubscriptionTest(TestCase):
         self.assertEqual(update['email'], sub.email)
         self.assertEqual(update['sms'], sub.sms_number)
 
-    def test_delete_subscription(self):
-        pass
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_delete_subscription(self, email=None, sms=None):
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+
+        factory = APIRequestFactory()
+        request = factory.delete('/subscription/{0}'.format(sub.id),
+                format='json')
+        original_len = len(Subscription.objects.all())
+        response = SubscriptionDetail.as_view()(request, pk=sub.id)
+        self.assertEqual(204, response.status_code)
+        new_len = len(Subscription.objects.all())
+        self.assertEqual(original_len - 1, new_len)
+        model_list = Subscription.objects.all().filter(pk=sub.id)
+        self.assertEqual(0, len(model_list))

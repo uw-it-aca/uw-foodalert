@@ -53,7 +53,7 @@ class UpdateList(generics.ListCreateAPIView):
     serializer_class = UpdateSerializer
 
 
-class SubscriptionDetail(generics.RetrieveUpdateAPIView):
+class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
