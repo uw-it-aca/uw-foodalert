@@ -35,11 +35,11 @@ class NotificationSerializer(serializers.ModelSerializer):
         notif.save()
         if (allergen_data is not None):
             for allergen in allergen_data:
-                entry = Allergen.objects.create(name=allergen)
+                entry = Allergen.objects.get_or_create(name=allergen)
                 notif.allergens.add(entry)
         if (safe_food_data is not None):
             for safe_food in safe_food_data:
-                entry = SafeFood.objects.create(name=safe_food)
+                entry = SafeFood.objects.get_or_create(name=safe_food)
                 notif.safe_foods.add(entry)
         return notif
 
