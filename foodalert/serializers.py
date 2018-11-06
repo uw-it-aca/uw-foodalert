@@ -121,8 +121,17 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         fields= ('id', 'netid', 'sms_number', 'email')
 
     def to_internal_value(self, data):
-        return {
-            'user': User.objects.get(email=data['netId']),
+        ret = {
             'email': data['email'],
             'sms_number': data['sms'],
         }
+
+        if 'id' in data:
+            ret['id'] = data['id']
+            ret['user'] = Subscription.objects.get(pk=data['id']).user
+        elif 'netId' in data:
+            ret['user'] = User.objects.get(email=data['netId'])
+        else:
+            raise ValidationError({"netId": "must specify netid"})
+
+        return ret
