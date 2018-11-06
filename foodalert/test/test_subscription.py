@@ -1,18 +1,26 @@
 import os
 import json
 from django.test import TestCase, Client
-from parameterized import parameterized
+from parameterized import parameterized, param
 from django.db import connection
+from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 
 import foodalert
 from foodalert.models import *
 from foodalert.serializers import *
 
-RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
-                            'test',
-                            'resources')
+VALID_TEST_CASES = [
+    param(email="testuser@test.com", sms="+41524204242"),
+    param(sms="+41524204242", email=""),
+    param(email="testuser@test.com", sms=""),
+]
 
+INVALID_TEST_CASES = [
+    param(sms="+41524204242"),
+    param(email="testuser@test.com"),
+    param(),
+]
 
 class SubscriptionTest(TestCase):
     @classmethod
@@ -28,14 +36,10 @@ class SubscriptionTest(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        Subscription.objects.all().delete()
 
-    @parameterized.expand([
-        ("testuser@test.com", "+41524204242"),
-        ("testuser@test.com", ""),
-        ("", "+41524204242"),
-        ("", ""),
-    ])
-    def test_subscription_model(self, email, sms):
+    @parameterized.expand(VALID_TEST_CASES)
+    def test_valid_subscription_models(self, email=None, sms=None):
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
@@ -43,6 +47,15 @@ class SubscriptionTest(TestCase):
         )
         self.assertEqual(sub.email, email)
         self.assertEqual(sub.sms_number, sms)
+
+    @parameterized.expand(INVALID_TEST_CASES)
+    def test_invalid_subscription_models(self, email=None, sms=None):
+        with self.assertRaises(IntegrityError):
+            sub = Subscription.objects.create(
+                user=self.user,
+                email=email,
+                sms_number=sms
+            )
 
     def test_create_subscription(self):
         pass
