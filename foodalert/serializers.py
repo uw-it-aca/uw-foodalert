@@ -119,3 +119,10 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields= ('id', 'netid', 'sms_number', 'email')
+
+    def to_internal_value(self, data):
+        return {
+            'user': User.objects.get(email=data['netId']),
+            'email': data['email'],
+            'sms_number': data['sms'],
+        }
