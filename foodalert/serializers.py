@@ -5,7 +5,22 @@ from django.contrib.auth.models import User
 from foodalert.models import Notification, Update, SafeFood, Allergen
 
 
+class SafeFoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SafeFood
+        fields = ('name')
+
+
+class AllergenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Allergen
+        fields = ('name')
+
+
 class NotificationSerializer(serializers.ModelSerializer):
+    allergens = AllergenSerializer(many=True, required=False)
+    safe_foods = SafeFoodSerializer(many=True, required=False)
+
     class Meta:
         model = Notification
         fields = ('location', 'location_details', 'event', 'created_time',
@@ -13,32 +28,47 @@ class NotificationSerializer(serializers.ModelSerializer):
                   'bring_container', 'safe_foods', 'allergens',
                   'host_permit_number', 'host_user_agent')
 
-    def to_representation(self, notification):
+    def create(self, validated_data):
+        allergen_data = validated_data.pop('allergens')
+        safe_food_data = validated_data.pop('safe_foods')
+        notif = Notification.objects.create(**validated_data)
+        notif.save()
+        if (allergen_data is not None):
+            for allergen in allergen_data:
+                entry = Allergen.objects.create(name=allergen)
+                notif.allergens.add(entry)
+        if (safe_food_data is not None):
+            for safe_food in safe_food_data:
+                entry = SafeFood.objects.create(name=safe_food)
+                notif.safe_foods.add(entry)
+        return notif
+
+    def to_representation(self, notif):
         return {
-            'id': str(notification.id),
+            'id': str(notif.id),
             'location': {
-                'main': notification.location,
-                'detail': notification.location_details,
+                'main': notif.location,
+                'detail': notif.location_details,
             },
-            'event': notification.event,
+            'event': notif.event,
             'time': {
-                'created': notification.created_time,
-                'ended': notification.end_time,
+                'created': notif.created_time,
+                'ended': notif.end_time,
             },
             'food': {
-                'served': notification.food_served,
-                'amount': notification.amount_of_food_left,
-                'allergens': notification.allergens,
+                'served': notif.food_served,
+                'amount': notif.amount_of_food_left,
+                'allergens': [x.name for x in notif.allergens.all()],
             },
-            'bringContainers': notification.bring_container,
+            'bringContainers': notif.bring_container,
             'foodServiceInfo': {
-                'permitNumber': notification.host_permit_number,
-                'safeToShareFood': notification.safe_foods,
+                'permitNumber': notif.host_permit_number,
+                'safeToShareFood': [x.name for x in notif.safe_foods.all()],
             },
             'host': {
-                'hostID': notification.host.id,
-                'netID': notification.host.email,
-                'userAgent': notification.host_user_agent,
+                'hostID': notif.host.id,
+                'netID': notif.host.email,
+                'userAgent': notif.host_user_agent,
             }
         }
 
@@ -74,11 +104,15 @@ class NotificationSerializer(serializers.ModelSerializer):
             'amount_of_food_left': data["food"]["amount"],
             'host': User.objects.get(id=data["host"]["hostID"]),
             'bring_container': data["bringContainers"],
-            'safe_foods': data["foodServiceInfo"]["safeToShareFood"],
-            'allergens': data["food"]["allergens"],
+            'safe_foods': None,
+            'allergens': None,
             'host_permit_number': data["foodServiceInfo"]["permitNumber"],
             'host_user_agent': data["host"]["userAgent"],
         }
+        if data["foodServiceInfo"]["safeToShareFood"] != []:
+            ret["safe_foods"] = data["foodServiceInfo"]["safeToShareFood"]
+        if data["food"]["allergens"] != []:
+            ret["allergens"] = data["food"]["allergens"]
         if ret["end_time"] == "":
             raise ValidationError({"end_time": "Invalid Datetime format"})
         if ret["location"] == "":
@@ -101,15 +135,3 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
         fields = ('text', 'parent_notification')
-
-
-class SafeFoodSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SafeFood
-        fields = ('notification', 'name')
-
-
-class AllergenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Allergen
-        fields = ('notification', 'name')

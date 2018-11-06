@@ -138,8 +138,10 @@
     import LabelledInput from './labelled-input.vue';
     import PopupContainer from './popup-container.vue';
     import AgreePop from './agreement-popup.vue';
+    import Cookies from 'js-cookie';
     import { validationMixin } from "vuelidate"
     import { required, maxLength } from "vuelidate/lib/validators"
+    const axios = require('axios');
     export default {
         props: {
             allergens: Array,
@@ -227,8 +229,7 @@
                 this.$store.commit('relinquishSafeFood');
             },
             buildRequest() {
-                alert("bulding request");
-                var payload = {
+                var data = {
                      "location": {
                           "main": this.$store.state.location.substring(0, 10),
                           "detail": this.$store.state.location
@@ -241,20 +242,32 @@
                      "food": {
                          "served": this.$store.state.foodEvent,
                          "amount": this.$store.state.foodQuantity,
-                         "allergens": this.$store.state.allergens.toString()
+                         "allergens": this.$store.state.allergens
                      },
                      "bringContainers": this.$store.state.needContainer,
                      "foodServiceInfo": {
                          "permitNumber": this.$store.state.permitNumber,
-                         "safeToShareFood": this.$store.state.safeFoodList.toString()
+                         "safeToShareFood": this.$store.state.safeFoodList
                      },
                      "host": {
-                         "hostID": "Placeholder ID",
-                         "netID": "Placeholder netID",
+                         "hostID": 1,
                          "userAgent": navigator.userAgent
                      }
                 };
-                console.log(payload);
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+                axios.post('/notification/', data, {"headers": headers})
+                    .then(function (response) {
+                        window.location.replace("/update");
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        alert("There was an error processing the request");
+                        console.log(error);
+                    })
             },
         },
         components: {
