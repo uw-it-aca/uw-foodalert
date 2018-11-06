@@ -120,7 +120,7 @@ class SubscriptionTest(TestCase):
 
         factory = APIRequestFactory()
         request = factory.put('/subscription/{0}'.format(sub.id), update,
-            format='json')
+                              format='json')
         original_len = len(Subscription.objects.all())
         response = SubscriptionDetail.as_view()(request, pk=sub.id)
         self.assertEqual(200, response.status_code)
@@ -143,7 +143,7 @@ class SubscriptionTest(TestCase):
 
         factory = APIRequestFactory()
         request = factory.delete('/subscription/{0}'.format(sub.id),
-            format='json')
+                                 format='json')
         original_len = len(Subscription.objects.all())
         response = SubscriptionDetail.as_view()(request, pk=sub.id)
         self.assertEqual(204, response.status_code)
