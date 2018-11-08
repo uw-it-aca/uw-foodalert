@@ -24,9 +24,13 @@ class Notification(models.Model):
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey(User, blank=False)
+    user = models.ForeignKey(User, blank=False, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
     sms_number = PhoneNumberField(blank=True)
+
+    @property
+    def netid(self):
+        return self.user.email
 
 
 class Update(models.Model):
