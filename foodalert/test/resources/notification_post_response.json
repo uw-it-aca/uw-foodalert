@@ -12,12 +12,12 @@
     "food": {
         "served": "Food",
         "amount": "No Food",
-        "allergens": null
+        "allergens": []
     },
     "bringContainers": false,
     "foodServiceInfo": {
         "permitNumber": "12345",
-        "safeToShareFood": null
+        "safeToShareFood": []
     },
     "host": {
         "hostID": 1,

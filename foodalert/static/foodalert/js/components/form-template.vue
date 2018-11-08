@@ -72,8 +72,8 @@
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
                     :disabled="$v.form.$invalid"
-                    href="/preview"
-                    class="float-right btn btn-primary btn-lg py-2"> Preview Notification </b-link>
+                    @click="buildRequest"
+                    class="float-right btn btn-primary btn-lg py-2"> Send Notification </b-link>
         </b-container>
 
         <popup-container
@@ -138,8 +138,10 @@
     import LabelledInput from './labelled-input.vue';
     import PopupContainer from './popup-container.vue';
     import AgreePop from './agreement-popup.vue';
+    import Cookies from 'js-cookie';
     import { validationMixin } from "vuelidate"
     import { required, maxLength } from "vuelidate/lib/validators"
+    const axios = require('axios');
     export default {
         props: {
             allergens: Array,
@@ -225,6 +227,47 @@
             },
             relinquishSafeFood() {
                 this.$store.commit('relinquishSafeFood');
+            },
+            buildRequest() {
+                var data = {
+                     "location": {
+                          "main": this.$store.state.location.substring(0, 10),
+                          "detail": this.$store.state.location
+                     },
+                     "event": "Placeholder event",
+                     "time": {
+                         "created": new Date(),
+                         "ended": new Date((new Date()).toString().substring(0,16) + this.$store.state.endTime + ":00")
+                     },
+                     "food": {
+                         "served": this.$store.state.foodEvent,
+                         "amount": this.$store.state.foodQuantity,
+                         "allergens": this.$store.state.allergens
+                     },
+                     "bringContainers": this.$store.state.needContainer,
+                     "foodServiceInfo": {
+                         "permitNumber": this.$store.state.permitNumber,
+                         "safeToShareFood": this.$store.state.safeFoodList
+                     },
+                     "host": {
+                         "hostID": 1,
+                         "userAgent": navigator.userAgent
+                     }
+                };
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+                axios.post('/notification/', data, {"headers": headers})
+                    .then(function (response) {
+                        window.location.replace("/update");
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        alert("There was an error processing the request");
+                        console.log(error);
+                    })
             },
         },
         components: {

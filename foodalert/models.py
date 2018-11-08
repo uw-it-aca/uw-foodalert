@@ -14,13 +14,13 @@ class Notification(models.Model):
     food_served = models.CharField(max_length=100, blank=False)
     amount_of_food_left = models.CharField(max_length=100, blank=False)
     bring_container = models.BooleanField(default=False)
-    safe_foods = models.ForeignKey(
-        'SafeFood', related_name='safe_foods', blank=True, null=True)
-    allergens = models.ForeignKey(
-        'Allergen', related_name='allergens', blank=True, null=True)
+    safe_foods = models.ManyToManyField(
+        'SafeFood', related_name='safe_foods', blank=True)
+    allergens = models.ManyToManyField(
+        'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     host_permit_number = models.CharField(max_length=40, blank=True, null=True)
-    host_user_agent = models.CharField(max_length=40, blank=False)
+    host_user_agent = models.CharField(max_length=80, blank=False)
 
 
 class Subscription(models.Model):
@@ -39,10 +39,8 @@ class Update(models.Model):
 
 
 class SafeFood(models.Model):
-    notification = models.ManyToManyField(Notification)
     name = models.CharField(max_length=30)
 
 
 class Allergen(models.Model):
-    notification = models.ManyToManyField(Notification)
     name = models.CharField(max_length=30)
