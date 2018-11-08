@@ -137,7 +137,7 @@ class UpdateSerializer(serializers.ModelSerializer):
         model = Update
         fields = ('text', 'parent_notification')
 
-        
+
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
