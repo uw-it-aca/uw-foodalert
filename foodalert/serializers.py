@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
-from foodalert.models import Notification, Update, SafeFood, Allergen
+from foodalert.models import Notification, Update, SafeFood, Allergen,\
+        Subscription
 
 
 class SafeFoodSerializer(serializers.ModelSerializer):
@@ -135,3 +136,25 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
         fields = ('text', 'parent_notification')
+
+        
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = ('id', 'netid', 'sms_number', 'email')
+
+    def to_internal_value(self, data):
+        ret = {
+            'email': data['email'],
+            'sms_number': data['sms'],
+        }
+
+        if 'id' in data:
+            ret['id'] = data['id']
+            ret['user'] = Subscription.objects.get(pk=data['id']).user
+        elif 'netId' in data:
+            ret['user'] = User.objects.get(email=data['netId'])
+        else:
+            raise ValidationError({"netId": "must specify netid"})
+
+        return ret

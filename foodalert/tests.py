@@ -5,11 +5,6 @@ from foodalert.test.test_subscription import SubscriptionTest
 # Create your tests here.
 
 
-class DummyTests(TestCase):
-    def test_one_plus_one_is_two(self):
-        self.assertIs(1+1, 2)
-
-
 class ViewTests(TestCase):
     client = Client()
 

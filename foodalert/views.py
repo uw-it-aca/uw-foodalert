@@ -7,8 +7,9 @@ from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
-from foodalert.models import Notification, Update
-from foodalert.serializers import NotificationSerializer, UpdateSerializer
+from foodalert.models import Notification, Update, Subscription
+from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
+        SubscriptionSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -50,6 +51,16 @@ class UpdateDetail(generics.RetrieveAPIView):
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
+
+
+class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+
+
+class SubscriptionList(generics.ListCreateAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
 
 
 @method_decorator(group_required(create_group), name='dispatch')
