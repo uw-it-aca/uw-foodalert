@@ -28,6 +28,11 @@
         },
         computed: {
 
+        },
+        props: {
+            items: {
+                type: Array
+            }
         }
     }   
 </script>
