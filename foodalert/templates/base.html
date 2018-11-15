@@ -6,10 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <header>
-            {% block header %}
-            {% endblock %}
-        </header>
         <div id="app">
             {% block vue %}
 
@@ -17,10 +13,5 @@
         </div>
 
         {% render_bundle 'main' %}
-
-        <footer>
-            {% block footer %}
-            {% endblock %}
-        </footer>
     </body>
 </html>

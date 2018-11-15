@@ -73,7 +73,8 @@
             <b-link type="submit"
                     :disabled="$v.form.$invalid"
                     @click="buildRequest"
-                    class="float-right btn btn-primary btn-lg py-2"> Send Notification </b-link>
+                    class="float-right btn btn-primary btn-lg py-2"
+                    to="update"> Send Notification </b-link>
         </b-container>
 
         <popup-container

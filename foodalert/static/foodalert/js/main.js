@@ -1,5 +1,6 @@
 "use strict";
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import Vuelidate from 'vuelidate'
 import BootstrapVue from 'bootstrap-vue'
@@ -38,15 +39,35 @@ import FormCategory from './components/form-category.vue';
 import AgreePop from './components/agreement-popup.vue';
 import PopContainer from './components/popup-container.vue';
 import FormTemplate from './components/form-template.vue';
+import FormController from './components/form-controller.vue';
 import SignupTemplate from './components/signup-template.vue';
 import UpdateTemplate from './components/update-template.vue';
-import PreviewTemplate from './components/preview-template.vue';
 import AuditTemplate from './components/audit-template.vue';
+import EndedTemplate from './components/ended-template.vue';
+import EndedController from './components/ended-controller.vue'
+import GenericTemplate from './components/generic-template.vue';
+
+var routes = [
+    {
+        path: "/",
+        component: FormTemplate,
+        name: "root",
+        // children: [
+        //     {path: "", component: FormTemplate, name: "form"},
+        //     {path: "update", component: UpdateTemplate, name: "update"},
+        // ],
+    },
+];
+
+var router = new VueRouter({
+    routes
+})
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
     store,
+    router,
     data() {
         return {
             scrollY: window.scrollY,
@@ -58,11 +79,14 @@ var app = new Vue({
         'agreement-popup': AgreePop,
         'popup-container': PopContainer,
         'form-template': FormTemplate,
+        'form-controller': FormController,
         'signup-template': SignupTemplate,
         'update-template': UpdateTemplate,
-        'preview-template': PreviewTemplate,
         'audit-template': AuditTemplate,
+        'ended-template': EndedTemplate,
+        'ended-controller': EndedController,
+        'generic-template': GenericTemplate,
     },
 });
 
-
+// router.push('/update');
