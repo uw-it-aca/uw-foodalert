@@ -71,10 +71,10 @@
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
+                    to="update"
                     :disabled="$v.form.$invalid"
                     @click="buildRequest"
-                    class="float-right btn btn-primary btn-lg py-2"
-                    to="update"> Send Notification </b-link>
+                    class="float-right btn btn-primary btn-lg py-2"> Send Notification </b-link>
         </b-container>
 
         <popup-container
@@ -262,7 +262,6 @@
                 }
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function (response) {
-                        window.location.replace("/update");
                         console.log(response);
                     })
                     .catch(function (error) {

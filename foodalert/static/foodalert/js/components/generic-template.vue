@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <b-container class="pt-3">
-            <h1 class="h4"> TEST TEXT</h1>
+            <h1 class="h4">{{ headerText }}</h1>
         </b-container>
         <hr>
         <router-view>
@@ -12,15 +12,9 @@
 
 <script>
 export default {
-    props: {
-        headerText: {
-            type: String,
-            //required: true,
-        }
-    },
     data() {
         return {
-            headerText: '',
+            headerText: 'TEST TEXT',
         }
     },
     beforeRouteUpdate(to, from, next) {

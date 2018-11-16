@@ -7,7 +7,12 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
   mode: 'development',
   context: __dirname,
-  entry: './foodalert/static/foodalert/js/main',
+  entry: {
+      main:  './foodalert/static/foodalert/js/main',
+      host: './foodalert/static/foodalert/js/host',
+      signup: './foodalert/static/foodalert/js/signup',
+      audit: './foodalert/static/foodalert/js/audit',
+  },
   output: {
       path: path.resolve('./foodalert/static/foodalert/bundles/'),
       filename: "[name]-[hash].js"

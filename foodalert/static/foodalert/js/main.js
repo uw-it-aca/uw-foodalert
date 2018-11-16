@@ -27,6 +27,7 @@ library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate)
+Vue.use(VueRouter)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -35,22 +36,12 @@ require('../css/styles.css');
 import {store} from './store.js';
 
 import LabelledInput from './components/labelled-input.vue';
-import FormCategory from './components/form-category.vue';
-import AgreePop from './components/agreement-popup.vue';
-import PopContainer from './components/popup-container.vue';
-import FormTemplate from './components/form-template.vue';
-import FormController from './components/form-controller.vue';
-import SignupTemplate from './components/signup-template.vue';
-import UpdateTemplate from './components/update-template.vue';
-import AuditTemplate from './components/audit-template.vue';
-import EndedTemplate from './components/ended-template.vue';
-import EndedController from './components/ended-controller.vue'
 import GenericTemplate from './components/generic-template.vue';
 
-var routes = [
+export var routes = [
     {
         path: "/",
-        component: FormTemplate,
+        component: GenericTemplate,
         name: "root",
         // children: [
         //     {path: "", component: FormTemplate, name: "form"},
@@ -60,8 +51,14 @@ var routes = [
 ];
 
 var router = new VueRouter({
-    routes
+    routes: routes,
+
 })
+
+export var components = {
+    'labelled-input': LabelledInput,
+    'generic-template': GenericTemplate,
+}
 
 var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -73,20 +70,6 @@ var app = new Vue({
             scrollY: window.scrollY,
         }
     },
-    components: {
-        'labelled-input': LabelledInput,
-        'form-category': FormCategory,
-        'agreement-popup': AgreePop,
-        'popup-container': PopContainer,
-        'form-template': FormTemplate,
-        'form-controller': FormController,
-        'signup-template': SignupTemplate,
-        'update-template': UpdateTemplate,
-        'audit-template': AuditTemplate,
-        'ended-template': EndedTemplate,
-        'ended-controller': EndedController,
-        'generic-template': GenericTemplate,
-    },
+    components,
 });
 
-// router.push('/update');

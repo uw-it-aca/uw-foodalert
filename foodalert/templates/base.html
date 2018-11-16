@@ -8,10 +8,19 @@
     <body>
         <div id="app">
             {% block vue %}
-
+            <router-view></router-view>
             {% endblock %}
         </div>
 
         {% render_bundle 'main' %}
+        {% if signup %}
+            {% render_bundle 'signup' %}
+        {% endif %}
+        {% if send %}
+            {% render_bundle 'host' %}
+        {% endif %}
+        {% if audit %}
+            {% render_bundle 'audit' %}
+        {% endif %}
     </body>
 </html>
