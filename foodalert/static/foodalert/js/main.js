@@ -37,30 +37,36 @@ import {store} from './store.js';
 
 import LabelledInput from './components/labelled-input.vue';
 import GenericTemplate from './components/generic-template.vue';
+import FormController from './components/form-controller.vue';
 
 export var routes = [
+    { path: "/loading", component: GenericTemplate, name: "loading" },
     {
         path: "/",
         component: GenericTemplate,
-        name: "root",
-        // children: [
-        //     {path: "", component: FormTemplate, name: "form"},
-        //     {path: "update", component: UpdateTemplate, name: "update"},
-        // ],
+        children: [
+        ],
     },
 ];
 
-var router = new VueRouter({
+export var router = new VueRouter({
     routes: routes,
 
+})
+
+router.beforeEach((to, from, next) => {
+    console.log("navigating from: " + from.path + " to: " + to.path);
+    console.log(router);
+    next();
 })
 
 export var components = {
     'labelled-input': LabelledInput,
     'generic-template': GenericTemplate,
+    'form-controller': FormController,
 }
 
-var app = new Vue({
+export var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
     store,
@@ -72,4 +78,3 @@ var app = new Vue({
     },
     components,
 });
-

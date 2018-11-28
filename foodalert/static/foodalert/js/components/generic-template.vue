@@ -12,12 +12,16 @@
 
 <script>
 export default {
+    mounted() {
+        console.log('mounted');
+    },
     data() {
         return {
             headerText: 'TEST TEXT',
         }
     },
     beforeRouteUpdate(to, from, next) {
+        console.log('update');
         switch (to) {
             case '/':
                 this.headerText = 'Create Food Notification';
@@ -26,8 +30,19 @@ export default {
                 this.headerText = 'Your Notification was Sent'
             default:
                 this.headerText = '';
-
         }
+        this.$forceUpdate();
+        console.log(this.$router);
+        next();
+    },
+    beforeRouteEnter(to, from, next) {
+        next(function(vm) {
+            console.log('entered');
+        });
+    },
+    beforeRouteExit(to, from, next) {
+        console.log('exit');
+        next();
     }
 }
 </script>

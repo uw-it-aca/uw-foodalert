@@ -193,6 +193,19 @@
                     quantity: "",
                     time: "",
                     location: ""
+                },
+                state: {
+                    claimsPermit: false,
+                    permitNumber: null,
+                    onSafeList: false,
+                    safeFoodList: [],
+                    acceptedSafeListTerms: false,
+                    foodEvent: "",
+                    foodQuantity: "",
+                    endTime: "",
+                    location: "",
+                    allergens: [],
+                    needContainer: false,
                 }
             }
         },
