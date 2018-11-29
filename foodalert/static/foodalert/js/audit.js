@@ -9,4 +9,4 @@ main.routes[0].children = main.routes[0].children.concat([
     { path: "audit", component: AuditController, name: "audit" }
 ]);
 
-main.router.addRoutes(main.routes);
+//main.router.addRoutes(main.routes);

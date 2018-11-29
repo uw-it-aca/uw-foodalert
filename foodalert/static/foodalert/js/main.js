@@ -37,10 +37,13 @@ import {store} from './store.js';
 
 import LabelledInput from './components/labelled-input.vue';
 import GenericTemplate from './components/generic-template.vue';
-import FormController from './components/form-controller.vue';
+//import FormController from './components/form-controller.vue';
 
 export var routes = [
-    { path: "/loading", component: GenericTemplate, name: "loading" },
+    //{ path: "/loading", component: GenericTemplate, name: "loading", beforeEnter: (to,from,next) => {
+    //    console.log("navigating to loading");
+    //    next();
+    //}},
     {
         path: "/",
         component: GenericTemplate,
@@ -55,15 +58,19 @@ export var router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    //debugger;
     console.log("navigating from: " + from.path + " to: " + to.path);
-    console.log(router);
+    next();
+})
+router.beforeResolve((to, from, next) => {
+    console.log("resolving from: " + from.path + " to: " + to.path);
     next();
 })
 
 export var components = {
     'labelled-input': LabelledInput,
     'generic-template': GenericTemplate,
-    'form-controller': FormController,
+//    'form-controller': FormController,
 }
 
 export var app = new Vue({
@@ -74,6 +81,7 @@ export var app = new Vue({
     data() {
         return {
             scrollY: window.scrollY,
+            routes,
         }
     },
     components,

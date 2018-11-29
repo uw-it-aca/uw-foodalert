@@ -10,4 +10,4 @@ main.routes[0].children = main.routes[0].children.concat([
     { path: "signup", component: SignupController, name: "signup" }
 ]);
 
-main.router.addRoutes(main.routes);
+//main.router.addRoutes(main.routes);
