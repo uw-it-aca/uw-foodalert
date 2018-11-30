@@ -6,72 +6,19 @@ import Vuelidate from 'vuelidate'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-    faUtensils,
-    faChevronLeft,
-    faCalendar,
-    faClock,
-    faMapMarkerAlt,
-    faClipboardCheck,
-    faBell,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faUtensils)
-library.add(faChevronLeft)
-library.add(faCalendar)
-library.add(faClock)
-library.add(faBell)
-library.add(faMapMarkerAlt)
-library.add(faClipboardCheck)
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate)
 Vue.use(VueRouter)
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 require('../css/styles.css');
 
 import {store} from './store.js';
 
-import LabelledInput from './components/labelled-input.vue';
-import GenericTemplate from './components/generic-template.vue';
-//import FormController from './components/form-controller.vue';
+var components = window.vueData.components;
 
-export var routes = [
-    //{ path: "/loading", component: GenericTemplate, name: "loading", beforeEnter: (to,from,next) => {
-    //    console.log("navigating to loading");
-    //    next();
-    //}},
-    {
-        path: "/",
-        component: GenericTemplate,
-        children: [
-        ],
-    },
-];
-
-export var router = new VueRouter({
-    routes: routes,
-
+var router = new VueRouter({
+    routes: window.vueData.routes,
 })
-
-router.beforeEach((to, from, next) => {
-    //debugger;
-    console.log("navigating from: " + from.path + " to: " + to.path);
-    next();
-})
-router.beforeResolve((to, from, next) => {
-    console.log("resolving from: " + from.path + " to: " + to.path);
-    next();
-})
-
-export var components = {
-    'labelled-input': LabelledInput,
-    'generic-template': GenericTemplate,
-//    'form-controller': FormController,
-}
 
 export var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -81,7 +28,6 @@ export var app = new Vue({
     data() {
         return {
             scrollY: window.scrollY,
-            routes,
         }
     },
     components,

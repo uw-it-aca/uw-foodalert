@@ -5,6 +5,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
+  devtool: 'source-map',
   mode: 'development',
   context: __dirname,
   entry: {
@@ -12,10 +13,13 @@ module.exports = {
       host: './foodalert/static/foodalert/js/host',
       signup: './foodalert/static/foodalert/js/signup',
       audit: './foodalert/static/foodalert/js/audit',
+      base: './foodalert/static/foodalert/js/base',
   },
   output: {
       path: path.resolve('./foodalert/static/foodalert/bundles/'),
-      filename: "[name]-[hash].js"
+      filename: "[name]-[hash].js",
+      chunkFilename: '[id]-[chunkhash].js',
+      publicPath: '/static/foodalert/bundles/',
   },
 
   module: {

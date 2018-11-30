@@ -1,13 +1,11 @@
 import SignupTemplate from './components/signup-template.vue';
 import SignupController from './components/signup-controller.vue';
 
-import * as main from './main.js';
+Objects.assign(window.vueData.components, {
+    "signup-template" : SignupTemplate,
+    "signup-controller" : SignupController
+});
 
-main.components['signup-template'] = SignupTemplate;
-main.components['signup-controller'] = SignupController;
-
-main.routes[0].children = main.routes[0].children.concat([
-    { path: "signup", component: SignupController, name: "signup" }
+window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
+    { path: "signup", component: SignupController },
 ]);
-
-//main.router.addRoutes(main.routes);

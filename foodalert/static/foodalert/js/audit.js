@@ -1,12 +1,11 @@
 import AuditTemplate from './components/audit-template.vue';
 import AuditController from './components/audit-controller.vue';
-import * as main from './main.js';
 
-main.components['audit-template'] = AuditTemplate;
-main.components['audit-controller'] = AuditController;
+Object.assign(window.vueData.components, {
+    "audit-template" : AuditTemplate,
+    "audit-controller" : AuditController
+});
 
-main.routes[0].children = main.routes[0].children.concat([
-    { path: "audit", component: AuditController, name: "audit" }
+window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
+    { path: "audit", component: AuditController },
 ]);
-
-//main.router.addRoutes(main.routes);

@@ -10,7 +10,7 @@
             <router-view></router-view>
         </div>
 
-        {% render_bundle 'main' %}
+        {% render_bundle 'base' %}
         {% if signup %}
             {% render_bundle 'signup' %}
         {% endif %}
@@ -20,5 +20,6 @@
         {% if audit %}
             {% render_bundle 'audit' %}
         {% endif %}
+        {% render_bundle 'main' %}
     </body>
 </html>

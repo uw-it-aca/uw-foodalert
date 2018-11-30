@@ -12,37 +12,40 @@
 
 <script>
 export default {
-    mounted() {
-        console.log('mounted');
-    },
     data() {
         return {
-            headerText: 'TEST TEXT',
+            headerText: '',
         }
     },
     beforeRouteUpdate(to, from, next) {
-        console.log('update');
-        switch (to) {
-            case '/':
-                this.headerText = 'Create Food Notification';
-                break;
-            case '/ended':
-                this.headerText = 'Your Notification was Sent'
-            default:
-                this.headerText = '';
-        }
-        this.$forceUpdate();
-        console.log(this.$router);
+        this.getHeader(to);
         next();
     },
     beforeRouteEnter(to, from, next) {
-        next(function(vm) {
-            console.log('entered');
-        });
+        next(function(vm) { vm.getHeader(to) });
     },
-    beforeRouteExit(to, from, next) {
-        console.log('exit');
-        next();
+    methods: {
+        getHeader(to) {
+            switch (to.path) {
+                case '/':
+                    this.headerText = 'Create Food Notification';
+                    break;
+                case '/ended':
+                    this.headerText = 'Your Notification Was Sent'
+                    break;
+                case '/update':
+                    this.headerText = 'Update An Existing Notification'
+                    break;
+                case '/signup':
+                    this.headerText = 'Sign-up To Receive Notifications'
+                    break;
+                case '/audit':
+                    this.headerText = 'Audit Logs'
+                    break;
+                default:
+                    this.headerText = '';
+            }
+        }
     }
 }
 </script>
