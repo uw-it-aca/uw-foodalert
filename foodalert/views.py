@@ -66,6 +66,7 @@ class SubscriptionList(generics.ListCreateAPIView):
 @method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):
     template_name = 'base.html'
+
     def get_context_data(self, *args, **kwargs):
         context = {}
         context['signup'] = False
