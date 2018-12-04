@@ -6,21 +6,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <header>
-            {% block header %}
-            {% endblock %}
-        </header>
         <div id="app">
-            {% block vue %}
-
-            {% endblock %}
+            <router-view></router-view>
         </div>
 
+        {% render_bundle 'base' %}
+        {% if signup %}
+            {% render_bundle 'signup' %}
+        {% endif %}
+        {% if send %}
+            {% render_bundle 'host' %}
+        {% endif %}
+        {% if audit %}
+            {% render_bundle 'audit' %}
+        {% endif %}
         {% render_bundle 'main' %}
-
-        <footer>
-            {% block footer %}
-            {% endblock %}
-        </footer>
     </body>
 </html>

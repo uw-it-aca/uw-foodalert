@@ -63,9 +63,16 @@ class SubscriptionList(generics.ListCreateAPIView):
     serializer_class = SubscriptionSerializer
 
 
-@method_decorator(group_required(create_group), name='dispatch')
+@method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):
-    template_name = 'form.html'
+    template_name = 'base.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = {}
+        context['signup'] = False
+        context['send'] = is_member_of_group(self.request, create_group)
+        context['audit'] = is_member_of_group(self.request, audit_group)
+        return context
 
 
 @method_decorator(group_required(create_group), name='dispatch')
