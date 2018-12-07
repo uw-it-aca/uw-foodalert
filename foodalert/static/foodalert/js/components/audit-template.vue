@@ -14,16 +14,6 @@
 
 <script>
     export default {
-        data() {
-            return {
-            }
-        },
-        components: {
-
-        },
-        computed: {
-
-        },
         props: {
             items: {
                 type: Array

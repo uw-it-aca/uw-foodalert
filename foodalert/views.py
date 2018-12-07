@@ -69,7 +69,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = {}
-        context['signup'] = False
+        context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
         return context
