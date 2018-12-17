@@ -28,12 +28,12 @@ library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 
 import {mount} from '@vue/test-utils';
-import SignupTemplate from '../components/signup-template.vue';
+import SignupController from '../components/signup-controller.vue';
 
-describe('Signup Template', function () {
+describe('Signup Controller', function () {
     describe('renders correctly', function () {
         test('textarea', function () {
-            var wrapper = mount(SignupTemplate, {
+            var wrapper = mount(SignupController, {
                 propsData: {
                 }
             });

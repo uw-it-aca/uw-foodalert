@@ -4,6 +4,7 @@
         :preview-text="'preview text'"
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
+        :foodList="this.state.safeFoodList"
         :v="$v"
         @updateState="this.modifyStateBoolean"
         @setState="this.modifyState"
@@ -25,14 +26,10 @@
         },
         methods: {
             modifyStateBoolean(context) {
-                console.log('updating ' + context + ' from ' + this.state[context]);
                 this.state[context] = !this.state[context];
-                console.log('to ' + this.state[context]);
             },
             modifyState(context, value) {
-                console.log('setting ' + context + ' from ' + this.state[context]);
                 this.state[context] = value;
-                console.log('to ' + value);
             },
             buildRequest() {
                 var data = {

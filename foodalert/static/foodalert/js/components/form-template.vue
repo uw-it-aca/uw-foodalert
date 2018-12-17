@@ -119,8 +119,8 @@
                 <p class="text-center">You can share the foods you checked on this list </p>
                 <p
                     class="text-center"
-                    v-for="food in this.safeFoods">
-                    <strong> {{food.text}} </strong>
+                    v-for="food in this.foodList" :key="food">
+                    <strong> {{food}} </strong>
                 </p>
                 <p>
                     You cannot share anything that is not on that list unless you have
@@ -149,6 +149,7 @@
             previewText: String,
             modalShow: Boolean,
             modalMode: String,
+            foodList: Array,
             v: Object,
         },
         data() {
