@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
+    "flat": "^4.1.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "less": "^3.8.1",
