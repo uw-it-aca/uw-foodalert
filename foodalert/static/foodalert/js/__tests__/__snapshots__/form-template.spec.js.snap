@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form Template renders correctly textarea 1`] = `
+exports[`Form Controller renders correctly textarea 1`] = `
 <div
   class="p-0 container-fluid"
 >
@@ -21,15 +21,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__15__BV_label_"
+            aria-labelledby="__BVID__16__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__15"
+            id="__BVID__16"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__15__BV_label_"
+              id="__BVID__16__BV_label_"
             >
               
             Describe the food and event 
@@ -61,15 +61,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__18__BV_label_"
+            aria-labelledby="__BVID__19__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__18"
+            id="__BVID__19"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__18__BV_label_"
+              id="__BVID__19__BV_label_"
             >
               
             Quantity 
@@ -101,15 +101,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__21__BV_label_"
+            aria-labelledby="__BVID__22__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__21"
+            id="__BVID__22"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__21__BV_label_"
+              id="__BVID__22__BV_label_"
             >
               
             End Time 
@@ -141,15 +141,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__24__BV_label_"
+            aria-labelledby="__BVID__25__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__24"
+            id="__BVID__25"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__24__BV_label_"
+              id="__BVID__25__BV_label_"
             >
               
             Location 
@@ -200,15 +200,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__28__BV_label_"
+            aria-labelledby="__BVID__29__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__28"
+            id="__BVID__29"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__28__BV_label_"
+              id="__BVID__29__BV_label_"
             >
               
             Does the food contain? 
@@ -223,7 +223,176 @@ exports[`Form Template renders correctly textarea 1`] = `
                 id="checkbox-null"
                 role="group"
                 tabindex="-1"
-              />
+              >
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__31"
+                      name="checkbox-null"
+                      true-value="milk"
+                      type="checkbox"
+                      value="milk"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__31"
+                    >
+                       milk 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__32"
+                      name="checkbox-null"
+                      true-value="eggs"
+                      type="checkbox"
+                      value="eggs"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__32"
+                    >
+                       eggs 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__33"
+                      name="checkbox-null"
+                      true-value="soy"
+                      type="checkbox"
+                      value="soy"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__33"
+                    >
+                       soy 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__34"
+                      name="checkbox-null"
+                      true-value="fish"
+                      type="checkbox"
+                      value="fish"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__34"
+                    >
+                       fish 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__35"
+                      name="checkbox-null"
+                      true-value="shellfish"
+                      type="checkbox"
+                      value="shellfish"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__35"
+                    >
+                       shellfish 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__36"
+                      name="checkbox-null"
+                      true-value="Peanuts"
+                      type="checkbox"
+                      value="Peanuts"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__36"
+                    >
+                       Peanuts 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="row mx-0"
+                >
+                  <div
+                    class="custom-control custom-checkbox custom-control-inline"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      id="__BVID__37"
+                      name="checkbox-null"
+                      true-value="wheat"
+                      type="checkbox"
+                      value="wheat"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="__BVID__37"
+                    >
+                       wheat 
+                    </label>
+                  </div>
+                  <br />
+                </div>
+              </div>
               <!---->
               <!---->
               <!---->
@@ -237,15 +406,15 @@ exports[`Form Template renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__31__BV_label_"
+            aria-labelledby="__BVID__39__BV_label_"
             class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__31"
+            id="__BVID__39"
             role="group"
           >
             <label
               class="col-form-label pt-0"
               for="textarea-null"
-              id="__BVID__31__BV_label_"
+              id="__BVID__39__BV_label_"
             >
               
             Do students need to bring containers? 
@@ -299,7 +468,9 @@ exports[`Form Template renders correctly textarea 1`] = `
       <div
         class="ml-2 pl-4 container"
       >
-        <p />
+        <p>
+          preview text
+        </p>
       </div>
     </div>
   </form>
@@ -367,7 +538,7 @@ exports[`Form Template renders correctly textarea 1`] = `
                  
                 <fieldset
                   class="b-form-group form-group"
-                  id="__BVID__37"
+                  id="__BVID__45"
                   role="group"
                 >
                   <!---->

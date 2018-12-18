@@ -1,7 +1,7 @@
 import SignupTemplate from './components/signup-template.vue';
 import SignupController from './components/signup-controller.vue';
 
-Objects.assign(window.vueData.components, {
+Object.assign(window.vueData.components, {
     "signup-template" : SignupTemplate,
     "signup-controller" : SignupController
 });

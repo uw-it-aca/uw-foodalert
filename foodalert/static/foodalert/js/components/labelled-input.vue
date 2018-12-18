@@ -12,7 +12,7 @@
                 :id="'textarea-' + id"
                 size="md"
                 v-model="v.$model"
-                @input="updateStore($event)">
+                @input="setState($event)">
             </b-form-textarea>
             <b-form-input
                 v-else-if="inputType=='time'"
@@ -22,13 +22,13 @@
                 size="md"
                 v-model="v.$model"
                 type="time"
-                @input="updateStore($event)">
+                @input="setState($event)">
             </b-form-input>
             <b-form-checkbox-group
                 v-else-if="inputType=='checkbox'"
                 v-model="checked"
                 :id="'checkbox-' + id"
-                @input="updateStore($event)">
+                @input="setState($event)">
                 <b-row
                     v-for="box in boxes"
                     class="mx-0">
@@ -39,8 +39,8 @@
                 v-else-if="inputType=='buttons'"
                 v-model="checked"
                 :id="'button-' + id">
-                <b-button @click="updateStore(true)" variant="outline-success">Yes</b-button>
-                <b-button @click="updateStore(false)" variant="outline-success">No</b-button>
+                <b-button @click="setState(true)" variant="outline-success">Yes</b-button>
+                <b-button @click="setState(false)" variant="outline-success">No</b-button>
             </b-container>
         </b-form-group>
         <b-alert v-if="warningText" show variant="primary" placement="bottom" class="mt-1"> {{warningText}} </b-alert>
@@ -79,12 +79,12 @@
                 type: Number,
                 default: 1
             },
-            storeCommit: String,
+            stateValue: String,
         },
         methods: {
-            updateStore(payload) {
-                this.$store.commit(this.storeCommit, payload);
-            }
+            setState(payload) {
+                this.$emit('stateAction', this.stateValue, payload);
+            },
         },
         data: function () {
             return {

@@ -30,14 +30,13 @@ library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 
 import {mount, createLocalVue} from '@vue/test-utils';
-import FormCategory from '../components/form-category.vue';
-import FormTemplate from '../components/form-template.vue';
+import FormController from '../components/form-controller.vue';
 
 var localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe('Form Template', function () {
+describe('Form Controller', function () {
     var store;
 
     beforeEach(function () {
@@ -48,7 +47,7 @@ describe('Form Template', function () {
 
     describe('renders correctly', function () {
         test('textarea', function () {
-            var wrapper = mount(FormTemplate, {
+            var wrapper = mount(FormController, {
                 localVue,
                 store,
                 propsData: {
