@@ -34,9 +34,11 @@ Use docker-compose to build the app container:
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
 
-To run the python tests: `docker-compose run --rm app python manage.py test foodalert`.
+To run the python tests: `docker-compose run --rm app python manage.py test foodalert --settings=sampleproj.settings.base`.
 
 To run the Javascript tests: `npx jest`.
+
+Both commands must be run from repository root
 
 ### Running the app
 To run the app simply execute `docker-compose up` from the repository's root directory.
