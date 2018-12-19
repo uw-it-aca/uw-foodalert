@@ -116,3 +116,6 @@ foodalert/static/foodalert/bundles
 # vim stuff
 *.swp
 *.swo
+
+#Sphinx
+docs/*.rst
