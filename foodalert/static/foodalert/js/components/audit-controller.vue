@@ -4,7 +4,8 @@
         :years="this.years"
         :months="this.months"
         @export="this.exportTable"
-        @updateValue="this.updateValue"
+        @updateMonth="this.updateMonth"
+        @updateYear="this.updateYear"
         >
     </audit-template>
 </template>
@@ -20,6 +21,15 @@
         },
         mounted() {
             this.requestLogs();
+        },
+        data() {
+            return {
+                items: [],
+                years: ["All"],
+                months: ["All"],
+                selectedMonth: "All",
+                selectedYear: "All",
+            }
         },
         methods: {
             requestLogs() {
@@ -64,7 +74,6 @@
 
                             this.items.push(flat);
                         }
-                        this.filteredItems = this.items;
                     })
                     .catch(function (error) {
                         alert("There was an error processing the request");
@@ -104,15 +113,15 @@
                 link.click();
                 link.remove();
             },
-            updateValue(context, value) {
-                if (context === "Year") {
-                    this.selectedYear = value;
-                } else if (context === "Month") {
-                    this.selectedMonth = value;
-                }
-                this.filterLogs();
+            updateMonth(value) {
+                this.selectedMonth = value;
             },
-            filterLogs() {
+            updateYear(value) {
+                this.selectedYear = value;
+            },
+        },
+        computed: {
+            filteredItems: function() {
                 var logs = this.items;
                 var year = this.selectedYear;
                 var month = this.selectedMonth;
@@ -126,19 +135,9 @@
                         return log["time.created"].includes(month);
                     });
                 }
-                this.filteredItems = logs;
+                return logs;
             }
-        },
-        data() {
-            return {
-                items: [test],
-                filteredItems: [],
-                years: ["All", "2017", "2019"],
-                months: ["All", "Jan"],
-                selectedMonth: "All",
-                selectedYear: "All",
-            }
-        },
+        }
     }   
 </script>
 

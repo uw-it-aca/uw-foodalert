@@ -1,29 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Audit Template renders correctly textarea 1`] = `
+exports[`Audit Controller renders correctly textarea 1`] = `
 <div>
   <div>
-    <div
-      class="btn-group b-dropdown dropdown"
-      id="__BVID__2"
-    >
-      <!---->
-      <button
-        aria-expanded="false"
-        aria-haspopup="true"
-        class="btn btn-secondary dropdown-toggle"
-        id="__BVID__2__BV_toggle_"
-        type="button"
-      >
-        Year
-      </button>
-      <div
-        aria-labelledby="__BVID__2__BV_toggle_"
-        class="dropdown-menu"
-        role="menu"
-      />
-    </div>
-     
     <div
       class="btn-group b-dropdown dropdown"
       id="__BVID__3"
@@ -36,13 +15,56 @@ exports[`Audit Template renders correctly textarea 1`] = `
         id="__BVID__3__BV_toggle_"
         type="button"
       >
-        Month
+        Year
       </button>
       <div
         aria-labelledby="__BVID__3__BV_toggle_"
         class="dropdown-menu"
         role="menu"
-      />
+      >
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           All
+           
+        </a>
+      </div>
+    </div>
+     
+    <div
+      class="btn-group b-dropdown dropdown"
+      id="__BVID__4"
+    >
+      <!---->
+      <button
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="btn btn-secondary dropdown-toggle"
+        id="__BVID__4__BV_toggle_"
+        type="button"
+      >
+        Month
+      </button>
+      <div
+        aria-labelledby="__BVID__4__BV_toggle_"
+        class="dropdown-menu"
+        role="menu"
+      >
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           All
+           
+        </a>
+      </div>
     </div>
      
     <button
@@ -58,148 +80,22 @@ exports[`Audit Template renders correctly textarea 1`] = `
    
   <table
     aria-busy="false"
-    aria-colcount="10"
-    aria-rowcount="1"
+    aria-colcount="0"
     class="table b-table table-hover"
-    id="__BVID__4"
+    id="__BVID__5"
   >
     <!---->
     <!---->
     <thead
       class=""
     >
-      <tr>
-        <th
-          aria-colindex="1"
-          class=""
-        >
-          Date Sent
-        </th>
-        <th
-          aria-colindex="2"
-          class=""
-        >
-          Time Sent
-        </th>
-        <th
-          aria-colindex="3"
-          class=""
-        >
-          End Time
-        </th>
-        <th
-          aria-colindex="4"
-          class=""
-        >
-          Update Time
-        </th>
-        <th
-          aria-colindex="5"
-          class=""
-        >
-          Host
-        </th>
-        <th
-          aria-colindex="6"
-          class=""
-        >
-          Permit Number
-        </th>
-        <th
-          aria-colindex="7"
-          class=""
-        >
-          Food And Event
-        </th>
-        <th
-          aria-colindex="8"
-          class=""
-        >
-          Quantity
-        </th>
-        <th
-          aria-colindex="9"
-          class=""
-        >
-          Location
-        </th>
-        <th
-          aria-colindex="10"
-          class=""
-        >
-          Contains
-        </th>
-      </tr>
+      <tr />
     </thead>
     <!---->
     <tbody
       class=""
     >
       <!---->
-      <tr
-        class=""
-      >
-        <td
-          aria-colindex="1"
-          class=""
-        >
-          10/22/18
-        </td>
-        <td
-          aria-colindex="2"
-          class=""
-        >
-          4:44PM
-        </td>
-        <td
-          aria-colindex="3"
-          class=""
-        >
-          5:32PM
-        </td>
-        <td
-          aria-colindex="4"
-          class=""
-        >
-          5:10PM
-        </td>
-        <td
-          aria-colindex="5"
-          class=""
-        >
-          netid@uw.edu
-        </td>
-        <td
-          aria-colindex="6"
-          class=""
-        >
-          12345678
-        </td>
-        <td
-          aria-colindex="7"
-          class=""
-        >
-          A Food and Event
-        </td>
-        <td
-          aria-colindex="8"
-          class=""
-        >
-          About 8 meals
-        </td>
-        <td
-          aria-colindex="9"
-          class=""
-        >
-          HUB 101
-        </td>
-        <td
-          aria-colindex="10"
-          class=""
-        >
-          Dairy, Meat
-        </td>
-      </tr>
       <!---->
       <!---->
     </tbody>

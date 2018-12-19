@@ -28,14 +28,13 @@ library.add(faMapMarkerAlt)
 library.add(faClipboardCheck)
 
 import {mount} from '@vue/test-utils';
-import AuditTemplate from '../components/audit-template.vue';
+import AuditController from '../components/audit-controller.vue';
 
-describe('Audit Template', function () {
+describe('Audit Controller', function () {
     describe('renders correctly', function () {
         test('textarea', function () {
-            var wrapper = mount(AuditTemplate, {
+            var wrapper = mount(AuditController, {
                 propsData: {
-                    items: [{ dateSent: '10/22/18', timeSent: '4:44PM', endTime: '5:32PM', updateTime: '5:10PM', host: 'netid@uw.edu', permitNumber: '12345678', foodAndEvent: 'A Food and Event', quantity: 'About 8 meals', location: 'HUB 101', contains: 'Dairy, Meat' }]
                 }
             });
             expect(wrapper.element).toMatchSnapshot();

@@ -1,12 +1,12 @@
 <template>
      <div>
          <div>
-             <b-dropdown text="Year" v-on:click.native="changeValue($event, 'Year')">
+             <b-dropdown text="Year" v-on:click.native="setYear($event)">
                 <b-dropdown-item v-for="year in this.years">
                 {{ year }}
                 </b-dropdown-item>
              </b-dropdown>
-             <b-dropdown text="Month" v-on:click.native="changeValue($event, 'Month')">
+             <b-dropdown text="Month" v-on:click.native="setMonth($event)">
                 <b-dropdown-item v-for="month in this.months">
                 {{ month }}
                 </b-dropdown-item>
@@ -40,8 +40,11 @@
             exportTable() {
                 this.$emit('export');
             },
-            changeValue(event, context) {
-                this.$emit('updateValue', context, event.target.innerText);
+            setMonth(event) {
+                this.$emit('updateMonth', event.target.innerText);
+            },
+            setYear(event) {
+                this.$emit('updateYear', event.target.innerText);
             },
         }
     }   
