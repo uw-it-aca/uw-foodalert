@@ -3,10 +3,13 @@ import json
 from django.test import TestCase, Client
 from django.db import connection
 from django.contrib.auth.models import User
+from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
 from foodalert.models import *
 from foodalert.serializers import *
+from foodalert.views import NotificationDetail, NotificationList
+
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
                             'test',
@@ -119,21 +122,21 @@ class NotificationTest(TestCase):
                     "safeToShareFood": None
                 },
                 "host": {
-                    "hostID": 1,
-                    "netID": "testuser@test.com",
                     "userAgent": "browser"
                 }
             }
-        client = Client()
-        response = client.post(
+        factory = APIRequestFactory()
+        request = factory.post(
                 "/notification/",
-                data=json.dumps(valid_payload),
-                content_type='application/json'
+                valid_payload,
+                format='json'
             )
+        force_authenticate(request, user=self.user)
+        response = NotificationList.as_view()(request)
         # Assert that the posted notificaiton was sucessfully created
         self.assertEqual(response.status_code, 201)
         # Convert the response to JSON as the actual json
-        actual_json = response.json()
+        actual_json = response.data
         # Set the created time to match as this field is dynamic/based on time
         expected_json["id"] = actual_json["id"]
         expected_json["time"]["created"] = actual_json["time"]["created"]
@@ -165,18 +168,18 @@ class NotificationTest(TestCase):
                      "safeToShareFood": None
                  },
                  "host": {
-                     "hostID": 1,
-                     "netID": "testuser@test.com",
                      "userAgent": "browser"
                  }
             }
-
-        client = Client()
-        response = client.post(
+        factory = APIRequestFactory()
+        request = factory.post(
                 "/notification/",
-                data=json.dumps(invalid_payload),
-                content_type='application/json'
+                invalid_payload,
+                format='json'
             )
+        force_authenticate(request, user=self.user)
+        response = NotificationList.as_view()(request)
+
         self.assertEqual(response.status_code, 400)
 
     def test_post_incomplete_payload(self):
@@ -186,10 +189,13 @@ class NotificationTest(TestCase):
         """
         incomplete_payload = {}
 
-        client = Client()
-        response = client.post(
+        factory = APIRequestFactory()
+        request = factory.post(
                 "/notification/",
-                data=json.dumps(incomplete_payload),
-                content_type='application/json'
+                incomplete_payload,
+                format='json'
             )
+        force_authenticate(request, user=self.user)
+        response = NotificationList.as_view()(request)
+
         self.assertEqual(response.status_code, 400)
