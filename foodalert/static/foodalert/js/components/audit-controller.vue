@@ -74,9 +74,10 @@
 
                             this.items.push(flat);
                         }
+                        this.$emit('requestComplete');
                     })
                     .catch(function (error) {
-                        alert("There was an error processing the request");
+                        console.log("There was an error processing the request");
                         console.log(error);
                     })
             },
