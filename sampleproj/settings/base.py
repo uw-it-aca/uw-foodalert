@@ -152,7 +152,7 @@ MOCK_SAML_ATTRIBUTES = {
     'affiliations': ['student', 'member'],
     'eppn': ['javerage@washington.edu'],
     'scopedAffiliations': ['student@washington.edu', 'member@washington.edu'],
-    'isMemberOf': ['u_test_host'],
+    'isMemberOf': ['u_test_host', 'u_test_admin'],
 }
 
 FOODALERT_AUTHZ_GROUPS = {

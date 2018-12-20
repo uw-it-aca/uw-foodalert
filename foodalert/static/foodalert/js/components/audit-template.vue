@@ -1,11 +1,17 @@
 <template>
      <div>
          <div>
-             <b-dropdown text="Year">
+             <b-dropdown text="Year" v-on:click.native="setYear($event)">
+                <b-dropdown-item v-for="year in this.years">
+                {{ year }}
+                </b-dropdown-item>
              </b-dropdown>
-             <b-dropdown text="Month">
+             <b-dropdown text="Month" v-on:click.native="setMonth($event)">
+                <b-dropdown-item v-for="month in this.months">
+                {{ month }}
+                </b-dropdown-item>
              </b-dropdown>   
-             <b-button style="float: right">Export</b-button>
+             <b-button style="float: right" @click="exportTable">Export</b-button>
          </div>
          <p></p>
          <b-table hover :items="items"></b-table>
@@ -17,8 +23,24 @@
         props: {
             items: {
                 type: Array
+            },
+            years: {
+                type: Array
+            },
+            months: {
+                type: Array
             }
+        },
+        methods: {
+            exportTable() {
+                this.$emit('export');
+            },
+            setMonth(event) {
+                this.$emit('updateMonth', event.target.innerText);
+            },
+            setYear(event) {
+                this.$emit('updateYear', event.target.innerText);
+            },
         }
     }   
 </script>
-

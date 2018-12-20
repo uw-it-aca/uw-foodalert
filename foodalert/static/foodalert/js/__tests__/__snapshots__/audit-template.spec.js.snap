@@ -1,29 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Audit Template renders correctly textarea 1`] = `
+exports[`Audit Controller renders correctly textarea 1`] = `
 <div>
   <div>
-    <div
-      class="btn-group b-dropdown dropdown"
-      id="__BVID__2"
-    >
-      <!---->
-      <button
-        aria-expanded="false"
-        aria-haspopup="true"
-        class="btn btn-secondary dropdown-toggle"
-        id="__BVID__2__BV_toggle_"
-        type="button"
-      >
-        Year
-      </button>
-      <div
-        aria-labelledby="__BVID__2__BV_toggle_"
-        class="dropdown-menu"
-        role="menu"
-      />
-    </div>
-     
     <div
       class="btn-group b-dropdown dropdown"
       id="__BVID__3"
@@ -36,13 +15,76 @@ exports[`Audit Template renders correctly textarea 1`] = `
         id="__BVID__3__BV_toggle_"
         type="button"
       >
-        Month
+        Year
       </button>
       <div
         aria-labelledby="__BVID__3__BV_toggle_"
         class="dropdown-menu"
         role="menu"
-      />
+      >
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           All
+           
+        </a>
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           2018
+           
+        </a>
+      </div>
+    </div>
+     
+    <div
+      class="btn-group b-dropdown dropdown"
+      id="__BVID__4"
+    >
+      <!---->
+      <button
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="btn btn-secondary dropdown-toggle"
+        id="__BVID__4__BV_toggle_"
+        type="button"
+      >
+        Month
+      </button>
+      <div
+        aria-labelledby="__BVID__4__BV_toggle_"
+        class="dropdown-menu"
+        role="menu"
+      >
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           All
+           
+        </a>
+        <a
+          class="dropdown-item"
+          href="#"
+          role="menuitem"
+          target="_self"
+        >
+          
+           Dec
+           
+        </a>
+      </div>
     </div>
      
     <button
@@ -58,10 +100,10 @@ exports[`Audit Template renders correctly textarea 1`] = `
    
   <table
     aria-busy="false"
-    aria-colcount="10"
-    aria-rowcount="1"
+    aria-colcount="12"
+    aria-rowcount="2"
     class="table b-table table-hover"
-    id="__BVID__4"
+    id="__BVID__5"
   >
     <!---->
     <!---->
@@ -73,61 +115,73 @@ exports[`Audit Template renders correctly textarea 1`] = `
           aria-colindex="1"
           class=""
         >
-          Date Sent
+          Location
         </th>
         <th
           aria-colindex="2"
           class=""
         >
-          Time Sent
+          Event
         </th>
         <th
           aria-colindex="3"
           class=""
         >
-          End Time
+          Time Created
         </th>
         <th
           aria-colindex="4"
           class=""
         >
-          Update Time
+          Time Ended
         </th>
         <th
           aria-colindex="5"
           class=""
         >
-          Host
+          Food Served
         </th>
         <th
           aria-colindex="6"
           class=""
         >
-          Permit Number
+          Food Amount
         </th>
         <th
           aria-colindex="7"
           class=""
         >
-          Food And Event
+          Food Allergens
         </th>
         <th
           aria-colindex="8"
           class=""
         >
-          Quantity
+          Bring Containers
         </th>
         <th
           aria-colindex="9"
           class=""
         >
-          Location
+          Host Net ID
         </th>
         <th
           aria-colindex="10"
           class=""
         >
-          Contains
+          Host User Agent
+        </th>
+        <th
+          aria-colindex="11"
+          class=""
+        >
+          Permit Number
+        </th>
+        <th
+          aria-colindex="12"
+          class=""
+        >
+          Host ID
         </th>
       </tr>
     </thead>
@@ -143,61 +197,145 @@ exports[`Audit Template renders correctly textarea 1`] = `
           aria-colindex="1"
           class=""
         >
-          10/22/18
+          HUB 130
         </td>
         <td
           aria-colindex="2"
           class=""
         >
-          4:44PM
+          Placeholder event
         </td>
         <td
           aria-colindex="3"
           class=""
         >
-          5:32PM
+          Tue Dec 18 2018 10:20:00 AM
         </td>
         <td
           aria-colindex="4"
           class=""
         >
-          5:10PM
+          Tue Dec 18 2018 11:11:00 AM
         </td>
         <td
           aria-colindex="5"
           class=""
         >
-          netid@uw.edu
+          a
         </td>
         <td
           aria-colindex="6"
           class=""
         >
-          12345678
+          a
         </td>
         <td
           aria-colindex="7"
           class=""
-        >
-          A Food and Event
-        </td>
+        />
         <td
           aria-colindex="8"
           class=""
         >
-          About 8 meals
+          false
         </td>
         <td
           aria-colindex="9"
           class=""
         >
-          HUB 101
+          
         </td>
         <td
           aria-colindex="10"
           class=""
         >
-          Dairy, Meat
+          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+        </td>
+        <td
+          aria-colindex="11"
+          class=""
+        >
+          2
+        </td>
+        <td
+          aria-colindex="12"
+          class=""
+        >
+          1
+        </td>
+      </tr>
+      <tr
+        class=""
+      >
+        <td
+          aria-colindex="1"
+          class=""
+        >
+          HUB 130
+        </td>
+        <td
+          aria-colindex="2"
+          class=""
+        >
+          Placeholder event
+        </td>
+        <td
+          aria-colindex="3"
+          class=""
+        >
+          Tue Dec 18 2018 11:08:04 AM
+        </td>
+        <td
+          aria-colindex="4"
+          class=""
+        >
+          Tue Dec 18 2018 1:00:00 PM
+        </td>
+        <td
+          aria-colindex="5"
+          class=""
+        >
+          Leftover food from HUB meeting
+        </td>
+        <td
+          aria-colindex="6"
+          class=""
+        >
+          About 8 full meals
+        </td>
+        <td
+          aria-colindex="7"
+          class=""
+        />
+        <td
+          aria-colindex="8"
+          class=""
+        >
+          false
+        </td>
+        <td
+          aria-colindex="9"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="10"
+          class=""
+        >
+          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+        </td>
+        <td
+          aria-colindex="11"
+          class=""
+        >
+          3
+        </td>
+        <td
+          aria-colindex="12"
+          class=""
+        >
+          1
         </td>
       </tr>
       <!---->
