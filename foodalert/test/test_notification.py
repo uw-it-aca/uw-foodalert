@@ -30,7 +30,6 @@ class NotificationTest(TestCase):
                                             password=passw,
                                             is_active=1)
 
-
     def setUp(self):
         # Set up a test notification with arbitrary field values
         notification = Notification.objects.create(
@@ -128,7 +127,7 @@ class NotificationTest(TestCase):
                     "userAgent": "browser"
                 }
             }
-        
+
         response = self.client.post(
                 "/notification/",
                 data=json.dumps(valid_payload),
@@ -186,7 +185,7 @@ class NotificationTest(TestCase):
         required fields
         """
         incomplete_payload = {}
-        
+
         response = self.client.post(
                 "/notification/",
                 data=json.dumps(incomplete_payload),
