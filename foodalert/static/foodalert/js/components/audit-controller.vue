@@ -12,8 +12,8 @@
 
 <script type="text/javascript">
     import AuditTemplate from './audit-template.vue';
-    const axios = require('axios')
-    var flatten = require('flat')
+    import axios from 'axios';
+    import flatten from 'flat';
 
     export default {
         components: {
