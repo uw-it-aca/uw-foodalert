@@ -132,7 +132,16 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification')
+        fields = ('text', 'parent_notification', 'timestamp')
+
+        def to_internal_value(self, data):
+            ret = {
+                'text': data['text']
+            }
+
+            ret['parent_notification'] = Notification.objects.get(
+                                         pk=data['parent_notification'])
+            return ret
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
