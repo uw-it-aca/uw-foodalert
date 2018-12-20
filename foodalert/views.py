@@ -20,11 +20,13 @@ create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 
+@method_decorator(login_required(), name='dispatch')
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
 
 
+@method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
@@ -46,21 +48,25 @@ class NotificationList(generics.ListCreateAPIView):
         serializer.save(host=self.request.user)
 
 
+@method_decorator(login_required(), name='dispatch')
 class UpdateDetail(generics.RetrieveAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
 
 
+@method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
 
 
+@method_decorator(login_required(), name='dispatch')
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
 
+@method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
@@ -103,6 +109,6 @@ class EndedView(TemplateView):
     template_name = 'ended.html'
 
 
-@method_decorator(group_required(create_group), name='dispatch')
+@method_decorator(group_required(audit_group), name='dispatch')
 class AuditView(TemplateView):
     template_name = 'audit.html'

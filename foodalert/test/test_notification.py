@@ -23,9 +23,12 @@ class NotificationTest(TestCase):
         Sets up a single mock user that can be used for all tests on
         notification tests
         """
-        cls.user = User.objects.create_user(username='testuser',
+        user = "testuser"
+        passw = "test"
+        cls.user = User.objects.create_user(username=user,
                                             email="testuser@test.com",
-                                            password="test")
+                                            password=passw,
+                                            is_active=1)
 
     def setUp(self):
         # Set up a test notification with arbitrary field values
@@ -37,6 +40,7 @@ class NotificationTest(TestCase):
             host=self.user,
             host_user_agent="browser")
         self.notification = notification
+        self.client.force_login(self.user)
 
     def tearDown(self):
         Notification.objects.all().delete()
@@ -54,9 +58,8 @@ class NotificationTest(TestCase):
         path = os.path.join(RESOURCE_DIR, 'notification_list.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
-        client = Client()
         # Get all notifications from the notification endpoint
-        response = client.get('/notification/')
+        response = self.client.get('/notification/')
         # Assert that the response is successful (200 HTTP Response Code)
         self.assertEqual(response.status_code, 200)
         # Convert response to JSON
@@ -78,10 +81,9 @@ class NotificationTest(TestCase):
         path = os.path.join(RESOURCE_DIR, 'notification_detail.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
-        client = Client()
         # Get a single notification by ID
         url = '/notification/' + str(self.notification.id) + '/'
-        response = client.get(url)
+        response = self.client.get(url)
         # Assert that the response is successful
         self.assertEqual(response.status_code, 200)
         # Convert response to JSON as the actual json
@@ -125,14 +127,12 @@ class NotificationTest(TestCase):
                     "userAgent": "browser"
                 }
             }
-        factory = APIRequestFactory()
-        request = factory.post(
+
+        response = self.client.post(
                 "/notification/",
-                valid_payload,
-                format='json'
+                data=json.dumps(valid_payload),
+                content_type='application/json'
             )
-        force_authenticate(request, user=self.user)
-        response = NotificationList.as_view()(request)
         # Assert that the posted notificaiton was sucessfully created
         self.assertEqual(response.status_code, 201)
         # Convert the response to JSON as the actual json
@@ -171,15 +171,12 @@ class NotificationTest(TestCase):
                      "userAgent": "browser"
                  }
             }
-        factory = APIRequestFactory()
-        request = factory.post(
-                "/notification/",
-                invalid_payload,
-                format='json'
-            )
-        force_authenticate(request, user=self.user)
-        response = NotificationList.as_view()(request)
 
+        response = self.client.post(
+                "/notification/",
+                data=json.dumps(invalid_payload),
+                content_type='application/json'
+            )
         self.assertEqual(response.status_code, 400)
 
     def test_post_incomplete_payload(self):
@@ -189,13 +186,9 @@ class NotificationTest(TestCase):
         """
         incomplete_payload = {}
 
-        factory = APIRequestFactory()
-        request = factory.post(
+        response = self.client.post(
                 "/notification/",
-                incomplete_payload,
-                format='json'
+                data=json.dumps(incomplete_payload),
+                content_type='application/json'
             )
-        force_authenticate(request, user=self.user)
-        response = NotificationList.as_view()(request)
-
         self.assertEqual(response.status_code, 400)
