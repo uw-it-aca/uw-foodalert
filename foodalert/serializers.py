@@ -21,6 +21,7 @@ class AllergenSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     allergens = AllergenSerializer(many=True, required=False)
     safe_foods = SafeFoodSerializer(many=True, required=False)
+    host = serializers.ReadOnlyField()
 
     class Meta:
         model = Notification
@@ -86,9 +87,6 @@ class NotificationSerializer(serializers.ModelSerializer):
         if 'food' not in data:
             raise ValidationError({
                 "Bad Request": "Post data must have a food field"})
-        if 'host' not in data:
-            raise ValidationError({
-                "Bad Request": "Post data must have a host field"})
         if 'foodServiceInfo' not in data:
             raise ValidationError({
                 "Bad Request": "Post data must have a foodServiceInfo field"})
@@ -103,7 +101,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             'end_time': data["time"]["ended"],
             'food_served': data["food"]["served"],
             'amount_of_food_left': data["food"]["amount"],
-            'host': User.objects.get(id=data["host"]["hostID"]),
             'bring_container': data["bringContainers"],
             'safe_foods': None,
             'allergens': None,

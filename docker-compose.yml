@@ -9,6 +9,7 @@ services:
     volumes:
       - ./sampleproj:/app/sampleproj/
       - ./foodalert:/app/foodalert
+      - ./docs:/app/docs/
     links:
       - db
     ports:

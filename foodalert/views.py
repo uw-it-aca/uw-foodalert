@@ -42,6 +42,9 @@ class NotificationList(generics.ListCreateAPIView):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(host=self.request.user)
+
 
 class UpdateDetail(generics.RetrieveAPIView):
     queryset = Update.objects.all()
@@ -69,7 +72,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = {}
-        context['signup'] = False
+        context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
         return context
