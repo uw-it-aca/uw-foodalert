@@ -1,7 +1,7 @@
 import os
 import json
 from django.test import TestCase, Client
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 from parameterized import parameterized, param
 from django.db import connection, transaction
 from django.db.utils import IntegrityError
@@ -32,13 +32,21 @@ class SubscriptionTest(TestCase):
         Sets up a single mock user that can be used for all tests on
         notification tests
         """
-        cls.user = User.objects.create_user(username='testuser',
+        user = "testuser"
+        passw = "test"
+        cls.user = User.objects.create_user(username=user,
                                             email="testuser@test.com",
-                                            password="test")
+                                            password=passw)
+
+        cls.client = Client()
 
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+
+    @transaction.atomic
+    def setUp(self):
+        self.client.force_login(self.user)
 
     @transaction.atomic
     def tearDown(self):
@@ -68,15 +76,13 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_create_subscription(self, email=None, sms=None):
-        factory = APIRequestFactory()
         valid_payload = {
             "netId": "testuser@test.com",
             "email": email,
             "sms": sms,
         }
-        request = factory.post('/subscription/', valid_payload, format='json')
         original_len = len(Subscription.objects.all())
-        response = SubscriptionList.as_view()(request)
+        response = self.client.post('/subscription/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(1, new_len - original_len)
@@ -94,9 +100,7 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        factory = APIRequestFactory()
-        request = factory.get('/subscription/')
-        response = SubscriptionList.as_view()(request)
+        response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.data[0]
         self.assertEqual(email, data['email'])
@@ -118,11 +122,10 @@ class SubscriptionTest(TestCase):
             'sms': '+12345678901',
         }
 
-        factory = APIRequestFactory()
-        request = factory.put('/subscription/{0}'.format(sub.id), update,
-                              format='json')
         original_len = len(Subscription.objects.all())
-        response = SubscriptionDetail.as_view()(request, pk=sub.id)
+        response = self.client.put('/subscription/{0}/'.format(sub.id),
+                                   data=json.dumps(update),
+                                   content_type='application/json')
         self.assertEqual(200, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)
@@ -141,11 +144,8 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        factory = APIRequestFactory()
-        request = factory.delete('/subscription/{0}'.format(sub.id),
-                                 format='json')
         original_len = len(Subscription.objects.all())
-        response = SubscriptionDetail.as_view()(request, pk=sub.id)
+        response = self.client.delete('/subscription/{0}/'.format(sub.id))
         self.assertEqual(204, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len - 1, new_len)

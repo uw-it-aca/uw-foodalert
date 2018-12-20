@@ -20,9 +20,13 @@ class NotificationTest(TestCase):
         Sets up a single mock user that can be used for all tests on
         notification tests
         """
-        cls.user = User.objects.create_user(username='testuser',
+        user = "testuser"
+        passw = "test"
+        cls.user = User.objects.create_user(username=user,
                                             email="testuser@test.com",
-                                            password="test")
+                                            password=passw,
+                                            is_active=1)
+
 
     def setUp(self):
         # Set up a test notification with arbitrary field values
@@ -34,6 +38,7 @@ class NotificationTest(TestCase):
             host=self.user,
             host_user_agent="browser")
         self.notification = notification
+        self.client.force_login(self.user)
 
     def tearDown(self):
         Notification.objects.all().delete()
@@ -51,9 +56,8 @@ class NotificationTest(TestCase):
         path = os.path.join(RESOURCE_DIR, 'notification_list.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
-        client = Client()
         # Get all notifications from the notification endpoint
-        response = client.get('/notification/')
+        response = self.client.get('/notification/')
         # Assert that the response is successful (200 HTTP Response Code)
         self.assertEqual(response.status_code, 200)
         # Convert response to JSON
@@ -75,10 +79,9 @@ class NotificationTest(TestCase):
         path = os.path.join(RESOURCE_DIR, 'notification_detail.json')
         with open(path) as data_file:
             expected_json = json.load(data_file)
-        client = Client()
         # Get a single notification by ID
         url = '/notification/' + str(self.notification.id) + '/'
-        response = client.get(url)
+        response = self.client.get(url)
         # Assert that the response is successful
         self.assertEqual(response.status_code, 200)
         # Convert response to JSON as the actual json
@@ -124,8 +127,7 @@ class NotificationTest(TestCase):
                     "userAgent": "browser"
                 }
             }
-        client = Client()
-        response = client.post(
+        response = self.client.post(
                 "/notification/",
                 data=json.dumps(valid_payload),
                 content_type='application/json'
@@ -171,8 +173,7 @@ class NotificationTest(TestCase):
                  }
             }
 
-        client = Client()
-        response = client.post(
+        response = self.client.post(
                 "/notification/",
                 data=json.dumps(invalid_payload),
                 content_type='application/json'
@@ -186,8 +187,7 @@ class NotificationTest(TestCase):
         """
         incomplete_payload = {}
 
-        client = Client()
-        response = client.post(
+        response = self.client.post(
                 "/notification/",
                 data=json.dumps(incomplete_payload),
                 content_type='application/json'
