@@ -3,10 +3,13 @@ import json
 from django.test import TestCase, Client
 from django.db import connection
 from django.contrib.auth.models import User
+from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
 from foodalert.models import *
 from foodalert.serializers import *
+from foodalert.views import NotificationDetail, NotificationList
+
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
                             'test',
@@ -122,11 +125,10 @@ class NotificationTest(TestCase):
                     "safeToShareFood": None
                 },
                 "host": {
-                    "hostID": 1,
-                    "netID": "testuser@test.com",
                     "userAgent": "browser"
                 }
             }
+        
         response = self.client.post(
                 "/notification/",
                 data=json.dumps(valid_payload),
@@ -135,7 +137,7 @@ class NotificationTest(TestCase):
         # Assert that the posted notificaiton was sucessfully created
         self.assertEqual(response.status_code, 201)
         # Convert the response to JSON as the actual json
-        actual_json = response.json()
+        actual_json = response.data
         # Set the created time to match as this field is dynamic/based on time
         expected_json["id"] = actual_json["id"]
         expected_json["time"]["created"] = actual_json["time"]["created"]
@@ -167,8 +169,6 @@ class NotificationTest(TestCase):
                      "safeToShareFood": None
                  },
                  "host": {
-                     "hostID": 1,
-                     "netID": "testuser@test.com",
                      "userAgent": "browser"
                  }
             }
@@ -186,7 +186,7 @@ class NotificationTest(TestCase):
         required fields
         """
         incomplete_payload = {}
-
+        
         response = self.client.post(
                 "/notification/",
                 data=json.dumps(incomplete_payload),

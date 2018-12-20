@@ -70,7 +70,7 @@
             primaryAction: Function,
             secondaryAction: Function,
             backAction: Function,
-            primaryStoreMutation: String,
+            stateValue: String,
         },
         data() {
             return {
@@ -81,9 +81,10 @@
             primarySubmit: function () {
                 if (this.primaryAction) {
                     return this.primaryAction();
+                } else {
+                    return this.$emit('primaryAction', this.stateValue, this.value);
                 }
-                this.$store.commit(this.primaryStoreMutation, this.value);
-            }
+            },
         },
         mounted() {
             if (this.inputType == 'checkbox') {

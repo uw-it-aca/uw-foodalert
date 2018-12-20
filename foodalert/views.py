@@ -44,6 +44,9 @@ class NotificationList(generics.ListCreateAPIView):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(host=self.request.user)
+
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateDetail(generics.RetrieveAPIView):
