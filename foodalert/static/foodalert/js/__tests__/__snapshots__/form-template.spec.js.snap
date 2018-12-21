@@ -3,6 +3,7 @@
 exports[`Form Controller renders correctly textarea 1`] = `
 <div
   class="p-0 container-fluid"
+  notificationid="0"
 >
   <form
     class=""
@@ -483,7 +484,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
     <a
       aria-disabled="true"
       class="float-right btn btn-primary btn-lg py-2 disabled"
-      href="update"
+      href="#"
       tabindex="-1"
       target="_self"
       type="submit"

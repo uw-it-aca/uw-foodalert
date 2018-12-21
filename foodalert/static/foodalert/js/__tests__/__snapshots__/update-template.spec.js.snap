@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Update Tempalte renders correctly textarea 1`] = `
+exports[`Update Controller renders correctly textarea 1`] = `
 <div
   class="px-4 pt-3 container"
+  text=""
 >
   <p>
     <strong>
@@ -28,15 +29,15 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
     is-optional=""
   >
     <div
-      aria-labelledby="__BVID__3__BV_label_"
+      aria-labelledby="__BVID__4__BV_label_"
       class="labelled-textarea mb-0 b-form-group form-group"
-      id="__BVID__3"
+      id="__BVID__4"
       role="group"
     >
       <label
         class="col-form-label pt-0"
         for="textarea-null"
-        id="__BVID__3__BV_label_"
+        id="__BVID__4__BV_label_"
       >
         
             Notify people if plans change 
@@ -62,23 +63,31 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
     <!---->
   </div>
    
-  <button
-    class="btn w-100 mb-3 py-2 btn-secondary"
-    type="button"
+  <p>
+     
+  </p>
+   
+  <!---->
+   
+  <a
+    class="w-100 mb-3 py-2 btn btn-secondary btn-md"
+    href="#"
+    target="_self"
+    type="submit"
   >
      Send Update 
-  </button>
+  </a>
    
   <div
     class="text-center"
   >
     <div
-      id="__BVID__5___BV_modal_outer_"
+      id="__BVID__6___BV_modal_outer_"
     >
       <div
         aria-hidden="true"
         class="modal fade"
-        id="__BVID__5"
+        id="__BVID__6"
         role="dialog"
         style="display: none;"
       >
@@ -86,15 +95,15 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
           class="modal-dialog modal-md"
         >
           <div
-            aria-describedby="__BVID__5___BV_modal_body_"
-            aria-labelledby="__BVID__5___BV_modal_header_"
+            aria-describedby="__BVID__6___BV_modal_body_"
+            aria-labelledby="__BVID__6___BV_modal_header_"
             class="modal-content"
             role="document"
             tabindex="-1"
           >
             <header
               class="modal-header border-0"
-              id="__BVID__5___BV_modal_header_"
+              id="__BVID__6___BV_modal_header_"
             >
               <h5
                 class="modal-title"
@@ -109,7 +118,7 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
             </header>
             <div
               class="modal-body"
-              id="__BVID__5___BV_modal_body_"
+              id="__BVID__6___BV_modal_body_"
             >
               <p
                 class="h5 pb-3"
@@ -131,7 +140,7 @@ exports[`Update Tempalte renders correctly textarea 1`] = `
             </div>
             <footer
               class="modal-footer border-0 d-flex flex-column"
-              id="__BVID__5___BV_modal_footer_"
+              id="__BVID__6___BV_modal_footer_"
             >
               <a
                 class="btn btn-lg btn-primary mx-auto mb-2"
