@@ -10,7 +10,8 @@
     import { requiredIf, email, helpers } from "vuelidate/lib/validators"
     const phoneNum = helpers.regex('phoneNum', /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
     //a function that takes a validator and a predicate and checks the validator
-    //only if the predicate is true
+    //only if the predicate is true, function is curried (i.e must be called
+    //checkIf(validator)(predicate))
     const checkIf = (check) => (predicate) => (value) => predicate() ? check(value) : true;
 
     export default {
