@@ -124,7 +124,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 {"amount_of_food_left": "Food amounts must be specified"})
         if ret["host_user_agent"] == "":
-            raise ValidaionError(
+            raise ValidationError(
                 {"host_user_agent": "User agent information is required"})
         return ret
 
@@ -142,16 +142,17 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         ret = {
-            'email': data['email'],
-            'sms_number': data['sms'],
+            'email': '',
+            'sms_number': '',
         }
 
-        if 'id' in data:
-            ret['id'] = data['id']
-            ret['user'] = Subscription.objects.get(pk=data['id']).user
-        elif 'netId' in data:
-            ret['user'] = User.objects.get(email=data['netId'])
+        if 'email' in data:
+            ret['email'] = data['email']
         else:
-            raise ValidationError({"netId": "must specify netid"})
+            ret['email'] = ''
+        if 'sms_number' in data:
+            ret['sms_number'] = data['sms_number']
+        else:
+            ret['sms_number'] = ''
 
         return ret

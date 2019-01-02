@@ -71,6 +71,9 @@ class SubscriptionList(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(user=self.request.user)
+
 
 @method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):

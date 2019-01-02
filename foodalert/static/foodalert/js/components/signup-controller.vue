@@ -1,10 +1,13 @@
 <template>
     <signup-template
         :v="$v"
-        v-bind.sync="this.val"/>
+        v-bind.sync="this.val"
+        @send="this.send"/>
 </template>
 
 <script type="text/javascript">
+    import Cookies from 'js-cookie';
+    import axios from 'axios';
     import SignupTemplate from './signup-template.vue';
     import { validationMixin } from "vuelidate"
     import { requiredIf, email, helpers } from "vuelidate/lib/validators"
@@ -27,6 +30,26 @@
                     agreement: false,
                 }
             }
+        },
+        computed: {
+            reqBody: function() {
+                var ret = {};
+                ret['email'] = this.val.email;
+                ret['sms_number'] = this.val.sms;
+                ret['netId'] = '';
+                return ret;
+            },
+        },
+        methods: {
+            send() {
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                };
+                axios.post('/subscription/', this.reqBody, {"headers": headers})
+                    .then(console.log);
+            },
         },
         validations() {
             return {

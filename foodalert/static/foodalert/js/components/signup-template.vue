@@ -64,7 +64,7 @@
             <b-link
                 :disabled="v.val.$invalid || this.inputTypes.length === 0 || !this.agreement"
                 class="btn btn-primary float-right mb-3"
-                href="/subscribed">
+                @click="$emit('send', $event)">
                 Sign Up
             </b-link>
         </b-container>
