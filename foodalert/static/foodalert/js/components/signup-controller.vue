@@ -1,86 +1,53 @@
 <template>
     <signup-template
-    :v="$v"
-    @updateInput="this.updateInput"
-    >
-    </signup-template>
+        :v="$v"
+        v-bind.sync="this.val"/>
 </template>
 
 <script type="text/javascript">
     import SignupTemplate from './signup-template.vue';
     import { validationMixin } from "vuelidate"
-    import { required, email, helpers } from "vuelidate/lib/validators"
+    import { requiredIf, email, helpers } from "vuelidate/lib/validators"
     const phoneNum = helpers.regex('phoneNum', /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
+    //a function that takes a validator and a predicate and checks the validator
+    //only if the predicate is true
+    const checkIf = (check) => (predicate) => (value) => predicate() ? check(value) : true;
 
     export default {
         components: {
             'signup-template': SignupTemplate,
         },
-        methods: {
-            updateInput(value) {
-                this.inputTypes = value;
-            },
-        },
         data() {
             return {
-                inputTypes: [],
-                form: {
+                val: {
+                    inputTypes: [],
                     email: "",
-                    sms: ""
-                },
+                    sms: "",
+                    agreement: false,
+                }
             }
         },
         validations() {
-            if (this.inputTypes.indexOf('SMS/Text') !== -1 && this.inputTypes.indexOf('Email') !== -1) {
-                return {
-                    form: {
-                        email: {
-                            required,
-                            email
-                        },
-                        sms: {
-                            required,
-                            phoneNum
-                        }
-                    }
-                }
-            } else if (this.inputTypes.indexOf('SMS/Text') == -1 && this.inputTypes.indexOf('Email') !== -1) {
-                return {
-                    form: {
-                        email: {
-                            required,
-                            email
-                        },
-                        sms: {
-
-                        }
-                    }
-                }
-            } else if (this.inputTypes.indexOf('SMS/Text') !== -1 && this.inputTypes.indexOf('Email') == -1) {
-                return {
-                    form: {
-                        sms: {
-                            required,
-                            phoneNum
-                        },
-                        email: {
-
-                        }
-                    }
-                }
-            } else {
-                return {
-                    form: {
-                        email: {
-
-                        },
-                        sms: {
-
-                        }
+            return {
+                val: {
+                    email: {
+                        requiredIf: requiredIf(function(v) {
+                            return this.val.inputTypes.indexOf('Email') !== -1
+                        }),
+                        emailIf: checkIf(email)((v) => {
+                            return this.val.inputTypes.indexOf('Email') !== -1
+                        })
+                    },
+                    sms: {
+                        requiredIf: requiredIf(function(v) {
+                            return this.val.inputTypes.indexOf('SMS/Text') !== -1
+                        }),
+                        phoneNumIf: checkIf(phoneNum)((v) => {
+                            return this.val.inputTypes.indexOf('SMS/Text') !== -1
+                        })
                     }
                 }
             }
         },
-    }   
+    }
 </script>
-
