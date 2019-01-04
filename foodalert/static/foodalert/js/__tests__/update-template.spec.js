@@ -3,36 +3,31 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-    faUtensils,
-    faChevronLeft,
-    faCalendar,
-    faClock,
-    faMapMarkerAlt,
-    faClipboardCheck,
-    faBell,
-} from '@fortawesome/free-solid-svg-icons'
-
-library.add(faUtensils)
-library.add(faChevronLeft)
-library.add(faCalendar)
-library.add(faClock)
-library.add(faBell)
-library.add(faMapMarkerAlt)
-library.add(faClipboardCheck)
-
 import {mount} from '@vue/test-utils';
-import UpdateTemplate from '../components/update-template.vue';
+import UpdateController from '../components/update-controller.vue';
+const $route = {
+    query: {
+        parent_notification: 1
+    }
+}
+const $v = {
+    form: {
+        text: {
+            required: true,
+            maxLength: true
+        },
+        $error: false
+    }
+}
 
-describe('Update Tempalte', function () {
-    describe('renders correctly', function () {
-        test('textarea', function () {
-            var wrapper = mount(UpdateTemplate, {
-                propsData: {
-                }
+describe('Update Controller', function () {
+        test('renders correctly', function () {
+            var wrapper = mount(UpdateController, {
+                mocks: {
+                    $route,
+                    $v
+                },
             });
             expect(wrapper.element).toMatchSnapshot();
         });
-    });
 })

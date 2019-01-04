@@ -5,6 +5,7 @@
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
         :foodList="this.state.safeFoodList"
+        :notificationID="this.state.notificationID"
         :v="$v"
         @updateState="this.modifyStateBoolean"
         @setState="this.modifyState"
@@ -63,9 +64,10 @@
                     'X-CSRFToken': csrftoken,
                 }
                 axios.post('/notification/', data, {"headers": headers})
-                    .then(function (response) {
+                    .then(function(response) {
                         console.log(response);
-                    })
+                        this.$router.push({ name: 'update', query: { notificationID: response.data.id}});
+                    }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");
                         console.log(error);
@@ -111,6 +113,7 @@
                         location: "",
                         allergens: [],
                         needContainer: false,
+                        notificationID: 0,
                 },
                 form : {
                     description: "",

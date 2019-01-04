@@ -34,8 +34,11 @@ class Subscription(models.Model):
 
 
 class Update(models.Model):
-    text = models.CharField(max_length=100)
-    parent_notification = models.ForeignKey('Notification')
+    text = models.CharField(max_length=100, blank=False)
+    parent_notification = models.ForeignKey('Notification',
+                                            blank=False,
+                                            on_delete=models.CASCADE)
+    created_time = models.DateTimeField(auto_now_add=True)
 
 
 class SafeFood(models.Model):

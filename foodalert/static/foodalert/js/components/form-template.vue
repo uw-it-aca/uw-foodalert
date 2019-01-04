@@ -73,7 +73,6 @@
         <hr>
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
-                    to="update"
                     :disabled="v.form.$invalid"
                     @click="$emit('submitRequest')"
                     class="float-right btn btn-primary btn-lg py-2"> Send Notification </b-link>

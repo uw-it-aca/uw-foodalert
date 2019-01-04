@@ -9,11 +9,21 @@
             label-text="Notify people if plans change"
             is-optional
             :rows="2"
+            :v="v.form.text"
+            state-value="text"
+            @stateAction="this.setValue"
             example-text="e.g. We moved to HUB 230! Still 4 more sandwiches"
             class="mt-3">
         </labelled-input>
-        <b-btn class="w-100 mb-3 py-2"> Send Update </b-btn>
-
+        <p v-if="!v.form.text.$error">&nbsp</p>
+        <div v-if="v.form.text.$error">
+            <p v-if="!v.form.text.required" class="hasError">An update message is required</p>
+            <p v-if="!v.form.text.maxLength" class="hasError">Your update message must be shorter than 100 characters</p>
+        </div>
+        <b-link type="submit"
+            :disabled="v.form.$invalid"
+            @click="$emit('submitRequest')"
+            class="w-100 mb-3 py-2 btn btn-secondary btn-md"> Send Update </b-link>
         <b-modal
             v-model="modalShowing"
             header-border-variant="0"
@@ -27,7 +37,7 @@
 
 
             <template slot="modal-footer">
-                <b-link class="btn btn-lg btn-primary mx-auto mb-2" href="/ended"> Send 'No Food Left' </b-link>
+                <b-link class="btn btn-lg btn-primary mx-auto mb-2" to="/ended"> Send 'No Food Left' </b-link>
                 <a href="#" @click="modalShowing = false" class="mx-auto"> Cancel </a>
             </template>
         </b-modal>
@@ -39,17 +49,21 @@
     import LabelledInput from './labelled-input.vue'
 
     export default {
+        props: {
+            v: Object,
+        },
         components: {
             'labelled-input': LabelledInput,
         },
         data() {
             return {
-                id: null,
                 modalShowing: false,
             }
         },
-        mounted() {
-            this.id = this._uid;
+        methods: {
+            setValue(context, value) {
+                this.$emit('setText', value);
+            },
         }
     }
 </script>
