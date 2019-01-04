@@ -19,13 +19,15 @@
             'update-template': UpdateTemplate,
         },
         mounted() {
-            this.uid = this._uid;
-            this.notificationID = parseInt(this.$route.query.notificationID);
+            this.state.uid = this._uid;
+            this.state.notificationID = parseInt(this.$route.query.notificationID);
         },
         data() {
             return {
-                uid: 0,
-                notificationID: 0,
+                state: {
+                    uid: 0,
+                    notificationID: 0,
+                },
                 form: {
                     text: ""
                 },
@@ -33,12 +35,12 @@
         },
         methods: {
             setText(payload) {
-                this.text = payload;
+                this.form.text = payload;
             },
             buildRequest() {
                 var data = {
                     "text": this.form.text,
-                    "parent_notification": this.notificationID
+                    "parent_notification": this.state.notificationID
                 };
                 var csrftoken = Cookies.get('csrftoken');
                 var headers = {

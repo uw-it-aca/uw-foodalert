@@ -132,7 +132,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification', 'timestamp')
+        fields = ('text', 'parent_notification', 'created_time')
 
         def to_internal_value(self, data):
             ret = {

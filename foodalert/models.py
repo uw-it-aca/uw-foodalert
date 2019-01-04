@@ -38,7 +38,7 @@ class Update(models.Model):
     parent_notification = models.ForeignKey('Notification',
                                             blank=False,
                                             on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(auto_now_add=True)
 
 
 class SafeFood(models.Model):

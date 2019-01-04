@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Update Controller renders correctly textarea 1`] = `
+exports[`Update Controller renders correctly 1`] = `
 <div
   class="px-4 pt-3 container"
   text=""

@@ -21,8 +21,7 @@ const $v = {
 }
 
 describe('Update Controller', function () {
-    describe('renders correctly', function () {
-        test('textarea', function () {
+        test('renders correctly', function () {
             var wrapper = mount(UpdateController, {
                 mocks: {
                     $route,
@@ -31,5 +30,4 @@ describe('Update Controller', function () {
             });
             expect(wrapper.element).toMatchSnapshot();
         });
-    });
 })
