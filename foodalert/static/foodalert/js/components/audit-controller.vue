@@ -20,11 +20,13 @@
             'audit-template': AuditTemplate,
         },
         mounted() {
+            this.requestUpdates();
             this.requestLogs();
         },
         data() {
             return {
                 items: [],
+                updates: [],
                 years: ["All"],
                 months: ["All"],
                 selectedMonth: "All",
@@ -42,7 +44,7 @@
                         var data = response.data
                         for (var i = 0; i < data.length; i++) {
                             //Iterate over our logs row by row
-                            var log = data[i]
+                            var log = data[i];
 
                             //Make datetimes readable
                             log.time.created = new Date(log.time.created).toDateString() + " " + new Date(log.time.created).toLocaleTimeString('en-US');
@@ -57,22 +59,23 @@
                             if (!this.months.includes(month)) {
                                 this.months.push(month);
                             }
-
-                            //Remove unnecessary fields
                             log.location = log.location.main;
-                            delete log.id;
-                            delete log.location.detail;
-                            delete log.location.main;
-                            delete log.foodServiceInfo.safeToShareFood;
 
                             //Flatten the row and rename columns
                             var flat = flatten(log);
                             flat["permitNumber"] = flat["foodServiceInfo.permitNumber"];
-                            flat["hostID"] = flat["host.hostID"];
-                            delete flat["foodServiceInfo.permitNumber"];
-                            delete flat["host.hostID"];
 
+                            //Add the item to our audit logs
                             this.items.push(flat);
+
+                            //Gather all updates to this corresponding item
+                            var itemUpdates = this.updates.filter(function(update) {
+                                return (update.parent_notification == log.id);
+                            });
+                            //Add each update of this item to the log
+                            for (var j = 0; j < itemUpdates.length; j++) {
+                                this.items.push(this.updateToLog(itemUpdates[j]));
+                            }
                         }
                         this.$emit('requestComplete');
                     })
@@ -80,6 +83,40 @@
                         console.log("There was an error processing the request");
                         console.log(error);
                     })
+            },
+            requestUpdates() {
+                var headers = {
+                    'Content-Type': 'application/json',
+                }
+                axios.get('http://0.0.0.0:8000/updates/', {"headers": headers})
+                    .then(response => {
+                        console.log(response);
+                        var data = response.data;
+                        for(var i = 0; i < data.length; i++) {
+                            this.updates.push(data[i]);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("There was an error processing the request");
+                        console.log(error);
+                    })
+            },
+            updateToLog(update) {
+                var ret = {
+                    "location": '',
+                    "event": '',
+                    "time.created": new Date(update.created_time).toDateString() + " " + new Date(update.created_time).toLocaleTimeString('en-US'),
+                    "time.ended": '',
+                    "food.served": '',
+                    "food.amount": update.text,
+                    "food.allergens": '',
+                    "bringContainers": '',
+                    "host.netID": '',
+                    "host.userAgent": '',
+                    "permitNumber": '',
+                    "_rowVariant": 'update',
+                };
+                return ret;
             },
             exportTable() {
                 //Write the column names as the first line in the result
@@ -141,4 +178,3 @@
         }
     }   
 </script>
-
