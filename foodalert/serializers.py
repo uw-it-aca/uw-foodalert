@@ -156,3 +156,8 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             ret['sms_number'] = ''
 
         return ret
+
+    def create(self, validated_data):
+        sub, created = Subscription.objects.get_or_create(
+            user=self.context.get('request').user)
+        return sub

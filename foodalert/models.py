@@ -24,7 +24,7 @@ class Notification(models.Model):
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey(User, blank=False, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
     sms_number = PhoneNumberField(blank=True)
 
