@@ -34,6 +34,7 @@
                 :class="['px-5', {'ml-2': secondaryText}]"
                 size="lg"
                 variant="primary"
+                :disabled="this.inputType == 'checkbox' && (this.value == null || this.value.length == 0)"
                 @click="primarySubmit">
                 {{ primaryText }}
             </b-button>
