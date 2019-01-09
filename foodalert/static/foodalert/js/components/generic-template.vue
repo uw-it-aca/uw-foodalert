@@ -42,6 +42,9 @@ export default {
                 case '/audit':
                     this.headerText = 'Audit Logs'
                     break;
+                case '/subscribed':
+                    this.headerText = 'You Signed Up For Food Notifications!'
+                    break;
                 default:
                     this.headerText = '';
             }
