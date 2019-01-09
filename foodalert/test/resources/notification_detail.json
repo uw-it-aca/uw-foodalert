@@ -21,7 +21,7 @@
     },
     "host": {
         "hostID": 1,
-        "netID": "testuser@test.com",
+        "netID": "testuser",
         "userAgent": "browser"
     }
 }
