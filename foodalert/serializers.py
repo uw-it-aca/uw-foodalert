@@ -46,6 +46,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         return notif
 
     def to_representation(self, notif):
+        user = User.objects.get(pk=notif.host.id)
         return {
             'id': str(notif.id),
             'location': {
@@ -69,7 +70,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             },
             'host': {
                 'hostID': notif.host.id,
-                'netID': notif.host.email,
+                'netID': user.username,
                 'userAgent': notif.host_user_agent,
             }
         }
