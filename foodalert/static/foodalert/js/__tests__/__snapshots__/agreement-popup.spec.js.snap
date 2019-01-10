@@ -106,7 +106,8 @@ exports[`Agreement Popup renders correctly checkbox 1`] = `
     </button>
      
     <button
-      class="btn btn-primary btn-lg px-5 ml-2"
+      class="btn btn-primary btn-lg disabled px-5 ml-2"
+      disabled="disabled"
       type="button"
     >
       
@@ -195,7 +196,8 @@ exports[`Agreement Popup renders correctly textarea 1`] = `
     </button>
      
     <button
-      class="btn btn-primary btn-lg px-5 ml-2"
+      class="btn btn-primary btn-lg disabled px-5 ml-2"
+      disabled="disabled"
       type="button"
     >
       

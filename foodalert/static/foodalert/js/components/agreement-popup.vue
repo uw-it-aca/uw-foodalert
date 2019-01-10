@@ -7,14 +7,14 @@
         <b-form-group>
             <b-form-input
                 v-if="inputType == 'number'"
-                v-model="value"
+                v-model="number"
                 type="number"
                 placeholder="40569503"
                 class="text-center mb-3 border-0">
             </b-form-input>
             <b-form-checkbox-group
                 v-if="inputType == 'checkbox'"
-                v-model="value"
+                v-model="checkboxes"
                 stacked
                 class="ml-5"
                 :options="checkboxOptions">
@@ -34,7 +34,7 @@
                 :class="['px-5', {'ml-2': secondaryText}]"
                 size="lg"
                 variant="primary"
-                :disabled="this.inputType == 'checkbox' && (this.value == null || this.value.length == 0)"
+                :disabled="buttonDisabled"
                 @click="primarySubmit">
                 {{ primaryText }}
             </b-button>
@@ -75,7 +75,8 @@
         },
         data() {
             return {
-                value: null,
+                checkboxes: null,
+                number: null,
             }
         },
         methods: {
@@ -83,15 +84,21 @@
                 if (this.primaryAction) {
                     return this.primaryAction();
                 } else {
-                    return this.$emit('primaryAction', this.stateValue, this.value);
+                    if (this.inputType == 'checkbox') {
+                        return this.$emit('primaryAction', this.stateValue, this.checkboxes);
+                    } else if (this.inputType == 'number') {
+                        return this.$emit('primaryAction', this.stateValue, this.number);
+                    }
                 }
             },
         },
-        mounted() {
-            if (this.inputType == 'checkbox') {
-                this.value = [];
+        computed: {
+            buttonDisabled: function() {
+                //Button is disabled whenever an input has not been given or changed from its default value
+                return (this.inputType == 'checkbox' && (this.checkboxes == null || this.checkboxes.length == 0))
+                || (this.inputType == 'number' && (this.number == null || this.number == 0))
             }
-        },
+        }
     }
 </script>
 
