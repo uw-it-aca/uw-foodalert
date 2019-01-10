@@ -122,8 +122,8 @@ class SubscriptionTest(TestCase):
 
         original_len = len(Subscription.objects.all())
         response = self.client.post('/subscription/'.format(sub.id),
-                                   data=json.dumps(update),
-                                   content_type='application/json')
+                                    data=json.dumps(update),
+                                    content_type='application/json')
         self.assertEqual(201, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)

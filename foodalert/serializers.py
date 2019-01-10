@@ -162,9 +162,9 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         sub, created = Subscription.objects.get_or_create(
             user=self.context.get('request').user)
 
-        sub.email = validated_data["email"];
-        sub.sms_number = validated_data["sms_number"];
+        sub.email = validated_data["email"]
+        sub.sms_number = validated_data["sms_number"]
 
-        sub.save();
+        sub.save()
 
         return sub
