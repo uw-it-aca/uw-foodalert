@@ -66,7 +66,7 @@
                     @stateAction="this.setValue">
                 </labelled-input>
             </form-category>
-            <form-category section-name="Preview">
+            <form-category section-name="Message Preview">
                 <p v-html="previewText"></p>
             </form-category>
         </b-form>

@@ -457,20 +457,36 @@ exports[`Form Controller renders correctly textarea 1`] = `
     <div
       aria-labelledby="category-heading-null"
       class="form-category my-3 container"
-      id="preview"
+      id="message-preview"
     >
       <h3
         class="h5 pt-2 pb-3 pl-1"
         id="category-heading-null"
       >
-        Preview 
+        Message Preview 
       </h3>
        
       <div
         class="ml-2 pl-4 container"
       >
         <p>
-          preview text
+          <h6
+            style="color: green"
+          >
+            An event has just been posted! Here are the details...
+          </h6>
+          <h6>
+            Food Served: 
+          </h6>
+          <h6>
+            Location: 
+          </h6>
+          <h6>
+            Amount Left: 
+          </h6>
+          <h6>
+            Ends At: 
+          </h6>
         </p>
       </div>
     </div>
