@@ -150,8 +150,9 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             ret['email'] = data['email']
         else:
             ret['email'] = ''
-        if 'sms_number' in data:
-            ret['sms_number'] = data['sms_number']
+
+        if 'sms' in data:
+            ret['sms_number'] = data['sms']
         else:
             ret['sms_number'] = ''
 
@@ -160,4 +161,10 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         sub, created = Subscription.objects.get_or_create(
             user=self.context.get('request').user)
+
+        sub.email = validated_data["email"];
+        sub.sms_number = validated_data["sms_number"];
+
+        sub.save();
+
         return sub

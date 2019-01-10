@@ -77,7 +77,6 @@ class SubscriptionTest(TestCase):
     @transaction.atomic
     def test_create_subscription(self, email=None, sms=None):
         valid_payload = {
-            "netId": "testuser@test.com",
             "email": email,
             "sms": sms,
         }
@@ -117,16 +116,15 @@ class SubscriptionTest(TestCase):
         )
 
         update = {
-            'id': sub.id,
             'email': 'prefix-' + sub.email,
             'sms': '+12345678901',
         }
 
         original_len = len(Subscription.objects.all())
-        response = self.client.put('/subscription/{0}/'.format(sub.id),
+        response = self.client.post('/subscription/'.format(sub.id),
                                    data=json.dumps(update),
                                    content_type='application/json')
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(201, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)
 
