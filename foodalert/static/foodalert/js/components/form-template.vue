@@ -67,7 +67,7 @@
                 </labelled-input>
             </form-category>
             <form-category section-name="Message Preview">
-                <p v-html="previewText"></p>
+                <pre>{{previewText}}</pre>
             </form-category>
         </b-form>
         <hr>

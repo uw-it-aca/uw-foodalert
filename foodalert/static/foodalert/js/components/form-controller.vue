@@ -108,36 +108,37 @@
                     }
                     foods = foods.slice(0, -2);
                 }
-                var text =  ("<h6 style='color: green'>An event has just been posted! Here are the details...</h6>" +
-                             "<h6>Food Served: " + foods + "</h6>" +
-                             "<h6>Location: " + this.state.location + "</h6>" +
-                             "<h6>Amount Left: " + this.state.foodQuantity + "</h6>" +
-                             "<h6>Ends At: ");
+                var text =  ("An event has just been posted! Here are the details...\n" +
+                             "Food Served: " + foods + "\n" +
+                             "Location: " + this.state.location + "\n" +
+                             "Amount Left: " + this.state.foodQuantity + "\n" +
+                             "Ends At: ");
                 //Change the end time into readable format
                 if (this.state.endTime != "") {
                     var hour = parseInt(this.state.endTime.substring(0,2));
                     if (hour > 12) {
-                        text += (hour - 12) + this.state.endTime.substring(2,5) + " PM</h6>";
+                        text += (hour - 12) + this.state.endTime.substring(2,5) + " PM";
                     } else if (hour == 12) {
-                        text += this.state.endTime + " PM </h6>"
+                        text += this.state.endTime + " PM"
                     } else if (hour == 0) {
-                        text += "12" + this.state.endTime.substring(2,5) + " AM</h6>"
+                        text += "12" + this.state.endTime.substring(2,5) + " AM"
                     } else {
-                        text += this.state.endTime + " AM</h6>";
+                        text += this.state.endTime + " AM";
                     }
                 }
+                text += "\n";
                 //Add in any allergens if they were selected
                 if (this.state.allergens.length > 0) {
-                    text += "<h6>Food Contains: ";
+                    text += "Food Contains: ";
                     for (var food in this.state.allergens) {
                         text += this.state.allergens[food] + ", ";
                     }
                     text = text.slice(0, -2);
-                    text += "</h6>";
+                    text += "\n";
                 }
                 //Add an additional message if containers are required
                 if (this.state.needContainer) {
-                    text += "<h6>Please Bring A Container!</h6>";
+                    text += "Please Bring A Container!\n";
                 }
                 return text;
             }
