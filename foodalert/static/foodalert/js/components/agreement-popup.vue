@@ -9,6 +9,7 @@
                 v-if="inputType == 'number'"
                 v-model="number"
                 type="number"
+                min="0"
                 placeholder="40569503"
                 class="text-center mb-3 border-0">
             </b-form-input>
@@ -84,9 +85,9 @@
                 if (this.primaryAction) {
                     return this.primaryAction();
                 } else {
-                    if (this.inputType == 'checkbox') {
+                    if (this.inputType === 'checkbox') {
                         return this.$emit('primaryAction', this.stateValue, this.checkboxes);
-                    } else if (this.inputType == 'number') {
+                    } else if (this.inputType === 'number') {
                         return this.$emit('primaryAction', this.stateValue, this.number);
                     }
                 }
@@ -95,8 +96,8 @@
         computed: {
             buttonDisabled: function() {
                 //Button is disabled whenever an input has not been given or changed from its default value
-                return (this.inputType == 'checkbox' && (this.checkboxes == null || this.checkboxes.length == 0))
-                || (this.inputType == 'number' && (this.number == null || this.number == 0))
+                return (this.inputType === 'checkbox' && (this.checkboxes === null || this.checkboxes.length === 0))
+                || (this.inputType === 'number' && (this.number === null || this.number === '0'))
             }
         }
     }
