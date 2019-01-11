@@ -20,7 +20,7 @@ class Notification(models.Model):
         'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     host_permit_number = models.CharField(max_length=40, blank=True, null=True)
-    host_user_agent = models.CharField(max_length=80, blank=False)
+    host_user_agent = models.CharField(max_length=256, blank=False)
 
 
 class Subscription(models.Model):
