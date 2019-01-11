@@ -127,8 +127,6 @@ class NotificationSerializer(serializers.ModelSerializer):
         if ret["host_user_agent"] == "":
             raise ValidaionError(
                 {"host_user_agent": "User agent information is required"})
-        if len(ret["host_user_agent"]) > 256:
-            ret["host_user_agent"] = ret["host_user_agent"][0:255]
         return ret
 
 
