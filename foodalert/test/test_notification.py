@@ -104,10 +104,7 @@ class NotificationTest(TestCase):
             expected_json = json.load(data_file)
         # Test the post with a valid payload (all fields necessary are there)
         valid_payload = {
-                "location": {
-                    "main": "UW Campus",
-                    "detail": "North Campus"
-                },
+                "location": "UW Campus",
                 "event": "UW Event",
                 "time": {
                     "created": "2018-09-13T19:25:40.440859Z",
@@ -148,10 +145,7 @@ class NotificationTest(TestCase):
         request is unsuccessful
         """
         invalid_payload = {
-                 "location": {
-                     "main": None,
-                     "detail": None
-                 },
+                 "location": None,
                  "event": "",
                  "time": {
                      "created": None,
