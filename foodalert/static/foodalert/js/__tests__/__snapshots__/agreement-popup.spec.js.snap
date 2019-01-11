@@ -172,6 +172,7 @@ exports[`Agreement Popup renders correctly textarea 1`] = `
       <input
         class="text-center mb-3 border-0 form-control"
         id="__BVID__3"
+        min="0"
         placeholder="40569503"
         type="number"
       />
