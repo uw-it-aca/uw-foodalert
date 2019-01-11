@@ -106,7 +106,8 @@ exports[`Agreement Popup renders correctly checkbox 1`] = `
     </button>
      
     <button
-      class="btn btn-primary btn-lg px-5 ml-2"
+      class="btn btn-primary btn-lg disabled px-5 ml-2"
+      disabled="disabled"
       type="button"
     >
       
@@ -171,6 +172,7 @@ exports[`Agreement Popup renders correctly textarea 1`] = `
       <input
         class="text-center mb-3 border-0 form-control"
         id="__BVID__3"
+        min="0"
         placeholder="40569503"
         type="number"
       />
@@ -195,7 +197,8 @@ exports[`Agreement Popup renders correctly textarea 1`] = `
     </button>
      
     <button
-      class="btn btn-primary btn-lg px-5 ml-2"
+      class="btn btn-primary btn-lg disabled px-5 ml-2"
+      disabled="disabled"
       type="button"
     >
       
