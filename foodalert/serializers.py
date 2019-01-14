@@ -4,6 +4,7 @@ from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
 from foodalert.models import Notification, Update, SafeFood, Allergen,\
         Subscription
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class SafeFoodSerializer(serializers.ModelSerializer):
@@ -136,6 +137,8 @@ class UpdateSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
+    sms_number = PhoneNumberField()
+
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'email')

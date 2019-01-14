@@ -11,13 +11,27 @@
     import SignupTemplate from './signup-template.vue';
     import { validationMixin } from "vuelidate"
     import { requiredIf, email, helpers } from "vuelidate/lib/validators"
-    const phoneNum = helpers.regex('phoneNum', /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
+    import { parsePhoneNumberFromString } from 'libphonenumber-js'
+    const phoneNum = function(s) {
+        if (s === '') {
+            return true;
+        }
+
+        try {
+            return parsePhoneNumberFromString(s, 'US').isValid();
+        } catch (e) {
+            return false;
+        }
+    }
     //a function that takes a validator and a predicate and checks the validator
     //only if the predicate is true, function is curried (i.e must be called
     //checkIf(validator)(predicate))
     const checkIf = (check) => (predicate) => (value) => predicate() ? check(value) : true;
 
     export default {
+        props: {
+            subId: Number
+        },
         components: {
             'signup-template': SignupTemplate,
         },
@@ -35,7 +49,11 @@
             reqBody: function() {
                 var ret = {};
                 ret['email'] = this.val.email;
-                ret['sms_number'] = this.val.sms;
+                try {
+                    ret['sms_number'] = parsePhoneNumberFromString(this.val.sms, 'US').number;
+                } catch (error) {
+                    ret['sms_number'] = '';
+                }
                 ret['netId'] = '';
                 return ret;
             },
@@ -48,8 +66,23 @@
                     'X-CSRFToken': csrftoken,
                 };
                 axios.post('/subscription/', this.reqBody, {"headers": headers})
-                    .then(console.log);
+                    .then(this.update);
             },
+            update() {
+                console.log("updating")
+                axios.get(`/subscription/${this.subId}`)
+                    .then(resp => resp.data)
+                    .then(data => {
+                        this.val.email = data.email;
+                        if(data.email) {
+                            this.val.inputTypes.push('Email');
+                        }
+                        this.val.sms = data.sms_number;
+                        if(data.sms) {
+                            this.val.inputTypes.push('SMS/Text');
+                        }
+                    })
+            }
         },
         validations() {
             return {
@@ -58,7 +91,7 @@
                         requiredIf: requiredIf(function(v) {
                             return this.val.inputTypes.indexOf('Email') !== -1
                         }),
-                        emailIf: checkIf(email)((v) => {
+                        emailIf: checkIf(email) ((v) => {
                             return this.val.inputTypes.indexOf('Email') !== -1
                         })
                     },
@@ -73,5 +106,12 @@
                 }
             }
         },
+        beforeRouteEnter(to, from , next) {
+            next(vm => vm.update());
+        },
+        beforeRouteUpdate(to, from , next) {
+            this.update();
+            next();
+        }
     }
 </script>

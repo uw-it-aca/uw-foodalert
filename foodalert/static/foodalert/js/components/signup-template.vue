@@ -10,7 +10,7 @@
             <b-form-checkbox-group
                 :options="['Email','SMS/Text']"
                 stacked
-                :value="inputTypes"
+                :checked="inputTypes"
                 @input="$emit('update:inputTypes', $event)"
                 class="mb-3">
             </b-form-checkbox-group>
@@ -64,7 +64,7 @@
             <b-link
                 :disabled="v.val.$invalid || this.inputTypes.length === 0 || !this.agreement"
                 class="btn btn-primary float-right mb-3"
-                @click="$emit('send', $event)">
+                @click="$emit('send')">
                 Sign Up
             </b-link>
         </b-container>
@@ -74,6 +74,7 @@
 <script>
     import FormCategory from './form-category.vue';
     import LabelledInput from './labelled-input.vue';
+    import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
     export default {
         props: {
@@ -89,11 +90,6 @@
         components: {
             'form-category': FormCategory,
             'labelled-input': LabelledInput,
-        },
-        methods: {
-            update() {
-                this.$emit('input', payload);
-            },
         },
     }
 </script>
