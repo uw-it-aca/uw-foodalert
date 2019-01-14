@@ -4,7 +4,7 @@ from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
 from foodalert.models import Notification, Update, SafeFood, Allergen,\
         Subscription
-from phonenumber_field.modelfields import PhoneNumberField
+from phonenumber_field.serializerfields import PhoneNumberField
 
 
 class SafeFoodSerializer(serializers.ModelSerializer):
@@ -154,10 +154,12 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         else:
             ret['email'] = ''
 
-        if 'sms' in data:
-            ret['sms_number'] = data['sms']
+        if 'sms_number' in data:
+            ret['sms_number'] = data['sms_number']
         else:
             ret['sms_number'] = ''
+
+        # print(data)
 
         return ret
 
@@ -167,6 +169,8 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
         sub.email = validated_data["email"]
         sub.sms_number = validated_data["sms_number"]
+
+        print(validated_data)
 
         sub.save()
 
