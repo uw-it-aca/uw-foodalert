@@ -19,7 +19,6 @@ class Notification(models.Model):
     allergens = models.ManyToManyField(
         'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
-    host_permit_number = models.CharField(max_length=40, blank=True, null=True)
     host_user_agent = models.TextField(blank=False)
 
 

@@ -63,7 +63,6 @@
 
                             //Flatten the row and rename columns
                             var flat = flatten(log);
-                            flat["permitNumber"] = flat["foodServiceInfo.permitNumber"];
 
                             //Add the item to our audit logs
                             this.items.push(flat);
@@ -113,7 +112,6 @@
                     "bringContainers": '',
                     "host.netID": '',
                     "host.userAgent": '',
-                    "permitNumber": '',
                     "_rowVariant": 'update',
                 };
                 return ret;

@@ -28,7 +28,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = ('location', 'location_details', 'event', 'created_time',
                   'end_time', 'food_served', 'amount_of_food_left', 'host',
                   'bring_container', 'safe_foods', 'allergens',
-                  'host_permit_number', 'host_user_agent')
+                  'host_user_agent')
 
     def create(self, validated_data):
         allergen_data = validated_data.pop('allergens')
@@ -65,7 +65,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             },
             'bringContainers': notif.bring_container,
             'foodServiceInfo': {
-                'permitNumber': notif.host_permit_number,
                 'safeToShareFood': [x.name for x in notif.safe_foods.all()],
             },
             'host': {
@@ -105,7 +104,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             'bring_container': data["bringContainers"],
             'safe_foods': None,
             'allergens': None,
-            'host_permit_number': data["foodServiceInfo"]["permitNumber"],
             'host_user_agent': data["host"]["userAgent"],
         }
         if data["foodServiceInfo"]["safeToShareFood"] != []:

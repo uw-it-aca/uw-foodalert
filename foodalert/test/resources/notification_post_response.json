@@ -16,7 +16,6 @@
     },
     "bringContainers": false,
     "foodServiceInfo": {
-        "permitNumber": "12345",
         "safeToShareFood": []
     },
     "host": {
