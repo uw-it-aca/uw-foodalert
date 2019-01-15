@@ -40,7 +40,6 @@ exports[`Signup Controller renders correctly textarea 1`] = `
         id="__BVID__13"
         role="group"
         tabindex="-1"
-        value=""
       >
         <div
           class="custom-control custom-checkbox"
