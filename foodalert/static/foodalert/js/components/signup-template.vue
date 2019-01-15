@@ -62,7 +62,7 @@
         <hr>
         <b-container>
             <b-link
-                :disabled="v.val.$invalid || this.inputTypes.length === 0 || !this.agreement"
+                :disabled="v.val.$invalid || !this.agreement"
                 class="btn btn-primary float-right mb-3"
                 @click="$emit('send')">
                 Sign Up

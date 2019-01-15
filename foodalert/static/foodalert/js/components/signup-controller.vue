@@ -48,15 +48,31 @@
         computed: {
             reqBody: function() {
                 var ret = {};
-                ret['email'] = this.val.email;
-                try {
-                    ret['sms_number'] = parsePhoneNumberFromString(this.val.sms, 'US').number;
-                } catch (error) {
-                    ret['sms_number'] = '';
+
+                if(this.val.inputTypes.indexOf('Email') !== -1) {
+                    ret['email'] = this.val.email;
                 }
-                ret['netId'] = '';
+
+                if(this.val.inputTypes.indexOf('SMS/Text') !== -1) {
+                    try {
+                        ret['sms_number'] = parsePhoneNumberFromString(
+                            this.val.sms, 'US').number;
+                    } catch (error) {
+                        ret['sms_number'] = '';
+                    }
+                }
+
                 return ret;
             },
+        },
+        watch: {
+            val: {
+                inputTypes: function(arr, old) {
+                    $v.$reset();
+                    $v.$touch();
+                    console.log("recalculated");
+                }
+            }
         },
         methods: {
             send() {
@@ -69,7 +85,6 @@
                     .then(this.update);
             },
             update() {
-                console.log("updating")
                 axios.get(`/subscription/${this.subId}`)
                     .then(resp => resp.data)
                     .then(data => {
@@ -78,7 +93,7 @@
                             this.val.inputTypes.push('Email');
                         }
                         this.val.sms = data.sms_number;
-                        if(data.sms) {
+                        if(data.sms_number) {
                             this.val.inputTypes.push('SMS/Text');
                         }
                     })

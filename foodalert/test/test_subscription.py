@@ -78,7 +78,7 @@ class SubscriptionTest(TestCase):
     def test_create_subscription(self, email=None, sms=None):
         valid_payload = {
             "email": email,
-            "sms": sms,
+            "sms_number": sms,
         }
         original_len = len(Subscription.objects.all())
         response = self.client.post('/subscription/', valid_payload)
@@ -117,11 +117,11 @@ class SubscriptionTest(TestCase):
 
         update = {
             'email': 'prefix-' + sub.email,
-            'sms': '+12345678901',
+            'sms_number': ' +12024561414',
         }
 
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/subscription/'.format(sub.id),
+        response = self.client.post('/subscription/',
                                     data=json.dumps(update),
                                     content_type='application/json')
         self.assertEqual(201, response.status_code)
@@ -131,7 +131,34 @@ class SubscriptionTest(TestCase):
         sub = Subscription.objects.get(pk=sub.id)
 
         self.assertEqual(update['email'], sub.email)
-        self.assertEqual(update['sms'], sub.sms_number)
+        self.assertEqual(update['sms_number'], sub.sms_number)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_unsubscribe(self, email=None, sms=None):
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+
+        update = {
+            'email': '',
+            'sms_number': '',
+        }
+
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/',
+                                    data=json.dumps(update),
+                                    content_type='application/json')
+        self.assertEqual(201, response.status_code)
+        new_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, new_len)
+
+        sub = Subscription.objects.get(pk=sub.id)
+
+        self.assertEqual(update['email'], sub.email)
+        self.assertEqual(update['sms_number'], sub.sms_number)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

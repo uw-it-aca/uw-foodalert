@@ -137,7 +137,7 @@ class UpdateSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    sms_number = PhoneNumberField()
+    sms_number = PhoneNumberField(allow_blank=True)
 
     class Meta:
         model = Subscription
@@ -159,8 +159,6 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         else:
             ret['sms_number'] = ''
 
-        # print(data)
-
         return ret
 
     def create(self, validated_data):
@@ -169,8 +167,6 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
         sub.email = validated_data["email"]
         sub.sms_number = validated_data["sms_number"]
-
-        print(validated_data)
 
         sub.save()
 
