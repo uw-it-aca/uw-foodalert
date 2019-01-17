@@ -67,7 +67,14 @@
                 </labelled-input>
             </form-category>
             <form-category section-name="Message Preview">
-                <pre>{{previewText}}</pre>
+                <h6 style="color: green">{{previewText.heading}}</h6>
+                <h6>{{previewText.food}}</h6>
+                <h6>{{previewText.location}}</h6>
+                <h6>{{previewText.quantity}}</h6>
+                <h6>{{previewText.time}}</h6>
+                <h6>{{previewText.allergens}}</h6>
+                <h6>{{previewText.container}}</h6>
+                <br>
             </form-category>
         </b-form>
         <hr>
@@ -145,7 +152,7 @@
     export default {
         props: {
             allergens: Array,
-            previewText: String,
+            previewText: Object,
             modalShow: Boolean,
             modalMode: String,
             foodList: Array,
