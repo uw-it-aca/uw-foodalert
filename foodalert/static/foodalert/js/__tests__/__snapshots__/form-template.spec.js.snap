@@ -33,7 +33,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__16__BV_label_"
             >
               
-            Describe the food 
+            Describe the food and event 
               <br />
             </label>
             <div

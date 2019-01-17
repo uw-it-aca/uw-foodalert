@@ -33,7 +33,7 @@ describe('Agreement Popup', function () {
         test('textarea', function () {
             var wrapper = mount(AgreePop, {
                 propsData: {
-                    inputType: "text",
+                    inputType: "number",
                     mainText: "Main TExt",
                     introText: "Intro Text",
                     infoText: "Info Text",
