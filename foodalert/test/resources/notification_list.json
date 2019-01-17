@@ -1,9 +1,6 @@
 [{
     "id": "2",
-    "location": {
-        "main": "UW Campus",
-        "detail": null
-    },
+    "location": "UW Campus",
     "event": "UW Event",
     "time": {
         "created": "1",

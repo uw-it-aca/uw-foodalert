@@ -1,9 +1,6 @@
 {
     "id": "3",
-    "location": {
-        "main": "UW Campus",
-        "detail": "North Campus"
-    },
+    "location": "UW Campus",
     "event": "UW Event",
     "time": {
         "created": "2018-09-13T19:25:40.440859Z",

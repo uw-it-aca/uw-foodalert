@@ -34,10 +34,7 @@
             },
             buildRequest() {
                 var data = {
-                     "location": {
-                          "main": this.state.location.substring(0, 10),
-                          "detail": this.state.location
-                     },
+                     "location": this.state.location,
                      "event": "Placeholder event",
                      "time": {
                          "created": new Date(),

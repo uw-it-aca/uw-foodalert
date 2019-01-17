@@ -1,13 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 
 class Notification(models.Model):
-    location = models.CharField(max_length=40, blank=False)
-    location_details = models.CharField(max_length=100, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=False)
     event = models.CharField(max_length=40, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
