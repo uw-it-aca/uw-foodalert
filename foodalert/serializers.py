@@ -25,7 +25,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields = ('location', 'location_details', 'event', 'created_time',
+        fields = ('location', 'event', 'created_time',
                   'end_time', 'food_served', 'amount_of_food_left', 'host',
                   'bring_container', 'safe_foods', 'allergens',
                   'host_user_agent')
@@ -49,10 +49,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         user = User.objects.get(pk=notif.host.id)
         return {
             'id': str(notif.id),
-            'location': {
-                'main': notif.location,
-                'detail': notif.location_details,
-            },
+            'location': notif.location,
             'event': notif.event,
             'time': {
                 'created': notif.created_time,
@@ -94,8 +91,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 "Bad Request": "Post data must have a bringContainers field"})
         ret = {
-            'location': data["location"]["main"],
-            'location_details': data["location"]["detail"],
+            'location': data["location"],
             'event': data["event"],
             'created_time': data["time"]["created"],
             'end_time': data["time"]["ended"],

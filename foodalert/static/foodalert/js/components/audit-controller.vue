@@ -59,7 +59,6 @@
                             if (!this.months.includes(month)) {
                                 this.months.push(month);
                             }
-                            log.location = log.location.main;
 
                             //Flatten the row and rename columns
                             var flat = flatten(log);

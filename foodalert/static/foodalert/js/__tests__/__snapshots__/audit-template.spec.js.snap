@@ -190,9 +190,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="2"
           class=""
-        >
-          HUB 130
-        </td>
+        />
         <td
           aria-colindex="3"
           class=""
@@ -376,9 +374,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="2"
           class=""
-        >
-          HUB 130
-        </td>
+        />
         <td
           aria-colindex="3"
           class=""
