@@ -28,7 +28,7 @@ jest.mock('axios', function() {
           },
           "bringContainers": false,
           "foodServiceInfo": {
-            "permitNumber": "2"
+            "safeToShareFood": []
           },
           "host": {
             "hostID": 1,
@@ -53,7 +53,7 @@ jest.mock('axios', function() {
           },
           "bringContainers": false,
           "foodServiceInfo": {
-            "permitNumber": "3"
+            "safeToShareFood": []
           },
           "host": {
             "hostID": 1,
