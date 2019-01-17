@@ -3,7 +3,7 @@
         <b-form>
             <form-category>
                 <labelled-input
-                    label-text="Describe the food"
+                    label-text="Describe the food and event"
                     example-text="hot indian food FIUTS weekly club meeting"
                     :rows="2"
                     :v="v.form.description"
@@ -92,13 +92,12 @@
             </agreement-popup>
             <agreement-popup
                 slot="permit"
-                input-type="text"
-                main-text="Describe Your Event"
+                input-type="number"
+                main-text="Enter your permit number"
                 primary-text="Continue"
-                info-text="Description must be shorter than 40 characters"
                 can-back
                 @primaryAction="this.setValue"
-                state-value="event"
+                state-value="permitNumber"
                 :back-action="updateValue.bind(this, 'claimsPermit')">
             </agreement-popup>
             <agreement-popup

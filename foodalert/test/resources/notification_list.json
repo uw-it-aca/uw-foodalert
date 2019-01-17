@@ -13,6 +13,7 @@
     },
     "bringContainers": false,
     "foodServiceInfo": {
+        "permitNumber": null,
         "safeToShareFood": []
     },
     "host": {

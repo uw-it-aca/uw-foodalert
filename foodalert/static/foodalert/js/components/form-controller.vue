@@ -34,8 +34,8 @@
             },
             buildRequest() {
                 var data = {
-                     "event": this.state.event,
                      "location": this.state.location,
+                     "event": "Placeholder event",
                      "time": {
                          "created": new Date(),
                          "ended": new Date((new Date()).toString().substring(0,16) + this.state.endTime + ":00")
@@ -47,6 +47,7 @@
                      },
                      "bringContainers": this.state.needContainer,
                      "foodServiceInfo": {
+                         "permitNumber": this.state.permitNumber,
                          "safeToShareFood": this.state.safeFoodList
                      },
                      "host": {
@@ -74,7 +75,7 @@
             modalShow: function() {
                 //show the model so long as one of the field sets is incomplete
                 return (
-                    (!this.state.claimsPermit || !this.state.event) &&
+                    (!this.state.claimsPermit || !this.state.permitNumber) &&
                     (
                         !this.state.onSafeList ||
                         this.state.safeFoodList.length == 0 ||
@@ -99,6 +100,7 @@
             return {
                 state: {
                         claimsPermit: false,
+                        permitNumber: null,
                         onSafeList: false,
                         safeFoodList: [],
                         acceptedSafeListTerms: false,
@@ -109,7 +111,6 @@
                         allergens: [],
                         needContainer: false,
                         notificationID: 0,
-                        event: "",
                 },
                 form : {
                     description: "",

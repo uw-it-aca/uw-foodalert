@@ -117,6 +117,7 @@ class NotificationTest(TestCase):
                 },
                 "bringContainers": False,
                 "foodServiceInfo": {
+                    "permitNumber": "12345",
                     "safeToShareFood": None
                 },
                 "host": {
@@ -157,6 +158,7 @@ class NotificationTest(TestCase):
                  },
                  "bringContainers": False,
                  "foodServiceInfo": {
+                     "permitNumber": "",
                      "safeToShareFood": None
                  },
                  "host": {
