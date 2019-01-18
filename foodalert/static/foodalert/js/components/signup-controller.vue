@@ -70,7 +70,6 @@
                 inputTypes: function(arr, old) {
                     $v.$reset();
                     $v.$touch();
-                    console.log("recalculated");
                 }
             }
         },
@@ -82,7 +81,7 @@
                     'X-CSRFToken': csrftoken,
                 };
                 axios.post('/subscription/', this.reqBody, {"headers": headers})
-                    .then(this.update);
+                    .then(() => router.push('subscribed'));
             },
             update() {
                 axios.get(`/subscription/${this.subId}`)
