@@ -67,13 +67,13 @@
                 </labelled-input>
             </form-category>
             <form-category section-name="Message Preview">
-                <h6 style="color: green">{{previewText.heading}}</h6>
-                <h6>{{previewText.food}}</h6>
-                <h6>{{previewText.location}}</h6>
-                <h6>{{previewText.quantity}}</h6>
-                <h6>{{previewText.time}}</h6>
-                <h6>{{previewText.allergens}}</h6>
-                <h6>{{previewText.container}}</h6>
+                <p style="color: green">{{previewText.heading}}</p>
+                <p>{{previewText.food}}</p>
+                <p>{{previewText.location}}</p>
+                <p>{{previewText.quantity}}</p>
+                <p>{{previewText.time}}</p>
+                <p>{{previewText.allergens}}</p>
+                <p>{{previewText.container}}</p>
                 <br>
             </form-category>
         </b-form>
