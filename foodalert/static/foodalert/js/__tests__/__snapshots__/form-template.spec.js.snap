@@ -469,35 +469,35 @@ exports[`Form Controller renders correctly textarea 1`] = `
       <div
         class="ml-2 pl-4 container"
       >
-        <h6
+        <p
           style="color: green;"
         >
           An event has just been posted! Here are the details...
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           Food Served: 
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           Location: 
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           Amount Left: 
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           Ends At: 
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           
-        </h6>
+        </p>
          
-        <h6>
+        <p>
           
-        </h6>
+        </p>
          
         <br />
       </div>
