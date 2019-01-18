@@ -2,6 +2,7 @@
     <update-template
         v-bind:text.sync="form.text"
         @submitRequest="this.sendUpdate"
+        :event="this.state.event"
         :v="$v"
         >
     </update-template>
@@ -19,14 +20,15 @@
             'update-template': UpdateTemplate,
         },
         mounted() {
+            this.getNotification();
             this.state.uid = this._uid;
-            this.state.notificationID = this.getNotification();
         },
         data() {
             return {
                 state: {
                     uid: 0,
                     notificationID: 0,
+                    event: ""
                 },
                 form: {
                     text: ""
@@ -47,6 +49,7 @@
                             return notif.ended == false;
                         });
                         this.state.notificationID = data[0].id;
+                        this.state.event = data[0].event;
                     })
                     .catch(error => {
                         console.log("There was an error processing the request");
