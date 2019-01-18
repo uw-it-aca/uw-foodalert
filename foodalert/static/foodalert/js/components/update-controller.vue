@@ -1,7 +1,7 @@
 <template>
     <update-template
         v-bind:text.sync="form.text"
-        @submitRequest="this.buildRequest"
+        @submitRequest="this.sendUpdate"
         :v="$v"
         >
     </update-template>
@@ -37,7 +37,9 @@
             setText(payload) {
                 this.form.text = payload;
             },
-            buildRequest() {
+            getNotification() {
+            }
+            sendUpdate() {
                 var data = {
                     "text": this.form.text,
                     "parent_notification": this.state.notificationID

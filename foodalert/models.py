@@ -18,6 +18,7 @@ class Notification(models.Model):
         'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     host_user_agent = models.TextField(blank=False)
+    ended = models.BooleanField(default=False)
 
 
 class Subscription(models.Model):

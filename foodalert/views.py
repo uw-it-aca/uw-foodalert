@@ -28,8 +28,13 @@ class NotificationDetail(generics.RetrieveAPIView):
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
-    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        if is_member_of_group(self.request, audit_group):
+            return Notification.objects.all()
+        else:
+            return self.request.user.notification_set.all()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
