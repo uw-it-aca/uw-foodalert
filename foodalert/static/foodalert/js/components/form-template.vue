@@ -66,8 +66,15 @@
                     @stateAction="this.setValue">
                 </labelled-input>
             </form-category>
-            <form-category section-name="Preview">
-                <p v-html="previewText"></p>
+            <form-category section-name="Message Preview">
+                <p style="color: green">{{previewText.heading}}</p>
+                <p>{{previewText.food}}</p>
+                <p>{{previewText.location}}</p>
+                <p>{{previewText.quantity}}</p>
+                <p>{{previewText.time}}</p>
+                <p>{{previewText.allergens}}</p>
+                <p>{{previewText.container}}</p>
+                <br>
             </form-category>
         </b-form>
         <hr>
@@ -145,7 +152,7 @@
     export default {
         props: {
             allergens: Array,
-            previewText: String,
+            previewText: Object,
             modalShow: Boolean,
             modalMode: String,
             foodList: Array,

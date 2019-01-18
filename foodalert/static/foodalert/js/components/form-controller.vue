@@ -1,7 +1,7 @@
 <template>
     <form-template
         :allergens='["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"]'
-        :preview-text="'preview text'"
+        :preview-text="previewText"
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
         :foodList="this.state.safeFoodList"
@@ -94,6 +94,51 @@
                     return "safeList";
                 }
                 return "default";
+            },
+            previewText: function() {
+                var foods = this.state.foodEvent;
+                //Add in foods from the safe food list if it was used
+                if (this.state.onSafeList) {
+                    foods += " ";
+                    for (var food in this.state.safeFoodList) {
+                        foods += this.state.safeFoodList[food] + ", ";
+                    }
+                    foods = foods.slice(0, -2);
+                }
+                //Change the end time into readable format
+                var time = "Ends At: "
+                if (this.state.endTime != "") {
+                    var hour = parseInt(this.state.endTime.substring(0,2));
+                    if (hour > 12) {
+                        time += (hour - 12) + this.state.endTime.substring(2,5) + " PM";
+                    } else if (hour == 12) {
+                        time += this.state.endTime + " PM"
+                    } else if (hour == 0) {
+                        time += "12" + this.state.endTime.substring(2,5) + " AM"
+                    } else {
+                        time += this.state.endTime + " AM";
+                    }
+                }
+
+                var text =  { 'heading': "An event has just been posted! Here are the details...",
+                              'food': "Food Served: " + foods,
+                              'location': "Location: " + this.state.location,
+                              'quantity': "Amount Left: " + this.state.foodQuantity,
+                              'time': time,
+                              };
+                //Add in any allergens if they were selected
+                if (this.state.allergens.length > 0) {
+                    var allergens = "Food Contains: ";
+                    for (var food in this.state.allergens) {
+                        allergens += this.state.allergens[food] + ", ";
+                    }
+                    text.allergens = allergens.slice(0, -2);
+                }
+                //Add an additional message if containers are required
+                if (this.state.needContainer) {
+                    text.container = "Please Bring A Container!";
+                }
+                return text;
             }
         },
         data() {
