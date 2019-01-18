@@ -5,7 +5,6 @@
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
         :foodList="this.state.safeFoodList"
-        :notificationID="this.state.notificationID"
         :v="$v"
         @updateState="this.modifyStateBoolean"
         @setState="this.modifyState"
@@ -62,7 +61,7 @@
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function(response) {
                         console.log(response);
-                        this.$router.push({ name: 'update', query: { notificationID: response.data.id}});
+                        this.$router.push({ name: 'update'});
                     }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");

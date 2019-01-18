@@ -20,7 +20,7 @@
         },
         mounted() {
             this.state.uid = this._uid;
-            this.state.notificationID = parseInt(this.$route.query.notificationID);
+            this.state.notificationID = this.getNotification();
         },
         data() {
             return {
@@ -38,7 +38,21 @@
                 this.form.text = payload;
             },
             getNotification() {
-            }
+                var headers = {
+                    'Content-Type': 'application/json',
+                }
+                axios.get('http://0.0.0.0:8000/notification/', {"headers": headers})
+                    .then(response => {
+                        var data = response.data.filter(function(notif) {
+                            return notif.ended == false;
+                        });
+                        this.state.notificationID = data[0].id;
+                    })
+                    .catch(error => {
+                        console.log("There was an error processing the request");
+                        console.log(error);
+                    })
+            },
             sendUpdate() {
                 var data = {
                     "text": this.form.text,
