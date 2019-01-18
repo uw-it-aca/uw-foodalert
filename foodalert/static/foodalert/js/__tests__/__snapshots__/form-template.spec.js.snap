@@ -33,7 +33,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__16__BV_label_"
             >
               
-            Describe the food and event 
+            Describe the food 
               <br />
             </label>
             <div
@@ -43,7 +43,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               <textarea
                 class="form-control form-control-md"
                 id="textarea-null"
-                placeholder="hot indian food FIUTS weekly club meeting"
+                placeholder="hot indian food"
                 rows="2"
                 wrap="soft"
               />
