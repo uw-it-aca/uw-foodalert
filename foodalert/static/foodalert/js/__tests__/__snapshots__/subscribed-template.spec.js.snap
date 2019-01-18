@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Subscribed Controller renders correctly 1`] = `
+<div
+  class="container"
+>
+  <p>
+    
+        Congratulations! You are signed up to be notified about leftover food after on-campus events.
+    
+  </p>
+   
+  <p>
+    
+        You will be emailed at
+    <br />
+     
+    <strong>
+       example@email.org 
+    </strong>
+  </p>
+   
+  <a
+    class="btn btn-info w-100 my-4 py-2"
+    href="/signup"
+    target="_self"
+  >
+    <span
+      class="ml-2"
+    >
+      Edit Notification Settings
+    </span>
+  </a>
+   
+  <button
+    class="btn w-100 py-2 btn-outline-secondary"
+    type="button"
+  >
+    
+        Unsubscribe
+    
+  </button>
+</div>
+`;

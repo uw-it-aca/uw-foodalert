@@ -1,9 +1,6 @@
 {
     "id": "2",
-    "location": {
-        "main": "UW Campus",
-        "detail": null
-    },
+    "location": "UW Campus",
     "event": "UW Event",
     "time": {
         "created": "1",
@@ -16,12 +13,11 @@
     },
     "bringContainers": false,
     "foodServiceInfo": {
-        "permitNumber": null,
         "safeToShareFood": []
     },
     "host": {
         "hostID": 1,
-        "netID": "testuser@test.com",
+        "netID": "testuser",
         "userAgent": "browser"
     }
 }

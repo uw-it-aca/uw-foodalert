@@ -100,8 +100,8 @@ exports[`Audit Controller renders correctly textarea 1`] = `
    
   <table
     aria-busy="false"
-    aria-colcount="12"
-    aria-rowcount="2"
+    aria-colcount="10"
+    aria-rowcount="6"
     class="table b-table table-hover"
     id="__BVID__5"
   >
@@ -115,73 +115,61 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="1"
           class=""
         >
-          Location
+          Host Net ID
         </th>
         <th
           aria-colindex="2"
           class=""
         >
-          Event
+          Location
         </th>
         <th
           aria-colindex="3"
           class=""
         >
-          Time Created
+          Event
         </th>
         <th
           aria-colindex="4"
           class=""
         >
-          Time Ended
+          Time Created
         </th>
         <th
           aria-colindex="5"
           class=""
         >
-          Food Served
+          Time Ended
         </th>
         <th
           aria-colindex="6"
           class=""
         >
-          Food Amount
+          Food Served
         </th>
         <th
           aria-colindex="7"
           class=""
         >
-          Food Allergens
+          Food Amount
         </th>
         <th
           aria-colindex="8"
           class=""
         >
-          Bring Containers
+          Food Allergens
         </th>
         <th
           aria-colindex="9"
           class=""
         >
-          Host Net ID
+          Bring Containers
         </th>
         <th
           aria-colindex="10"
           class=""
         >
           Host User Agent
-        </th>
-        <th
-          aria-colindex="11"
-          class=""
-        >
-          Permit Number
-        </th>
-        <th
-          aria-colindex="12"
-          class=""
-        >
-          Host ID
         </th>
       </tr>
     </thead>
@@ -197,31 +185,29 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="1"
           class=""
         >
-          HUB 130
+          
         </td>
         <td
           aria-colindex="2"
+          class=""
+        />
+        <td
+          aria-colindex="3"
           class=""
         >
           Placeholder event
         </td>
         <td
-          aria-colindex="3"
+          aria-colindex="4"
           class=""
         >
           Tue Dec 18 2018 10:20:00 AM
         </td>
         <td
-          aria-colindex="4"
-          class=""
-        >
-          Tue Dec 18 2018 11:11:00 AM
-        </td>
-        <td
           aria-colindex="5"
           class=""
         >
-          a
+          Tue Dec 18 2018 11:11:00 AM
         </td>
         <td
           aria-colindex="6"
@@ -232,12 +218,74 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="7"
           class=""
+        >
+          a
+        </td>
+        <td
+          aria-colindex="8"
+          class=""
+        />
+        <td
+          aria-colindex="9"
+          class=""
+        >
+          false
+        </td>
+        <td
+          aria-colindex="10"
+          class=""
+        >
+          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+        </td>
+      </tr>
+      <tr
+        class="table-update"
+      >
+        <td
+          aria-colindex="1"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="2"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="3"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="4"
+          class=""
+        >
+          Invalid Date Invalid Date
+        </td>
+        <td
+          aria-colindex="5"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="6"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="7"
+          class=""
         />
         <td
           aria-colindex="8"
           class=""
         >
-          false
+          
         </td>
         <td
           aria-colindex="9"
@@ -249,19 +297,69 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="10"
           class=""
         >
-          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+          
         </td>
+      </tr>
+      <tr
+        class="table-update"
+      >
         <td
-          aria-colindex="11"
+          aria-colindex="1"
           class=""
         >
-          2
+          
         </td>
         <td
-          aria-colindex="12"
+          aria-colindex="2"
           class=""
         >
-          1
+          
+        </td>
+        <td
+          aria-colindex="3"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="4"
+          class=""
+        >
+          Invalid Date Invalid Date
+        </td>
+        <td
+          aria-colindex="5"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="6"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="7"
+          class=""
+        />
+        <td
+          aria-colindex="8"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="9"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="10"
+          class=""
+        >
+          
         </td>
       </tr>
       <tr
@@ -271,37 +369,97 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="1"
           class=""
         >
-          HUB 130
+          
         </td>
         <td
           aria-colindex="2"
+          class=""
+        />
+        <td
+          aria-colindex="3"
           class=""
         >
           Placeholder event
         </td>
         <td
-          aria-colindex="3"
+          aria-colindex="4"
           class=""
         >
           Tue Dec 18 2018 11:08:04 AM
         </td>
         <td
-          aria-colindex="4"
+          aria-colindex="5"
           class=""
         >
           Tue Dec 18 2018 1:00:00 PM
         </td>
         <td
-          aria-colindex="5"
+          aria-colindex="6"
           class=""
         >
           Leftover food from HUB meeting
         </td>
         <td
-          aria-colindex="6"
+          aria-colindex="7"
           class=""
         >
           About 8 full meals
+        </td>
+        <td
+          aria-colindex="8"
+          class=""
+        />
+        <td
+          aria-colindex="9"
+          class=""
+        >
+          false
+        </td>
+        <td
+          aria-colindex="10"
+          class=""
+        >
+          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+        </td>
+      </tr>
+      <tr
+        class="table-update"
+      >
+        <td
+          aria-colindex="1"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="2"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="3"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="4"
+          class=""
+        >
+          Invalid Date Invalid Date
+        </td>
+        <td
+          aria-colindex="5"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="6"
+          class=""
+        >
+          
         </td>
         <td
           aria-colindex="7"
@@ -311,7 +469,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="8"
           class=""
         >
-          false
+          
         </td>
         <td
           aria-colindex="9"
@@ -323,19 +481,69 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="10"
           class=""
         >
-          Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
+          
         </td>
+      </tr>
+      <tr
+        class="table-update"
+      >
         <td
-          aria-colindex="11"
+          aria-colindex="1"
           class=""
         >
-          3
+          
         </td>
         <td
-          aria-colindex="12"
+          aria-colindex="2"
           class=""
         >
-          1
+          
+        </td>
+        <td
+          aria-colindex="3"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="4"
+          class=""
+        >
+          Invalid Date Invalid Date
+        </td>
+        <td
+          aria-colindex="5"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="6"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="7"
+          class=""
+        />
+        <td
+          aria-colindex="8"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="9"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="10"
+          class=""
+        >
+          
         </td>
       </tr>
       <!---->

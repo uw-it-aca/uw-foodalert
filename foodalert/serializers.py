@@ -26,10 +26,10 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields = ('location', 'location_details', 'event', 'created_time',
+        fields = ('location', 'event', 'created_time',
                   'end_time', 'food_served', 'amount_of_food_left', 'host',
                   'bring_container', 'safe_foods', 'allergens',
-                  'host_permit_number', 'host_user_agent')
+                  'host_user_agent')
 
     def create(self, validated_data):
         allergen_data = validated_data.pop('allergens')
@@ -47,12 +47,10 @@ class NotificationSerializer(serializers.ModelSerializer):
         return notif
 
     def to_representation(self, notif):
+        user = User.objects.get(pk=notif.host.id)
         return {
             'id': str(notif.id),
-            'location': {
-                'main': notif.location,
-                'detail': notif.location_details,
-            },
+            'location': notif.location,
             'event': notif.event,
             'time': {
                 'created': notif.created_time,
@@ -65,12 +63,11 @@ class NotificationSerializer(serializers.ModelSerializer):
             },
             'bringContainers': notif.bring_container,
             'foodServiceInfo': {
-                'permitNumber': notif.host_permit_number,
                 'safeToShareFood': [x.name for x in notif.safe_foods.all()],
             },
             'host': {
                 'hostID': notif.host.id,
-                'netID': notif.host.email,
+                'netID': user.username,
                 'userAgent': notif.host_user_agent,
             }
         }
@@ -95,8 +92,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 "Bad Request": "Post data must have a bringContainers field"})
         ret = {
-            'location': data["location"]["main"],
-            'location_details': data["location"]["detail"],
+            'location': data["location"],
             'event': data["event"],
             'created_time': data["time"]["created"],
             'end_time': data["time"]["ended"],
@@ -105,7 +101,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             'bring_container': data["bringContainers"],
             'safe_foods': None,
             'allergens': None,
-            'host_permit_number': data["foodServiceInfo"]["permitNumber"],
             'host_user_agent': data["host"]["userAgent"],
         }
         if data["foodServiceInfo"]["safeToShareFood"] != []:
@@ -133,7 +128,16 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification')
+        fields = ('text', 'parent_notification', 'created_time')
+
+        def to_internal_value(self, data):
+            ret = {
+                'text': data['text']
+            }
+
+            ret['parent_notification'] = Notification.objects.get(
+                                         pk=data['parent_notification'])
+            return ret
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):

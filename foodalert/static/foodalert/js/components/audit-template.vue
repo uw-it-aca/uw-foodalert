@@ -14,7 +14,7 @@
              <b-button style="float: right" @click="exportTable">Export</b-button>
          </div>
          <p></p>
-         <b-table hover :items="items"></b-table>
+         <b-table hover :items="items" :fields="fields"></b-table>
      </div>
 </template>
 
@@ -41,6 +41,28 @@
             setYear(event) {
                 this.$emit('updateYear', event.target.innerText);
             },
+        },
+        data() {
+            return {
+                fields: [
+                    'host.netID',
+                    'location',
+                    'event',
+                    'time.created',
+                    'time.ended',
+                    'food.served',
+                    'food.amount',
+                    'food.allergens',
+                    'bringContainers',
+                    'host.userAgent',
+                ],
+            }
         }
     }   
 </script>
+
+<style>
+    .table-update td {
+        border-top : 0 !important;
+    }
+</style>

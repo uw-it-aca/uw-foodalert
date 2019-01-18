@@ -1,13 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 
 class Notification(models.Model):
-    location = models.CharField(max_length=40, blank=False)
-    location_details = models.CharField(max_length=100, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=False)
     event = models.CharField(max_length=40, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
@@ -19,8 +17,7 @@ class Notification(models.Model):
     allergens = models.ManyToManyField(
         'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
-    host_permit_number = models.CharField(max_length=40, blank=True, null=True)
-    host_user_agent = models.CharField(max_length=80, blank=False)
+    host_user_agent = models.TextField(blank=False)
 
 
 class Subscription(models.Model):
@@ -34,8 +31,11 @@ class Subscription(models.Model):
 
 
 class Update(models.Model):
-    text = models.CharField(max_length=100)
-    parent_notification = models.ForeignKey('Notification')
+    text = models.CharField(max_length=100, blank=False)
+    parent_notification = models.ForeignKey('Notification',
+                                            blank=False,
+                                            on_delete=models.CASCADE)
+    created_time = models.DateTimeField(auto_now_add=True)
 
 
 class SafeFood(models.Model):

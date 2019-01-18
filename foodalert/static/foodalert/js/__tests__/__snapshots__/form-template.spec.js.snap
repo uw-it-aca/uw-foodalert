@@ -3,6 +3,7 @@
 exports[`Form Controller renders correctly textarea 1`] = `
 <div
   class="p-0 container-fluid"
+  notificationid="0"
 >
   <form
     class=""
@@ -32,7 +33,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__16__BV_label_"
             >
               
-            Describe the food and event 
+            Describe the food 
               <br />
             </label>
             <div
@@ -42,7 +43,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               <textarea
                 class="form-control form-control-md"
                 id="textarea-null"
-                placeholder="hot indian food FIUTS weekly club meeting"
+                placeholder="hot indian food"
                 rows="2"
                 wrap="soft"
               />
@@ -456,21 +457,49 @@ exports[`Form Controller renders correctly textarea 1`] = `
     <div
       aria-labelledby="category-heading-null"
       class="form-category my-3 container"
-      id="preview"
+      id="message-preview"
     >
       <h3
         class="h5 pt-2 pb-3 pl-1"
         id="category-heading-null"
       >
-        Preview 
+        Message Preview 
       </h3>
        
       <div
         class="ml-2 pl-4 container"
       >
-        <p>
-          preview text
+        <p
+          style="color: green;"
+        >
+          An event has just been posted! Here are the details...
         </p>
+         
+        <p>
+          Food Served: 
+        </p>
+         
+        <p>
+          Location: 
+        </p>
+         
+        <p>
+          Amount Left: 
+        </p>
+         
+        <p>
+          Ends At: 
+        </p>
+         
+        <p>
+          
+        </p>
+         
+        <p>
+          
+        </p>
+         
+        <br />
       </div>
     </div>
   </form>
@@ -483,7 +512,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
     <a
       aria-disabled="true"
       class="float-right btn btn-primary btn-lg py-2 disabled"
-      href="update"
+      href="#"
       tabindex="-1"
       target="_self"
       type="submit"
