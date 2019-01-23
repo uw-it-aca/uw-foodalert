@@ -72,6 +72,8 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrftoken,
                 };
+                this.form.text = "No Food left! The event: " + this.state.event + " has ended and is no longer serving food"
+                this.sendUpdate();
                 axios.patch(url, data, {"headers": headers})
                     .then(response => {
                         console.log(response);
