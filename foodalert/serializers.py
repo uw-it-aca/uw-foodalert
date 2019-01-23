@@ -75,8 +75,8 @@ class NotificationSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         if 'ended' not in data:
             data["ended"] = False
-        if  data["ended"] == True:
-            return { 'ended': data["ended"] }
+        if data["ended"]:
+            return {'ended': data["ended"]}
         if 'location' not in data:
             raise ValidationError({
                 "Bad Request": "Post data must have a location field"})

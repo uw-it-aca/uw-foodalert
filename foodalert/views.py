@@ -27,7 +27,9 @@ class NotificationDetail(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, pk):
         instance = self.get_object()
-        serializer = NotificationSerializer(instance, data=request.data, partial=True)
+        serializer = NotificationSerializer(instance,
+                                            data=request.data,
+                                            partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
