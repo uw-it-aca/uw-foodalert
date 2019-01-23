@@ -23,7 +23,7 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 @method_decorator(login_required(), name='dispatch')
 class NotificationDetail(generics.RetrieveUpdateAPIView):
     queryset = Notification.objects.all()
-    serializer = NotificationSerializer
+    serializer_class = NotificationSerializer
 
     def patch(self, request, pk):
         instance = self.get_object()
