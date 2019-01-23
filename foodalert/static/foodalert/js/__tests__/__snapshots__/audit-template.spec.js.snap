@@ -100,7 +100,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
    
   <table
     aria-busy="false"
-    aria-colcount="10"
+    aria-colcount="11"
     aria-rowcount="6"
     class="table b-table table-hover"
     id="__BVID__5"
@@ -171,6 +171,12 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         >
           Host User Agent
         </th>
+        <th
+          aria-colindex="11"
+          class=""
+        >
+          Ended
+        </th>
       </tr>
     </thead>
     <!---->
@@ -237,6 +243,10 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         >
           Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
         </td>
+        <td
+          aria-colindex="11"
+          class=""
+        />
       </tr>
       <tr
         class="table-update"
@@ -299,6 +309,12 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         >
           
         </td>
+        <td
+          aria-colindex="11"
+          class=""
+        >
+          
+        </td>
       </tr>
       <tr
         class="table-update"
@@ -357,6 +373,12 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         </td>
         <td
           aria-colindex="10"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="11"
           class=""
         >
           
@@ -421,6 +443,10 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         >
           Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0
         </td>
+        <td
+          aria-colindex="11"
+          class=""
+        />
       </tr>
       <tr
         class="table-update"
@@ -483,6 +509,12 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         >
           
         </td>
+        <td
+          aria-colindex="11"
+          class=""
+        >
+          
+        </td>
       </tr>
       <tr
         class="table-update"
@@ -541,6 +573,12 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         </td>
         <td
           aria-colindex="10"
+          class=""
+        >
+          
+        </td>
+        <td
+          aria-colindex="11"
           class=""
         >
           

@@ -11,6 +11,14 @@ exports[`Update Controller renders correctly 1`] = `
     </strong>
   </p>
    
+  <!---->
+   
+  <p
+    style="color: red;"
+  >
+    You must be currently hosting an event to submit an update
+  </p>
+   
   <p
     class="mt-4"
   >
@@ -18,7 +26,8 @@ exports[`Update Controller renders correctly 1`] = `
   </p>
    
   <button
-    class="btn w-100 mb-3 py-2 btn-primary"
+    class="btn w-100 mb-3 py-2 btn-primary disabled"
+    disabled="disabled"
     type="button"
   >
      No Food Left 
@@ -70,8 +79,10 @@ exports[`Update Controller renders correctly 1`] = `
   <!---->
    
   <a
-    class="w-100 mb-3 py-2 btn btn-secondary btn-md"
+    aria-disabled="true"
+    class="w-100 mb-3 py-2 btn btn-secondary btn-md disabled"
     href="#"
+    tabindex="-1"
     target="_self"
     type="submit"
   >
@@ -133,8 +144,7 @@ exports[`Update Controller renders correctly 1`] = `
               <blockquote
                 class="border rounded mb-0 mx-3 p-3 text-left bg-light"
               >
-                Update: No Food left! “Hot Indian buffet food leftover
-        from from FIUTs weekly meeting” is all gone.
+                Update: No Food left! The event: “” has ended and is no longer serving food.
               </blockquote>
                
             </div>
@@ -143,8 +153,10 @@ exports[`Update Controller renders correctly 1`] = `
               id="__BVID__6___BV_modal_footer_"
             >
               <a
-                class="btn btn-lg btn-primary mx-auto mb-2"
-                href="/ended"
+                aria-disabled="true"
+                class="btn btn-lg btn-primary mx-auto mb-2 disabled"
+                href="#"
+                tabindex="-1"
                 target="_self"
               >
                  Send 'No Food Left' 
