@@ -25,6 +25,11 @@
             :disabled="v.form.$invalid || event === ''"
             @click="$emit('submitRequest')"
             class="w-100 mb-3 py-2 btn btn-secondary btn-md"> Send Update </b-link>
+            <div v-if="this.update != ''">
+                <br>
+                <p style="color: green"> Update Successfully Sent: " {{this.update}}"</p>
+                <br>
+            </div>
         <b-modal
             v-model="modalShowing"
             header-border-variant="0"
@@ -52,6 +57,7 @@
         props: {
             v: Object,
             event: String,
+            update: String,
         },
         components: {
             'labelled-input': LabelledInput,

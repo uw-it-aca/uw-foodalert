@@ -4,6 +4,7 @@
         @submitRequest="this.sendUpdate"
         @submitEnd="this.endNotification"
         :event="this.state.event"
+        :update="this.state.update"
         :v="$v"
         >
     </update-template>
@@ -29,7 +30,8 @@
                 state: {
                     uid: 0,
                     notificationID: 0,
-                    event: ""
+                    event: "",
+                    update: "",
                 },
                 form: {
                     text: ""
@@ -95,6 +97,7 @@
                 }
                 axios.post('/updates/', data, {"headers": headers})
                     .then(function(response) {
+                        this.state.update = response.data.text;
                         console.log(response);
                     }.bind(this))
                     .catch(function (error) {

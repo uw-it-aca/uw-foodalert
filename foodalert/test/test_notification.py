@@ -184,3 +184,20 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 400)
+
+    def test_patch_notification(self):
+        """
+        Attempts to patch a notification 'ended' field and tests that
+        the parital update was successful
+        """
+        payload = {
+            "ended": True
+        }
+        url = "/notification/" + str(self.notification.id) + "/"
+        response = self.client.patch(
+                url,
+                data=json.dumps(payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["ended"], True);
