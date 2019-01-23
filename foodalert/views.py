@@ -21,9 +21,17 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 
 @method_decorator(login_required(), name='dispatch')
-class NotificationDetail(generics.RetrieveAPIView):
+class NotificationDetail(generics.RetrieveUpdateAPIView):
     queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
+    serializer = NotificationSerializer
+
+    def patch(self, request, pk):
+        instance = self.get_object()
+        serializer = NotificationSerializer(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')

@@ -1,9 +1,10 @@
 <template>
     <b-container class="px-4 pt-3">
         <p><strong>Thanks for Sharing! Here's what's next:</strong></p>
-        <p style="color: green">You are currently updating your event: "{{this.event}}"</p>
+        <p v-if="event != ''" style="color: green">You are currently updating your event: "{{this.event}}"</p>
+        <p v-if="event === ''" style="color: red">You must be currently hosting an event to submit an update</p>
         <p class="mt-4"> Let people know when food runs out </p>
-        <b-btn class="w-100 mb-3 py-2" variant="primary" @click="modalShowing = true"> No Food Left </b-btn>
+        <b-btn class="w-100 mb-3 py-2" variant="primary" :disabled="event === ''" @click="modalShowing = true"> No Food Left </b-btn>
 
         <labelled-input
             label-text="Notify people if plans change"
@@ -21,7 +22,7 @@
             <p v-if="!v.form.text.maxLength" class="hasError">Your update message must be shorter than 100 characters</p>
         </div>
         <b-link type="submit"
-            :disabled="v.form.$invalid"
+            :disabled="v.form.$invalid || event === ''"
             @click="$emit('submitRequest')"
             class="w-100 mb-3 py-2 btn btn-secondary btn-md"> Send Update </b-link>
         <b-modal
@@ -36,7 +37,7 @@
 
 
             <template slot="modal-footer">
-                <b-link class="btn btn-lg btn-primary mx-auto mb-2" to="/ended"> Send 'No Food Left' </b-link>
+                <b-link class="btn btn-lg btn-primary mx-auto mb-2" :disabled="event === ''" @click="$emit('submitEnd')"> Send 'No Food Left' </b-link>
                 <a href="#" @click="modalShowing = false" class="mx-auto"> Cancel </a>
             </template>
         </b-modal>

@@ -2,6 +2,7 @@
     <update-template
         v-bind:text.sync="form.text"
         @submitRequest="this.sendUpdate"
+        @submitEnd="this.endNotification"
         :event="this.state.event"
         :v="$v"
         >
@@ -48,11 +49,35 @@
                         var data = response.data.filter(function(notif) {
                             return notif.ended == false;
                         });
-                        this.state.notificationID = data[0].id;
-                        this.state.event = data[0].event;
+                        if (data.length === 0) {
+                            this.state.notificationID = 0;
+                            this.state.event = "";
+                        } else {
+                            this.state.notificationID = data[0].id;
+                            this.state.event = data[0].event;
+                        }
                     })
                     .catch(error => {
                         console.log("There was an error processing the request");
+                        console.log(error);
+                    })
+            },
+            endNotification() {
+                var url = '/notification/' + this.state.notificationID + '/';
+                var data = {
+                    "ended": true,
+                };
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                };
+                axios.patch(url, data, {"headers": headers})
+                    .then(response => {
+                        console.log(response);
+                        this.$router.push({ name: 'ended' });
+                    })
+                    .catch(error => {
                         console.log(error);
                     })
             },
