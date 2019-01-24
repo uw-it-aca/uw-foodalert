@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundTemplate (404 Page) renders correctly 1`] = `
+<div
+  class="container"
+  style="padding: 40px 15px;"
+>
+  <div
+    align-self="center"
+    class="row justify-content-center"
+  >
+    <img
+      src="http://www.washington.edu/anyhungryhusky/files/2016/12/18_UWFoodPantry-Bug-BlkPMS2685-2-300x300.png"
+    />
+  </div>
+   
+  <br />
+   
+  <div
+    align-self="center"
+    class="row justify-content-center"
+  >
+    <h1>
+      404 Not Found
+    </h1>
+  </div>
+   
+  <br />
+   
+  <div
+    align-self="center"
+    class="row justify-content-center"
+  >
+    <h2>
+      The Page You Requested Could Not Be Found
+    </h2>
+  </div>
+   
+  <br />
+   
+  <div
+    align-self="center"
+    class="row justify-content-center"
+  >
+    <a
+      class=""
+      href="/"
+      target="_self"
+    >
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+      >
+        
+                  Go To Homepage
+              
+      </button>
+    </a>
+  </div>
+</div>
+`;
