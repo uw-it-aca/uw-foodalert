@@ -34,18 +34,23 @@ export default {
                     this.headerText = 'Create Food Notification';
                     break;
                 case '/ended/':
+                case '/ended':
                     this.headerText = 'Your Notification Was Sent'
                     break;
                 case '/update/':
+                case '/update':
                     this.headerText = 'Update An Existing Notification'
                     break;
                 case '/signup/':
+                case '/signup':
                     this.headerText = 'Sign-up To Receive Notifications'
                     break;
                 case '/audit/':
+                case '/audit':
                     this.headerText = 'Audit Logs'
                     break;
                 case '/subscribed/':
+                case '/subscribed':
                     this.headerText = 'You Signed Up For Food Notifications!'
                     break;
                 default:

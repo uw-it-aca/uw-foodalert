@@ -81,7 +81,7 @@
                     'X-CSRFToken': csrftoken,
                 };
                 axios.post('/subscription/', this.reqBody, {"headers": headers})
-                    .then(() => this.$router.push('subscribed'));
+                    .then(() => this.$router.push('/subscribed'));
             },
             update() {
                 axios.get(`/subscription/${this.subId}`)
