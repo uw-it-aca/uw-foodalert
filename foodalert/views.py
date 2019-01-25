@@ -82,33 +82,3 @@ class HomeView(TemplateView):
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
         return context
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class PreView(TemplateView):
-    template_name = 'preview.html'
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class UpdateView(TemplateView):
-    template_name = 'update.html'
-
-
-@method_decorator(login_required(), name='dispatch')
-class SignupView(TemplateView):
-    template_name = 'signup.html'
-
-
-@method_decorator(login_required(), name='dispatch')
-class SubscribedView(TemplateView):
-    template_name = 'subscribed.html'
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class EndedView(TemplateView):
-    template_name = 'ended.html'
-
-
-@method_decorator(group_required(audit_group), name='dispatch')
-class AuditView(TemplateView):
-    template_name = 'audit.html'

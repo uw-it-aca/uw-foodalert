@@ -16,6 +16,7 @@ require('../css/styles.css');
 var components = window.vueData.components;
 
 var router = new VueRouter({
+    mode: 'history',
     routes: window.vueData.routes,
 })
 
