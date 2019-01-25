@@ -4,6 +4,7 @@ from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
 from foodalert.models import Notification, Update, SafeFood, Allergen,\
         Subscription
+from phonenumber_field.serializerfields import PhoneNumberField
 
 
 class SafeFoodSerializer(serializers.ModelSerializer):
@@ -119,7 +120,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 {"amount_of_food_left": "Food amounts must be specified"})
         if ret["host_user_agent"] == "":
-            raise ValidaionError(
+            raise ValidationError(
                 {"host_user_agent": "User agent information is required"})
         return ret
 
@@ -140,22 +141,37 @@ class UpdateSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
+    sms_number = PhoneNumberField(allow_blank=True)
+
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'email')
 
     def to_internal_value(self, data):
         ret = {
-            'email': data['email'],
-            'sms_number': data['sms'],
+            'email': '',
+            'sms_number': '',
         }
 
-        if 'id' in data:
-            ret['id'] = data['id']
-            ret['user'] = Subscription.objects.get(pk=data['id']).user
-        elif 'netId' in data:
-            ret['user'] = User.objects.get(email=data['netId'])
+        if 'email' in data:
+            ret['email'] = data['email']
         else:
-            raise ValidationError({"netId": "must specify netid"})
+            ret['email'] = ''
+
+        if 'sms_number' in data:
+            ret['sms_number'] = data['sms_number']
+        else:
+            ret['sms_number'] = ''
 
         return ret
+
+    def create(self, validated_data):
+        sub, created = Subscription.objects.get_or_create(
+            user=self.context.get('request').user)
+
+        sub.email = validated_data["email"]
+        sub.sms_number = validated_data["sms_number"]
+
+        sub.save()
+
+        return sub

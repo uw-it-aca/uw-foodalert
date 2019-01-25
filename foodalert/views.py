@@ -14,6 +14,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 
+
 # Create your views here.
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
@@ -71,6 +72,9 @@ class SubscriptionList(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(user=self.request.user)
+
 
 @method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):
@@ -81,4 +85,7 @@ class HomeView(TemplateView):
         context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
+        context['subscription'], created = Subscription.objects.get_or_create(
+            user=self.request.user)
+        context['subscription'] = context['subscription'].pk
         return context

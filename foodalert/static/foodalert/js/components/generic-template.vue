@@ -4,7 +4,7 @@
             <h1 class="h4">{{ headerText }}</h1>
         </b-container>
         <hr>
-        <router-view>
+        <router-view :subId="this.subId">
 
         </router-view>
     </div>
@@ -12,6 +12,9 @@
 
 <script>
 export default {
+    props: {
+        subId: Number,
+    },
     data() {
         return {
             headerText: '',
