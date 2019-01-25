@@ -111,6 +111,7 @@
                     "bringContainers": '',
                     "host.netID": '',
                     "host.userAgent": '',
+                    "ended": '',
                     "_rowVariant": 'update',
                 };
                 return ret;

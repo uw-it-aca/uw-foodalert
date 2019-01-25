@@ -29,7 +29,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = ('location', 'event', 'created_time',
                   'end_time', 'food_served', 'amount_of_food_left', 'host',
                   'bring_container', 'safe_foods', 'allergens',
-                  'host_user_agent')
+                  'host_user_agent', 'ended')
 
     def create(self, validated_data):
         allergen_data = validated_data.pop('allergens')
@@ -69,10 +69,15 @@ class NotificationSerializer(serializers.ModelSerializer):
                 'hostID': notif.host.id,
                 'netID': user.username,
                 'userAgent': notif.host_user_agent,
-            }
+            },
+            'ended': notif.ended
         }
 
     def to_internal_value(self, data):
+        if 'ended' not in data:
+            data["ended"] = False
+        if data["ended"]:
+            return {'ended': data["ended"]}
         if 'location' not in data:
             raise ValidationError({
                 "Bad Request": "Post data must have a location field"})
@@ -102,6 +107,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             'safe_foods': None,
             'allergens': None,
             'host_user_agent': data["host"]["userAgent"],
+            'ended': data["ended"]
         }
         if data["foodServiceInfo"]["safeToShareFood"] != []:
             ret["safe_foods"] = data["foodServiceInfo"]["safeToShareFood"]

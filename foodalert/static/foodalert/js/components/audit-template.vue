@@ -55,6 +55,7 @@
                     'food.allergens',
                     'bringContainers',
                     'host.userAgent',
+                    'ended',
                 ],
             }
         }

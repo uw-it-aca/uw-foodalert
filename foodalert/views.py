@@ -22,15 +22,34 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 
 @method_decorator(login_required(), name='dispatch')
-class NotificationDetail(generics.RetrieveAPIView):
+class NotificationDetail(generics.RetrieveUpdateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def patch(self, request, pk):
+        instance = self.get_object()
+        serializer = NotificationSerializer(instance,
+                                            data=request.data,
+                                            partial=True)
+        if 'ended' not in request.data or len(request.data) > 1:
+            return Response({
+                "Bad Request": "Patches only apply to the ended field"},
+                status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
-    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        if is_member_of_group(self.request, audit_group):
+            return Notification.objects.all()
+        else:
+            return self.request.user.notification_set.all()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

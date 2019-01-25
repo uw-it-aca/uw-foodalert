@@ -12,6 +12,7 @@
         "allergens": []
     },
     "bringContainers": false,
+    "ended": false,
     "foodServiceInfo": {
         "safeToShareFood": []
     },

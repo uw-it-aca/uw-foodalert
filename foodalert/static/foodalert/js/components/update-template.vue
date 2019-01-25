@@ -1,9 +1,10 @@
 <template>
     <b-container class="px-4 pt-3">
         <p><strong>Thanks for Sharing! Here's what's next:</strong></p>
-
+        <p v-if="event != ''" style="color: green">You are currently updating your event: "{{this.event}}"</p>
+        <p v-if="event === ''" style="color: red">You must be currently hosting an event to submit an update</p>
         <p class="mt-4"> Let people know when food runs out </p>
-        <b-btn class="w-100 mb-3 py-2" variant="primary" @click="modalShowing = true"> No Food Left </b-btn>
+        <b-btn class="w-100 mb-3 py-2" variant="primary" :disabled="event === ''" @click="modalShowing = true"> No Food Left </b-btn>
 
         <labelled-input
             label-text="Notify people if plans change"
@@ -21,9 +22,14 @@
             <p v-if="!v.form.text.maxLength" class="hasError">Your update message must be shorter than 100 characters</p>
         </div>
         <b-link type="submit"
-            :disabled="v.form.$invalid"
+            :disabled="v.form.$invalid || event === ''"
             @click="$emit('submitRequest')"
             class="w-100 mb-3 py-2 btn btn-secondary btn-md"> Send Update </b-link>
+            <div v-if="this.update != ''">
+                <br>
+                <p style="color: green"> Update Successfully Sent: " {{this.update}}"</p>
+                <br>
+            </div>
         <b-modal
             v-model="modalShowing"
             header-border-variant="0"
@@ -32,12 +38,11 @@
             footer-class="d-flex flex-column">
             <p class="h5 pb-3"> Are you sure you'd like to notify student's there's <strong> no food left</strong>? </p>
 
-            <blockquote class="border rounded mb-0 mx-3 p-3 text-left bg-light">Update: No Food left! “Hot Indian buffet food leftover
-            from from FIUTs weekly meeting” is all gone.</blockquote>
+            <blockquote class="border rounded mb-0 mx-3 p-3 text-left bg-light">Update: No Food left! The event: “{{this.event}}” has ended and is no longer serving food.</blockquote>
 
 
             <template slot="modal-footer">
-                <b-link class="btn btn-lg btn-primary mx-auto mb-2" to="/ended"> Send 'No Food Left' </b-link>
+                <b-link class="btn btn-lg btn-primary mx-auto mb-2" :disabled="event === ''" @click="$emit('submitEnd')"> Send 'No Food Left' </b-link>
                 <a href="#" @click="modalShowing = false" class="mx-auto"> Cancel </a>
             </template>
         </b-modal>
@@ -51,6 +56,8 @@
     export default {
         props: {
             v: Object,
+            event: String,
+            update: String,
         },
         components: {
             'labelled-input': LabelledInput,
