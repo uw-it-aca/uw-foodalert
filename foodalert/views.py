@@ -30,7 +30,7 @@ class NotificationDetail(generics.RetrieveUpdateAPIView):
         serializer = NotificationSerializer(instance,
                                             data=request.data,
                                             partial=True)
-        if 'ended' not in request.data:
+        if 'ended' not in request.data or len(request.data) > 1:
             return Response({
                 "Bad Request": "Patches only apply to the ended field"},
                 status=status.HTTP_400_BAD_REQUEST)

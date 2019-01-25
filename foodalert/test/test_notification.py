@@ -225,7 +225,8 @@ class NotificationTest(TestCase):
         'ended' field and tests that an error is raised
         """
         payload = {
-            "location": "Test"
+            "location": "Test",
+            "ended": True
         }
         url = "/notification/" + str(self.notification.id) + "/"
         response = self.client.patch(
