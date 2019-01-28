@@ -31,6 +31,15 @@ Use docker-compose to build the app container:
 
 `docker-compose build app`
 
+#### Installing Fixtures
+
+For the app to function correctly, the Allergen and SafeFood models must be populated with all relevant allergens and safe-to-share-foods respectively. Fixtures have been provided to load these models with example values. To load them, run the foolowing two commands:
+
+`docker-compose run --rm app python manage.py loaddata Allergen --settings=sampleproj.settings.base`
+`docker-compose run --rm app python manage.py loaddata SafeFood --settings=sampleproj.settings.base`
+
+See Django documentation for instruction on populating these models with custom values and geneerating your own fixtures.
+
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
 

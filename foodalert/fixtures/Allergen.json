@@ -1,0 +1,51 @@
+[
+{
+    "model": "foodalert.allergen",
+    "pk": 2,
+    "fields": {
+        "name": "Milk"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 3,
+    "fields": {
+        "name": "Eggs"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 4,
+    "fields": {
+        "name": "Soy"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 5,
+    "fields": {
+        "name": "Fish"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 6,
+    "fields": {
+        "name": "Shellfish"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 7,
+    "fields": {
+        "name": "Peanuts"
+    }
+},
+{
+    "model": "foodalert.allergen",
+    "pk": 8,
+    "fields": {
+        "name": "Wheat"
+    }
+}
+]
