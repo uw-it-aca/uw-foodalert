@@ -3,8 +3,8 @@
         <b-form>
             <form-category>
                 <labelled-input
-                    label-text="Describe the food and event"
-                    example-text="hot indian food FIUTS weekly club meeting"
+                    label-text="Describe the food"
+                    example-text="Hot Indian buffet food"
                     :rows="2"
                     :v="v.form.description"
                     state-value="foodEvent"
@@ -59,6 +59,21 @@
                     state-value="allergens"
                     @stateAction="this.setValue">
                 </labelled-input>
+
+
+
+
+                <b-container class="bv-example-row">
+                    <b-row>
+                        <b-col sm >first 5</b-col>
+                        <b-col sm >next 4</b-col>
+                    </b-row>
+                </b-container>
+
+
+
+
+
                 <labelled-input
                     input-type="buttons"
                     label-text="Do students need to bring containers?"
@@ -75,7 +90,7 @@
             <b-link type="submit"
                     :disabled="v.form.$invalid"
                     @click="$emit('submitRequest')"
-                    class="float-right btn btn-primary btn-lg py-2"> Send Notification </b-link>
+                    class="float-right btn btn-primary btn-lg py-2"> Send </b-link>
         </b-container>
 
         <popup-container
@@ -104,9 +119,9 @@
                 slot="safeList"
                 input-type="checkbox"
                 :checkbox-options="safeFoods"
-                main-text="Is the food you are sharing listed below?"
+                main-text="Is your food..."
                 primary-text="Continue"
-                info-text="If your food is NOT on this list, you need a permit to share it"
+
                 link-text="How to get a Permit"
                 link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
                 can-back
@@ -154,10 +169,10 @@
         data() {
             return {
                 safeFoods: [
-                    { text: "Food A", value: "foodA"},
-                    { text: "Food B", value: "foodB"},
-                    { text: "Food C", value: "foodC"},
-                    { text: "Food D", value: "foodD"},
+                    { text: "Non-perishable", value: "foodA"},
+                    { text: "Commercially pre-packaged", value: "foodB"},
+                    { text: "Prepared by UW Housing & Food Services", value: "foodC"},
+                    { text: "None of the above", value: "foodD"},
                 ],
             }
         },
