@@ -1,7 +1,7 @@
 <template>
     <form-template
         :allergens='["Dairy", "Eggs", "Fish", "Shellfish", "Meat", "Gluten (wheat)", "Soy", "Peanuts", "Tree Nuts"]'
-        :preview-text="'preview text'"
+        :preview-text="previewText"
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
         :foodList="this.state.safeFoodList"
