@@ -12,18 +12,17 @@ Vue.use(VueRouter)
 
 require('../css/styles.css');
 
-import {store} from './store.js';
 
 var components = window.vueData.components;
 
 var router = new VueRouter({
+    mode: 'history',
     routes: window.vueData.routes,
 })
 
 export var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
-    store,
     router,
     data() {
         return {

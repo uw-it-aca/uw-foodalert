@@ -175,7 +175,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           aria-colindex="11"
           class=""
         >
-          Permit Number
+          Ended
         </th>
       </tr>
     </thead>
@@ -196,9 +196,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="2"
           class=""
-        >
-          HUB 130
-        </td>
+        />
         <td
           aria-colindex="3"
           class=""
@@ -248,9 +246,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="11"
           class=""
-        >
-          2
-        </td>
+        />
       </tr>
       <tr
         class="table-update"
@@ -400,9 +396,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="2"
           class=""
-        >
-          HUB 130
-        </td>
+        />
         <td
           aria-colindex="3"
           class=""
@@ -452,9 +446,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
         <td
           aria-colindex="11"
           class=""
-        >
-          3
-        </td>
+        />
       </tr>
       <tr
         class="table-update"

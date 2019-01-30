@@ -81,8 +81,15 @@
                     @stateAction="this.setValue">
                 </labelled-input>
             </form-category>
-            <form-category section-name="Preview">
-                <p v-html="previewText"></p>
+            <form-category section-name="Message Preview">
+                <p style="color: green">{{previewText.heading}}</p>
+                <p>{{previewText.food}}</p>
+                <p>{{previewText.location}}</p>
+                <p>{{previewText.quantity}}</p>
+                <p>{{previewText.time}}</p>
+                <p>{{previewText.allergens}}</p>
+                <p>{{previewText.container}}</p>
+                <br>
             </form-category>
         </b-form>
         <hr>
@@ -107,12 +114,13 @@
             </agreement-popup>
             <agreement-popup
                 slot="permit"
-                input-type="number"
-                main-text="Enter your permit number"
+                input-type="text"
+                main-text="Describe your event"
                 primary-text="Continue"
+                info-text="Description must be shorter than 40 characters"
                 can-back
                 @primaryAction="this.setValue"
-                state-value="permitNumber"
+                state-value="event"
                 :back-action="updateValue.bind(this, 'claimsPermit')">
             </agreement-popup>
             <agreement-popup
@@ -160,7 +168,7 @@
     export default {
         props: {
             allergens: Array,
-            previewText: String,
+            previewText: Object,
             modalShow: Boolean,
             modalMode: String,
             foodList: Array,

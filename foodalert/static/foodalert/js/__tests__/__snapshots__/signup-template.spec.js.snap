@@ -37,10 +37,9 @@ exports[`Signup Controller renders correctly textarea 1`] = `
     >
       <div
         class="mb-3 custom-controls-stacked"
-        id="__BVID__9"
+        id="__BVID__13"
         role="group"
         tabindex="-1"
-        value=""
       >
         <div
           class="custom-control custom-checkbox"
@@ -48,15 +47,15 @@ exports[`Signup Controller renders correctly textarea 1`] = `
           <input
             autocomplete="off"
             class="custom-control-input"
-            id="__BVID__9__BV_check_0_opt_"
-            name="__BVID__9"
+            id="__BVID__13__BV_check_0_opt_"
+            name="__BVID__13"
             true-value="Email"
             type="checkbox"
             value="Email"
           />
           <label
             class="custom-control-label"
-            for="__BVID__9__BV_check_0_opt_"
+            for="__BVID__13__BV_check_0_opt_"
           >
             <span>
               Email
@@ -69,15 +68,15 @@ exports[`Signup Controller renders correctly textarea 1`] = `
           <input
             autocomplete="off"
             class="custom-control-input"
-            id="__BVID__9__BV_check_1_opt_"
-            name="__BVID__9"
+            id="__BVID__13__BV_check_1_opt_"
+            name="__BVID__13"
             true-value="SMS/Text"
             type="checkbox"
             value="SMS/Text"
           />
           <label
             class="custom-control-label"
-            for="__BVID__9__BV_check_1_opt_"
+            for="__BVID__13__BV_check_1_opt_"
           >
             <span>
               SMS/Text
@@ -141,14 +140,14 @@ exports[`Signup Controller renders correctly textarea 1`] = `
         <input
           autocomplete="off"
           class="custom-control-input"
-          id="__BVID__13"
+          id="__BVID__17"
           true-value="true"
           type="checkbox"
           value="true"
         />
         <label
           class="custom-control-label"
-          for="__BVID__13"
+          for="__BVID__17"
         >
           
             I agree to the terms and conditions.
@@ -166,7 +165,7 @@ exports[`Signup Controller renders correctly textarea 1`] = `
     <a
       aria-disabled="true"
       class="btn btn-primary float-right mb-3 disabled"
-      href="/subscribed"
+      href="#"
       tabindex="-1"
       target="_self"
     >

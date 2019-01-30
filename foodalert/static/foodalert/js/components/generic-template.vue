@@ -4,7 +4,7 @@
             <h1 class="h4">{{ headerText }}</h1>
         </b-container>
         <hr>
-        <router-view>
+        <router-view :subId="this.subId">
 
         </router-view>
     </div>
@@ -12,6 +12,9 @@
 
 <script>
 export default {
+    props: {
+        subId: Number,
+    },
     data() {
         return {
             headerText: '',
@@ -30,18 +33,23 @@ export default {
                 case '/':
                     this.headerText = 'Create Food Notification';
                     break;
+                case '/ended/':
                 case '/ended':
                     this.headerText = 'Your Notification Was Sent'
                     break;
+                case '/update/':
                 case '/update':
                     this.headerText = 'Update An Existing Notification'
                     break;
+                case '/signup/':
                 case '/signup':
                     this.headerText = 'Sign-up To Receive Notifications'
                     break;
+                case '/audit/':
                 case '/audit':
                     this.headerText = 'Audit Logs'
                     break;
+                case '/subscribed/':
                 case '/subscribed':
                     this.headerText = 'You Signed Up For Food Notifications!'
                     break;

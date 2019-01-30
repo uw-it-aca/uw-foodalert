@@ -59,11 +59,9 @@
                             if (!this.months.includes(month)) {
                                 this.months.push(month);
                             }
-                            log.location = log.location.main;
 
                             //Flatten the row and rename columns
                             var flat = flatten(log);
-                            flat["permitNumber"] = flat["foodServiceInfo.permitNumber"];
 
                             //Add the item to our audit logs
                             this.items.push(flat);
@@ -113,7 +111,7 @@
                     "bringContainers": '',
                     "host.netID": '',
                     "host.userAgent": '',
-                    "permitNumber": '',
+                    "ended": '',
                     "_rowVariant": 'update',
                 };
                 return ret;

@@ -14,6 +14,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 
+
 # Create your views here.
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
@@ -21,15 +22,34 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 
 @method_decorator(login_required(), name='dispatch')
-class NotificationDetail(generics.RetrieveAPIView):
+class NotificationDetail(generics.RetrieveUpdateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def patch(self, request, pk):
+        instance = self.get_object()
+        serializer = NotificationSerializer(instance,
+                                            data=request.data,
+                                            partial=True)
+        if 'ended' not in request.data or len(request.data) > 1:
+            return Response({
+                "Bad Request": "Patches only apply to the ended field"},
+                status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
-    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        if is_member_of_group(self.request, audit_group):
+            return Notification.objects.all()
+        else:
+            return self.request.user.notification_set.all()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -71,6 +91,9 @@ class SubscriptionList(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(user=self.request.user)
+
 
 @method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):
@@ -81,34 +104,7 @@ class HomeView(TemplateView):
         context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
+        context['subscription'], created = Subscription.objects.get_or_create(
+            user=self.request.user)
+        context['subscription'] = context['subscription'].pk
         return context
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class PreView(TemplateView):
-    template_name = 'preview.html'
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class UpdateView(TemplateView):
-    template_name = 'update.html'
-
-
-@method_decorator(login_required(), name='dispatch')
-class SignupView(TemplateView):
-    template_name = 'signup.html'
-
-
-@method_decorator(login_required(), name='dispatch')
-class SubscribedView(TemplateView):
-    template_name = 'subscribed.html'
-
-
-@method_decorator(group_required(create_group), name='dispatch')
-class EndedView(TemplateView):
-    template_name = 'ended.html'
-
-
-@method_decorator(group_required(audit_group), name='dispatch')
-class AuditView(TemplateView):
-    template_name = 'audit.html'

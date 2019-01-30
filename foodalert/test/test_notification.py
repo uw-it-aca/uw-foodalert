@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
-from foodalert.models import *
-from foodalert.serializers import *
+from foodalert.models import Notification
+from foodalert.serializers import NotificationSerializer
 from foodalert.views import NotificationDetail, NotificationList
 
 
@@ -104,10 +104,7 @@ class NotificationTest(TestCase):
             expected_json = json.load(data_file)
         # Test the post with a valid payload (all fields necessary are there)
         valid_payload = {
-                "location": {
-                    "main": "UW Campus",
-                    "detail": "North Campus"
-                },
+                "location": "UW Campus",
                 "event": "UW Event",
                 "time": {
                     "created": "2018-09-13T19:25:40.440859Z",
@@ -120,7 +117,6 @@ class NotificationTest(TestCase):
                 },
                 "bringContainers": False,
                 "foodServiceInfo": {
-                    "permitNumber": "12345",
                     "safeToShareFood": None
                 },
                 "host": {
@@ -148,10 +144,7 @@ class NotificationTest(TestCase):
         request is unsuccessful
         """
         invalid_payload = {
-                 "location": {
-                     "main": None,
-                     "detail": None
-                 },
+                 "location": None,
                  "event": "",
                  "time": {
                      "created": None,
@@ -164,7 +157,6 @@ class NotificationTest(TestCase):
                  },
                  "bringContainers": False,
                  "foodServiceInfo": {
-                     "permitNumber": "",
                      "safeToShareFood": None
                  },
                  "host": {
@@ -192,3 +184,57 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 400)
+
+    def test_patch_notification(self):
+        """
+        Attempts to patch a notification 'ended' field and tests that
+        the parital update was successful
+        """
+        payload = {
+            "ended": True
+        }
+        url = "/notification/" + str(self.notification.id) + "/"
+        response = self.client.patch(
+                url,
+                data=json.dumps(payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["ended"], True)
+
+    def test_patch_notification_empty(self):
+        """
+        Attempts to patch a notification with an empty payload
+        and tests that an error is raised
+        """
+        payload = {}
+        url = "/notification/" + str(self.notification.id) + "/"
+        response = self.client.patch(
+                url,
+                data=json.dumps(payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.content,
+            b'{"Bad Request":"Patches only apply to the ended field"}')
+
+    def test_patch_incorrect_fields(self):
+        """
+        Attempts to patch fields of a notification that are not the
+        'ended' field and tests that an error is raised
+        """
+        payload = {
+            "location": "Test",
+            "ended": True
+        }
+        url = "/notification/" + str(self.notification.id) + "/"
+        response = self.client.patch(
+                url,
+                data=json.dumps(payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.content,
+            b'{"Bad Request":"Patches only apply to the ended field"}')

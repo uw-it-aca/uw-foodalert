@@ -5,7 +5,6 @@
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
         :foodList="this.state.safeFoodList"
-        :notificationID="this.state.notificationID"
         :v="$v"
         @updateState="this.modifyStateBoolean"
         @setState="this.modifyState"
@@ -34,11 +33,8 @@
             },
             buildRequest() {
                 var data = {
-                     "location": {
-                          "main": this.state.location.substring(0, 10),
-                          "detail": this.state.location
-                     },
-                     "event": "Placeholder event",
+                     "location": this.state.location,
+                     "event": this.state.event,
                      "time": {
                          "created": new Date(),
                          "ended": new Date((new Date()).toString().substring(0,16) + this.state.endTime + ":00")
@@ -50,7 +46,6 @@
                      },
                      "bringContainers": this.state.needContainer,
                      "foodServiceInfo": {
-                         "permitNumber": this.state.permitNumber,
                          "safeToShareFood": this.state.safeFoodList
                      },
                      "host": {
@@ -66,7 +61,7 @@
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function(response) {
                         console.log(response);
-                        this.$router.push({ name: 'update', query: { notificationID: response.data.id}});
+                        this.$router.push({ name: 'update'});
                     }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");
@@ -78,7 +73,7 @@
             modalShow: function() {
                 //show the model so long as one of the field sets is incomplete
                 return (
-                    (!this.state.claimsPermit || !this.state.permitNumber) &&
+                    (!this.state.claimsPermit || !this.state.event) &&
                     (
                         !this.state.onSafeList ||
                         this.state.safeFoodList.length == 0 ||
@@ -97,13 +92,57 @@
                     return "safeList";
                 }
                 return "default";
+            },
+            previewText: function() {
+                var foods = this.state.foodEvent;
+                //Add in foods from the safe food list if it was used
+                if (this.state.onSafeList) {
+                    foods += " ";
+                    for (var food in this.state.safeFoodList) {
+                        foods += this.state.safeFoodList[food] + ", ";
+                    }
+                    foods = foods.slice(0, -2);
+                }
+                //Change the end time into readable format
+                var time = "Ends At: "
+                if (this.state.endTime != "") {
+                    var hour = parseInt(this.state.endTime.substring(0,2));
+                    if (hour > 12) {
+                        time += (hour - 12) + this.state.endTime.substring(2,5) + " PM";
+                    } else if (hour == 12) {
+                        time += this.state.endTime + " PM"
+                    } else if (hour == 0) {
+                        time += "12" + this.state.endTime.substring(2,5) + " AM"
+                    } else {
+                        time += this.state.endTime + " AM";
+                    }
+                }
+
+                var text =  { 'heading': "An event has just been posted! Here are the details...",
+                              'food': "Food Served: " + foods,
+                              'location': "Location: " + this.state.location,
+                              'quantity': "Amount Left: " + this.state.foodQuantity,
+                              'time': time,
+                              };
+                //Add in any allergens if they were selected
+                if (this.state.allergens.length > 0) {
+                    var allergens = "Food Contains: ";
+                    for (var food in this.state.allergens) {
+                        allergens += this.state.allergens[food] + ", ";
+                    }
+                    text.allergens = allergens.slice(0, -2);
+                }
+                //Add an additional message if containers are required
+                if (this.state.needContainer) {
+                    text.container = "Please Bring A Container!";
+                }
+                return text;
             }
         },
         data() {
             return {
                 state: {
                         claimsPermit: false,
-                        permitNumber: null,
                         onSafeList: false,
                         safeFoodList: [],
                         acceptedSafeListTerms: false,
@@ -114,6 +153,7 @@
                         allergens: [],
                         needContainer: false,
                         notificationID: 0,
+                        event: "",
                 },
                 form : {
                     description: "",

@@ -6,11 +6,10 @@
         <p class="h5 text-center mb-3"> {{ mainText }} </p>
         <b-form-group>
             <b-form-input
-                v-if="inputType == 'number'"
-                v-model="number"
-                type="number"
-                min="0"
-                placeholder="40569503"
+                v-if="inputType == 'text'"
+                v-model="text"
+                type="text"
+                placeholder="Dawg Daze Event"
                 class="text-center mb-3 border-0">
             </b-form-input>
             <b-form-checkbox-group
@@ -55,7 +54,7 @@
                 required: false,
                 validator: function (value) {
                     return [
-                        'number',
+                        'text',
                         'checkbox',
                     ].indexOf(value) !== -1;
                 }
@@ -77,7 +76,7 @@
         data() {
             return {
                 checkboxes: null,
-                number: null,
+                text: null,
             }
         },
         methods: {
@@ -87,8 +86,8 @@
                 } else {
                     if (this.inputType === 'checkbox') {
                         return this.$emit('primaryAction', this.stateValue, this.checkboxes);
-                    } else if (this.inputType === 'number') {
-                        return this.$emit('primaryAction', this.stateValue, this.number);
+                    } else if (this.inputType === 'text') {
+                        return this.$emit('primaryAction', this.stateValue, this.text);
                     }
                 }
             },
@@ -97,7 +96,7 @@
             buttonDisabled: function() {
                 //Button is disabled whenever an input has not been given or changed from its default value
                 return (this.inputType === 'checkbox' && (this.checkboxes === null || this.checkboxes.length === 0))
-                || (this.inputType === 'number' && (this.number === null || this.number === '0'))
+                || (this.inputType === 'text' && (this.text === null || this.text === '' || this.text.length > 40))
             }
         }
     }

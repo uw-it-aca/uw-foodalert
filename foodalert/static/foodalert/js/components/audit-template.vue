@@ -55,7 +55,7 @@
                     'food.allergens',
                     'bringContainers',
                     'host.userAgent',
-                    'permitNumber'
+                    'ended',
                 ],
             }
         }
