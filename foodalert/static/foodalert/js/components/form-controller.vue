@@ -61,7 +61,7 @@
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function(response) {
                         console.log(response);
-                        this.$router.push({ name: 'update'});
+                        this.$router.push({ name: 'permit'});
                     }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");

@@ -53,6 +53,10 @@ export default {
                 case '/subscribed':
                     this.headerText = 'You Signed Up For Food Notifications!'
                     break;
+                case '/permit/':
+                case '/permit':
+                    this.headerText = 'Permit'
+                    break;
                 default:
                     this.headerText = '';
             }

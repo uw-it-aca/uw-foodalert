@@ -8,6 +8,9 @@ import UpdateTemplate from './components/update-template.vue';
 import UpdateController from './components/update-controller.vue';
 import EndedTemplate from './components/ended-template.vue';
 import EndedController from './components/ended-controller.vue';
+import PermitCheckTemplate from './components/permit-check-template.vue'
+import PermitCheckController from './components/permit-check-controller.vue'
+
 
 Object.assign(window.vueData.components, {
     'form-category': FormCategory,
@@ -19,10 +22,13 @@ Object.assign(window.vueData.components, {
     'update-controller': UpdateController,
     'ended-template': EndedTemplate,
     'ended-controller': EndedController,
+    'permit-check-template': PermitCheckTemplate,
+    'permit-check-controller': PermitCheckController,
 });
 
 window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
     { path: "update", component: UpdateController, name: "update" },
     { path: "ended", component: EndedController, name: "ended" },
+    { path: "permit", component: PermitCheckController, name: "permit"},
     { path: "", component: FormController, name: "form" },
 ]);
