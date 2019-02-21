@@ -21,6 +21,7 @@ setup(
         'django-phonenumber-field',
         'parameterized',
         'django-db-mailer',
+        'boto3',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
