@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'foodalert',
     'uw_saml',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
+    'dbmail',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,6 +91,13 @@ DATABASES = {
         'HOST': 'db',
         'PORT': 5432,
     }
+}
+
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    },
 }
 
 

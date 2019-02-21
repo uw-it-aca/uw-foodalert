@@ -20,6 +20,7 @@ setup(
         'phonenumbers',
         'django-phonenumber-field',
         'parameterized',
+        'django-db-mailer',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
