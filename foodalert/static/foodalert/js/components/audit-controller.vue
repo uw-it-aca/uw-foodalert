@@ -38,7 +38,7 @@
                 var headers = {
                     'Content-Type': 'application/json',
                 }
-                axios.get('http://0.0.0.0:8000/notification/', {"headers": headers})
+                axios.get('notification/', {"headers": headers})
                     .then(response => {
                         console.log(response);
                         var data = response.data
@@ -86,7 +86,7 @@
                 var headers = {
                     'Content-Type': 'application/json',
                 }
-                axios.get('http://0.0.0.0:8000/updates/', {"headers": headers})
+                axios.get('updates/', {"headers": headers})
                     .then(response => {
                         console.log(response);
                         var data = response.data;

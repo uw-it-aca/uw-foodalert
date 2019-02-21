@@ -46,7 +46,7 @@
                 var headers = {
                     'Content-Type': 'application/json',
                 }
-                axios.get('http://0.0.0.0:8000/notification/', {"headers": headers})
+                axios.get('notification/', {"headers": headers})
                     .then(response => {
                         var data = response.data.filter(function(notif) {
                             return notif.ended == false;
