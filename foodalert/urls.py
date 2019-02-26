@@ -7,16 +7,16 @@ import uw_saml
 
 urlpatterns = [
     url(r'^saml/', include('uw_saml.urls')),
-    url('notification/', NotificationList.as_view(),
+    url(r'^notification/$', NotificationList.as_view(),
         name='notificaion_list'),
-    url('notification/<int:pk>/',
+    url(r'^notification/(?P<pk>[0-9]+)/$',
         NotificationDetail.as_view(), name='notification_detail'),
-    url('updates$', UpdateList.as_view(), name='update_list'),
-    url('update/<int:pk>/',
+    url(r'^updates/$', UpdateList.as_view(), name='update_list'),
+    url(r'^updates/(?P<pk>[0-9]+)/$',
         UpdateDetail.as_view(), name='update_detail'),
-    url('subscription/', SubscriptionList.as_view(),
+    url(r'^subscription/$', SubscriptionList.as_view(),
         name='subscription_list'),
-    url('subscription/<int:pk>/',
+    url(r'^subscription/(?P<pk>[0-9]+)/$',
         SubscriptionDetail.as_view(), name='subscription_detail'),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]
