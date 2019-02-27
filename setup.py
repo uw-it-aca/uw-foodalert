@@ -14,6 +14,7 @@ setup(
     install_requires=[
         'django==2.0',
         'django-webpack-loader',
+        'django-compressor==2.2',
         'UW-Django-SAML2',
         'psycopg2',
         'djangorestframework',
@@ -25,6 +26,9 @@ setup(
         'Django-Safe-EmailBackend==0.1',
         'twilio',
         'boto3',
+        'ua-parser',
+        'user-agents',
+        'django-user-agents',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
