@@ -147,6 +147,11 @@ LOGIN_URL = reverse_lazy('saml_login')
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
 
+# Twilio Configuration Settings
+TWILIO_ACCOUNT_SID = ""
+TWILIO_AUTH_TOKEN = ""
+TWILIO_FROM = "javerage@uw.edu"
+
 MOCK_SAML_ATTRIBUTES = {
     'uwnetid': ['javerage'],
     'affiliations': ['student', 'member'],
