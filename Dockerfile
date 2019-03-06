@@ -1,12 +1,19 @@
-#generic python2.7 image
-FROM python:3.6
-ENV PYTHONUNBUFFERED 1
-
-# copy contents of repo into an 'app' directory on container
+FROM acait/django-container:python3
+RUN apt-get update && apt-get install mysql-client -y
+RUN mkdir /app/logs
+ADD setup.py /app/
+ADD requirements.txt /app/
+ADD README.md /app/
+RUN . /app/bin/activate && pip install -r requirements.txt
+ADD /docker/web/apache2.conf /tmp/apache2.conf
+RUN rm -rf /etc/apache2/sites-available/ && mkdir /etc/apache2/sites-available/ && \
+    rm -rf /etc/apache2/sites-enabled/ && mkdir /etc/apache2/sites-enabled/ && \
+    rm /etc/apache2/apache2.conf && \
+    cp /tmp/apache2.conf /etc/apache2/apache2.conf &&\
+    mkdir /etc/apache2/logs
 ADD . /app/
-WORKDIR /app
-
-# install python dependency packages (via setup.py) on container
-RUN apt-get update && apt-get install -y libxmlsec1-dev
-RUN pip install -r requirements.txt
-COPY sampleproj/manage.py /app/manage.py
+ENV DB postgres
+ADD docker /app/project/
+ADD docker/web/start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh" ]

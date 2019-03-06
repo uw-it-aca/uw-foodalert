@@ -7,13 +7,13 @@ services:
     # map the local (host) directories to their container counterparts
     # to support live-syncing
     volumes:
-      - ./sampleproj:/app/sampleproj/
+      # - ./sampleproj:/app/sampleproj/
       - ./foodalert:/app/foodalert
-      - ./docs:/app/docs/
+      # - ./docs:/app/docs/
     links:
       - db
     ports:
-      - "${PORT:-8000}:8000"
-    command: bash -c "python manage.py migrate --settings=sampleproj.settings.base && python manage.py runserver 0:8000 --settings=sampleproj.settings.base"
+      - "${PORT:-8000}:80"
+    # command: bash -c "python manage.py migrate --settings=sampleproj.settings.base && python manage.py runserver 0:8000 --settings=sampleproj.settings.base"
   db:
     image: postgres
