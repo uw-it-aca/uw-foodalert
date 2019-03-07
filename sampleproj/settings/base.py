@@ -155,15 +155,15 @@ WEBPACK_LOADER = {
 }
 
 # AWS Config for Boto3
-AWS_ACCESS_KEY_ID = 'id'
-AWS_SECRET_ACCESS_KEY = 'key'
-AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_MESSAGE_ATTRIBUTES = {
     'SMSType': 'Promotional',
     'MaxPrice': '0.50',
     'mySenderID': 'foodalert'
 }
 #Optional AWS session token & config/credentials files
+# AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
 #AWS_SESSION_TOKEN = ''
 #AWS_SHARED_CREDENTIALS_FILE = '../../aws/credentials'
 #AWS_CONFIG_FILE = '../../aws/config'
