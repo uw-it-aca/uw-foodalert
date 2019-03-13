@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'foodalert',
     'uw_saml',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
+    'dbmail',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,6 +93,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -148,9 +158,11 @@ LOGIN_URL = reverse_lazy('saml_login')
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
 
 # Twilio Configuration Settings
-TWILIO_ACCOUNT_SID = ""
-TWILIO_AUTH_TOKEN = ""
-TWILIO_FROM = "javerage@uw.edu"
+# Note: These must be set (to anything) for tests to work
+TWILIO_ACCOUNT_SID = "XXX"
+TWILIO_AUTH_TOKEN = "XXX"
+TWILIO_NOTIFY_SERVICE_ID = "XXX"
+TWILIO_FROM = ""
 
 MOCK_SAML_ATTRIBUTES = {
     'uwnetid': ['javerage'],
