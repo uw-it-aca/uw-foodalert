@@ -42,8 +42,13 @@ INSTALLED_APPS = [
     'foodalert',
     'uw_saml',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
+    'dbmail',
+    'premailer',
+    'django.contrib.sites'
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,6 +94,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -159,3 +170,17 @@ FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
+
+# Django email settings
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST= 'localhost'
+# Settings to send a real email
+# EMAIL_BACKEND='saferecipient.EmailBackend'
+# EMAIL_HOST= 'smtp.washington.edu'
+# EMAIL_PORT= 587
+# EMAIL_HOST_USER = 'email@uw.edu'
+# EMAIL_HOST_PASSWORD = 'mypassword'
+# EMAIL_USE_TLS = True
+
+# Django-saferecipient-email-backend settings
+SAFE_EMAIL_RECIPIENT='keithrob@uw.edu'
