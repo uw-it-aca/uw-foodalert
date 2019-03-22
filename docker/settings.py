@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 from project.base_settings import *
+from django.urls import reverse_lazy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +32,10 @@ INSTALLED_APPS += [
 ]
 
 SITE_ID = 1
+
+MIDDLEWARE += [
+    'django_user_agents.middleware.UserAgentMiddleware'
+]
 
 WSGI_APPLICATION = 'docker.wsgi.application'
 
@@ -129,8 +134,11 @@ TWILIO_AUTH_TOKEN = "XXX"
 TWILIO_NOTIFY_SERVICE_ID = "XXX"
 TWILIO_FROM = ""
 
+LOGIN_URL = reverse_lazy('saml_login')
+LOGOUT_URL = reverse_lazy('saml_logout')
 
 MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+# SAML_FORCE_AUTHN = True
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
