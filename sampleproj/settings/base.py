@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phonenumber_field',
     'dbmail',
+    'premailer',
     'django.contrib.sites',
 ]
 
@@ -191,3 +192,17 @@ FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
+
+# Django email settings
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST= 'localhost'
+# Settings to send a real email
+# EMAIL_BACKEND='saferecipient.EmailBackend'
+# EMAIL_HOST= 'smtp.washington.edu'
+# EMAIL_PORT= 587
+# EMAIL_HOST_USER = 'email@uw.edu'
+# EMAIL_HOST_PASSWORD = 'mypassword'
+# EMAIL_USE_TLS = True
+
+# Django-saferecipient-email-backend settings
+SAFE_EMAIL_RECIPIENT='keithrob@uw.edu'

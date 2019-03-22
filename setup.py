@@ -21,6 +21,8 @@ setup(
         'django-phonenumber-field',
         'parameterized',
         'django-db-mailer',
+        'premailer',
+        'Django-Safe-EmailBackend==0.1',
         'twilio',
         'boto3',
     ],
