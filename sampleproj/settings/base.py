@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'foodalert',
     'uw_saml',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
+    'dbmail',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,6 +91,13 @@ DATABASES = {
         'HOST': 'db',
         'PORT': 5432,
     }
+}
+
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    },
 }
 
 
@@ -143,6 +154,21 @@ WEBPACK_LOADER = {
     }
 }
 
+# AWS Config for Boto3
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_MESSAGE_ATTRIBUTES = {
+    'SMSType': 'Promotional',
+    'MaxPrice': '0.50',
+    'mySenderID': 'foodalert'
+}
+#Optional AWS session token & config/credentials files
+# AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
+#AWS_SESSION_TOKEN = ''
+#AWS_SHARED_CREDENTIALS_FILE = '../../aws/credentials'
+#AWS_CONFIG_FILE = '../../aws/config'
+
+#Foodalert Config
 LOGIN_URL = reverse_lazy('saml_login')
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
