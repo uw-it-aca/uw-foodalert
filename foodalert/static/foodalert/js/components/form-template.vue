@@ -65,6 +65,11 @@
                     state-value="needContainer"
                     @stateAction="this.setValue">
                 </labelled-input>
+                <b-form-group label="Do students need to bring containers?" v-model="this.selected">
+                    <b-form-radio value="Yes" name="yesNo">Yes</b-form-radio>
+                    <br>
+                    <b-form-radio value="No" name="yesNo">No</b-form-radio>
+                </b-form-group>
             </form-category>
             <form-category section-name="Message Preview">
                 <p style="color: green">{{previewText.heading}}</p>
@@ -161,6 +166,7 @@
         },
         data() {
             return {
+                selected: "",
                 safeFoods: [
                     { text: "Food A", value: "foodA"},
                     { text: "Food B", value: "foodB"},
