@@ -450,6 +450,68 @@ exports[`Form Controller renders correctly textarea 1`] = `
            
           <!---->
         </div>
+         
+        <fieldset
+          aria-labelledby="__BVID__40__BV_label_"
+          class="b-form-group form-group"
+          id="__BVID__40"
+          role="group"
+        >
+          <legend
+            class="col-form-label pt-0"
+            id="__BVID__40__BV_label_"
+          >
+            Do students need to bring containers?
+          </legend>
+          <div
+            aria-labelledby="__BVID__40__BV_label_"
+            class=""
+            role="group"
+          >
+            <div
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <input
+                autocomplete="off"
+                class="custom-control-input"
+                id="__BVID__41"
+                name="yesNo"
+                type="radio"
+                value="Yes"
+              />
+              <label
+                class="custom-control-label"
+                for="__BVID__41"
+              >
+                Yes
+              </label>
+            </div>
+             
+            <br />
+             
+            <div
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <input
+                autocomplete="off"
+                class="custom-control-input"
+                id="__BVID__42"
+                name="yesNo"
+                type="radio"
+                value="No"
+              />
+              <label
+                class="custom-control-label"
+                for="__BVID__42"
+              >
+                No
+              </label>
+            </div>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </fieldset>
       </div>
     </div>
      
@@ -566,7 +628,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
                  
                 <fieldset
                   class="b-form-group form-group"
-                  id="__BVID__45"
+                  id="__BVID__48"
                   role="group"
                 >
                   <!---->
