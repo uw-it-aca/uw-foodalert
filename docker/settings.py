@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 from project.base_settings import *
+from django.urls import reverse_lazy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -24,9 +25,12 @@ INSTALLED_APPS += [
     'webpack_loader',
     'foodalert',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
 ]
 
+MIDDLEWARE += [
+    'django_user_agents.middleware.UserAgentMiddleware'
+]
 
 WSGI_APPLICATION = 'docker.wsgi.application'
 
@@ -98,7 +102,12 @@ WEBPACK_LOADER = {
     }
 }
 
+
+LOGIN_URL = reverse_lazy('saml_login')
+LOGOUT_URL = reverse_lazy('saml_logout')
+
 MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+# SAML_FORCE_AUTHN = True
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
