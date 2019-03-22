@@ -22,6 +22,7 @@ setup(
         'parameterized',
         'django-db-mailer',
         'twilio'
+        'boto3',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
