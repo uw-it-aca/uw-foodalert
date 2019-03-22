@@ -100,7 +100,6 @@ CACHES = {
     },
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -172,6 +171,13 @@ AWS_MESSAGE_ATTRIBUTES = {
 LOGIN_URL = reverse_lazy('saml_login')
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
+
+# Twilio Configuration Settings
+# Note: These must be set (to anything) for tests to work
+TWILIO_ACCOUNT_SID = "XXX"
+TWILIO_AUTH_TOKEN = "XXX"
+TWILIO_NOTIFY_SERVICE_ID = "XXX"
+TWILIO_FROM = ""
 
 MOCK_SAML_ATTRIBUTES = {
     'uwnetid': ['javerage'],

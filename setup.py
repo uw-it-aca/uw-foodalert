@@ -21,6 +21,7 @@ setup(
         'django-phonenumber-field',
         'parameterized',
         'django-db-mailer',
+        'twilio',
         'boto3',
     ],
     license='Apache License, Version 2.0',
