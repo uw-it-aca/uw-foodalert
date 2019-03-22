@@ -22,7 +22,9 @@ setup(
         'parameterized',
         'django-db-mailer',
         'premailer',
-        'Django-Safe-EmailBackend==0.1'
+        'Django-Safe-EmailBackend==0.1',
+        'twilio',
+        'boto3',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',

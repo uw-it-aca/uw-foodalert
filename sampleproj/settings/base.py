@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'dbmail',
     'premailer',
-    'django.contrib.sites'
+    'django.contrib.sites',
 ]
 
 SITE_ID = 1
@@ -154,9 +154,31 @@ WEBPACK_LOADER = {
     }
 }
 
+# AWS Config for Boto3
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_MESSAGE_ATTRIBUTES = {
+    'SMSType': 'Promotional',
+    'MaxPrice': '0.50',
+    'mySenderID': 'foodalert'
+}
+#Optional AWS session token & config/credentials files
+# AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
+#AWS_SESSION_TOKEN = ''
+#AWS_SHARED_CREDENTIALS_FILE = '../../aws/credentials'
+#AWS_CONFIG_FILE = '../../aws/config'
+
+#Foodalert Config
 LOGIN_URL = reverse_lazy('saml_login')
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
+
+# Twilio Configuration Settings
+# Note: These must be set (to anything) for tests to work
+TWILIO_ACCOUNT_SID = "XXX"
+TWILIO_AUTH_TOKEN = "XXX"
+TWILIO_NOTIFY_SERVICE_ID = "XXX"
+TWILIO_FROM = ""
 
 MOCK_SAML_ATTRIBUTES = {
     'uwnetid': ['javerage'],
