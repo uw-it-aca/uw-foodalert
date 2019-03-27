@@ -13,7 +13,6 @@ RUN rm -rf /etc/apache2/sites-available/ && mkdir /etc/apache2/sites-available/ 
     mkdir /etc/apache2/logs
 ADD . /app/
 ENV DB postgres
-ENV AUTH SAML_MOCK
 ADD docker /app/project/
 ADD docker/web/start.sh /start.sh
 RUN chmod +x /start.sh

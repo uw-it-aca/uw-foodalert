@@ -33,8 +33,20 @@ INSTALLED_APPS += [
 
 SITE_ID = 1
 
+#TODO: override MIDDLEWARE or just add to django-container's?
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
+]
+
 MIDDLEWARE += [
     'django_user_agents.middleware.UserAgentMiddleware'
+    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
 ]
 
 WSGI_APPLICATION = 'docker.wsgi.application'

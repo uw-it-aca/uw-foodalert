@@ -99,12 +99,7 @@ class SubscriptionList(generics.ListCreateAPIView):
 class HomeView(TemplateView):
     template_name = 'base.html'
 
-    def get():
-        print(self.request.user)
-        return super.get()
-
     def get_context_data(self, *args, **kwargs):
-        print(self.request.user)
         context = {}
         context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
