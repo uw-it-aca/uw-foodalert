@@ -28,8 +28,15 @@ INSTALLED_APPS += [
     'phonenumber_field',
 ]
 
-MIDDLEWARE += [
-    'django_user_agents.middleware.UserAgentMiddleware'
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 WSGI_APPLICATION = 'docker.wsgi.application'

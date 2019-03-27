@@ -12,6 +12,8 @@ services:
       # - ./docs:/app/docs/
     links:
       - db
+    environment:
+      AUTH: SAML_MOCK
     ports:
       - "${PORT:-8000}:80"
     # command: bash -c "python3 manage.py migrate --settings=sampleproj.settings.base && python3 manage.py runserver 0:8000 --settings=sampleproj.settings.base"
