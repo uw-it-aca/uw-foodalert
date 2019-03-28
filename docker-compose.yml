@@ -15,7 +15,8 @@ services:
     environment:
       AUTH: SAML_MOCK
     ports:
-      - "${PORT:-8000}:80"
-    # command: bash -c "python3 manage.py migrate --settings=sampleproj.settings.base && python3 manage.py runserver 0:8000 --settings=sampleproj.settings.base"
+      - "${APACHE_PORT:-8080}:80"
+      - "${RUNSERVER_PORT:-8000}:8000"
+    #command: bash -c "bin/python manage.py migrate && bin/python manage.py runserver 0:8000"
   db:
     image: postgres
