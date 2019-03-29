@@ -13,7 +13,6 @@ before_script:
   - pip install python-coveralls
   - pip install pycodestyle
   - pip install .
-  - source bin/activate
   - cp docker/manage.py manage.py
   - python manage.py migrate --noinput
   - npm install
