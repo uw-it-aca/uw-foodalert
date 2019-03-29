@@ -13,7 +13,8 @@ before_script:
   - pip install python-coveralls
   - pip install pycodestyle
   - pip install .
-  - cp sampleproj/manage.py manage.py
+  - source bin/activate
+  - cp docker/manage.py manage.py
   - python manage.py migrate --noinput
   - npm install
   - npm list
