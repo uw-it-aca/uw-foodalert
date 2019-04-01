@@ -22,7 +22,7 @@ INSTALLED_APPS = [
 ]
 
 ALLOWED_HOSTS = []
-`
+
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
