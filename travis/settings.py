@@ -60,28 +60,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.UserAttributeSimilarityValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.MinimumLengthValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.CommonPasswordValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.NumericPasswordValidator'),
-    },
-]
-
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -109,42 +87,6 @@ TEMPLATES = [
         }
     }
 ]
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'formatters': {
-    },
-    'handlers': {
-        'stdout': {
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'strm': sys.stdout
-        },
-        'stderr': {
-            'level':'ERROR',
-            'class':'logging.StreamHandler',
-            'strm': sys.stderr
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        '': {
-            'handlers': ['stderr'],
-            'level': 'ERROR',
-            'propagate': False,
-        }
-    }
-}
 
 INSTALLED_APPS += ['uw_saml']
 
