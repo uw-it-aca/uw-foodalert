@@ -13,7 +13,7 @@ before_script:
   - pip install python-coveralls
   - pip install pycodestyle
   - pip install .
-  - cp docker/manage.py manage.py
+  - cp travis/manage.py manage.py
   - python manage.py migrate --noinput
   - npm install
   - npm list
@@ -22,7 +22,7 @@ script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
   - npx jest --coverage && coveralls-lcov -v -n ./coverage/lcov.info > js-coverage.json
-  - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert --settings=sampleproj.settings.travis
+  - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
 after_script:
   - coveralls --merge=js-coverage.json
 
