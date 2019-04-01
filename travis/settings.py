@@ -52,10 +52,11 @@ WSGI_APPLICATION = 'travis.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'travis_ci_test',
         'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
