@@ -11,6 +11,6 @@ services:
     environment:
       AUTH: SAML_MOCK
     ports:
-      - "${APACHE_PORT:-8000}:80"
+      - "${APACHE_PORT:-8080}:80"
   db:
     image: postgres
