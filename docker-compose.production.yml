@@ -4,8 +4,6 @@ services:
   app:
     restart: always
     build: .
-    volumes:
-      - ./foodalert:/app/foodalert
     links:
       - db
     environment:
