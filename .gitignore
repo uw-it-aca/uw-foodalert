@@ -110,7 +110,7 @@ node_modules/
 coverage/
 
 #webpack stuff
-sampleproj/webpack-stats.json
+webpack-stats.json
 foodalert/static/foodalert/bundles
 
 # vim stuff
