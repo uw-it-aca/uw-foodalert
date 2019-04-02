@@ -1,5 +1,4 @@
 FROM acait/django-container:python3
-RUN apt-get update
 RUN mkdir /app/logs
 ADD setup.py /app/
 ADD requirements.txt /app/
