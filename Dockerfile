@@ -1,3 +1,9 @@
+FROM node:8.15.1-jessie AS wpack
+ADD . /app/
+WORKDIR /app/
+RUN npm install .
+RUN npx webpack
+
 FROM acait/django-container:python3
 RUN mkdir /app/logs
 ADD setup.py /app/
@@ -11,6 +17,10 @@ RUN rm -rf /etc/apache2/sites-available/ && mkdir /etc/apache2/sites-available/ 
     cp /tmp/apache2.conf /etc/apache2/apache2.conf &&\
     mkdir /etc/apache2/logs
 ADD . /app/
+RUN mkdir /app/foodalert/static/foodalert/bundles
+COPY --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
+COPY --from=wpack /app/foodalert/static/ /static/
+COPY --from=wpack /app/docker/webpack-stats.json /app/docker/webpack-stats.json
 ENV DB postgres
 ADD docker /app/project/
 ADD docker/web/start.sh /start.sh
