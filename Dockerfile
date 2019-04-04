@@ -20,7 +20,7 @@ ADD . /app/
 RUN mkdir /app/foodalert/static/foodalert/bundles
 COPY --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --from=wpack /app/foodalert/static/ /static/
-COPY --from=wpack /app/docker/webpack-stats.json /app/docker/webpack-stats.json
+COPY --from=wpack /app/project/webpack-stats.json /app/project/webpack-stats.json
 ENV DB postgres
 ADD docker /app/project/
 ADD docker/web/start.sh /start.sh
