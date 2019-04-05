@@ -28,9 +28,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           role="menuitem"
           target="_self"
         >
-          
-           All
-           
+          All
         </a>
         <a
           class="dropdown-item"
@@ -38,9 +36,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           role="menuitem"
           target="_self"
         >
-          
-           2018
-           
+          2018
         </a>
       </div>
     </div>
@@ -70,9 +66,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           role="menuitem"
           target="_self"
         >
-          
-           All
-           
+          All
         </a>
         <a
           class="dropdown-item"
@@ -80,9 +74,7 @@ exports[`Audit Controller renders correctly textarea 1`] = `
           role="menuitem"
           target="_self"
         >
-          
-           Dec
-           
+          Dec
         </a>
       </div>
     </div>

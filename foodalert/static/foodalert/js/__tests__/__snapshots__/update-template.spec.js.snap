@@ -22,7 +22,7 @@ exports[`Update Controller renders correctly 1`] = `
   <p
     class="mt-4"
   >
-     Let people know when food runs out 
+    Let people know when food runs out
   </p>
    
   <button
@@ -30,7 +30,7 @@ exports[`Update Controller renders correctly 1`] = `
     disabled="disabled"
     type="button"
   >
-     No Food Left 
+    No Food Left
   </button>
    
   <div
@@ -49,7 +49,8 @@ exports[`Update Controller renders correctly 1`] = `
         id="__BVID__4__BV_label_"
       >
         
-            Notify people if plans change 
+      Notify people if plans change
+      
         <br />
       </label>
       <div
@@ -86,7 +87,7 @@ exports[`Update Controller renders correctly 1`] = `
     target="_self"
     type="submit"
   >
-     Send Update 
+    Send Update
   </a>
    
   <!---->
@@ -136,11 +137,13 @@ exports[`Update Controller renders correctly 1`] = `
               <p
                 class="h5 pb-3"
               >
-                 Are you sure you'd like to notify student's there's 
+                Are you sure you'd like to notify student's there's
+      
                 <strong>
-                   no food left
+                  no food left
                 </strong>
-                ? 
+                ?
+    
               </p>
                
               <blockquote
@@ -161,14 +164,14 @@ exports[`Update Controller renders correctly 1`] = `
                 tabindex="-1"
                 target="_self"
               >
-                 Send 'No Food Left' 
+                Send 'No Food Left'
               </a>
                
               <a
                 class="mx-auto"
                 href="#"
               >
-                 Cancel 
+                Cancel
               </a>
             </footer>
           </div>

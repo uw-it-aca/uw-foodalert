@@ -17,7 +17,8 @@ exports[`Labelled Input renders correctly buttons 1`] = `
       id="__BVID__17__BV_label_"
     >
       
-            Label Text 
+      Label Text
+      
       <br />
     </label>
     <div
@@ -45,7 +46,7 @@ exports[`Labelled Input renders correctly buttons 1`] = `
     role="alert"
   >
     <!---->
-     Warning Text 
+    Warning Text
   </div>
 </div>
 `;
@@ -67,7 +68,8 @@ exports[`Labelled Input renders correctly checkbox 1`] = `
       id="__BVID__7__BV_label_"
     >
       
-            Label Text 
+      Label Text
+      
       <br />
     </label>
     <div
@@ -95,7 +97,7 @@ exports[`Labelled Input renders correctly checkbox 1`] = `
     role="alert"
   >
     <!---->
-     Warning Text 
+    Warning Text
   </div>
 </div>
 `;
@@ -116,7 +118,8 @@ exports[`Labelled Input renders correctly textarea 1`] = `
       id="__BVID__2__BV_label_"
     >
       
-            Label Text 
+      Label Text
+      
       <br />
     </label>
     <div
@@ -144,7 +147,7 @@ exports[`Labelled Input renders correctly textarea 1`] = `
     role="alert"
   >
     <!---->
-     Warning Text 
+    Warning Text
   </div>
 </div>
 `;
@@ -166,7 +169,8 @@ exports[`Labelled Input renders correctly time 1`] = `
       id="__BVID__12__BV_label_"
     >
       
-            Label Text 
+      Label Text
+      
       <br />
     </label>
     <div
@@ -194,7 +198,7 @@ exports[`Labelled Input renders correctly time 1`] = `
     role="alert"
   >
     <!---->
-     Warning Text 
+    Warning Text
   </div>
 </div>
 `;

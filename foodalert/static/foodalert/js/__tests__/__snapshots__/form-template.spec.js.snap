@@ -32,7 +32,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__16__BV_label_"
             >
               
-            Describe the food 
+      Describe the food
+      
               <br />
             </label>
             <div
@@ -72,7 +73,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__19__BV_label_"
             >
               
-            Quantity 
+      Quantity
+      
               <br />
             </label>
             <div
@@ -112,7 +114,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__22__BV_label_"
             >
               
-            End Time 
+      End Time
+      
               <br />
             </label>
             <div
@@ -152,7 +155,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__25__BV_label_"
             >
               
-            Location 
+      Location
+      
               <br />
             </label>
             <div
@@ -211,7 +215,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__29__BV_label_"
             >
               
-            Does the food contain? 
+      Does the food contain?
+      
               <br />
             </label>
             <div
@@ -243,9 +248,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__31"
                     >
-                       milk 
+                      milk
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -267,9 +273,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__32"
                     >
-                       eggs 
+                      eggs
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -291,9 +298,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__33"
                     >
-                       soy 
+                      soy
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -315,9 +323,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__34"
                     >
-                       fish 
+                      fish
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -339,9 +348,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__35"
                     >
-                       shellfish 
+                      shellfish
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -363,9 +373,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__36"
                     >
-                       Peanuts 
+                      Peanuts
                     </label>
                   </div>
+                   
                   <br />
                 </div>
                 <div
@@ -387,9 +398,10 @@ exports[`Form Controller renders correctly textarea 1`] = `
                       class="custom-control-label"
                       for="__BVID__37"
                     >
-                       wheat 
+                      wheat
                     </label>
                   </div>
+                   
                   <br />
                 </div>
               </div>
@@ -417,7 +429,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
               id="__BVID__39__BV_label_"
             >
               
-            Do students need to bring containers? 
+      Do students need to bring containers?
+      
               <br />
             </label>
             <div
