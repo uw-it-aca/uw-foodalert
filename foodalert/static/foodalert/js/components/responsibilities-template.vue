@@ -16,18 +16,16 @@
             <strong>4 hours</strong>.
             <a
               href="#"
-              v-b-popover="'There will be content here about why it matters that food is not homemade.'"
+              v-b-popover.bottom="'There will be content here about why it matters that food is not homemade.'"
               title="Homemade food"
-              placement="bottom"
             >Learn more</a>
           </b-form-checkbox>
           <b-form-checkbox value="3">
             The food is not homemade.
             <a
               href="#"
-              v-b-popover="'There will be content here about why it matters that food is not homemade.'"
+              v-b-popover.bottom="'There will be content here about why it matters that food is not homemade.'"
               title="Homemade food"
-              placement="bottom"
             >Learn more</a>
           </b-form-checkbox>
         </b-form-checkbox-group>
