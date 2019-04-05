@@ -119,3 +119,5 @@ foodalert/static/foodalert/bundles
 
 #Sphinx
 docs/*.rst
+
+.DS_Store
