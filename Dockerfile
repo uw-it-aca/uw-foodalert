@@ -9,6 +9,7 @@ RUN mkdir /app/logs
 ADD setup.py /app/
 ADD requirements.txt /app/
 ADD README.md /app/
+RUN apt-get install -y libpq-dev
 RUN . /app/bin/activate && pip install -r requirements.txt
 ADD /docker/web/apache2.conf /tmp/apache2.conf
 RUN rm -rf /etc/apache2/sites-available/ && mkdir /etc/apache2/sites-available/ && \
@@ -17,7 +18,7 @@ RUN rm -rf /etc/apache2/sites-available/ && mkdir /etc/apache2/sites-available/ 
     cp /tmp/apache2.conf /etc/apache2/apache2.conf &&\
     mkdir /etc/apache2/logs
 ADD . /app/
-RUN mkdir /app/foodalert/static/foodalert/bundles
+RUN rm -rf /app/foodalert/static/foodalert/bundles && mkdir /app/foodalert/static/foodalert/bundles
 COPY --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --from=wpack /app/foodalert/static/ /static/
 COPY --from=wpack /app/project/webpack-stats.json /app/project/webpack-stats.json
