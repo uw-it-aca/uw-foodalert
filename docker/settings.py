@@ -25,7 +25,7 @@ INSTALLED_APPS += [
     'webpack_loader',
     'foodalert',
     'rest_framework',
-    'phonenumber_field'
+    'phonenumber_field',
     'dbmail',
     'premailer',
     'django.contrib.sites',
@@ -33,7 +33,7 @@ INSTALLED_APPS += [
 
 SITE_ID = 1
 
-#TODO: override MIDDLEWARE or just add to django-container's?
+#TODO: Update django-container Middleware to not assume RemoteUserMiddleware
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,11 +41,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 MIDDLEWARE += [
-    'django_user_agents.middleware.UserAgentMiddleware'
+    'django_user_agents.middleware.UserAgentMiddleware',
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
 ]
 
