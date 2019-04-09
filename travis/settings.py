@@ -103,6 +103,22 @@ MOCK_SAML_ATTRIBUTES = {
                    'u_astratest_myuw_test-support-admin'],
 }
 
+# AWS Config for Boto3
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_MESSAGE_ATTRIBUTES = {
+    'SMSType': 'Promotional',
+    'MaxPrice': '0.50',
+    'mySenderID': 'foodalert'
+}
+
+# Twilio Configuration Settings
+# Note: These must be set (to anything) for tests to work
+TWILIO_ACCOUNT_SID = "XXX"
+TWILIO_AUTH_TOKEN = "XXX"
+TWILIO_NOTIFY_SERVICE_ID = "XXX"
+TWILIO_FROM = ""
+
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
