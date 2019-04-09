@@ -6,7 +6,6 @@ from uw_saml.decorators import group_required
 import uw_saml
 
 urlpatterns = [
-    url(r'^saml/', include('uw_saml.urls')),
     url(r'^notification/$', NotificationList.as_view(),
         name='notificaion_list'),
     url(r'^notification/(?P<pk>[0-9]+)/$',

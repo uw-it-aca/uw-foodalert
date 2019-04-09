@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  app:
+    restart: always
+    build: .
+    links:
+      - db
+    environment:
+      AUTH: SAML_MOCK
+    ports:
+      - "${APACHE_PORT:-8080}:80"
+  db:
+    image: postgres

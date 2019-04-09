@@ -10,18 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-from django.core.urlresolvers import reverse_lazy
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c^*q8l682i__vs4*+0k=)731!lcu(+zcl_4f!^us%ingm$@cdf'
+from project.base_settings import *
+from django.urls import reverse_lazy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,16 +21,9 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+INSTALLED_APPS += [
     'webpack_loader',
     'foodalert',
-    'uw_saml',
     'rest_framework',
     'phonenumber_field',
     'dbmail',
@@ -50,35 +33,22 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+#TODO: Update django-container Middleware to not assume RemoteUserMiddleware
 MIDDLEWARE = [
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sampleproj.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+MIDDLEWARE += [
+    'django_user_agents.middleware.UserAgentMiddleware',
+    'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
 ]
 
-WSGI_APPLICATION = 'sampleproj.wsgi.application'
+WSGI_APPLICATION = 'docker.wsgi.application'
 
 
 # Database
@@ -147,7 +117,7 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'foodalert/bundles/',  # must end with slash
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'STATS_FILE': os.path.join(BASE_DIR, 'project', 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
@@ -165,13 +135,8 @@ AWS_MESSAGE_ATTRIBUTES = {
 #Optional AWS session token & config/credentials files
 # AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
 #AWS_SESSION_TOKEN = ''
-#AWS_SHARED_CREDENTIALS_FILE = '../../aws/credentials'
-#AWS_CONFIG_FILE = '../../aws/config'
-
-#Foodalert Config
-LOGIN_URL = reverse_lazy('saml_login')
-
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.RemoteUserBackend',)
+#AWS_SHARED_CREDENTIALS_FILE = 'path/to/aws/credentials'
+#AWS_CONFIG_FILE = 'path/to/aws/config'
 
 # Twilio Configuration Settings
 # Note: These must be set (to anything) for tests to work
@@ -180,19 +145,15 @@ TWILIO_AUTH_TOKEN = "XXX"
 TWILIO_NOTIFY_SERVICE_ID = "XXX"
 TWILIO_FROM = ""
 
-MOCK_SAML_ATTRIBUTES = {
-    'uwnetid': ['javerage'],
-    'affiliations': ['student', 'member'],
-    'eppn': ['javerage@washington.edu'],
-    'scopedAffiliations': ['student@washington.edu', 'member@washington.edu'],
-    'isMemberOf': ['u_test_host', 'u_test_admin'],
-}
+LOGIN_URL = reverse_lazy('saml_login')
+LOGOUT_URL = reverse_lazy('saml_logout')
+
+MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
-
 # Django email settings
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST= 'localhost'
@@ -200,9 +161,9 @@ EMAIL_HOST= 'localhost'
 # EMAIL_BACKEND='saferecipient.EmailBackend'
 # EMAIL_HOST= 'smtp.washington.edu'
 # EMAIL_PORT= 587
-# EMAIL_HOST_USER = 'email@uw.edu'
+# EMAIL_HOST_USER = 'notarealaddress@uw.edu'
 # EMAIL_HOST_PASSWORD = 'mypassword'
 # EMAIL_USE_TLS = True
 
 # Django-saferecipient-email-backend settings
-SAFE_EMAIL_RECIPIENT='keithrob@uw.edu'
+SAFE_EMAIL_RECIPIENT='notarealaddress@uw.edu'
