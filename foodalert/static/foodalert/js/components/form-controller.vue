@@ -1,6 +1,6 @@
 <template>
     <form-template
-        :allergens='["milk", "eggs", "soy", "fish", "shellfish", "Peanuts", "wheat"]'
+        :allergens='["Dairy", "Eggs", "Fish", "Shellfish", "Meat", "Gluten (wheat)", "Soy", "Peanuts", "Tree Nuts"]'
         :preview-text="previewText"
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"

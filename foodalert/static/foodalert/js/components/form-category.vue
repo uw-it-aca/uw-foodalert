@@ -1,7 +1,7 @@
 <template>
     <b-container :id="containerId"  class="form-category my-3" :aria-labelledby="'category-heading-' + id">
         <h3 v-if="sectionName" class="h5 pt-2 pb-3 pl-1" :id="'category-heading-' + id">{{ sectionName  }} </h3>
-        <b-container class="ml-2 pl-4">
+        <b-container class="ml-0 pl-2">
             <slot></slot>
         </b-container>
     </b-container>

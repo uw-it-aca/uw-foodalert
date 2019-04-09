@@ -119,3 +119,6 @@ foodalert/static/foodalert/bundles
 
 #Sphinx
 docs/*.rst
+
+#mac ds store files
+*.DS_Store
