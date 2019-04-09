@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'foodalert',
     'rest_framework',
     'phonenumber_field',
+    'dbmail',
+    'premailer',
+    'django.contrib.sites',
 ]
 
 ALLOWED_HOSTS = []
