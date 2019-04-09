@@ -5,36 +5,32 @@
 }
 
 .foodalert-sticky {
-    position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
 }
 
 .foodalert-navbar {
-    background-color: #FFFFFF;
-    z-index: 100;
-    color: #4b2e83;
+  background-color: #ffffff;
+  z-index: 100;
+  color: #4b2e83;
 }
 
 .foodalert-navbar-active {
-    font-weight: bold;
-    transform: scale(1.1);
-    color: #4b2e83;
+  font-weight: bold;
+  transform: scale(1.1);
+  color: #4b2e83;
 }
 
 /* Styling color of heading in each form category (Food, Time, Location, etc) */
 .form-category h2 {
-	color: #4b2e83;
+  color: #4b2e83;
 }
 
 ::placeholder {
-	color: #fff;
+  color: #fff;
 }
 
 .hasError {
-    border-color: red;
-    color: red;
-}
-
-textarea, input {
-	max-width: 500px;
+  border-color: red;
+  color: red;
 }
