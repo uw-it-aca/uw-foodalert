@@ -1,9 +1,6 @@
 import os
-import sys
-from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 
 SECRET_KEY = os.getenv('DJANGO_SECRET', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
@@ -24,9 +21,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 ]
 
-ALLOWED_HOSTS = []
-
 SITE_ID = 1
+
+ALLOWED_HOSTS = []
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -39,42 +36,23 @@ MIDDLEWARE = [
     'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.RemoteUserBackend',
-]
-
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Los_Angeles'
-
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
 ROOT_URLCONF = 'travis.urls'
-WSGI_APPLICATION = 'travis.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'travis_ci_test',
-        'USER': 'postgres',
+        'USER': 'travis',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
 
-
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
-
-COMPRESS_ENABLED = False
-COMPRESS_ROOT = '/static/'
 STATIC_ROOT = '/static/'
 STATIC_URL = '/static/'
 
@@ -94,37 +72,21 @@ TEMPLATES = [
     }
 ]
 
-INSTALLED_APPS += ['uw_saml']
-
 MOCK_SAML_ATTRIBUTES = {
     'uwnetid': ['javerage'],
-    'affiliations': ['student', 'member', 'alum', 'staff', 'employee'],
-    'eppn': ['javerage@washington.edu'],
-    'scopedAffiliations': ['student@washington.edu', 'member@washington.edu'],
-    'isMemberOf': ['u_test_group', 'u_test_another_group',
-                   'u_astratest_myuw_test-support-admin'],
 }
 
 # AWS Config for Boto3
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
-AWS_MESSAGE_ATTRIBUTES = {
-    'SMSType': 'Promotional',
-    'MaxPrice': '0.50',
-    'mySenderID': 'foodalert'
-}
 
 # Twilio Configuration Settings
 # Note: These must be set (to anything) for tests to work
 TWILIO_ACCOUNT_SID = "XXX"
 TWILIO_AUTH_TOKEN = "XXX"
 TWILIO_NOTIFY_SERVICE_ID = "XXX"
-TWILIO_FROM = ""
+TWILIO_FROM = ''
 
-LOGIN_URL = reverse_lazy('saml_login')
-LOGOUT_URL = reverse_lazy('saml_logout')
-
-REMOTE_USER_FORMAT = 'uwnetid'
 MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
