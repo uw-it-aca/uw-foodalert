@@ -1,5 +1,6 @@
 sudo: false
 language: python
+dist: xenial
 python:
   - "3.6"
 addons:
@@ -25,4 +26,3 @@ script:
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
 after_script:
   - coveralls --merge=js-coverage.json
-
