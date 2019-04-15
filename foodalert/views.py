@@ -13,6 +13,7 @@ from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from foodalert.sender import Sender
 
 
 # Create your views here.
@@ -57,6 +58,11 @@ class NotificationList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
+            recipients = []
+            for sub in Subscription.objects.all():
+                recipients += sub.email
+
+            Sender.send_email('Event: ' + data['event'], recipients)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
