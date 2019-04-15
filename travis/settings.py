@@ -27,7 +27,7 @@ ROOT_URLCONF = 'travis.urls'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'travis_ci_test',
         'USER': 'travis',
         'PASSWORD': '',
