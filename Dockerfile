@@ -10,7 +10,6 @@ ADD setup.py /app/
 ADD requirements.txt /app/
 ADD README.md /app/
 ENV DB postgres
-ENV LC_ALL C.UTF-8
 RUN apt-get install -y libpq-dev
 RUN . /app/bin/activate && pip install -r requirements.txt
 ADD /docker/web/apache2.conf /tmp/apache2.conf
