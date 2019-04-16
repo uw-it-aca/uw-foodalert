@@ -4,7 +4,7 @@ WORKDIR /app/
 RUN npm install .
 RUN npx webpack
 
-FROM acait/django-container:python3
+FROM acait/django-container:develop
 RUN mkdir /app/logs
 ADD setup.py /app/
 ADD requirements.txt /app/

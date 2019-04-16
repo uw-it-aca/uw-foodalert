@@ -6,6 +6,8 @@ services:
     build: .
     volumes:
       - ./foodalert:/app/foodalert
+      - ./docker/settings.py:/app/project/settings.py
+      - ./docker/urls.py:/app/project/urls.py
     links:
       - db
     environment:
