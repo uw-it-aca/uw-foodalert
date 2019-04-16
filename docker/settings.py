@@ -33,7 +33,6 @@ INSTALLED_APPS += [
 
 SITE_ID = 1
 
-#TODO: Update django-container Middleware to not assume RemoteUserMiddleware
 MIDDLEWARE += [
     'django_user_agents.middleware.UserAgentMiddleware',
 ]
@@ -122,11 +121,11 @@ AWS_MESSAGE_ATTRIBUTES = {
     'MaxPrice': '0.50',
     'mySenderID': 'foodalert'
 }
-#Optional AWS session token & config/credentials files
+# Optional AWS session token & config/credentials files
 # AWS_TOPIC_ARN = 'arn:aws:sns:us-west-2:nums:topic'
-#AWS_SESSION_TOKEN = ''
-#AWS_SHARED_CREDENTIALS_FILE = 'path/to/aws/credentials'
-#AWS_CONFIG_FILE = 'path/to/aws/config'
+# AWS_SESSION_TOKEN = ''
+# AWS_SHARED_CREDENTIALS_FILE = 'path/to/aws/credentials'
+# AWS_CONFIG_FILE = 'path/to/aws/config'
 
 # Twilio Configuration Settings
 # Note: These must be set (to anything) for tests to work
@@ -138,15 +137,15 @@ TWILIO_FROM = ""
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
-MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+# MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
 # Django email settings
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST= 'localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
 # Settings to send a real email
 # EMAIL_BACKEND='saferecipient.EmailBackend'
 # EMAIL_HOST= 'smtp.washington.edu'
@@ -156,4 +155,4 @@ EMAIL_HOST= 'localhost'
 # EMAIL_USE_TLS = True
 
 # Django-saferecipient-email-backend settings
-SAFE_EMAIL_RECIPIENT='notarealaddress@uw.edu'
+SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
