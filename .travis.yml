@@ -17,7 +17,6 @@ before_script:
   - cp travis/manage.py manage.py
   - python manage.py migrate --noinput
   - npm install
-  - npm list
   - gem install coveralls-lcov
 script:
   - npx webpack
