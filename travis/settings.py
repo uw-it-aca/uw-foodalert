@@ -59,3 +59,7 @@ FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
+
+SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
