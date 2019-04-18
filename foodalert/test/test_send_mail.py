@@ -9,5 +9,5 @@ class SendMailTest(TestCase):
 
     @patch('dbmail.send_db_mail')
     def test_send():
-        Sender.send_email("test", ["javerage@uw.edu"])
+        Sender.send_email("test", ["javerage@uw.edu"], '123456789')
         assert dbmail.send_db_mail.called

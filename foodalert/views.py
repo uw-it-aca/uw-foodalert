@@ -58,15 +58,19 @@ class NotificationList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
+            # Remove characters we can't store in db properly
+            slug = str(data['time']['created'])
+            for ch in [' ', ':', '+']:
+                slug = slug.replace(ch, '')
             recipients = []
             for sub in Subscription.objects.all():
                 recipients += sub.email
 
-            Sender.send_email('Event: ' + data['event'], recipients)
+            Sender.send_email('Event: ' + data['event'], recipients, slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            print("failed to post")
+            print("failed to post notification")
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -84,6 +88,27 @@ class UpdateDetail(generics.RetrieveAPIView):
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            data = serializer.data
+            slug = str(data['created_time'])
+            for ch in [' ', ':', '+']:
+                slug = slug.replace(ch, '')
+            recipients = []
+            for sub in Subscription.objects.all():
+                recipients += sub.email
+
+            Sender.send_email('Update: ' + data['text'], recipients, slug)
+            return Response(
+                data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            print("failed to post update")
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
