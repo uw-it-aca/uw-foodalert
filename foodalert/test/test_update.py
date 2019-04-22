@@ -10,6 +10,9 @@ import foodalert
 from foodalert.models import Update, Notification
 from foodalert.serializers import UpdateSerializer
 from foodalert.views import UpdateDetail, UpdateList
+from foodalert.twilio_sender import TwilioSender, send
+from unittest.mock import patch, Mock, PropertyMock
+
 
 VALID_TEST_CASES = [
     param(text="test update"),
@@ -80,15 +83,33 @@ class UpdateTest(TestCase):
             "parent_notification": self.notification.id
         }
         original_len = len(Update.objects.all())
-        response = self.client.post('/updates/',
-                                    data=json.dumps(valid_payload),
-                                    content_type='application/json')
-        self.assertEqual(201, response.status_code)
 
-        updated_len = len(Update.objects.all())
-        self.assertEqual(updated_len - original_len, 1)
-        model = Update.objects.get(parent_notification=self.notification)
-        self.assertEqual(model.text, valid_payload["text"])
+        ret = Mock()
+        ret.body = ''
+        ret.status = 200
+        m2 = Mock()
+        m2.notifications = Mock()
+        m2.notifications.create = PropertyMock(return_value=ret)
+
+        m1 = Mock()
+        m1.notify = Mock()
+        m1.notify.services = PropertyMock(return_value=m2)
+
+        with patch.object(
+                         TwilioSender,
+                         'c',
+                         new_callable=PropertyMock) as mock:
+            mock.return_value = m1
+
+            response = self.client.post('/updates/',
+                                        data=json.dumps(valid_payload),
+                                        content_type='application/json')
+            self.assertEqual(201, response.status_code)
+
+            updated_len = len(Update.objects.all())
+            self.assertEqual(updated_len - original_len, 1)
+            model = Update.objects.get(parent_notification=self.notification)
+            self.assertEqual(model.text, valid_payload["text"])
 
     @transaction.atomic
     def test_read_update(self):

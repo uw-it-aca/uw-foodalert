@@ -9,7 +9,8 @@ import foodalert
 from foodalert.models import Notification
 from foodalert.serializers import NotificationSerializer
 from foodalert.views import NotificationDetail, NotificationList
-
+from foodalert.twilio_sender import TwilioSender, send
+from unittest.mock import patch, Mock, PropertyMock
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
                             'test',
@@ -124,19 +125,36 @@ class NotificationTest(TestCase):
                 }
             }
 
-        response = self.client.post(
-                "/notification/",
-                data=json.dumps(valid_payload),
-                content_type='application/json'
-            )
-        # Assert that the posted notificaiton was sucessfully created
-        self.assertEqual(response.status_code, 201)
-        # Convert the response to JSON as the actual json
-        actual_json = response.data
-        # Set the created time to match as this field is dynamic/based on time
-        expected_json["id"] = actual_json["id"]
-        expected_json["time"]["created"] = actual_json["time"]["created"]
-        self.assertEqual(expected_json, actual_json)
+        ret = Mock()
+        ret.body = ''
+        ret.status = 200
+        m2 = Mock()
+        m2.notifications = Mock()
+        m2.notifications.create = PropertyMock(return_value=ret)
+
+        m1 = Mock()
+        m1.notify = Mock()
+        m1.notify.services = PropertyMock(return_value=m2)
+
+        with patch.object(
+                         TwilioSender,
+                         'c',
+                         new_callable=PropertyMock) as mock:
+            mock.return_value = m1
+
+            response = self.client.post(
+                    "/notification/",
+                    data=json.dumps(valid_payload),
+                    content_type='application/json'
+                )
+            # Assert that the posted notificaiton was sucessfully created
+            self.assertEqual(response.status_code, 201)
+            # Convert the response to JSON as the actual json
+            actual_json = response.data
+            # Set the created time to match as this field is dynamic/based on time
+            expected_json["id"] = actual_json["id"]
+            expected_json["time"]["created"] = actual_json["time"]["created"]
+            self.assertEqual(expected_json, actual_json)
 
     def test_post_invalid_notification(self):
         """

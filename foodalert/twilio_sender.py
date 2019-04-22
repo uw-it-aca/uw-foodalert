@@ -13,7 +13,6 @@ def send(recipient, message, **kwargs):
 class TwilioSender(object):
     account_sid = settings.TWILIO_ACCOUNT_SID
     auth_token = settings.TWILIO_AUTH_TOKEN
-    from_number = settings.TWILIO_FROM
     c = Client(account_sid, auth_token)
 
     def send_message(self, recipients, message):
