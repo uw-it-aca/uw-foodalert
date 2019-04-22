@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 from django.test.utils import override_settings
 from django.db import connection
 from django.conf import settings
-from foodalert.twilio_sender import TwilioSender, send
+from foodalert.sender import TwilioSender, Sender
 from unittest.mock import patch, Mock, PropertyMock
 from twilio.base.exceptions import TwilioRestException
 
@@ -40,7 +40,7 @@ class TwilioTest(TestCase):
                          'c',
                          new_callable=PropertyMock) as mock:
             mock.return_value = m1
-            sms = send(self.recipients, self.message)
+            sms = Sender.send_twilio_sms(self.recipients, self.message)
             self.assertEquals('Hungry Husky Event: Test Event is Open',
                               sms.body)
             self.assertEquals(200, sms.status)
@@ -66,5 +66,5 @@ class TwilioTest(TestCase):
                          new_callable=PropertyMock) as mock:
             mock.return_value = m1
             recipients = ['']
-            sms = send(recipients, self.message)
+            sms = Sender.send_twilio_sms(recipients, self.message)
             self.assertEquals(400, sms.status)

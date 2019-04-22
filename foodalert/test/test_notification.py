@@ -9,7 +9,7 @@ import foodalert
 from foodalert.models import Notification
 from foodalert.serializers import NotificationSerializer
 from foodalert.views import NotificationDetail, NotificationList
-from foodalert.twilio_sender import TwilioSender, send
+from foodalert.sender import TwilioSender, Sender
 from unittest.mock import patch, Mock, PropertyMock
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
@@ -151,7 +151,7 @@ class NotificationTest(TestCase):
             self.assertEqual(response.status_code, 201)
             # Convert the response to JSON as the actual json
             actual_json = response.data
-            # Set the created time to match as this field is dynamic/based on time
+            # Set the created time to match: this field is dynamic
             expected_json["id"] = actual_json["id"]
             expected_json["time"]["created"] = actual_json["time"]["created"]
             self.assertEqual(expected_json, actual_json)

@@ -10,7 +10,7 @@ import foodalert
 from foodalert.models import Update, Notification
 from foodalert.serializers import UpdateSerializer
 from foodalert.views import UpdateDetail, UpdateList
-from foodalert.twilio_sender import TwilioSender, send
+from foodalert.sender import TwilioSender
 from unittest.mock import patch, Mock, PropertyMock
 
 

@@ -14,8 +14,6 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from foodalert.sender import Sender
-from foodalert.twilio_sender import TwilioSender, send
-
 
 # Create your views here.
 
@@ -73,8 +71,10 @@ class NotificationList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            sms = send(sms_recipients, 'Event: ' + data['event'])
-            Sender.send_email('Event: ' + data['event'], email_recipients, slug)
+            Sender.send_twilio_sms(sms_recipients, 'Event: ' + data['event'])
+            Sender.send_email('Event: ' + data['event'],
+                              email_recipients,
+                              slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
@@ -115,8 +115,10 @@ class UpdateList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            sms = send(sms_recipients, 'Update: ' + data['text'])
-            Sender.send_email('Update: ' + data['text'], email_recipients, slug)
+            Sender.send_twilio_sms(sms_recipients, 'Update: ' + data['text'])
+            Sender.send_email('Update: ' + data['text'],
+                              email_recipients,
+                              slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
