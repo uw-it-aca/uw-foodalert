@@ -3,6 +3,8 @@ from dbmail.models import MailTemplate
 from django.conf import settings
 import boto3
 from twilio.rest import Client
+import dateutil.parser
+from datetime import datetime
 
 
 class Sender:
@@ -45,7 +47,7 @@ class Sender:
         for food in message['foodServiceInfo']['safeToShareFood']:
             food += ' ' + food
         text = "A new Hungry Husky Event: '" + event + "' has been posted! \n"
-        time = message['time']['ended']
+        time = dateutil.parser.parse(message['time']['ended']).strftime("%c")
         details = {
             'Food Served:': message['food']['served'],
             'Location:': message['location'],

@@ -71,8 +71,9 @@ class NotificationList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            Sender.send_twilio_sms(sms_recipients, 'Event: ' + data['event'])
-            Sender.send_email('Event: ' + data['event'],
+            message = Sender.format_message(data)
+            Sender.send_twilio_sms(sms_recipients, message)
+            Sender.send_email(message,
                               email_recipients,
                               slug)
             return Response(
@@ -115,8 +116,10 @@ class UpdateList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            Sender.send_twilio_sms(sms_recipients, 'Update: ' + data['text'])
-            Sender.send_email('Update: ' + data['text'],
+            parent = Notification.objects.get(pk=data['parent_notification'])
+            Sender.send_twilio_sms(sms_recipients,
+                                   parent.event + ' Update: ' + data['text'])
+            Sender.send_email(parent.event + ' Update: ' + data['text'],
                               email_recipients,
                               slug)
             return Response(

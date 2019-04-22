@@ -72,7 +72,7 @@ class SMSTest(TestCase):
                     "Food Served: Food\n"
                     "Location: UW Campus\n"
                     "Amount Left: One box\n"
-                    "Ends At: 2018-09-13T19:23:06.508534Z\n"
+                    "Ends At: Thu Sep 13 19:23:06 2018\n"
                     "Food Contains: wheat\n"
                     "Please bring a container!")
 
