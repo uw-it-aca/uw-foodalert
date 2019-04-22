@@ -4,7 +4,7 @@ from django.test import TestCase, Client
 from django.test.utils import override_settings
 from django.db import connection
 from django.conf import settings
-from foodalert.snsprovider import send, AmazonSNSProvider, format_message
+from foodalert.sender import Sender, AmazonSNSProvider
 from unittest.mock import patch, Mock
 
 
@@ -32,7 +32,7 @@ class SMSTest(TestCase):
                 AmazonSNSProvider,
                 'send_message',
                 return_value=ret) as mock:
-            response = send(self.recipients, self.message)
+            response = Sender.send_amazon_sms(self.recipients, self.message)
             mock.assert_called_once()
             self.assertEqual(len(response['failed']), 0)
 
@@ -42,7 +42,7 @@ class SMSTest(TestCase):
         Tests that an exception is thrown when sending to
         an invalid number
         """
-        response = send(self.recipients, self.message)
+        response = Sender.send_amazon_sms(self.recipients, self.message)
         self.assertEqual(len(response['failed']), 1)
         self.assertEqual(response['failed'][0]['Error']['Code'],
                          'InvalidClientTokenId')
@@ -72,9 +72,9 @@ class SMSTest(TestCase):
                     "Food Served: Food\n"
                     "Location: UW Campus\n"
                     "Amount Left: One box\n"
-                    "Ends At: 2018-09-13T19:23:06.508534Z\n"
+                    "Ends At: Thu Sep 13 19:23:06 2018\n"
                     "Food Contains: wheat\n"
                     "Please bring a container!")
 
-        message = format_message(data)
+        message = Sender.format_message(data)
         self.assertEquals(message, expected)

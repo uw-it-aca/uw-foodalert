@@ -132,12 +132,12 @@ AWS_MESSAGE_ATTRIBUTES = {
 TWILIO_ACCOUNT_SID = "XXX"
 TWILIO_AUTH_TOKEN = "XXX"
 TWILIO_NOTIFY_SERVICE_ID = "XXX"
-TWILIO_FROM = ""
+# TWILIO_FROM = ""
 
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
-# MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',

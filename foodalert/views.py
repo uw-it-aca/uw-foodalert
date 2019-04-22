@@ -13,7 +13,7 @@ from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-
+from foodalert.sender import Sender
 
 # Create your views here.
 
@@ -57,10 +57,29 @@ class NotificationList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
+
+            # Remove characters we can't store in db properly
+            slug = str(data['time']['created'])
+            for ch in [' ', ':', '+']:
+                slug = slug.replace(ch, '')
+
+            email_recipients = []
+            sms_recipients = []
+            for sub in Subscription.objects.all():
+                if sub.email != '':
+                    email_recipients.append(sub.email)
+                if sub.sms_number != '':
+                    sms_recipients.append(str(sub.sms_number))
+
+            message = Sender.format_message(data)
+            Sender.send_twilio_sms(sms_recipients, message)
+            Sender.send_email(message,
+                              email_recipients,
+                              slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            print("failed to post")
+            print("failed to post notification")
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -78,6 +97,37 @@ class UpdateDetail(generics.RetrieveAPIView):
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            data = serializer.data
+            slug = str(data['created_time'])
+            for ch in [' ', ':', '+']:
+                slug = slug.replace(ch, '')
+
+            email_recipients = []
+            sms_recipients = []
+            for sub in Subscription.objects.all():
+                if sub.email != '':
+                    email_recipients.append(sub.email)
+                if sub.sms_number != '':
+                    sms_recipients.append(str(sub.sms_number))
+
+            parent = Notification.objects.get(pk=data['parent_notification'])
+            Sender.send_twilio_sms(sms_recipients,
+                                   parent.event + ' Update: ' + data['text'])
+            Sender.send_email(parent.event + ' Update: ' + data['text'],
+                              email_recipients,
+                              slug)
+            return Response(
+                data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            print("failed to post update")
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
