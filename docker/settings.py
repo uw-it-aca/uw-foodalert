@@ -137,7 +137,7 @@ TWILIO_FROM = ""
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
-# MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',

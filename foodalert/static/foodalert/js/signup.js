@@ -15,3 +15,7 @@ window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
     { path: "signup", component: SignupController },
     { path: "subscribed", component: SubscribedController },
 ]);
+
+let rootPath = window.vueData.routes.find(obj => obj.path === "/");
+rootPath.children.find(obj => obj.path === "signup").component = SignupController;
+rootPath.children.find(obj => obj.path === "subscribed").component = SubscribedController;

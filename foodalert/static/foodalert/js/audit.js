@@ -9,3 +9,6 @@ Object.assign(window.vueData.components, {
 window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
     { path: "audit", component: AuditController },
 ]);
+
+let rootPath = window.vueData.routes.find(obj => obj.path === "/");
+rootPath.children.find(obj => obj.path === "audit").component = AuditController;

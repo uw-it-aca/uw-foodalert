@@ -21,8 +21,7 @@ Object.assign(window.vueData.components, {
     'ended-controller': EndedController,
 });
 
-window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
-    { path: "update", component: UpdateController, name: "update" },
-    { path: "ended", component: EndedController, name: "ended" },
-    { path: "", component: FormController, name: "form" },
-]);
+let rootPath = window.vueData.routes.find(obj => obj.path === "/");
+rootPath.children.find(obj => obj.path === "update").component = UpdateController;
+rootPath.children.find(obj => obj.path === "ended").component = EndedController;
+rootPath.children.find(obj => obj.path === "").component = FormController;
