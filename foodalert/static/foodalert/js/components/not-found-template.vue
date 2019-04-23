@@ -1,7 +1,7 @@
 <template>
   <b-container style="padding: 40px 15px;">
         <b-row align-self="center" align-h="center">
-            <img src="http://www.washington.edu/anyhungryhusky/files/2016/12/18_UWFoodPantry-Bug-BlkPMS2685-2-300x300.png">
+            <img src="../../img/hungryhusky.png">
         </b-row>
         <br>
         <b-row align-self="center" align-h="center">
