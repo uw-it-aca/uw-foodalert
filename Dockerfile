@@ -9,6 +9,8 @@ RUN mkdir /app/logs
 ADD setup.py /app/
 ADD requirements.txt /app/
 ADD README.md /app/
+ADD docker /app/project/
+ADD docker/web/start.sh /start.sh
 ENV DB postgres
 RUN apt-get install -y libpq-dev
 RUN . /app/bin/activate && pip install -r requirements.txt
@@ -23,7 +25,6 @@ RUN rm -rf /app/foodalert/static/foodalert/bundles && mkdir /app/foodalert/stati
 COPY --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --from=wpack /app/foodalert/static/ /static/
 COPY --from=wpack /app/project/webpack-stats.json /app/project/webpack-stats.json
-ADD docker /app/project/
-ADD docker/web/start.sh /start.sh
+RUN cat /app/project/webpack-stats.json
 RUN chmod +x /start.sh
 CMD ["/start.sh" ]
