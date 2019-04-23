@@ -35,5 +35,3 @@ window.vueData.routes = [
         component: NotFoundTemplate,
     },
 ];
-
-console.log(window.vueData.routes);
