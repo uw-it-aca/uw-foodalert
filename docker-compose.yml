@@ -10,6 +10,7 @@ services:
       - ./foodalert:/app/foodalert
       - ./docker/settings.py:/app/project/settings.py
       - ./docker/urls.py:/app/project/urls.py
+      - shared-static:/app/foodalert/static
     links:
       - db
     environment:
@@ -19,3 +20,13 @@ services:
     command: bash -c "bin/python manage.py migrate && bin/python manage.py runserver 0:8000"
   db:
     image: postgres
+  devtools:
+    container_name: devtools
+    image: node:8.15.1-jessie
+    volumes:
+      - ./package.json:/home/node/package.json
+      - ./package-lock.json:/home/node/package-lock.json
+      - shared-static:/devtools/uw-foodalert/foodalert/static
+    command: bash -c "yes yes | npm install; npx webpack --watch"
+volumes:
+  shared-static:
