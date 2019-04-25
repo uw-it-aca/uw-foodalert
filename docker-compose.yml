@@ -22,8 +22,9 @@ services:
   devtools:
     container_name: devtools
     image: node:8.15.1-jessie
+    working_dir: /devtools/uw-foodalert
     volumes:
       - ./package.json:/devtools/uw-foodalert/package.json
       - ./webpack.config.js:/devtools/uw-foodalert/webpack.config.js
       - ./foodalert:/devtools/uw-foodalert/foodalert
-    command: bash -c "cd /devtools/uw-foodalert; yes yes | npm install; npx webpack --watch"
+    command: bash -c "yes yes | npm install; npx webpack --watch"
