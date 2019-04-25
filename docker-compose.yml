@@ -10,7 +10,6 @@ services:
       - ./foodalert:/app/foodalert
       - ./docker/settings.py:/app/project/settings.py
       - ./docker/urls.py:/app/project/urls.py
-      - shared-static:/app/foodalert/static
     links:
       - db
     environment:
@@ -24,9 +23,7 @@ services:
     container_name: devtools
     image: node:8.15.1-jessie
     volumes:
-      - ./package.json:/home/node/package.json
-      - ./package-lock.json:/home/node/package-lock.json
-      - shared-static:/devtools/uw-foodalert/foodalert/static
-    command: bash -c "yes yes | npm install; npx webpack --watch"
-volumes:
-  shared-static:
+      - ./package.json:/devtools/uw-foodalert/package.json
+      - ./webpack.config.js:/devtools/uw-foodalert/webpack.config.js
+      - ./foodalert:/devtools/uw-foodalert/foodalert
+    command: bash -c "cd /devtools/uw-foodalert; yes yes | npm install; npx webpack --watch"
