@@ -5,7 +5,6 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: BaseContainer
     volumes:
       - ./foodalert:/app/foodalert
       - ./docker/settings.py:/app/project/settings.py
@@ -20,7 +19,7 @@ services:
   db:
     image: postgres
   devtools:
-    container_name: devtools
+    container_name: foodalert-devtools
     image: node:8.15.1-jessie
     working_dir: /devtools/uw-foodalert
     volumes:
