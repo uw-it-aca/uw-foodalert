@@ -140,7 +140,9 @@ TWILIO_NOTIFY_SERVICE_ID = "XXX"
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
-MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+
+if os.getenv("AUTH", "MOCK"):
+    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',

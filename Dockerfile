@@ -22,6 +22,7 @@ ADD . /app/
 WORKDIR /app/
 RUN npm install .
 RUN npx webpack
+ENV AUTH MOCK
 
 FROM django 
 
