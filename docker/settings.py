@@ -151,3 +151,6 @@ EMAIL_HOST = 'localhost'
 
 # Django-saferecipient-email-backend settings
 SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+
+if os.getenv("ENV", "") == "localdev":
+    DEBUG = True
