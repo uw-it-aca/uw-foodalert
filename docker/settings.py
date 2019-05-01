@@ -43,16 +43,6 @@ WSGI_APPLICATION = 'docker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
-    }
-}
-
 CACHES = {
     "default": {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -106,7 +96,10 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'foodalert/bundles/',  # must end with slash
-        'STATS_FILE': os.path.join(BASE_DIR, 'project', 'webpack-stats.json'),
+        'STATS_FILE': os.path.join(BASE_DIR,
+                                   'foodalert',
+                                   'static',
+                                   'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
@@ -137,7 +130,9 @@ TWILIO_NOTIFY_SERVICE_ID = "XXX"
 LOGIN_URL = reverse_lazy('saml_login')
 LOGOUT_URL = reverse_lazy('saml_logout')
 
-MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+
+if os.getenv("AUTH", "SAML_MOCK") == "SAML_MOCK":
+    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
@@ -156,3 +151,6 @@ EMAIL_HOST = 'localhost'
 
 # Django-saferecipient-email-backend settings
 SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+
+if os.getenv("ENV", "") == "localdev":
+    DEBUG = True
