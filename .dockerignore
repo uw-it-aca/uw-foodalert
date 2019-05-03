@@ -10,6 +10,5 @@ Dockerfile
 .gitignore
 .travis.yml
 docs
-LICENSE
 sample.env
 travis
