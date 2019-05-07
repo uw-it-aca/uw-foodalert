@@ -1,4 +1,3 @@
-# Adding commit to push to trigger codebuild........
 # docker-compose
 docker-compose.apache.yml
 docker-compose.yml
@@ -11,5 +10,6 @@ Dockerfile
 .gitignore
 .travis.yml
 docs
+LICENSE
 sample.env
 travis
