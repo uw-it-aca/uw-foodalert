@@ -1,8 +1,5 @@
 sudo: false
-language: python
 dist: xenial
-python:
-  - "3.6"
 services:
   - docker
 addons:
