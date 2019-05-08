@@ -3,25 +3,13 @@ language: python
 dist: xenial
 python:
   - "3.6"
+services:
+  - docker
 addons:
   postgresql: "9.4"
-install:
-  - sudo apt-get update && sudo apt-get install -y libxmlsec1-dev
-  - python setup.py -q install
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - pip install coverage
-  - pip install python-coveralls
-  - pip install pycodestyle
-  - pip install .
-  - cp travis/manage.py manage.py
-  - python manage.py migrate --noinput
-  - npm install
-  - gem install coveralls-lcov
 script:
-  - npx webpack
-  - pycodestyle foodalert/ --exclude=migrations
-  - npx jest --coverage && coveralls-lcov -v -n ./coverage/lcov.info > js-coverage.json
-  - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
-after_script:
-  - coveralls --merge=js-coverage.json
+  - docker exec -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID"
+                -e TRAVIS_BRANCH="$TRAVIS_BRANCH"
+                -e DATABASE_DB_NAME="travis_ci_test"
+                -e DATABASE_USERNAME="travis"
+                -e DATABASE_HOST="localhost"
