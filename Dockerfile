@@ -63,7 +63,6 @@ COPY --chown=acait:acait --from=wpack /app/foodalert/static/webpack-stats.json /
 FROM testpy AS test
 RUN bin/pip install coveralls
 COPY --from=testjs /app/js-coverage.json .
-RUN bin/coveralls --merge=js-coverage.json
 
 
 #### CONTAINER SELECTION
