@@ -6,10 +6,7 @@ addons:
   postgresql: "9.4"
 script:
   - docker build --build-arg BUILD_STAGE=test -t foodalert .
-  - docker run  -e CI=true
-                -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID"
-                -e TRAVIS_BRANCH="$TRAVIS_BRANCH"
-                -e DATABASE_DB_NAME="travis_ci_test"
-                -e DATABASE_USERNAME="travis"
-                -e DATABASE_HOST="localhost"
-                foodalert bin/coveralls --merge=js-coverage.json
+  - CONTAINER=$(docker create foodalert)
+  - docker cp  "$container:/app/js-coverage.json" "."
+  - docker cp  "$container:/app/.coverage" "."
+  - coveralls --merge=js-coverage.json
