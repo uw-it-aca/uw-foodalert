@@ -8,6 +8,5 @@ script:
   - pip install --user python-coveralls
   - docker build --build-arg BUILD_STAGE=test -t foodalert .
   - CONTAINER=$(docker create foodalert)
-  - docker cp  "$CONTAINER:/app/js-coverage.json" "."
-  - docker cp  "$CONTAINER:/app/.coverage" "."
+  - docker cp  "$CONTAINER:/app/." "."
   - coveralls --merge=js-coverage.json
