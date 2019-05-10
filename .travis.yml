@@ -7,6 +7,6 @@ addons:
 script:
   - docker build --build-arg BUILD_STAGE=test -t foodalert .
   - CONTAINER=$(docker create foodalert)
-  - docker cp  "$container:/app/js-coverage.json" "."
-  - docker cp  "$container:/app/.coverage" "."
+  - docker cp  "$CONTAINER:/app/js-coverage.json" "."
+  - docker cp  "$CONTAINER:/app/.coverage" "."
   - coveralls --merge=js-coverage.json
