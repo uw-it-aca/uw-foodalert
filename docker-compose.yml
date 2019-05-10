@@ -15,7 +15,7 @@ services:
       DATABASE_USERNAME: postgres
       DATABASE_HOST: db
     ports:
-      - "8000:8000"
+      - "${RUNSERVER_PORT:-8000}:8000"
   db:
     image: postgres
   devtools:
