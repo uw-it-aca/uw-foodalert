@@ -9,6 +9,7 @@ ADD --chown=acait:acait setup.py /app/
 ADD --chown=acait:acait requirements.txt /app/
 ADD --chown=acait:acait README.md /app/
 
+ADD --chown=acait:acait docker/scripts /scripts/
 ADD --chown=acait:acait docker /app/project/
 
 RUN . /app/bin/activate && pip install -r requirements.txt
