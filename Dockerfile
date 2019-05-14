@@ -36,12 +36,11 @@ RUN npx webpack
 ## Container that runs python tests and outputs coverage
 FROM django AS testpy
 RUN chmod +x bin/activate
-RUN bin/pip install coverage
 RUN bin/pip install python-coveralls
-RUN bin/pip install python-coveralls
+RUN bin/pip install coverage==4.5.3
 RUN bin/pip install pycodestyle
 RUN bin/pycodestyle foodalert/ --exclude=migrations
-RUN bin/activate && bin/coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
+RUN bin/activate && bin/coverage run --rcfile=$(pwd)/.coveragerc --omit=foodalert/migrations/* manage.py test foodalert
 
 ## Container that runs js tests and outputs coverage
 FROM wpack AS testjs
