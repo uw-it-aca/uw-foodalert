@@ -9,6 +9,7 @@ FROM acait/django-container:feature-refactor as django
 ENV AUTH SAML_MOCK
 # Install deps as root
 USER root
+RUN apt-get update
 RUN apt-get install -y libpq-dev
 # Switch to acait and chown setup files
 USER acait
