@@ -1,0 +1,3 @@
+database:
+  engine: "postgres"
+  hostname: "rds-postgres.default.svc.cluster.local"
