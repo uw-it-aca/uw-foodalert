@@ -25,10 +25,8 @@ RUN npm install .
 RUN npx webpack
 
 
-FROM django 
+FROM django
 
-ENV DB sqlite3
-ENV AUTH SAML_MOCK
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/ /static/
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/webpack-stats.json /app/foodalert/static/webpack-stats.json

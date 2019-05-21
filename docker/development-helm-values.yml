@@ -1,0 +1,5 @@
+environmentVariables:
+  - name: "DB"
+    value: "sqlite3"
+  - name: "AUTH"
+    value: "SAML_MOCK"
