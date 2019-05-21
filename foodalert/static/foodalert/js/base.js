@@ -13,6 +13,8 @@ window.vueData.components = {
 };
 
 window.vueData.routes = [
+  { path: "/welcome", component: UnauthzTemplate},
+
     {
         path: "/",
         component: GenericTemplate,
