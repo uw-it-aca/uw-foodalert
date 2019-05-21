@@ -14,7 +14,7 @@
         <br>
         <b-row align-self="center" align-h="center">
             <b-link to="/">
-                <button type="button" class="btn btn-outline-primary">
+                <button style="c" type="button" class="btn btn-outline-primary">
                     Go To Homepage
                 </button>
             </b-link>

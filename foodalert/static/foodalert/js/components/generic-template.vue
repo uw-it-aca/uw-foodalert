@@ -1,9 +1,9 @@
 <template>
     <div class="">
-        <b-container class="pt-3">
+        <!-- <b-container class="pt-3">
             <h1 class="h4">{{ headerText }}</h1>
         </b-container>
-        <hr>
+        <hr> -->
         <router-view :subId="this.subId">
 
         </router-view>
