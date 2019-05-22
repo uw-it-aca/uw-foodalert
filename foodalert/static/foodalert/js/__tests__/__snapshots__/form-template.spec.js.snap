@@ -21,23 +21,18 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__16__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__16"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__16__BV_label_"
             >
               
             Describe the food 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <textarea
                 class="form-control form-control-md"
@@ -61,23 +56,18 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__19__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__19"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__19__BV_label_"
             >
               
             Quantity 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <textarea
                 class="form-control form-control-md"
@@ -101,30 +91,24 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__22__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__22"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__22__BV_label_"
             >
               
             End Time 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <input
                 class="form-control form-control-md"
                 id="time-input-null"
                 placeholder="6:00 PM"
                 type="time"
-                value=""
               />
               <!---->
               <!---->
@@ -141,29 +125,24 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__25__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__25"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__25__BV_label_"
             >
               
             Location 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <textarea
                 class="form-control form-control-md"
                 id="textarea-null"
                 placeholder="e.g HUB 130"
-                rows="1"
+                rows="2"
                 wrap="soft"
               />
               <!---->
@@ -200,23 +179,18 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__29__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__29"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__29__BV_label_"
             >
               
             Does the food contain? 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <div
                 class=""
@@ -228,20 +202,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__31"
                       name="checkbox-null"
-                      true-value="Dairy"
                       type="checkbox"
                       value="Dairy"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__31"
                     >
                        Dairy 
                     </label>
@@ -252,20 +223,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__32"
                       name="checkbox-null"
-                      true-value="Eggs"
                       type="checkbox"
                       value="Eggs"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__32"
                     >
                        Eggs 
                     </label>
@@ -276,20 +244,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__33"
                       name="checkbox-null"
-                      true-value="Fish"
                       type="checkbox"
                       value="Fish"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__33"
                     >
                        Fish 
                     </label>
@@ -300,20 +265,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__34"
                       name="checkbox-null"
-                      true-value="Shellfish"
                       type="checkbox"
                       value="Shellfish"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__34"
                     >
                        Shellfish 
                     </label>
@@ -324,20 +286,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__35"
                       name="checkbox-null"
-                      true-value="Meat"
                       type="checkbox"
                       value="Meat"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__35"
                     >
                        Meat 
                     </label>
@@ -348,20 +307,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__36"
                       name="checkbox-null"
-                      true-value="Gluten (wheat)"
                       type="checkbox"
                       value="Gluten (wheat)"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__36"
                     >
                        Gluten (wheat) 
                     </label>
@@ -372,20 +328,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__37"
                       name="checkbox-null"
-                      true-value="Soy"
                       type="checkbox"
                       value="Soy"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__37"
                     >
                        Soy 
                     </label>
@@ -396,20 +349,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__38"
                       name="checkbox-null"
-                      true-value="Peanuts"
                       type="checkbox"
                       value="Peanuts"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__38"
                     >
                        Peanuts 
                     </label>
@@ -420,20 +370,17 @@ exports[`Form Controller renders correctly textarea 1`] = `
                   class="row mx-0"
                 >
                   <div
-                    class="custom-control custom-checkbox custom-control-inline"
+                    class="custom-control custom-control-inline custom-checkbox"
                   >
                     <input
                       autocomplete="off"
                       class="custom-control-input"
-                      id="__BVID__39"
                       name="checkbox-null"
-                      true-value="Tree Nuts"
                       type="checkbox"
                       value="Tree Nuts"
                     />
                     <label
                       class="custom-control-label"
-                      for="__BVID__39"
                     >
                        Tree Nuts 
                     </label>
@@ -474,23 +421,18 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="px-0 py-1 container-fluid"
         >
           <div
-            aria-labelledby="__BVID__41__BV_label_"
-            class="labelled-textarea mb-0 b-form-group form-group"
-            id="__BVID__41"
+            class="form-group labelled-textarea mb-0"
             role="group"
           >
             <label
-              class="col-form-label pt-0"
+              class="d-block"
               for="textarea-null"
-              id="__BVID__41__BV_label_"
             >
               
             Do students need to bring containers? 
               <br />
             </label>
-            <div
-              class=""
-            >
+            <div>
                
               <div
                 class="container"
@@ -591,6 +533,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
   <div>
     <div
       id="modal-null___BV_modal_outer_"
+      style="position: absolute; z-index: 1040;"
     >
       <div
         aria-hidden="true"
@@ -598,6 +541,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
         id="modal-null"
         role="dialog"
         style="display: none;"
+        tabindex="-1"
       >
         <div
           class="modal-dialog modal-md"
@@ -605,8 +549,8 @@ exports[`Form Controller renders correctly textarea 1`] = `
           <div
             aria-describedby="modal-null___BV_modal_body_"
             class="modal-content"
+            id="modal-null___BV_modal_content_"
             role="document"
-            tabindex="-1"
           >
             <!---->
             <div
@@ -633,15 +577,14 @@ exports[`Form Controller renders correctly textarea 1`] = `
                 </p>
                  
                 <fieldset
-                  class="b-form-group form-group"
-                  id="__BVID__47"
-                  role="group"
+                  class="form-group"
                 >
                   <!---->
                   <div
-                    class=""
                     role="group"
+                    tabindex="-1"
                   >
+                    <!---->
                     <!---->
                     <!---->
                     <!---->
@@ -682,6 +625,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
           </div>
         </div>
       </div>
+      <!---->
       <!---->
     </div>
   </div>
