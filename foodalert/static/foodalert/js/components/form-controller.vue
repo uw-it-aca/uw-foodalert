@@ -1,6 +1,6 @@
 <template>
     <form-template
-        :allergens='["Dairy", "Eggs", "Fish", "Shellfish", "Meat", "Gluten (wheat)", "Soy", "Peanuts", "Tree Nuts"]'
+        :allergens="this.allergens"
         :preview-text="previewText"
         :modalShow="this.modalShow"
         :modalMode="this.modalMode"
@@ -21,6 +21,9 @@
     const axios = require('axios');
 
     export default {
+        props: {
+            allergens: Array
+        },
         components: {
             'form-template': FormTemplate,
         },

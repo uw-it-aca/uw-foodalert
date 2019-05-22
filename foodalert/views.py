@@ -7,7 +7,7 @@ from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
-from foodalert.models import Notification, Update, Subscription
+from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
         SubscriptionSerializer
 from rest_framework import generics
@@ -150,6 +150,9 @@ class HomeView(TemplateView):
     template_name = 'base.html'
 
     def get_context_data(self, *args, **kwargs):
+        allergens = []
+        for allergen in Allergen.objects.all():
+            allergens.append(allergen.name)
         context = {}
         context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)
@@ -157,4 +160,5 @@ class HomeView(TemplateView):
         context['subscription'], created = Subscription.objects.get_or_create(
             user=self.request.user)
         context['subscription'] = context['subscription'].pk
+        context['allergens'] = allergens
         return context

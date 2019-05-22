@@ -59,21 +59,6 @@
                     state-value="allergens"
                     @stateAction="this.setValue">
                 </labelled-input>
-
-
-
-
-                <b-container class="bv-example-row">
-                    <b-row>
-                        <b-col sm >first 5</b-col>
-                        <b-col sm >next 4</b-col>
-                    </b-row>
-                </b-container>
-
-
-
-
-
                 <labelled-input
                     input-type="buttons"
                     label-text="Do students need to bring containers?"

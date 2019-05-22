@@ -4,7 +4,7 @@
             <h1 class="h4">{{ headerText }}</h1>
         </b-container>
         <hr>
-        <router-view :subId="this.subId">
+        <router-view :subId="this.subId" :allergens="this.allergens">
 
         </router-view>
     </div>
@@ -14,6 +14,7 @@
 export default {
     props: {
         subId: Number,
+        allergens: Array,
     },
     data() {
         return {

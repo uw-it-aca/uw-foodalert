@@ -1,51 +1,65 @@
 [
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 2,
     "fields": {
-        "name": "Milk"
+        "name": "Dairy"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 3,
     "fields": {
         "name": "Eggs"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 4,
     "fields": {
         "name": "Soy"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 5,
     "fields": {
         "name": "Fish"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 6,
     "fields": {
         "name": "Shellfish"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 7,
     "fields": {
         "name": "Peanuts"
     }
 },
 {
-    "model": "foodalert.allergen",
+    "model": "foodalert.Allergen",
     "pk": 8,
     "fields": {
-        "name": "Wheat"
+        "name": "Gluten"
+    }
+},
+{
+    "model": "foodalert.Allergen",
+    "pk": 9,
+    "fields": {
+        "name": "Tree Nuts"
+    }
+},
+{
+    "model": "foodalert.Allergen",
+    "pk": 10,
+    "fields": {
+        "name": "Meat"
     }
 }
 ]
