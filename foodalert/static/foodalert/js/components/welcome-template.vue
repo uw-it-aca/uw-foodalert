@@ -3,7 +3,7 @@
   <b-container fluid class="py-2" style="background-color: #4b2e83">
     <b-row class="justify-content-center">
       <b-col md="8">
-        <b-img v-bind="mainProps" src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/98/2014/09/07214416/W-Logo_White.png" alt="UW Block Logo"></b-img>
+          <img src="../../img/uw-logo.png">
       </b-col>
     </b-row>
   </b-container>
@@ -32,36 +32,7 @@
 </template>
 
 <script type="text/javascript">
-  export default {
-    data() {
-      return {
-        mainProps: { width: 40, height: 27 } // UW Block Logo has aspect ratio of 150:101
-      }
-    }
-  }
 </script>
 
 <style lang="scss">
-    @import '../../css/_mixins.scss';
-    .hh-logo {
-      outline: 1px solid red;
-      // padding-left: 15px !important;
-      // padding-right: 15px !important;
-
-      @include breakpoint(tablet) {
-       outline-color: #f5f5f5;
-       // padding-left: 15px !important;
-       // padding-right: 15px !important;
-      }
-      @include breakpoint(desktop) {
-       outline-color: blue;
-       // padding-left: 15px !important;
-       // padding-right: 15px !important;
-      }
-    }
-    .hh-back-button {
-        color: #000000 !important;
-        /* fill: #d9d7d6 !important; */
-        background-color: #f2f2f2 !important;
-    }
 </style>
