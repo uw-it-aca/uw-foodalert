@@ -1,5 +1,5 @@
 environmentVariables:
   - name: "DB"
-    value: "sqlite3"
+    value: "postgres"
   - name: "AUTH"
     value: "SAML_MOCK"
