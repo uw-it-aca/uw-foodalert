@@ -6,29 +6,24 @@ exports[`Labelled Input renders correctly buttons 1`] = `
   type="buttons"
 >
   <div
-    aria-labelledby="__BVID__17__BV_label_"
-    class="labelled-textarea mb-0 b-form-group form-group"
-    id="__BVID__17"
+    class="form-group labelled-textarea mb-0"
     role="group"
   >
     <label
-      class="col-form-label pt-0"
+      class="d-block"
       for="textarea-null"
-      id="__BVID__17__BV_label_"
     >
       
             Label Text 
       <br />
     </label>
-    <div
-      class=""
-    >
+    <div>
        
       <textarea
         class="form-control form-control-md"
         id="textarea-null"
         placeholder="Example Text"
-        rows="1"
+        rows="2"
         wrap="soft"
       />
       <!---->
@@ -40,7 +35,7 @@ exports[`Labelled Input renders correctly buttons 1`] = `
   <div
     aria-atomic="true"
     aria-live="polite"
-    class="mt-1 alert alert-primary"
+    class="alert mt-1 alert-primary"
     placement="bottom"
     role="alert"
   >
@@ -56,29 +51,24 @@ exports[`Labelled Input renders correctly checkbox 1`] = `
   type="checkbox"
 >
   <div
-    aria-labelledby="__BVID__7__BV_label_"
-    class="labelled-textarea mb-0 b-form-group form-group"
-    id="__BVID__7"
+    class="form-group labelled-textarea mb-0"
     role="group"
   >
     <label
-      class="col-form-label pt-0"
+      class="d-block"
       for="textarea-null"
-      id="__BVID__7__BV_label_"
     >
       
             Label Text 
       <br />
     </label>
-    <div
-      class=""
-    >
+    <div>
        
       <textarea
         class="form-control form-control-md"
         id="textarea-null"
         placeholder="Example Text"
-        rows="1"
+        rows="2"
         wrap="soft"
       />
       <!---->
@@ -90,7 +80,7 @@ exports[`Labelled Input renders correctly checkbox 1`] = `
   <div
     aria-atomic="true"
     aria-live="polite"
-    class="mt-1 alert alert-primary"
+    class="alert mt-1 alert-primary"
     placement="bottom"
     role="alert"
   >
@@ -105,29 +95,24 @@ exports[`Labelled Input renders correctly textarea 1`] = `
   class="px-0 py-1 container-fluid"
 >
   <div
-    aria-labelledby="__BVID__2__BV_label_"
-    class="labelled-textarea mb-0 b-form-group form-group"
-    id="__BVID__2"
+    class="form-group labelled-textarea mb-0"
     role="group"
   >
     <label
-      class="col-form-label pt-0"
+      class="d-block"
       for="textarea-null"
-      id="__BVID__2__BV_label_"
     >
       
             Label Text 
       <br />
     </label>
-    <div
-      class=""
-    >
+    <div>
        
       <textarea
         class="form-control form-control-md"
         id="textarea-null"
         placeholder="Example Text"
-        rows="1"
+        rows="2"
         wrap="soft"
       />
       <!---->
@@ -139,7 +124,7 @@ exports[`Labelled Input renders correctly textarea 1`] = `
   <div
     aria-atomic="true"
     aria-live="polite"
-    class="mt-1 alert alert-primary"
+    class="alert mt-1 alert-primary"
     placement="bottom"
     role="alert"
   >
@@ -155,29 +140,24 @@ exports[`Labelled Input renders correctly time 1`] = `
   type="time"
 >
   <div
-    aria-labelledby="__BVID__12__BV_label_"
-    class="labelled-textarea mb-0 b-form-group form-group"
-    id="__BVID__12"
+    class="form-group labelled-textarea mb-0"
     role="group"
   >
     <label
-      class="col-form-label pt-0"
+      class="d-block"
       for="textarea-null"
-      id="__BVID__12__BV_label_"
     >
       
             Label Text 
       <br />
     </label>
-    <div
-      class=""
-    >
+    <div>
        
       <textarea
         class="form-control form-control-md"
         id="textarea-null"
         placeholder="Example Text"
-        rows="1"
+        rows="2"
         wrap="soft"
       />
       <!---->
@@ -189,7 +169,7 @@ exports[`Labelled Input renders correctly time 1`] = `
   <div
     aria-atomic="true"
     aria-live="polite"
-    class="mt-1 alert alert-primary"
+    class="alert mt-1 alert-primary"
     placement="bottom"
     role="alert"
   >
