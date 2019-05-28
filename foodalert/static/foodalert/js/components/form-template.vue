@@ -96,66 +96,25 @@
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
                     :disabled="v.form.$invalid"
-                    @click="$emit('submitRequest')"
+                    @click="showModal"
                     class="float-right btn btn-primary btn-lg py-2"> Send </b-link>
         </b-container>
 
-        <popup-container
-            :modal-show="this.modalShow"
-            :mode="this.modalMode">
-            <agreement-popup
-                slot="default"
-                intro-text="Thank you for sharing leftover food!"
-                main-text="Do you have a Food Distribution Permit?"
-                primary-text="Yes"
-                secondary-text="No"
-                :primary-action="updateValue.bind(this, 'claimsPermit')"
-                :secondary-action="updateValue.bind(this, 'onSafeList')">
-            </agreement-popup>
-            <agreement-popup
-                slot="permit"
-                input-type="text"
-                main-text="Describe your event"
-                primary-text="Continue"
-                info-text="Description must be shorter than 40 characters"
-                can-back
-                @primaryAction="this.setValue"
-                state-value="event"
-                :back-action="updateValue.bind(this, 'claimsPermit')">
-            </agreement-popup>
-            <agreement-popup
-                slot="safeList"
-                input-type="checkbox"
-                :checkbox-options="safeFoods"
-                main-text="Is your food..."
-                primary-text="Continue"
+        <b-modal
+            v-model="modalShow"
+            title="Confirmation"
+            title-tag="h3"
+            header-border-variant="light"
+            footer-border-variant="light"
+            header-bg-variant="light"
+            footer-bg-variant="light"
+            body-bg-variant="light"
+            hide-header-close="true"
+            ok-title="Send"
+            @ok="$emit('submitRequest')">
+            We will send your notification to Hungry Husky Subscribers.
+        </b-modal>
 
-                link-text="How to get a Permit"
-                link-location="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
-                can-back
-                @primaryAction="this.setValue"
-                state-value="safeFoodList"
-                :back-action="updateValue.bind(this, 'onSafeList')">
-            </agreement-popup>
-            <b-container slot="safeListConfirmation">
-                <p class="text-center">You can share the foods you checked on this list </p>
-                <p
-                    class="text-center"
-                    v-for="food in this.foodList" :key="food">
-                    <strong> {{food}} </strong>
-                </p>
-                <p>
-                    You cannot share anything that is not on that list unless you have
-                    a food distribution permit.
-                </p>
-                <b-button
-                    variant="primary"
-                    class="w-100"
-                    @click="updateValue('acceptedSafeListTerms')">
-                    I Understand
-                </b-button>
-            </b-container>
-        </popup-container>
     </b-container>
 </template>
 
@@ -169,13 +128,13 @@
         props: {
             allergens: Array,
             previewText: Object,
-            modalShow: Boolean,
             modalMode: String,
             foodList: Array,
             v: Object,
         },
         data() {
             return {
+                modalShow: false,
                 safeFoods: [
                     { text: "Non-perishable", value: "foodA"},
                     { text: "Commercially pre-packaged", value: "foodB"},
@@ -190,6 +149,9 @@
             },
             setValue(context, value) {
                 this.$emit('setState', context, value);
+            },
+            showModal() {
+                this.modalShow = true;
             },
         },
         components: {
