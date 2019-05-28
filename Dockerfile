@@ -1,6 +1,7 @@
 FROM acait/django-container:feature-refactor as django
 
 USER root
+RUN apt-get update
 RUN apt-get install -y libpq-dev
 USER acait
 
