@@ -153,9 +153,9 @@
                         allergens: [],
                         needContainer: false,
                         notificationID: 0,
-                        event: "",
                 },
                 form : {
+                    event: "",
                     description: "",
                     quantity: "",
                     time: "",
@@ -165,6 +165,10 @@
         },
         validations: {
             form: {
+                event: {
+                    required,
+                    maxLength: maxLength(100)
+                },
                 description: {
                     required,
                     maxLength: maxLength(100)

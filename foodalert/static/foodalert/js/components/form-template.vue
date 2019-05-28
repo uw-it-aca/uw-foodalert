@@ -3,6 +3,14 @@
         <b-form>
             <form-category>
                 <labelled-input
+                    label-text="Event Name"
+                    example-text="FIUTS weekly club meeting"
+                    :rows="1"
+                    :v="v.form.event"
+                    state-value="event"
+                    @stateAction="this.setValue">
+                </labelled-input>
+                <labelled-input
                     label-text="Describe the food"
                     example-text="Hot Indian buffet food"
                     :rows="2"
@@ -59,21 +67,6 @@
                     state-value="allergens"
                     @stateAction="this.setValue">
                 </labelled-input>
-
-
-
-
-                <b-container class="bv-example-row">
-                    <b-row>
-                        <b-col sm >first 5</b-col>
-                        <b-col sm >next 4</b-col>
-                    </b-row>
-                </b-container>
-
-
-
-
-
                 <labelled-input
                     input-type="buttons"
                     label-text="Do students need to bring containers?"
