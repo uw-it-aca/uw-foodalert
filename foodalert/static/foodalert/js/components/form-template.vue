@@ -102,7 +102,7 @@
             header-bg-variant="light"
             footer-bg-variant="light"
             body-bg-variant="light"
-            hide-header-close="true"
+            :hide-header-close="true"
             ok-title="Send"
             @ok="$emit('submitRequest')">
             We will send your notification to Hungry Husky Subscribers.
