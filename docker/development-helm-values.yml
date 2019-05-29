@@ -1,0 +1,5 @@
+environmentVariables:
+  - name: "DB"
+    value: "postgres"
+  - name: "AUTH"
+    value: "SAML_MOCK"

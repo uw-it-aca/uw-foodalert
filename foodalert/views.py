@@ -72,10 +72,13 @@ class NotificationList(generics.ListCreateAPIView):
                     sms_recipients.append(str(sub.sms_number))
 
             message = Sender.format_message(data)
-            Sender.send_twilio_sms(sms_recipients, message)
-            Sender.send_email(message,
-                              email_recipients,
-                              slug)
+
+            if not settings.DEBUG:
+                Sender.send_twilio_sms(sms_recipients, message)
+                Sender.send_email(message,
+                                  email_recipients,
+                                  slug)
+
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:

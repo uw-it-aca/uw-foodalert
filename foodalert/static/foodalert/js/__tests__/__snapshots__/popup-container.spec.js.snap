@@ -4,6 +4,7 @@ exports[`Labelled Input renders correctly textarea 1`] = `
 <div>
   <div
     id="modal-null___BV_modal_outer_"
+    style="position: absolute; z-index: 1040;"
   >
     <div
       aria-hidden="true"
@@ -11,6 +12,7 @@ exports[`Labelled Input renders correctly textarea 1`] = `
       id="modal-null"
       role="dialog"
       style="display: none;"
+      tabindex="-1"
     >
       <div
         class="modal-dialog modal-md"
@@ -18,8 +20,8 @@ exports[`Labelled Input renders correctly textarea 1`] = `
         <div
           aria-describedby="modal-null___BV_modal_body_"
           class="modal-content"
+          id="modal-null___BV_modal_content_"
           role="document"
-          tabindex="-1"
         >
           <!---->
           <div
@@ -30,6 +32,7 @@ exports[`Labelled Input renders correctly textarea 1`] = `
         </div>
       </div>
     </div>
+    <!---->
     <!---->
   </div>
 </div>

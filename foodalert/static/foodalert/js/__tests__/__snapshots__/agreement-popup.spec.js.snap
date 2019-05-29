@@ -27,20 +27,17 @@ exports[`Agreement Popup renders correctly checkbox 1`] = `
   </p>
    
   <fieldset
-    class="b-form-group form-group"
-    id="__BVID__6"
-    role="group"
+    class="form-group"
   >
     <!---->
     <div
-      class=""
       role="group"
+      tabindex="-1"
     >
       <!---->
        
       <div
-        class="ml-5 custom-controls-stacked"
-        id="__BVID__7"
+        class="ml-5"
         role="group"
         tabindex="-1"
       >
@@ -50,15 +47,11 @@ exports[`Agreement Popup renders correctly checkbox 1`] = `
           <input
             autocomplete="off"
             class="custom-control-input"
-            id="__BVID__7__BV_check_0_opt_"
-            name="__BVID__7"
-            true-value="Option 1"
             type="checkbox"
             value="Option 1"
           />
           <label
             class="custom-control-label"
-            for="__BVID__7__BV_check_0_opt_"
           >
             <span>
               Option 1
@@ -71,15 +64,11 @@ exports[`Agreement Popup renders correctly checkbox 1`] = `
           <input
             autocomplete="off"
             class="custom-control-input"
-            id="__BVID__7__BV_check_1_opt_"
-            name="__BVID__7"
-            true-value="Option 2"
             type="checkbox"
             value="Option 2"
           />
           <label
             class="custom-control-label"
-            for="__BVID__7__BV_check_1_opt_"
           >
             <span>
               Option 2
@@ -160,18 +149,15 @@ exports[`Agreement Popup renders correctly textarea 1`] = `
   </p>
    
   <fieldset
-    class="b-form-group form-group"
-    id="__BVID__2"
-    role="group"
+    class="form-group"
   >
     <!---->
     <div
-      class=""
       role="group"
+      tabindex="-1"
     >
       <input
         class="text-center mb-3 border-0 form-control"
-        id="__BVID__3"
         placeholder="Dawg Daze Event"
         type="text"
       />
