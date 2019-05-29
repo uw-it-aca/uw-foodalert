@@ -1,9 +1,9 @@
 <template>
     <div class="">
-        <!-- <b-container class="pt-3">
+        <b-container class="pt-3">
             <h1 class="h4">{{ headerText }}</h1>
         </b-container>
-        <hr> -->
+        <hr>
         <router-view :subId="this.subId">
 
         </router-view>
@@ -52,6 +52,10 @@ export default {
                 case '/subscribed/':
                 case '/subscribed':
                     this.headerText = 'You Signed Up For Food Notifications!'
+                    break;
+                case '/categories/':
+                case '/categories':
+                    this.headerText = 'Tell us about your food'
                     break;
                 default:
                     this.headerText = '';
