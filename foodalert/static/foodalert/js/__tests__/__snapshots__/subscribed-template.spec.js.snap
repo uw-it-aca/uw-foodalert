@@ -32,6 +32,21 @@ exports[`Subscribed Controller renders correctly 1`] = `
     </span>
   </a>
    
+  <nav
+    class="navbar navbar-light navbar-expand"
+  >
+    <a
+      class="navbar-brand"
+      href="#"
+      target="_self"
+    >
+      <img
+        alt="Kitten"
+        src="https://placekitten.com/g/30/30"
+      />
+    </a>
+  </nav>
+   
   <button
     class="btn w-100 py-2 btn-outline-secondary"
     type="button"

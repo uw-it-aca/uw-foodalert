@@ -3,6 +3,7 @@
 exports[`Form Controller renders correctly textarea 1`] = `
 <div
   class="p-0 container-fluid"
+  modalshow="true"
 >
   <form
     class=""
@@ -29,11 +30,11 @@ exports[`Form Controller renders correctly textarea 1`] = `
               for="textarea-null"
             >
               
-            Describe the food 
+            Event Name 
               <br />
             </label>
             <div>
-               
+
               <textarea
                 class="form-control form-control-md"
                 id="textarea-null"
@@ -398,26 +399,6 @@ exports[`Form Controller renders correctly textarea 1`] = `
         </div>
          
         <div
-          class="bv-example-row container"
-        >
-          <div
-            class="row"
-          >
-            <div
-              class="col-sm"
-            >
-              first 5
-            </div>
-             
-            <div
-              class="col-sm"
-            >
-              next 4
-            </div>
-          </div>
-        </div>
-         
-        <div
           class="px-0 py-1 container-fluid"
         >
           <div
@@ -437,6 +418,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               <div
                 class="container"
                 id="button-null"
+                value=""
               >
                 <button
                   class="btn btn-outline-success"
@@ -532,13 +514,12 @@ exports[`Form Controller renders correctly textarea 1`] = `
    
   <div>
     <div
-      id="modal-null___BV_modal_outer_"
+
       style="position: absolute; z-index: 1040;"
     >
       <div
         aria-hidden="true"
         class="modal fade"
-        id="modal-null"
         role="dialog"
         style="display: none;"
         tabindex="-1"
@@ -547,81 +528,34 @@ exports[`Form Controller renders correctly textarea 1`] = `
           class="modal-dialog modal-md"
         >
           <div
-            aria-describedby="modal-null___BV_modal_body_"
             class="modal-content"
             id="modal-null___BV_modal_content_"
             role="document"
           >
-            <!---->
-            <div
-              class="modal-body"
-              id="modal-null___BV_modal_body_"
+            <header
+              class="modal-header bg-light border-light"
             >
-              <div
-                class="px-4"
+              <h3
+                class="modal-title"
               >
-                <!---->
-                 
-                <!---->
-                 
-                <p
-                  class="h5 text-center mt-4 mb-5 text-center font-weight-light"
-                >
-                     Thank you for sharing leftover food!
-                </p>
-                 
-                <p
-                  class="h5 text-center mb-3"
-                >
-                   Do you have a Food Distribution Permit? 
-                </p>
-                 
-                <fieldset
-                  class="form-group"
-                >
-                  <!---->
-                  <div
-                    role="group"
-                    tabindex="-1"
-                  >
-                    <!---->
-                    <!---->
-                    <!---->
-                    <!---->
-                  </div>
-                </fieldset>
-                 
-                <div
-                  class="d-flex justify-content-center"
-                >
-                  <button
-                    class="btn px-5 btn-secondary btn-lg"
-                    type="button"
-                  >
-                    
-            No
-        
-                  </button>
-                   
-                  <button
-                    class="btn btn-primary btn-lg px-5 ml-2"
-                    type="button"
-                  >
-                    
-            Yes
-        
-                  </button>
-                </div>
-                 
-                <br />
-                 
-                <!---->
-                 
-                <!---->
-              </div>
-                 
+
             </div>
-            <!---->
+            <footer
+              class="modal-footer bg-light border-light"
+            >
+              <button
+                class="btn btn-secondary"
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Send
+              </button>
+            </footer>
           </div>
         </div>
       </div>

@@ -20,7 +20,9 @@ Object.assign(window.vueData.components, {
     'update-controller': UpdateController,
     'ended-template': EndedTemplate,
     'ended-controller': EndedController,
+
     "welcome-template": WelcomeTemplate,
+
 
 });
 
@@ -29,5 +31,7 @@ let welcomePath = window.vueData.routes.find(obj => obj.path === "/welcome");
 
 rootPath.children.find(obj => obj.path === "update").component = UpdateController;
 rootPath.children.find(obj => obj.path === "ended").component = EndedController;
+
 welcomePath.component = WelcomeTemplate;
+
 rootPath.children.find(obj => obj.path === "").component = FormController;

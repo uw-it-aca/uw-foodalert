@@ -14,8 +14,7 @@ setup(
     install_requires=[
         'django==2.1',
         'django-webpack-loader',
-        'django-compressor==2.2',
-        'UW-Django-SAML2<1.3.7',
+        'UW-Django-SAML2<2.0',
         'psycopg2',
         'djangorestframework',
         'phonenumbers',

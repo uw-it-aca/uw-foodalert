@@ -11,6 +11,12 @@
             <span class="ml-2">Edit Notification Settings</span>
         </b-link>
 
+        <b-navbar style = dsfasdafs>
+      <b-navbar-brand href="#">
+        <img src="https://placekitten.com/g/30/30" alt="Kitten">
+      </b-navbar-brand>
+    </b-navbar>
+
         <b-button variant="outline-secondary" class='w-100 py-2'>
             Unsubscribe
         </b-button>
