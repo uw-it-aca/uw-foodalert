@@ -1,4 +1,4 @@
-FROM acait/django-container:feature-refactor as django
+FROM acait/django-container:develop as django
 
 USER root
 RUN apt-get update
