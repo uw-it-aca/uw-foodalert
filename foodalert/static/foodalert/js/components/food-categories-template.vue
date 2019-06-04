@@ -8,33 +8,37 @@
                 v-model="selected"
                 key="non-perishable"
                 value="non-perishable"
+                :disabled="selected.includes('none') || selected.includes('home')"
               >{{"My food is non-perishable. "}}<a href="#" @click.prevent.stop="tooltip1 = !tooltip1">Examples</a></b-form-checkbox>
               <div class="tooltip-example" v-if="tooltip1">Candy, beverages (pasteruized, canned, or bottled), chips, dips.</div>
               <b-form-checkbox
                 v-model="selected"
                 key="pre-packaged"
                 value="pre-packaged"
+                :disabled="selected.includes('none') || selected.includes('home')"
               >{{"My food was commercially pre-packaged. "}}<a href="#" @click.prevent.stop="tooltip2 = !tooltip2">Examples</a></b-form-checkbox>
               <div class="tooltip-example" v-if="tooltip2"> Wrapped or boxed baked goods (cakes, pies), chips, store-bought ice cream.</div>
               <b-form-checkbox
                 v-model="selected"
                 key="home"
                 value="home"
+                :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('none')"
               >{{"My food was prepared at home."}}</b-form-checkbox>
               <b-form-checkbox
                 v-model="selected"
                 key="none"
                 value="none"
+                :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('home')"
               >{{"None of the above."}}</b-form-checkbox>
             </b-form-group>
 
             <div class="mt-5">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
-                   <b-button class="mb-3" type="submit" block variant="primary">Continue</b-button>
+                   <b-button class="mb-3" type="submit" block variant="primary" @click="getNextPage()">Continue</b-button>
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
-                   <b-button class="hh-back-button" type="submit" block variant="light">Back</b-button>
+                   <b-button class="hh-back-button" type="submit" block variant="light" @click="getBackPage()">Back</b-button>
                  </b-col>
                </b-row>
              </div>
@@ -45,6 +49,18 @@
 
 <script type="text/javascript">
   export default {
+    methods: {
+        getNextPage() {
+            if (this.selected.includes('none') || this.selected.includes('home')) {
+                this.$router.push({ name: 'notfound' });
+            } else if (this.selected.includes('pre-packaged') || this.selected.includes('non-perishable')) {
+                this.$router.push({ name: 'responsibilities' });
+            }
+        },
+        getBackPage() {
+            this.$router.push({ name: 'notfound' });
+        }
+    },
     data() {
       return {
         selected: [],
@@ -58,7 +74,7 @@
 <style>
     .custom-control-label::before, .custom-control-label::after {
         transform: scale(1.5);
-        top: unset !important;
+        //top: unset !important;
         padding: 10px;
     }
 

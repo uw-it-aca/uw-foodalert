@@ -1,9 +1,8 @@
 <template>
     <div class="">
         <b-container class="pt-3">
-            <h1 class="h4">{{ headerText }}</h1>
+            <h2 class="heading-text"><b>{{ headerText }}</b></h2>
         </b-container>
-        <hr>
         <router-view :subId="this.subId">
 
         </router-view>
@@ -64,3 +63,9 @@ export default {
     }
 }
 </script>
+
+<style>
+    .header-text < b {
+        font-family: Helvetica;
+    }
+</style>

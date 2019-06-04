@@ -37,5 +37,6 @@ window.vueData.routes = [
     {
         path: "*",
         component: NotFoundTemplate,
+        name: "notfound"
     },
 ];
