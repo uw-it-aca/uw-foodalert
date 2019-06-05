@@ -3,6 +3,7 @@ import LabelledInput from './components/labelled-input.vue';
 import NotFoundTemplate from './components/not-found-template.vue';
 import UnauthzTemplate from './components/unauthz-template.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
+import TooltipCheckbox from './components/tooltip-checkbox.vue';
 
 window.vueData = {};
 
@@ -12,6 +13,7 @@ window.vueData.components = {
     "not-found-template": NotFoundTemplate,
     "unauthz-template": UnauthzTemplate,
     "welcome-template": WelcomeTemplate,
+    "tooltip-checkbox": TooltipCheckbox,
 };
 
 window.vueData.routes = [
