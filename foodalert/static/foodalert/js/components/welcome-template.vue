@@ -39,5 +39,5 @@
   }
 </script>
 
-<style lang="scss">3e333
+<style lang="scss">
 </style>

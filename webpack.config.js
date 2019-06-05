@@ -27,11 +27,6 @@ module.exports = {
       {
         test: /\.vue$/,
         use: 'vue-loader',
-        options: {
-          transformAssetUrls: {
-            "b-img": "src"
-          }
-        }
       },
       {
         test: /\.js?$/,
