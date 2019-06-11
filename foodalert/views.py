@@ -126,13 +126,15 @@ class UpdateList(generics.ListCreateAPIView):
             if not settings.DEBUG:
                 if settings.USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
-                                       parent.event + ' Update: ' + data['text'])
+                                           parent.event +
+                                           ' Update: ' + data['text'])
                 elif settings.USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients,
-                                       parent.event + ' Update: ' + data['text'])
+                                           parent.event +
+                                           ' Update: ' + data['text'])
                 Sender.send_email(parent.event + ' Update: ' + data['text'],
-                              email_recipients,
-                              slug)
+                                  email_recipients,
+                                  slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
