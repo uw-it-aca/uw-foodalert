@@ -76,7 +76,7 @@ class NotificationList(generics.ListCreateAPIView):
             if not settings.DEBUG:
                 if settings.USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients, message)
-                else if settings.USE_SMS == "amazon":
+                elif settings.USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients, message)
                 Sender.send_email(message,
                                   email_recipients,
@@ -127,7 +127,7 @@ class UpdateList(generics.ListCreateAPIView):
                 if settings.USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
                                        parent.event + ' Update: ' + data['text'])
-                else if settings.USE_SMS == "amazon":
+                elif settings.USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients,
                                        parent.event + ' Update: ' + data['text'])
                 Sender.send_email(parent.event + ' Update: ' + data['text'],
