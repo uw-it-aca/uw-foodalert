@@ -74,9 +74,9 @@ class NotificationList(generics.ListCreateAPIView):
             message = Sender.format_message(data)
 
             if not settings.DEBUG:
-                if settings.USE_SMS == "twilio":
+                if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients, message)
-                elif settings.USE_SMS == "amazon":
+                elif settings.FOODALERT_USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients, message)
                 Sender.send_email(message,
                                   email_recipients,
@@ -124,11 +124,11 @@ class UpdateList(generics.ListCreateAPIView):
 
             parent = Notification.objects.get(pk=data['parent_notification'])
             if not settings.DEBUG:
-                if settings.USE_SMS == "twilio":
+                if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                elif settings.USE_SMS == "amazon":
+                elif settings.FOODALERT_USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])

@@ -107,7 +107,7 @@ WEBPACK_LOADER = {
 }
 
 # SETTING FOR WHICH SMS TO USE
-USE_SMS = 'twilio'
+FOODALERT_USE_SMS = 'twilio'
 
 # AWS Config for Boto3
 AWS_ACCESS_KEY_ID = ''
