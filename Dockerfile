@@ -1,12 +1,15 @@
 FROM acait/django-container:feature-refactor as django
 
 USER root
+run apt-get update
 RUN apt-get install -y libpq-dev
 USER acait
 
 ADD --chown=acait:acait setup.py /app/
 ADD --chown=acait:acait requirements.txt /app/
 ADD --chown=acait:acait README.md /app/
+ADD --chown=acait:acait docs /app/
+RUN rm -rf /app/docs/*
 
 ADD --chown=acait:acait docker /app/project/
 
@@ -23,7 +26,7 @@ RUN npm install .
 RUN npx webpack
 
 
-FROM django 
+FROM django
 
 ENV AUTH SAML_MOCK
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/

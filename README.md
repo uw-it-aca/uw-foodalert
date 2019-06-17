@@ -65,9 +65,9 @@ Once you have finished work on a branch, push it to Github and submit a pull req
 
 ### Documentation
 
-To generate documentation for the backend app, run the following command in the repository root:
+The documentation for the backend app is currently served on port 3000 whenever you run `docker-compose up`.
 
-`docker-compose run --rm app sh ./docs/docs.sh`
+It is important to note the docs have to be manually refreshed by manually purging the volume (`docker-compose down -v` or `docker volume rm uw-foodalert_docs`). If this is not done, the documentation server will continue serving the same outdated docs
 
 ## Authors
 

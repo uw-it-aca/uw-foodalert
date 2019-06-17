@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
   app:
@@ -26,4 +26,21 @@ services:
       - ./package.json:/devtools/uw-foodalert/package.json
       - ./webpack.config.js:/devtools/uw-foodalert/webpack.config.js
       - ./foodalert:/devtools/uw-foodalert/foodalert
+      - ./.babelrc:/devtools/uw-foodalert/.babelrc
     command: bash -c "yes yes | npm install; npx webpack --watch"
+  documentation:
+    restart: always
+    build: .
+    volumes:
+      - ./foodalert:/app/foodalert
+      - ./docker/settings.py:/app/project/settings.py
+      - ./docker/urls.py:/app/project/urls.py
+      - type: volume
+        source: ./docs
+        target: /app/doc_vol
+    ports:
+      - "3000:8000"
+    command: bash -c "mkdir /app/docs; cp -R /app/doc_vol/* /app/docs; sh docs.sh"
+
+volumes:
+  docs:
