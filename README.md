@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 Before you set up your local build you should have the following installed:
-* NodeJS
+* NodeJS (for running the frontend tests)
 * Docker
 
 ### Installing
@@ -21,31 +21,28 @@ Then navigate into the repository's root directory and install node dependencies
 
 `cd uw-foodalert`
 
-`npm install .`
-
-Run Webpack to compile the project's frontend code:
-
-`npx webpack`
-
 Use docker-compose to build the app container:
 
 `docker-compose build app`
 
 #### Installing Fixtures
 
-For the app to function correctly, the Allergen and SafeFood models must be populated with all relevant allergens and safe-to-share-foods respectively. Fixtures have been provided to load these models with example values. To load them, run the foolowing two commands:
+For the app to function correctly, the Allergen and SafeFood models must be populated with all relevant allergens and safe-to-share-foods respectively. Fixtures have been provided to load these models with example values. To load them, run the following two commands:
 
 `docker-compose run --rm app python manage.py loaddata Allergen --settings=sampleproj.settings.base`
 `docker-compose run --rm app python manage.py loaddata SafeFood --settings=sampleproj.settings.base`
 
-See Django documentation for instruction on populating these models with custom values and geneerating your own fixtures.
+See Django documentation for instruction on populating these models with custom values and generating your own fixtures.
 
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
 
 To run the python tests: `docker-compose run --rm app python manage.py test foodalert --settings=sampleproj.settings.base`.
 
-To run the Javascript tests: `npx jest`.
+
+To run the Javascript tests:
+`npm install .`
+`npx jest`.
 
 Both commands must be run from repository root
 
@@ -63,13 +60,8 @@ To contribute to the project, create a branch off of develop to make your change
 
 For all of your commits, please write out a description of the changes made and the rationale behind their implementation in the commit details.
 
-Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being acceptd, run these locally before pushing (it may be worth setting up a git hook). 
+Once you have finished work on a branch, push it to Github and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improve the likelihood of your pull request being accepted, run these locally before pushing (it may be worth setting up a git hook).
 
-### Webpack
-
-During development, you may find it convenient to have webpack watching your files in the background and compiling them as they change. To do this, run: 
-
-`npx webpack --watch`
 
 ### Documentation
 
