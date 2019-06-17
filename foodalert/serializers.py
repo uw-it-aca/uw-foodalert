@@ -20,6 +20,9 @@ class AllergenSerializer(serializers.ModelSerializer):
 
 
 class NotificationSerializer(serializers.ModelSerializer):
+    """ Utilities for handling the notification model
+    """
+
     allergens = AllergenSerializer(many=True, required=False)
     safe_foods = SafeFoodSerializer(many=True, required=False)
     host = serializers.ReadOnlyField()
@@ -32,6 +35,10 @@ class NotificationSerializer(serializers.ModelSerializer):
                   'host_user_agent', 'ended')
 
     def create(self, validated_data):
+        """ Creates a notification object from a dict in the format secified by
+            to_representation
+        """
+
         allergen_data = validated_data.pop('allergens')
         safe_food_data = validated_data.pop('safe_foods')
         notif = Notification.objects.create(**validated_data)
@@ -47,6 +54,8 @@ class NotificationSerializer(serializers.ModelSerializer):
         return notif
 
     def to_representation(self, notif):
+        """ Converts a notification object to a serializable dict
+        """
         user = User.objects.get(pk=notif.host.id)
         return {
             'id': str(notif.id),
@@ -74,6 +83,9 @@ class NotificationSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
+        """ Validates a dict to ensure it contains all necessary fields and
+            flattens it for serialization
+        """
         if 'ended' not in data:
             data["ended"] = False
         if data["ended"]:
@@ -132,21 +144,25 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 class UpdateSerializer(serializers.ModelSerializer):
+    """ Utilities for handling the Update model
+    """
     class Meta:
         model = Update
         fields = ('text', 'parent_notification', 'created_time')
 
-        def to_internal_value(self, data):
-            ret = {
-                'text': data['text']
-            }
+    def to_internal_value(self, data):
+        ret = {
+            'text': data['text']
+        }
 
-            ret['parent_notification'] = Notification.objects.get(
-                                         pk=data['parent_notification'])
-            return ret
+        ret['parent_notification'] = Notification.objects.get(
+                                     pk=data['parent_notification'])
+        return ret
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
+    """ Utilities for handling the Dubscription model
+    """
     sms_number = PhoneNumberField(allow_blank=True)
 
     class Meta:

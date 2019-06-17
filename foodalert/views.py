@@ -23,10 +23,15 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationDetail(generics.RetrieveUpdateAPIView):
+    """ Endpoint for getting/updating a single notification
+    """
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
 
     def patch(self, request, pk):
+        """ Updates a notification object to end it
+            (distinct from sending an update)
+        """
         instance = self.get_object()
         serializer = NotificationSerializer(instance,
                                             data=request.data,
@@ -43,6 +48,9 @@ class NotificationDetail(generics.RetrieveUpdateAPIView):
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
+    """ Endpoint for getting a list of notifications or creating
+        (and therefore sending) a new one
+    """
     serializer_class = NotificationSerializer
 
     def get_queryset(self):
@@ -52,6 +60,8 @@ class NotificationList(generics.ListCreateAPIView):
             return self.request.user.notification_set.all()
 
     def create(self, request, *args, **kwargs):
+        """ Creates a notification and sends it out to all subscriptions
+        """
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
             self.perform_create(serializer)
@@ -89,16 +99,23 @@ class NotificationList(generics.ListCreateAPIView):
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateDetail(generics.RetrieveAPIView):
+    """ Endpoint for getting a single update
+    """
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
+    """ Endpoint for getting a list of Updates or creating
+        (and therefore sending) a new one
+    """
     queryset = Update.objects.all()
     serializer_class = UpdateSerializer
 
     def create(self, request, *args, **kwargs):
+        """ Creates an update and sends it out to all subscriptions
+        """
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
             self.perform_create(serializer)
@@ -132,24 +149,33 @@ class UpdateList(generics.ListCreateAPIView):
 
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
+    """ Endpoint for getting a single update
+    """
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
+    """ Endpoint for getting a list of Updates or creating a new one
+    """
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
     def perform_create(self, serializer, *args, **kwargs):
+        """ Creates a Subscription """
         serializer.save(user=self.request.user)
 
 
 @method_decorator(login_required(), name='dispatch')
 class HomeView(TemplateView):
+    """ Serves the app page
+    """
     template_name = 'base.html'
 
     def get_context_data(self, *args, **kwargs):
+        """ session data to be templated into the HTML
+        """
         context = {}
         context['signup'] = True
         context['send'] = is_member_of_group(self.request, create_group)

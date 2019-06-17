@@ -8,6 +8,9 @@ from datetime import datetime
 
 
 class Sender:
+    """ Contains methods to send messages to a variety of endpoints
+    """
+
     def send_email(body, recipients, time):
         if body[:6] == 'Update':
             MailTemplate.objects.create(
@@ -68,6 +71,8 @@ class Sender:
 
 
 class TwilioSender(object):
+    """ Sender provider that sends messages to twilio
+    """
     account_sid = settings.TWILIO_ACCOUNT_SID
     auth_token = settings.TWILIO_AUTH_TOKEN
     c = Client(account_sid, auth_token)
@@ -87,6 +92,8 @@ class TwilioSender(object):
 
 
 class AmazonSNSProvider(object):
+    """ Sender provider that sends messages to SNS
+    """
     def __init__(self):
         self.client = boto3.client(
             'sns',

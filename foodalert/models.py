@@ -5,6 +5,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Notification(models.Model):
+    """ Tracks an initial notification that starts an event
+    """
     location = models.CharField(max_length=100, blank=False)
     event = models.CharField(max_length=40, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
@@ -22,6 +24,8 @@ class Notification(models.Model):
 
 
 class Subscription(models.Model):
+    """ Tracks the subscription of an individual netid to receive notifications
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
     sms_number = PhoneNumberField(blank=True)
@@ -32,6 +36,8 @@ class Subscription(models.Model):
 
 
 class Update(models.Model):
+    """ Tracks all sent messages associated with an event after the first one
+    """
     text = models.CharField(max_length=100, blank=False)
     parent_notification = models.ForeignKey('Notification',
                                             blank=False,
@@ -40,8 +46,12 @@ class Update(models.Model):
 
 
 class SafeFood(models.Model):
+    """ Foods that are safe to share without a permit
+    """
     name = models.CharField(max_length=30)
 
 
 class Allergen(models.Model):
+    """ Allergens that can be indicated on teh host form
+    """
     name = models.CharField(max_length=30)
