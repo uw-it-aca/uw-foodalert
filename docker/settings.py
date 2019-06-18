@@ -134,6 +134,7 @@ LOGOUT_URL = reverse_lazy('saml_logout')
 if os.getenv("AUTH", "SAML_MOCK") == "SAML_MOCK":
     MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
+# The names of the UW groups authorized to create and audit notifications
 FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
