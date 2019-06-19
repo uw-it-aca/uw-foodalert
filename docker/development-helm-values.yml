@@ -9,3 +9,5 @@ environmentVariables:
     value: "dev"
   - name: "PORT"
     value: "8080"
+  - name: "DJANGO_SECRET"
+    value: "ThisIsTemporaryForTesting"
