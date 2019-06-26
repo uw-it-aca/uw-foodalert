@@ -451,6 +451,7 @@ exports[`Form Controller renders correctly textarea 1`] = `
               <div
                 class="container"
                 id="button-null"
+                value=""
               >
                 <button
                   class="btn btn-outline-success"
