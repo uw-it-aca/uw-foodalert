@@ -3,6 +3,7 @@ import LabelledInput from './components/labelled-input.vue';
 import NotFoundTemplate from './components/not-found-template.vue';
 import UnauthzTemplate from './components/unauthz-template.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
+import CloseTemplate from './components/close-template.vue';
 
 window.vueData = {};
 
@@ -12,6 +13,7 @@ window.vueData.components = {
     "not-found-template": NotFoundTemplate,
     "unauthz-template": UnauthzTemplate,
     "welcome-template": WelcomeTemplate,
+    "close-template": CloseTemplate,
 };
 
 window.vueData.routes = [
@@ -31,6 +33,7 @@ window.vueData.routes = [
             { path: "subscribed", component: UnauthzTemplate },
             { path: "audit", component: UnauthzTemplate },
             { path: "welcome", component: WelcomeTemplate },
+            { path: "close", component: CloseTemplate },
         ],
     },
     {
