@@ -9,6 +9,7 @@ import UpdateController from './components/update-controller.vue';
 import EndedTemplate from './components/ended-template.vue';
 import EndedController from './components/ended-controller.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
+import CloseTemplate from './components/close-template.vue';
 
 Object.assign(window.vueData.components, {
     'form-category': FormCategory,
@@ -21,6 +22,7 @@ Object.assign(window.vueData.components, {
     'ended-template': EndedTemplate,
     'ended-controller': EndedController,
     'welcome-template': WelcomeTemplate,
+    'close-template': CloseTemplate,
 });
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
@@ -28,3 +30,4 @@ rootPath.children.find(obj => obj.path === "update").component = UpdateControlle
 rootPath.children.find(obj => obj.path === "ended").component = EndedController;
 rootPath.children.find(obj => obj.path === "welcome").component = WelcomeTemplate;
 rootPath.children.find(obj => obj.path === "").component = FormController;
+rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
