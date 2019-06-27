@@ -22,7 +22,7 @@ Object.assign(window.vueData.components, {
     'ended-template': EndedTemplate,
     'ended-controller': EndedController,
     'welcome-template': WelcomeTemplate,
-    'food-categories-template': FoodCategoriesTemplate
+    'food-categories-template': FoodCategoriesTemplate,
 });
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
