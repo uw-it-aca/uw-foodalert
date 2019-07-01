@@ -30,6 +30,7 @@ window.vueData.routes = [
             { path: "signup", component: UnauthzTemplate },
             { path: "subscribed", component: UnauthzTemplate },
             { path: "audit", component: UnauthzTemplate },
+            { path: "categories", component: UnauthzTemplate },
             { path: "welcome", component: WelcomeTemplate },
             { path: "close", component: UnauthzTemplate },
             { path: "need-permit", component: UnauthzTemplate },
@@ -38,5 +39,6 @@ window.vueData.routes = [
     {
         path: "*",
         component: NotFoundTemplate,
+        name: "notfound"
     },
 ];
