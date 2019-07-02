@@ -1,6 +1,6 @@
 <template>
 <div>
-  <welcome-page>
+  <welcome-page #banner>
   </welcome-page>
 </div>
 </template>

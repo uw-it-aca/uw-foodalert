@@ -13,6 +13,7 @@ import FoodCategoriesTemplate from './components/food-categories-template.vue';
 import CloseTemplate from './components/close-template.vue';
 import NeedPermit from './components/need-permit-template.vue';
 import FoodService from './pages/food-service-page.vue';
+import HostWelcome from './pages/host-welcome.vue';
 
 Object.assign(window.vueData.components, {
     'form-category': FormCategory,
@@ -29,6 +30,7 @@ Object.assign(window.vueData.components, {
     'close-template': CloseTemplate,
     'need-permit': NeedPermit,
     'food-service': FoodService,
+    'host-welcome': HostWelcome,
 });
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
@@ -40,3 +42,4 @@ rootPath.children.find(obj => obj.path === "").component = FormController;
 rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
 rootPath.children.find(obj => obj.path === "need-permit").component = NeedPermit;
 rootPath.children.find(obj => obj.path === "food-service").component = FoodService;
+rootPath.children.find(obj => obj.path === "host-welcome").component = HostWelcome;
