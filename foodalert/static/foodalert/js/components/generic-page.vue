@@ -4,6 +4,7 @@
             <slot name="notification"></slot>
         </b-collapse>
         <div class="page-content">
+            <slot name="banner"></slot>
             <slot name="heading"></slot>
             <slot name="body"></slot>
             <slot name="navigation"></slot>
