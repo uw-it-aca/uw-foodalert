@@ -39,6 +39,7 @@ window.vueData.routes = [
             { path: "close", component: UnauthzTemplate },
             { path: "need-permit", component: UnauthzTemplate },
             { path: "test-template", component: TestTemplate },
+            { path: "food-service", component: UnauthzTemplate },
             { path: "host-welcome", component: UnauthzTemplate },
         ],
     },
