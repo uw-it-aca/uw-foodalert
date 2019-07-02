@@ -174,5 +174,5 @@
                 return logs;
             }
         }
-    }   
+    }
 </script>
