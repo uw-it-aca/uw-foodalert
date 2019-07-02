@@ -5,9 +5,15 @@
         </b-collapse>
         <div class="page-content">
             <slot name="banner"></slot>
-            <slot name="heading"></slot>
-            <slot name="body"></slot>
-            <slot name="navigation"></slot>
+            <b-container>
+              <b-row class="justify-content-center">
+                <b-col md="8">
+                  <h1 id="standard-heading" class="pt-4"><slot name="heading"></slot></h1>
+                  <div id="standard-body"><slot name="body"></slot></div>
+                  <slot name="navigation"></slot>
+                </b-col>
+              </b-row>
+            </b-container>
         </div>
     </div>
 </template>
@@ -42,3 +48,21 @@ export default {
     },
 }
 </script>
+
+<style media="screen">
+  #standard-heading {
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: .004rem;
+  }
+  #standard-body {
+    font-size:1.14rem;
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: .012rem;
+    color: #333;
+  }
+
+
+</style>
