@@ -8,7 +8,7 @@
             <b-container>
               <b-row class="justify-content-center">
                 <b-col md="8">
-                  <h1 id="standard-heading" class="pt-4"><slot name="heading"></slot></h1>
+                  <h1 id="standard-heading" class="pt-4 pb-2"><slot name="heading"></slot></h1>
                   <div id="standard-body"><slot name="body"></slot></div>
                   <slot name="navigation"></slot>
                 </b-col>
