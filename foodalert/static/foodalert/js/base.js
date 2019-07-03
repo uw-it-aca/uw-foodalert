@@ -5,6 +5,7 @@ import UnauthzTemplate from './components/unauthz-template.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
 import TestTemplate from './pages/test-template.vue';
 import HostWelcome from './pages/host-welcome.vue';
+import StudentWelcome from './pages/student-welcome.vue';
 
 window.vueData = {};
 
@@ -16,6 +17,7 @@ window.vueData.components = {
     "welcome-template": WelcomeTemplate,
     "test-template": TestTemplate,
     "host-welcome": HostWelcome,
+    "student-welcome": StudentWelcome,
 };
 
 window.vueData.routes = [
@@ -41,6 +43,7 @@ window.vueData.routes = [
             { path: "test-template", component: TestTemplate },
             { path: "food-service", component: UnauthzTemplate },
             { path: "host-welcome", component: UnauthzTemplate },
+            { path: "student-welcome", component: UnauthzTemplate },
         ],
     },
     {
