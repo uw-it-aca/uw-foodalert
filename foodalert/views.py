@@ -7,9 +7,9 @@ from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
-from foodalert.models import Notification, Update, Subscription
+from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
-        SubscriptionSerializer
+        SubscriptionSerializer, AllergenSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -171,3 +171,8 @@ class HomeView(TemplateView):
             user=self.request.user)
         context['subscription'] = context['subscription'].pk
         return context
+
+@method_decorator(login_required(), name='dispatch')
+class AllergensList(generics.ListCreateAPIView):
+    queryset = Allergen.objects.all()
+    serializer_class = AllergenSerializer

@@ -9,11 +9,12 @@ import UpdateController from './components/update-controller.vue';
 import EndedTemplate from './components/ended-template.vue';
 import EndedController from './components/ended-controller.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
-import FoodCategoriesTemplate from './components/food-categories-template.vue';
-import CloseTemplate from './components/close-template.vue';
-import NeedPermit from './components/need-permit-template.vue';
+import FoodCategoriesTemplate from './pages/food-categories-page.vue';
+import CloseTemplate from './pages/close-page.vue';
+import NeedPermit from './pages/need-permit-page.vue';
 import FoodService from './pages/food-service-page.vue';
 import HostWelcome from './pages/host-welcome.vue';
+import ResponsibitiesPage from './pages/responsibilities-page.vue'
 
 Object.assign(window.vueData.components, {
     'form-category': FormCategory,
@@ -38,8 +39,9 @@ rootPath.children.find(obj => obj.path === "update").component = UpdateControlle
 rootPath.children.find(obj => obj.path === "ended").component = EndedController;
 rootPath.children.find(obj => obj.path === "welcome").component = WelcomeTemplate;
 rootPath.children.find(obj => obj.path === "categories").component = FoodCategoriesTemplate;
-rootPath.children.find(obj => obj.path === "").component = FormController;
+rootPath.children.find(obj => obj.path === "form").component = FormController;
 rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
 rootPath.children.find(obj => obj.path === "need-permit").component = NeedPermit;
 rootPath.children.find(obj => obj.path === "food-service").component = FoodService;
 rootPath.children.find(obj => obj.path === "host-welcome").component = HostWelcome;
+rootPath.children.find(obj => obj.path === "responsibilities").component = ResponsibitiesPage;

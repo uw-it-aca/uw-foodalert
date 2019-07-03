@@ -18,7 +18,7 @@
       <template #navigation>
         <div class="mt-5">
           <b-row align-h="between">
-            <b-col md="4" lg="3" order-md="2"><b-button class="mb-3" type="submit" block variant="primary">Let's get started</b-button>
+            <b-col md="4" lg="3" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" @click="getNextPage()">Let's get started</b-button>
             </b-col>
             <b-col md="4" lg="3" order-md="1"></b-col>
           </b-row>
@@ -30,16 +30,19 @@
 <script>
 import GenericPage from "./generic-page.vue";
 export default {
-    components: {
-      "generic-page": GenericPage,
-    },
-    props: {
-    },
-    data() {
-        return {
-        }
-    },
-    methods: {
-    },
+	components: {
+		"generic-page": GenericPage,
+	},
+	props: {
+		nextPageName: String,
+	},
+	methods: {
+		getNextPage() {
+			this.$router.push({name: this.nextPageName});
+		},
+	},
+	data() {
+		return {}
+	},
 }
 </script>

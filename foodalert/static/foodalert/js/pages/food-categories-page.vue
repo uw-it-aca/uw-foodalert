@@ -1,36 +1,47 @@
 <template>
     <generic-page>
         <template #heading>
-            Food service information
+            Tell us about your food
         </template>
         <template #body>
             <p>
-                Let's determine you eligibility for using Hungry Husky. Select all that apply.
+                Select all that apply to your food.
             </p>
             <b-form-group>
                 <b-form-checkbox
                     v-model="selected"
-                    key="preparedByAuth"
-                    value="preparedByAuth"
-                    :disabled="selected.includes('none')">
-                    My food was prepared by UW Housing &amp; Food Services or Bay Laurel Catering.
+                    key="non-perishable"
+                    value="non-perishable"
+                    :disabled="selected.includes('none') || selected.includes('atHome')">
+                    My food is non-perishable.
+                    <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
                 </b-form-checkbox>
+                <collapse-text-box bid="non-perishable">
+                Candy, beverages (pasteruized, canned, or bottled), chips, dips.
+                </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
-                    key="hasPermit"
-                    value="hasPermit"
-                    :disabled="selected.includes('none')">
-                    I have a UW Temporary Food Service Permit. 
-                    <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
+                    key="pre-packaged"
+                    value="pre-packaged"
+                    :disabled="selected.includes('none') || selected.includes('atHome')">
+                    My food was commercially pre-packaged.
+                    <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
                 </b-form-checkbox>
-                <collapse-text-box bid="perm-info">
-                    When providing food to the public (anyone beyond staff/faculty of your unit), UW offices are required to secure a Temporary Food Permit through <a href="#">UW Environmental Health &amp; Safety</a> to help ensure food service providers meet safety reulation and the food itself is safe for consumption.
+                <collapse-text-box bid="pre-packaged">
+                    Wrapped or boxed baked goods (cakes, pies), chips, store-bought ice cream.
                 </collapse-text-box>
+                <b-form-checkbox
+                    v-model="selected"
+                    key="atHome"
+                    value="atHome"
+                    :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('none')">
+                    My food was prepared at home.
+                </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
                     key="none"
                     value="none"
-                    :disabled="selected.includes('hasPermit') || selected.includes('preparedByAuth')">
+                    :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('atHome') ">
                     None of the above.
                 </b-form-checkbox>
             </b-form-group>
@@ -63,12 +74,10 @@
         },
         methods: {
             getNextPage() {
-                if (this.selected.includes('hasPermit')) {
-                    this.$router.push({ name: 'responsibilities' });
-                } else if (this.selected.includes('preparedByAuth')) {
+                if (this.selected.includes('non-perishable') || this.selected.includes('pre-packaged')) {
                     this.$router.push({ name: 'need-permit' });
-                } else if (this.selected.includes('none')) {
-                    this.$router.push({ name: 'categories' });
+                } else if (this.selected.includes('none') || this.selected.includes('atHome')) {
+                    this.$router.push({ name: 'close' });
                 }
             },
             getBackPage() {
