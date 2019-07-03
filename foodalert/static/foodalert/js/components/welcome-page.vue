@@ -30,16 +30,19 @@
 <script>
 import GenericPage from "./generic-page.vue";
 export default {
-    components: {
-      "generic-page": GenericPage,
-    },
-    props: {
-    },
-    data() {
-        return {
-        }
-    },
-    methods: {
-    },
+	components: {
+		"generic-page": GenericPage,
+	},
+	props: {
+		nextPageName: String,
+	},
+	methods: {
+		getNextPage() {
+			this.$router.push({name: this.nextPageName});
+		},
+	},
+	data() {
+		return {}
+	},
 }
 </script>

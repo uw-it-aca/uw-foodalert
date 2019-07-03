@@ -1,10 +1,11 @@
 <template>
-    <b-collapse :id="bid">
+    <b-collapse :id="bid" class="custom-collapse">
         <div class="custom-text-box">
             <slot>
                 <h1>Hello this will be content</h1>
             </slot>
         </div>
+        <div class="padding-collapse"></div>
     </b-collapse>
 </template>
 
@@ -23,5 +24,8 @@
         color: #707070;
         padding: 1rem;
         margin-bottom: 1rem;
+    }
+    .padding-collapse {
+        height: 20px; 
     }
 </style>
