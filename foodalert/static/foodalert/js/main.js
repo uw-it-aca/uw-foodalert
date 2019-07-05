@@ -24,7 +24,7 @@ var router = new VueRouter({
     routes: window.vueData.routes,
 })
 
-export var app = new Vue({
+export var vm = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
     router,
@@ -35,3 +35,5 @@ export var app = new Vue({
     },
     components,
 });
+
+global.vm = vm

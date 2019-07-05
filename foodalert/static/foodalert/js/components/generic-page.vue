@@ -51,10 +51,11 @@ export default {
 
 <style media="screen">
   #standard-heading {
-    font-size: 2rem;
+    font-size: 3rem;
     line-height: 1.2;
     font-weight: 600;
     letter-spacing: .004rem;
+    margin-left: -5px;
   }
   #standard-body {
     font-size:1.14rem;

@@ -58,7 +58,6 @@
                     <p v-if="!v.form.location.maxLength" class="hasError">Description must be shorter than 40 characters</p>
                 </div>
             </form-category>
-            <hr>
             <form-category section-name="Food Specifications">
                 <labelled-input
                     input-type="checkbox"
@@ -85,7 +84,6 @@
                 <br>
             </form-category>
         </b-form>
-        <hr>
         <b-container class="mb-4 d-flex justify-content-end">
             <b-link type="submit"
                     :disabled="v.form.$invalid"

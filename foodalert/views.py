@@ -81,7 +81,9 @@ class NotificationList(generics.ListCreateAPIView):
                 Sender.send_email(message,
                                   email_recipients,
                                   slug)
-
+            Sender.send_email(message,
+                                  email_recipients,
+                                  slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
@@ -176,3 +178,6 @@ class HomeView(TemplateView):
 class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
+
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(user=self.request.user)

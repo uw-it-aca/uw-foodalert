@@ -10,13 +10,21 @@ from phonenumber_field.serializerfields import PhoneNumberField
 class SafeFoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = SafeFood
-        fields = ('name',)
+        fields = ['name']
 
 
 class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
-        fields = ('name',)
+        fields = ['name']
+    
+    def create(self, validated_data):
+        allergen = Allergen.objects.create()
+
+        allergen.name = validated_data["name"]
+        allergen.save()
+
+        return allergen
 
 
 class NotificationSerializer(serializers.ModelSerializer):
