@@ -81,7 +81,7 @@
                 }
             },
             getBackPage() {
-                this.$router.push({ name: 'host-welcome' });
+                this.$router.push({ name: 'food-service' });
             }
         },
         data() {

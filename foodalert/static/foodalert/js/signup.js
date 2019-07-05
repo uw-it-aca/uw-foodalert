@@ -4,15 +4,6 @@ import SubscribedTemplate from './components/subscribed-template.vue';
 import SubscribedController from './components/subscribed-controller.vue';
 import StudentWelcome from './pages/student-welcome.vue';
 
-
-Object.assign(window.vueData.components, {
-    "signup-template" : SignupTemplate,
-    "signup-controller" : SignupController,
-    "subscribed-template" : SubscribedTemplate,
-    "subscribed-controller" : SubscribedController,
-    "student-welcome" : StudentWelcome,
-});
-
 window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
     { path: "signup", component: SignupController },
     { path: "subscribed", component: SubscribedController },

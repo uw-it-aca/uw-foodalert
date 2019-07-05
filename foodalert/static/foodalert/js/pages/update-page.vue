@@ -1,0 +1,143 @@
+<template>
+    <generic-page :startWithNotification="notificationText != undefined">
+        <template #notification>
+            {{notificationText}}
+        </template>
+        <template #heading>
+            Compose update
+        </template>
+        <template #body>
+            <h2><strong>Don't leave people stranded!</strong></h2>
+            <p>
+                When the food is all gone, please return here to send an update. This will prevent people making unnecessary trips.
+            </p>
+            <b-form>
+                <b-form-radio-group stacked v-model="selected">
+                    <b-form-radio value="noFoodUpdate">
+                        No food left
+                    </b-form-radio>
+                    <b-form-radio id="otherRadio" value="otherUpdate">
+                        <label for="otherMessage">Other Message</label>
+                        <b-form-input id="other-message" aria-describedby="Other message for the subs" 
+                            required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText"></b-form-input>
+                    </b-form-radio>
+                </b-form-radio-group>
+            </b-form>
+            <h2 class="mt-4">Preview</h2>
+            <preview-box>
+                Update: 
+                <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>
+                <span v-else-if="selected == 'otherUpdate'"> 
+                    <span v-if="otherText == ''"> We've moved to HUB 120 </span>
+                    <span v-else> {{otherText}} </span>
+                </span>
+                Re: {{state.food.served}} leftover from {{state.event}}...
+            </preview-box>
+        </template>
+        <template #navigation>
+            <div class="mt-5">
+                <b-row align-h="between">
+                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" @click="sendUpdate()">Send Update</b-button>
+                    </b-col>
+                </b-row>
+            </div>
+        </template>
+    </generic-page>
+</template>
+
+<script type="text/javascript">
+    import GenericPage from "../components/generic-page.vue";
+    import PreviewBox from "../components/custom-preview-box.vue";
+    import Cookies from 'js-cookie';
+    const axios = require('axios');
+
+    export default {
+        components:{
+            "generic-page": GenericPage,
+            "preview-box": PreviewBox,
+        },
+        props: {
+            notificationText: String,
+        },
+        data() {
+            return {
+                selected: "noFoodUpdate",
+                state: {
+                    food: {
+                        served: "",
+                    },
+                    event: "",
+                    location: "",
+                },
+                otherText: "",
+            }
+        },
+        beforeCreate() {
+            var headers = {
+                    'Content-Type': 'application/json',
+                }
+            axios.get('notification/', {"headers": headers})
+                .then(response => {
+                    var data = response.data.filter(function(notif) {
+                        return notif.ended == false;
+                    });
+                    if (data.length === 0) {
+                        this.$router.push({ name: 'form'});
+                    } else {
+                        this.state = data[0]
+                    }
+                    this.state.uid = this._uid;
+                })
+                .catch(error => {
+                    console.log("There was an error processing the request");
+                    console.log(error);
+                })
+        },
+        methods: {
+            sendUpdate() {
+                if (this.selected == "noFoodUpdate") {
+                    var data = {
+                        "ended": true,
+                    };
+                    var csrftoken = Cookies.get('csrftoken');
+                    var headers = {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    };
+                    axios.patch("notification/" + this.state.uid + "/", data, {"headers": headers})
+                        .then(response => {
+                            console.log(response);
+                            this.$router.push({ name: 'ended' });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                } else {
+                    var data = {
+                    "text": this.form.text,
+                    "parent_notification": this.state.uid
+                };
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+                axios.post('/updates/', data, {"headers": headers})
+                    .then(function(response) {
+                        this.$router.push({ name: 'update', params: {notificationText: "Your update was sent."} });
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log("There was an error processing the request");
+                        console.log(error);
+                    })
+                }
+            }
+        },
+    }
+</script>
+
+<style>
+    #otherRadio + label {
+        width: 100%;
+    }
+</style>

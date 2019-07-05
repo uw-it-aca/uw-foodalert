@@ -1,8 +1,22 @@
 <template>
     <div class="page">
-        <b-collapse id="notif-container" v-model="notificationState">
-            <slot name="notification"></slot>
-        </b-collapse>
+        <div id="standard-notification">
+            <b-collapse id="notif-container" v-model="notificationState">
+                <b-container fluid class="py-3" :style="notifStyle">
+                    <b-container>
+                        <b-row class="justify-content-center">
+                            <b-col md="8">
+                                <h2 style="color: white;">
+                                    <strong> 
+                                        <slot name="notification"></slot>
+                                    </strong>
+                                </h2>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-container>
+            </b-collapse>
+        </div>
         <div class="page-content">
             <slot name="banner"></slot>
             <b-container>
@@ -27,43 +41,53 @@ export default {
         },
         timeoutOfNotification: {
             type: Number,
-            default: 5000
+            default: 3000
         },
+        notificationColor: {
+            type: String,
+            default: "#1DA83F"
+        }
     },
     data() {
         return {
             notificationState: false,
+            notifStyle: "",
         }
     },
     methods: {
         showNotification: async function() {
-            this.notificationState = true;
-            await setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification);
+            await setTimeout(() => {this.notificationState = true;}, 250);
+            await setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification + 250);
         }
     },
     beforeMount() {
         if(this.startWithNotification) {
             this.showNotification();
         }
+        this.notifStyle = "background-color: " + this.notificationColor + ";";
     },
 }
 </script>
 
 <style media="screen">
-  #standard-heading {
-    font-size: 3rem;
-    line-height: 1.2;
-    font-weight: 600;
-    letter-spacing: .004rem;
-    margin-left: -5px;
-  }
-  #standard-body {
-    font-size:1.14rem;
-    line-height: 1.5;
-    font-weight: 400;
-    letter-spacing: .012rem;
-    color: #333;
-  }
-
-
+    #standard-notification {
+        height: 0;
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+    }
+    #standard-heading {
+        font-size: 3rem;
+        line-height: 1.2;
+        font-weight: 600;
+        letter-spacing: .004rem;
+        margin-left: -5px;
+    }
+    #standard-body {
+        font-size:1.14rem;
+        line-height: 1.5;
+        font-weight: 400;
+        letter-spacing: .012rem;
+        color: #333;
+    }
 </style>

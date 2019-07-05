@@ -117,12 +117,12 @@
                 </b-card!-->
 
                 <div class="mt-5">
-                <b-row align-h="between">
-                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;">Submit</b-button>
-                    </b-col>
-                    <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="submit" block variant="danger" style="white-space: nowrap;">Reset</b-button></b-col>
-                </b-row>
-            </div>
+                    <b-row align-h="between">
+                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;">Submit</b-button>
+                        </b-col>
+                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="danger" style="white-space: nowrap;">Reset</b-button></b-col>
+                    </b-row>
+                </div>
             </b-form>
         </template>
     </generic-page>
@@ -208,7 +208,7 @@
                          "safeToShareFood": this.form.safe_foods
                      },
                      "host": {
-                         "hostID": 1,
+                         "hostID": this._uid,
                          "userAgent": navigator.userAgent
                      }
                 };
@@ -220,14 +220,20 @@
                 }
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function(response) {
-                        console.log(response);
-                        this.$router.push({ name: 'update'});
+                        this.$router.push({ name: 'update', params: {notificationText: "Your notification was sent."}});
                     }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");
                         console.log(error);
                     })
             }
+        },
+        beforeCreate() {
+            axios.get("./notification/").then((result) => {
+                if(result.data.length)
+                    this.$router.push({ name: 'update', params: {notificationText: "You already have an event running."}});
+            });
+            console.log(this.$router.history.current.name);
         },
         beforeMount() {
             axios.get("./allergen/").then((result) => {

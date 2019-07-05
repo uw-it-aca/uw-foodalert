@@ -6,27 +6,15 @@ import WelcomeTemplate from './components/welcome-template.vue';
 import TestTemplate from './pages/test-template.vue';
 import HostWelcome from './pages/host-welcome.vue';
 import StudentWelcome from './pages/student-welcome.vue';
-import FormPage from './pages/form-page.vue';
 
 window.vueData = {};
-
-window.vueData.components = {
-    "generic-template": GenericTemplate,
-    "labelled-input": LabelledInput,
-    "not-found-template": NotFoundTemplate,
-    "unauthz-template": UnauthzTemplate,
-    "welcome-template": WelcomeTemplate,
-    "test-template": TestTemplate,
-    "host-welcome": HostWelcome,
-    "student-welcome": StudentWelcome,
-};
 
 window.vueData.routes = [
     {
         path: "/",
         component: GenericTemplate,
         children: [
-            { path: "update", component: UnauthzTemplate, name: "update" },
+            { path: "update", component: UnauthzTemplate, name: "update", props: true },
             { path: "ended", component: UnauthzTemplate, name: "ended" },
             {
               path: "responsibilities",
@@ -45,7 +33,6 @@ window.vueData.routes = [
             { path: "food-service", component: UnauthzTemplate, name: "food-service" },
             { path: "host-welcome", component: UnauthzTemplate, name: "host-welcome" },
             { path: "student-welcome", component: UnauthzTemplate, name: "student-welcome" },
-            { path: "form-test", component: FormPage, name: "form-page-test" },
         ],
     },
     {

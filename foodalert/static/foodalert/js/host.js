@@ -5,7 +5,7 @@ import PopContainer from './components/popup-container.vue';
 import FormTemplate from './components/form-template.vue';
 import FormController from './components/form-controller.vue';
 import UpdateTemplate from './components/update-template.vue';
-import UpdateController from './components/update-controller.vue';
+import UpdateController from './pages/update-page.vue';
 import EndedTemplate from './components/ended-template.vue';
 import EndedController from './components/ended-controller.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
@@ -15,31 +15,14 @@ import NeedPermit from './pages/need-permit-page.vue';
 import FoodService from './pages/food-service-page.vue';
 import HostWelcome from './pages/host-welcome.vue';
 import ResponsibitiesPage from './pages/responsibilities-page.vue'
-
-Object.assign(window.vueData.components, {
-    'form-category': FormCategory,
-    'agreement-popup': AgreePop,
-    'popup-container': PopContainer,
-    'form-template': FormTemplate,
-    'form-controller': FormController,
-    'update-template': UpdateTemplate,
-    'update-controller': UpdateController,
-    'ended-template': EndedTemplate,
-    'ended-controller': EndedController,
-    'welcome-template': WelcomeTemplate,
-    'food-categories-template': FoodCategoriesTemplate,
-    'close-template': CloseTemplate,
-    'need-permit': NeedPermit,
-    'food-service': FoodService,
-    'host-welcome': HostWelcome,
-});
+import FormPage from './pages/form-page.vue';
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
 rootPath.children.find(obj => obj.path === "update").component = UpdateController;
 rootPath.children.find(obj => obj.path === "ended").component = EndedController;
 rootPath.children.find(obj => obj.path === "welcome").component = WelcomeTemplate;
 rootPath.children.find(obj => obj.path === "categories").component = FoodCategoriesTemplate;
-rootPath.children.find(obj => obj.path === "form").component = FormController;
+rootPath.children.find(obj => obj.path === "form").component = FormPage;
 rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
 rootPath.children.find(obj => obj.path === "need-permit").component = NeedPermit;
 rootPath.children.find(obj => obj.path === "food-service").component = FoodService;
