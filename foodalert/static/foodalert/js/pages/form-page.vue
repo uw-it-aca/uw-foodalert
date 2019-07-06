@@ -230,6 +230,7 @@
         },
         beforeCreate() {
             axios.get("./notification/").then((result) => {
+                result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
                     this.$router.push({ name: 'update', params: {notificationText: "You already have an event running."}});
             });

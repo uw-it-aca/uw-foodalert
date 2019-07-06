@@ -1,12 +1,26 @@
 <template>
-    <generic-page :startWithNotification="notificationText != undefined">
+    <generic-page :startWithNotification="privNotifText != undefined" ref="notifBox">
         <template #notification>
-            {{notificationText}}
+            {{privNotifText}}
         </template>
         <template #heading>
             Compose update
         </template>
         <template #body>
+            <b-modal id="submitconfirmation" title="Confirmation" @ok="sendUpdate()">
+                <p>
+                    We will send your update to Hungry Husky Subscribers.
+                </p>
+                <preview-box>
+                    Update: 
+                    <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>
+                    <span v-else-if="selected == 'otherUpdate'"> 
+                        <span v-if="otherText == ''"> We've moved to HUB 120 </span>
+                        <span v-else> {{otherText}} </span>
+                    </span>.
+                    Re: {{state.food.served}} leftover from {{state.event}}...
+                </preview-box>
+            </b-modal>
             <h2><strong>Don't leave people stranded!</strong></h2>
             <p>
                 When the food is all gone, please return here to send an update. This will prevent people making unnecessary trips.
@@ -30,14 +44,14 @@
                 <span v-else-if="selected == 'otherUpdate'"> 
                     <span v-if="otherText == ''"> We've moved to HUB 120 </span>
                     <span v-else> {{otherText}} </span>
-                </span>
+                </span>.
                 Re: {{state.food.served}} leftover from {{state.event}}...
             </preview-box>
         </template>
         <template #navigation>
             <div class="mt-5">
                 <b-row align-h="between">
-                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" @click="sendUpdate()">Send Update</b-button>
+                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" @click="$bvModal.show('submitconfirmation')" :disabled="(otherText == '') && (selected != 'noFoodUpdate')">Send Update</b-button>
                     </b-col>
                 </b-row>
             </div>
@@ -70,6 +84,7 @@
                     location: "",
                 },
                 otherText: "",
+                privNotifText: this.notificationText,
             }
         },
         beforeCreate() {
@@ -97,14 +112,29 @@
             sendUpdate() {
                 if (this.selected == "noFoodUpdate") {
                     var data = {
-                        "ended": true,
+                        "text": "No Food left! The event: " + this.state.event + " has ended and is no longer serving food",
+                        "parent_notification": this.state.uid
                     };
                     var csrftoken = Cookies.get('csrftoken');
                     var headers = {
                         'Content-Type': 'application/json',
                         'X-CSRFToken': csrftoken,
                     };
-                    axios.patch("notification/" + this.state.uid + "/", data, {"headers": headers})
+
+                    axios.post('/updates/', data, {"headers": headers})
+                        .then(function(response) {
+                            console.log(response);
+                        }.bind(this))
+                        .catch(function (error) {
+                            console.log("There was an error processing the request");
+                            console.log(error);
+                        })
+
+                    var data = {
+                        "ended": true,
+                    };
+
+                    axios.patch("notification/" + this.state.id + "/", data, {"headers": headers})
                         .then(response => {
                             console.log(response);
                             this.$router.push({ name: 'ended' });
@@ -114,24 +144,28 @@
                         })
                 } else {
                     var data = {
-                    "text": this.form.text,
-                    "parent_notification": this.state.uid
-                };
-                var csrftoken = Cookies.get('csrftoken');
-                var headers = {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
+                        "text": this.otherText,
+                        "parent_notification": this.state.id
+                    };
+                    var csrftoken = Cookies.get('csrftoken');
+                    var headers = {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    }
+                    axios.post('/updates/', data, {"headers": headers})
+                        .then(function(response) {
+                            console.log(response)
+                            this.privNotifText = "Your update was sent.";
+                            this.$refs.notifBox.showNotification()
+                        }.bind(this))
+                        .catch(function (error) {
+                            console.log("There was an error processing the request");
+                            console.log(error);
+                        })
                 }
-                axios.post('/updates/', data, {"headers": headers})
-                    .then(function(response) {
-                        this.$router.push({ name: 'update', params: {notificationText: "Your update was sent."} });
-                    }.bind(this))
-                    .catch(function (error) {
-                        console.log("There was an error processing the request");
-                        console.log(error);
-                    })
-                }
-            }
+                this.selected = "noFoodUpdate";
+                this.otherText= "";
+            },
         },
     }
 </script>
