@@ -7,7 +7,7 @@ import FormController from './components/form-controller.vue';
 import UpdateTemplate from './components/update-template.vue';
 import UpdateController from './pages/update-page.vue';
 import EndedTemplate from './components/ended-template.vue';
-import EndedController from './components/ended-controller.vue';
+import EndedController from './pages/ended-page.vue';
 import WelcomeTemplate from './components/welcome-template.vue';
 import FoodCategoriesTemplate from './pages/food-categories-page.vue';
 import CloseTemplate from './pages/close-page.vue';

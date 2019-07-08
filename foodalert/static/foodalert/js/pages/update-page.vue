@@ -113,7 +113,7 @@
                 if (this.selected == "noFoodUpdate") {
                     var data = {
                         "text": "No Food left! The event: " + this.state.event + " has ended and is no longer serving food",
-                        "parent_notification": this.state.uid
+                        "parent_notification": this.state.id
                     };
                     var csrftoken = Cookies.get('csrftoken');
                     var headers = {
