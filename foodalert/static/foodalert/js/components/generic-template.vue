@@ -15,7 +15,7 @@ export default {
 <style>
     .custom-control-label::before, .custom-control-label::after {
         transform: scale(1.5);
-        padding: 10px;
+        padding: 5px;
         vertical-align: bottom;
         margin-top: 6px;
     }
