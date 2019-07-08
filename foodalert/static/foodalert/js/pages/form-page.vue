@@ -65,7 +65,7 @@
                 <b-container>
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
                         <b-row>
-                            <b-col v-for="allergen in allergens" cols="6">
+                            <b-col v-for="allergen in allergens" sm="6">
                                 <b-form-checkbox :value="allergen">{{allergen}}</b-form-checkbox>
                             </b-col>
                         </b-row>
@@ -76,8 +76,10 @@
                 <b-container>
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container">
                         <b-row>
-                            <b-col cols="12">
+                            <b-col sm="3">
                                 <b-form-radio :value="true">Yes</b-form-radio>
+                            </b-col>
+                            <b-col sm="3">
                                 <b-form-radio :value="false">No</b-form-radio>
                             </b-col>
                         </b-row>
