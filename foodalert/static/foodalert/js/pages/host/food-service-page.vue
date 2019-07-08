@@ -20,7 +20,7 @@
                     key="hasPermit"
                     value="hasPermit"
                     :disabled="selected.includes('none')">
-                    I have a UW Temporary Food Service Permit. 
+                    I have a UW Temporary Food Service Permit.
                     <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
                 </b-form-checkbox>
                 <collapse-text-box bid="perm-info">
@@ -39,10 +39,10 @@
             <div class="mt-5">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
-                   <b-button class="mb-3" type="submit" block variant="primary" @click="getNextPage()">Continue</b-button>
+                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()">Continue</b-button>
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
-                   <b-button class="hh-back-button" type="submit" block variant="light" @click="getBackPage()">Back</b-button>
+                   <b-button class="hh-back-button" type="submit" block size="lg" variant="outline-secondary" @click="getBackPage()">Back</b-button>
                  </b-col>
                </b-row>
             </div>

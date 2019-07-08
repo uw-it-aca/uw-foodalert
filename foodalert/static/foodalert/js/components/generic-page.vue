@@ -81,13 +81,12 @@ export default {
         line-height: 1.2;
         font-weight: 600;
         letter-spacing: .004rem;
-        margin-left: -5px;
+        color: #484848;
     }
     #standard-body {
-        font-size:1.14rem;
+        font-size:16px;
         line-height: 1.5;
         font-weight: 400;
-        letter-spacing: .012rem;
-        color: #333;
+        color: #484848;
     }
 </style>

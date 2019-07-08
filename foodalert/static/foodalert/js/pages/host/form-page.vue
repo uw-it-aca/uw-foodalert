@@ -120,9 +120,9 @@
 
                 <div class="mt-5">
                     <b-row align-h="between">
-                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;">Submit</b-button>
+                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
                         </b-col>
-                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="danger" style="white-space: nowrap;">Reset</b-button></b-col>
+                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="danger" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
                     </b-row>
                 </div>
             </b-form>
@@ -264,6 +264,7 @@
     font-size: 22px !important;
     font-weight: 600 !important;
     line-height: 1.375 !important;
+    color: #484848 !important;
   }
 
   .p {
