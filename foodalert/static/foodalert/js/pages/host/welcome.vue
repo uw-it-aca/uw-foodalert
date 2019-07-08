@@ -10,7 +10,7 @@
 </template>
 
 <script type="text/javascript">
-import WelcomePage from '../components/welcome-page.vue';
+import WelcomePage from '../../components/welcome-page.vue';
   export default {
     components: {
       "welcome-page": WelcomePage,

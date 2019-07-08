@@ -132,8 +132,8 @@
 
 <script type="text/javascript">
     import Cookies from 'js-cookie';
-    import GenericPage from "../components/generic-page.vue";
-    import PreviewBox from "../components/custom-preview-box.vue";
+    import GenericPage from "../../components/generic-page.vue";
+    import PreviewBox from "../../components/custom-preview-box.vue";
     const axios = require('axios');
 
     export default {
@@ -190,7 +190,7 @@
                     hours -= 12;
                     time_ext = "PM"
                 }
-                return hours + ":" + mins + " " + time_ext; 
+                return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext; 
             },
             submitAndNext(){
                 var data = {

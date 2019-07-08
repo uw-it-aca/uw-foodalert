@@ -22,7 +22,7 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../components/generic-page.vue";
+    import GenericPage from "../../components/generic-page.vue";
     export default {
         components:{
             "generic-page": GenericPage,
