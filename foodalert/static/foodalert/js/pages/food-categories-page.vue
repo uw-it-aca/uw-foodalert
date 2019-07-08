@@ -75,13 +75,13 @@
         methods: {
             getNextPage() {
                 if (this.selected.includes('non-perishable') || this.selected.includes('pre-packaged')) {
-                    this.$router.push({ name: 'need-permit' });
+                    this.$router.push({ name: 'h-need-permit' });
                 } else if (this.selected.includes('none') || this.selected.includes('atHome')) {
-                    this.$router.push({ name: 'close' });
+                    this.$router.push({ name: 'h-close' });
                 }
             },
             getBackPage() {
-                this.$router.push({ name: 'food-service' });
+                this.$router.push({ name: 'h-food-service' });
             }
         },
         data() {

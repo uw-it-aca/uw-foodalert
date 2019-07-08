@@ -18,13 +18,12 @@ import ResponsibitiesPage from './pages/responsibilities-page.vue'
 import FormPage from './pages/form-page.vue';
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
-rootPath.children.find(obj => obj.path === "update").component = UpdateController;
-rootPath.children.find(obj => obj.path === "ended").component = EndedController;
-rootPath.children.find(obj => obj.path === "welcome").component = WelcomeTemplate;
-rootPath.children.find(obj => obj.path === "categories").component = FoodCategoriesTemplate;
-rootPath.children.find(obj => obj.path === "form").component = FormPage;
-rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
-rootPath.children.find(obj => obj.path === "need-permit").component = NeedPermit;
-rootPath.children.find(obj => obj.path === "food-service").component = FoodService;
-rootPath.children.find(obj => obj.path === "host-welcome").component = HostWelcome;
-rootPath.children.find(obj => obj.path === "responsibilities").component = ResponsibitiesPage;
+rootPath.children.find(obj => obj.path === "h/update").component = UpdateController;
+rootPath.children.find(obj => obj.path === "h/ended").component = EndedController;
+rootPath.children.find(obj => obj.path === "h/welcome").component = HostWelcome;
+rootPath.children.find(obj => obj.path === "h/categories").component = FoodCategoriesTemplate;
+rootPath.children.find(obj => obj.path === "h/form").component = FormPage;
+rootPath.children.find(obj => obj.path === "h/close").component = CloseTemplate;
+rootPath.children.find(obj => obj.path === "h/need-permit").component = NeedPermit;
+rootPath.children.find(obj => obj.path === "h/food-service").component = FoodService;
+rootPath.children.find(obj => obj.path === "h/responsibilities").component = ResponsibitiesPage;

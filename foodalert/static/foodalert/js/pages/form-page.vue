@@ -222,7 +222,7 @@
                 }
                 axios.post('/notification/', data, {"headers": headers})
                     .then(function(response) {
-                        this.$router.push({ name: 'update', params: {notificationText: "Your notification was sent."}});
+                        this.$router.push({ name: 'h-update', params: {notificationText: "Your notification was sent."}});
                     }.bind(this))
                     .catch(function (error) {
                         alert("There was an error processing the request");
@@ -231,15 +231,15 @@
             }
         },
         beforeCreate() {
-            axios.get("./notification/").then((result) => {
+            axios.get("/notification/").then((result) => {
                 result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
-                    this.$router.push({ name: 'update', params: {notificationText: "You already have an event running."}});
+                    this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
             });
             console.log(this.$router.history.current.name);
         },
         beforeMount() {
-            axios.get("./allergen/").then((result) => {
+            axios.get("/allergen/").then((result) => {
                 this.allergens = []
                 result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
             });

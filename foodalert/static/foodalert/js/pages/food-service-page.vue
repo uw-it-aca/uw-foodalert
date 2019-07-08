@@ -64,15 +64,15 @@
         methods: {
             getNextPage() {
                 if (this.selected.includes('hasPermit')) {
-                    this.$router.push({ name: 'responsibilities' });
+                    this.$router.push({ name: 'h-responsibilities' });
                 } else if (this.selected.includes('preparedByAuth')) {
-                    this.$router.push({ name: 'need-permit' });
+                    this.$router.push({ name: 'h-need-permit' });
                 } else if (this.selected.includes('none')) {
-                    this.$router.push({ name: 'categories' });
+                    this.$router.push({ name: 'h-categories' });
                 }
             },
             getBackPage() {
-                this.$router.push({ name: 'host-welcome' });
+                this.$router.push({ name: 'h-welcome' });
             }
         },
         data() {

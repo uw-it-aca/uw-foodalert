@@ -91,13 +91,13 @@
             var headers = {
                     'Content-Type': 'application/json',
                 }
-            axios.get('notification/', {"headers": headers})
+            axios.get('/notification/', {"headers": headers})
                 .then(response => {
                     var data = response.data.filter(function(notif) {
                         return notif.ended == false;
                     });
                     if (data.length === 0) {
-                        this.$router.push({ name: 'form'});
+                        this.$router.push({ name: 'h-form'});
                     } else {
                         this.state = data[0]
                     }
@@ -134,10 +134,10 @@
                         "ended": true,
                     };
 
-                    axios.patch("notification/" + this.state.id + "/", data, {"headers": headers})
+                    axios.patch("/notification/" + this.state.id + "/", data, {"headers": headers})
                         .then(response => {
                             console.log(response);
-                            this.$router.push({ name: 'ended' });
+                            this.$router.push({ name: 'h-ended' });
                         })
                         .catch(error => {
                             console.log(error);
