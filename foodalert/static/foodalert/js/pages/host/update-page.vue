@@ -37,7 +37,7 @@
                     </b-form-radio>
                 </b-form-radio-group>
             </b-form>
-            <h2 class="mt-4">Preview</h2>
+            <h2 class="h2 mt-4">Preview</h2>
             <preview-box>
                 Update:
                 <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>

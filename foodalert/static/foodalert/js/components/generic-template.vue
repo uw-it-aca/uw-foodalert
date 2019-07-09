@@ -13,16 +13,27 @@ export default {
 </script>
 
 <style>
-    .custom-control-label::before, .custom-control-label::after {
+    .custom-control-label::before {
         transform: scale(1.5);
-        padding: 5px;
+        padding: 4px;
         vertical-align: bottom;
         margin-top: 6px;
+        border-radius: 100% !important;
+    }
+
+    .custom-control-label::after {
+        transform: scale(1.5);
+        padding: 4px;
+        vertical-align: bottom;
+        margin-top: 6px;
+        border-radius: 100% !important;
+        /* background: 0; */
+        /* This still does not do what we want for styling */
     }
 
     .custom-control-label {
-        padding-left: 1rem;
-        padding-bottom: 1.5rem;
-        padding-top: 0.3rem;
+        padding-left: 0.6rem;
+        padding-bottom: 1.2rem;
+        padding-top: 0.4rem;
     }
 </style>

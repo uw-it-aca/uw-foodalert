@@ -73,19 +73,14 @@
 
                 <h5 class="mt-4 standard-label">Do students need to bring food storage containers? </h5>
                 <b-container>
-                    <b-form-radio-group id="bring-radio" v-model="form.bring_container">
-                        <b-row>
-                            <b-col sm="3">
-                                <b-form-radio :value="true">Yes</b-form-radio>
-                            </b-col>
-                            <b-col sm="3">
-                                <b-form-radio :value="false">No</b-form-radio>
-                            </b-col>
-                        </b-row>
-                    </b-form-radio-group>
+                    <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
+                      <b-form-radio :value="true">Yes</b-form-radio>
+                      <b-form-radio :value="false">No</b-form-radio>
+                  </b-form-radio-group>
                 </b-container>
 
-                <h2 class="mt-4">Preview</h2>
+
+                <h2 class="h2 mt-4">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
                     <span v-else>Hot Indian buffet food</span> from
@@ -103,13 +98,7 @@
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
                     <br/>
-<<<<<<< HEAD
-                    May contain: 
                     <span v-for="(list, index) in form.allergens" :key="list">
-=======
-                    May contain:
-                    <span v-for="(list, index) in form.allergens">
->>>>>>> c5e9de344daa1eda8b6e543773c9ad41b323f57d
                         <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
                     </span>
                     <br/>
