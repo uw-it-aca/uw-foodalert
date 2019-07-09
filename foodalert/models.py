@@ -26,7 +26,7 @@ class Subscription(models.Model):
     email = models.EmailField(blank=True)
     email_verified = models.BooleanField(default=False)
     sms_number = PhoneNumberField(blank=True)
-    number_verified = models.BooleanField(default=False)     
+    number_verified = models.BooleanField(default=False)
 
     @property
     def netid(self):
