@@ -10,7 +10,7 @@
                 </p>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
-                    <span v-else>Hot Indian buffet food</span> from 
+                    <span v-else>Hot Indian buffet food</span> from
                     <span v-if="form.event">{{form.event}}</span>
                     <span v-else>FIUTS weekly club meeting</span>.
                     <br/>
@@ -18,49 +18,48 @@
                     Quantity: <span v-if="form.amount_of_food_left">{{form.amount_of_food_left}}</span>
                     <span v-else>About 8 full meals</span>
                     <br/>
-                    End time: 
+                    End time:
                     <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
                     <span v-else>--:-- --</span>
                     <br/>
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
                     <br/>
-                    May contain: 
                     <span v-for="(list, index) in form.allergens" :key="list">
                         <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
                     </span>
                     <br/>
                     <p v-if="form.bring_container">
                         <br/>
-                        You must bring a container.
+                        You must bring food storage container.
                     </p>
                 </preview-box>
             </b-modal>
 
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <label for="event-name">Event name</label>
-                <b-form-input id="event-name" aria-describedby="Name of the event" 
-                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="mb-3"></b-form-input>
-                
-                <label for="food-description">Describe the food</label>
-                <b-form-textarea id="food-description" aria-describedby="Describe the food" 
-                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="mb-3"></b-form-textarea>
-                
-                <label for="quantity">Quantity</label>
-                <b-form-input id="quantity" aria-describedby="Quantity of food" 
-                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-3"></b-form-input>
-                
-                <label for="end-time">End Time</label>
-                <b-form-input id="end-time" aria-describedby="End time of the event" 
-                    v-model="form.end_time" required type="time" class="mb-3"></b-form-input>
-                
-                <label for="location">Location</label>
-                <b-form-input id="location" aria-describedby="Location of the event" 
-                    v-model="form.location" required placeholder="e.g HUB 130" class="mb-3"></b-form-input>
+                <label class="standard-label" for="event-name">Event name</label>
+                <b-form-input id="event-name" aria-describedby="Name of the event"
+                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="mb-4 standard-placeholder"></b-form-input>
 
-                <h2 class="mt-4">Food Specifications</h2>
-                <h5>Does the food contain allergens?</h5>
-                <h6>It's OK if you are are unsure, just select to the best of your understanding.</h6>
+                <label class="standard-label" for="food-description">Describe the food</label>
+                <b-form-textarea id="food-description" aria-describedby="Describe the food"
+                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="mb-4"></b-form-textarea>
+
+                <label class="standard-label" for="quantity">Quantity</label>
+                <b-form-input id="quantity" aria-describedby="Quantity of food"
+                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-4"></b-form-input>
+
+                <label class="standard-label" for="end-time">End Time</label>
+                <b-form-input id="end-time" aria-describedby="End time of the event"
+                    v-model="form.end_time" required type="time" class="mb-4"></b-form-input>
+
+                <label class="standard-label" for="location">Location</label>
+                <b-form-input id="location" aria-describedby="Location of the event"
+                    v-model="form.location" required placeholder="e.g HUB 130" class="mb-4"></b-form-input>
+
+                <h2 class="mt-4 h2">Food Specifications</h2>
+                <h5 class="standard-label">Does the food contain allergens?</h5>
+                <p class="p">It's ok if you are unsure, just select to the best of your knowledge.</p>
 
                 <b-container>
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
@@ -72,7 +71,7 @@
                     </b-form-checkbox-group>
                 </b-container>
 
-                <h5 class="mt-2">Do students need to bring containers? </h5>
+                <h5 class="mt-4 standard-label">Do students need to bring food storage containers? </h5>
                 <b-container>
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container">
                         <b-row>
@@ -89,7 +88,7 @@
                 <h2 class="mt-4">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
-                    <span v-else>Hot Indian buffet food</span> from 
+                    <span v-else>Hot Indian buffet food</span> from
                     <span v-if="form.event">{{form.event}}</span>
                     <span v-else>FIUTS weekly club meeting</span>.
                     <br/>
@@ -97,15 +96,20 @@
                     Quantity: <span v-if="form.amount_of_food_left">{{form.amount_of_food_left}}</span>
                     <span v-else>About 8 full meals</span>
                     <br/>
-                    End time: 
+                    End time:
                     <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
                     <span v-else>--:-- --</span>
                     <br/>
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
                     <br/>
+<<<<<<< HEAD
                     May contain: 
                     <span v-for="(list, index) in form.allergens" :key="list">
+=======
+                    May contain:
+                    <span v-for="(list, index) in form.allergens">
+>>>>>>> c5e9de344daa1eda8b6e543773c9ad41b323f57d
                         <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
                     </span>
                     <br/>
@@ -120,9 +124,9 @@
 
                 <div class="mt-5">
                     <b-row align-h="between">
-                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;">Submit</b-button>
+                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
                         </b-col>
-                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="danger" style="white-space: nowrap;">Reset</b-button></b-col>
+                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="light" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
                     </b-row>
                 </div>
             </b-form>
@@ -190,7 +194,7 @@
                     hours -= 12;
                     time_ext = "PM"
                 }
-                return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext; 
+                return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext;
             },
             submitAndNext(){
                 var data = {
@@ -246,4 +250,31 @@
         },
     }
 </script>
+<style>
+  .standard-label {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.375 !important;
+    color: #6B6C72;
+  }
 
+  .standard-placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #484848 !important;
+  }
+
+  .h2 {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    line-height: 1.375 !important;
+    color: #484848 !important;
+  }
+
+  .p {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.375 !important;
+    color: #484848 !important;
+  }
+</style>

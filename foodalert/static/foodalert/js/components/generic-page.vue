@@ -7,7 +7,7 @@
                         <b-row class="justify-content-center">
                             <b-col md="8">
                                 <h2 style="color: white;">
-                                    <strong> 
+                                    <strong>
                                         <slot name="notification"></slot>
                                     </strong>
                                 </h2>
@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style media="screen">
+<style>
     #standard-notification {
         height: 0;
         overflow: visible;
@@ -77,17 +77,22 @@ export default {
         z-index: 1;
     }
     #standard-heading {
-        font-size: 3rem;
+        font-size: 32px;
         line-height: 1.2;
         font-weight: 600;
         letter-spacing: .004rem;
-        margin-left: -5px;
+        color: #484848;
     }
     #standard-body {
-        font-size:1.14rem;
+        font-size:16px;
         line-height: 1.5;
         font-weight: 400;
-        letter-spacing: .012rem;
-        color: #333;
+        color: #484848;
+    }
+
+    .col-md-8 {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+      padding-bottom: 24px !important;
     }
 </style>

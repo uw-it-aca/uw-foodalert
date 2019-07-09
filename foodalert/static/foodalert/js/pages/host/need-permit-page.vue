@@ -17,7 +17,7 @@
         <template #navigation>
             <div class="mt-5">
             <b-row align-h="between">
-              <b-col md="4" lg="3" order-md="2"><b-button href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" class="mb-3" type="submit" block variant="primary">Get a permit</b-button>
+              <b-col md="4" lg="3" order-md="2"><b-button href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" class="mb-3" type="submit" block size="lg" variant="primary">Get a permit</b-button>
               </b-col>
               <b-col md="4" lg="3" order-md="1"></b-col>
             </b-row>

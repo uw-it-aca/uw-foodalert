@@ -12,17 +12,17 @@
                     We will send your update to Hungry Husky Subscribers.
                 </p>
                 <preview-box>
-                    Update: 
+                    Update:
                     <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>
-                    <span v-else-if="selected == 'otherUpdate'"> 
+                    <span v-else-if="selected == 'otherUpdate'">
                         <span v-if="otherText == ''"> We've moved to HUB 120 </span>
                         <span v-else> {{otherText}} </span>
                     </span>.
                     Re: {{state.food.served}} leftover from {{state.event}}...
                 </preview-box>
             </b-modal>
-            <h2><strong>Don't leave people stranded!</strong></h2>
-            <p>
+            <h2 class="h2">Don't leave people stranded!</h2>
+            <p class="p">
                 When the food is all gone, please return here to send an update. This will prevent people making unnecessary trips.
             </p>
             <b-form>
@@ -32,16 +32,16 @@
                     </b-form-radio>
                     <b-form-radio id="otherRadio" value="otherUpdate">
                         <label for="otherMessage">Other Message</label>
-                        <b-form-input id="other-message" aria-describedby="Other message for the subs" 
+                        <b-form-input id="other-message" aria-describedby="Other message for the subs"
                             required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText"></b-form-input>
                     </b-form-radio>
                 </b-form-radio-group>
             </b-form>
             <h2 class="mt-4">Preview</h2>
             <preview-box>
-                Update: 
+                Update:
                 <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>
-                <span v-else-if="selected == 'otherUpdate'"> 
+                <span v-else-if="selected == 'otherUpdate'">
                     <span v-if="otherText == ''"> We've moved to HUB 120 </span>
                     <span v-else> {{otherText}} </span>
                 </span>.
@@ -173,5 +173,19 @@
 <style>
     #otherRadio + label {
         width: 100%;
+    }
+
+    .h2 {
+      font-size: 22px !important;
+      font-weight: 600 !important;
+      line-height: 1.375 !important;
+      color: #484848 !important;
+    }
+
+    .p {
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      line-height: 1.375 !important;
+      color: #484848 !important;
     }
 </style>

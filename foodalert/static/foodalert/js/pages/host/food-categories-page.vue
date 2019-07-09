@@ -50,10 +50,10 @@
             <div class="mt-5">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
-                   <b-button class="mb-3" type="submit" block variant="primary" @click="getNextPage()">Continue</b-button>
+                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()">Continue</b-button>
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
-                   <b-button class="hh-back-button" type="submit" block variant="light" @click="getBackPage()">Back</b-button>
+                   <b-button class="hh-back-button" type="submit" block size="lg" variant="outline-secondary" @click="getBackPage()">Back</b-button>
                  </b-col>
                </b-row>
             </div>
