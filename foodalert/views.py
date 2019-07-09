@@ -174,6 +174,7 @@ class HomeView(TemplateView):
         context['subscription'] = context['subscription'].pk
         return context
 
+
 @method_decorator(login_required(), name='dispatch')
 class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
