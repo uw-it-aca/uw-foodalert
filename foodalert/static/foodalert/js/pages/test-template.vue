@@ -1,17 +1,22 @@
 <template>
 <div>
-  <welcome-page>
-  </welcome-page>
+  <notification-option accord_id="abcd1">
+    Hello 1
+  </notification-option>
+  <notification-option accord_id="abcd2">
+    Hello 2
+  </notification-option>
+  <notification-option accord_id="abcd3">
+    Hello 3
+  </notification-option>
 </div>
 </template>
 
 <script type="text/javascript">
-import CustomTextBox from '../components/custom-preview-box.vue';
-import WelcomePage from '../components/welcome-page.vue';
+import NotificationOption from '../components/notification-option.vue';
   export default {
     components: {
-      "custom-text-box": CustomTextBox,
-      "welcome-page": WelcomePage,
+      "notification-option": NotificationOption,
     },
 
     data() {

@@ -22,6 +22,7 @@ window.vueData.routes = [
             { path: "h/ended", component: UnauthzTemplate, name: "h-ended" },
             { path: "s/welcome", component: UnauthzTemplate, name: "s-welcome" },
             { path: "s/responsibilities", component: UnauthzTemplate, name: "s-responsibilities" },
+            { path: "s/notifications", component: UnauthzTemplate, name: "s-notifications" },
             { path: "s/signup", component: UnauthzTemplate, name: "s-signup" },
             { path: "s/subscribed", component: UnauthzTemplate, name: "s-subscribed" },
         ],

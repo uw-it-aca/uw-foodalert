@@ -5,7 +5,7 @@
         </template>
         <template #body>
             <p>
-                Select how you will like to re <!-- TODO from here !--> 
+                Select how you will like to receive notifications. PLease choose at least one.                                                      
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <b-form-checkbox
@@ -48,7 +48,7 @@
         },
         methods: {
             getNextPage() {
-                this.$router.push({ name: '' });
+                this.$router.push({ name: 's-responsibilities' });
             },
         },
         data() {

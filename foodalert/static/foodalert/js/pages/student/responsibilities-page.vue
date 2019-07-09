@@ -48,7 +48,7 @@
         },
         methods: {
             getNextPage() {
-                this.$router.push({ name: '' });
+                this.$router.push({ name: 's-notifications' });
             },
         },
         data() {

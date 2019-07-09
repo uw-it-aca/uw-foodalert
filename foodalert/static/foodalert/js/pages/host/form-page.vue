@@ -26,7 +26,7 @@
                     <span v-else>HUB 130</span>
                     <br/>
                     May contain: 
-                    <span v-for="(list, index) in form.allergens">
+                    <span v-for="(list, index) in form.allergens" :key="list">
                         <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
                     </span>
                     <br/>
@@ -65,7 +65,7 @@
                 <b-container>
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
                         <b-row>
-                            <b-col v-for="allergen in allergens" sm="6">
+                            <b-col v-for="allergen in allergens" :key="allergen" sm="6">
                                 <b-form-checkbox :value="allergen">{{allergen}}</b-form-checkbox>
                             </b-col>
                         </b-row>
@@ -105,7 +105,7 @@
                     <span v-else>HUB 130</span>
                     <br/>
                     May contain: 
-                    <span v-for="(list, index) in form.allergens">
+                    <span v-for="(list, index) in form.allergens" :key="list">
                         <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
                     </span>
                     <br/>
