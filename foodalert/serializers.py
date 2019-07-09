@@ -17,7 +17,7 @@ class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
         fields = ['name']
-    
+
     def create(self, validated_data):
         allergen = Allergen.objects.create()
 

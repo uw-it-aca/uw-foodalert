@@ -81,9 +81,8 @@ class NotificationList(generics.ListCreateAPIView):
                 Sender.send_email(message,
                                   email_recipients,
                                   slug)
-            Sender.send_email(message,
-                                  email_recipients,
-                                  slug)
+
+            Sender.send_email(message, email_recipients, slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
@@ -173,6 +172,7 @@ class HomeView(TemplateView):
             user=self.request.user)
         context['subscription'] = context['subscription'].pk
         return context
+
 
 @method_decorator(login_required(), name='dispatch')
 class AllergensList(generics.ListCreateAPIView):
