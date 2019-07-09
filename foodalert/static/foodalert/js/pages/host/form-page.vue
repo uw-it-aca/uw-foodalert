@@ -122,7 +122,7 @@
                     <b-row align-h="between">
                         <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
                         </b-col>
-                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="danger" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
+                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="light" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
                     </b-row>
                 </div>
             </b-form>

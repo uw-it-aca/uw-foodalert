@@ -5,7 +5,7 @@
         </template>
         <template #body>
             <p>
-                To ensure the safety of the food being shared, we'll need you yo agree to the following requirements.
+                To ensure the safety of the food being shared, we'll need you to agree to the following requirements.
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <b-form-checkbox

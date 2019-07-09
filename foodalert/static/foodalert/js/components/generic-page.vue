@@ -89,4 +89,10 @@ export default {
         font-weight: 400;
         color: #484848;
     }
+
+    .col-md-8 {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+      padding-bottom: 24px !important;
+    }
 </style>
