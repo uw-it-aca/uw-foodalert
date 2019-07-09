@@ -247,10 +247,10 @@
     color: #6B6C72;
   }
 
-  .standard-placeholder {
+  .standard-placeholder::placeholder {
     font-size: 16px !important;
     font-weight: 400 !important;
-    color: #484848 !important;
+    color: #c9c9c9 !important;
   }
 
   .h2 {
