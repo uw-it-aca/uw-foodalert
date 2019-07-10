@@ -10,7 +10,7 @@
             <b-form-group>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    value="non-perishable"
+                    c_value="non-perishable"
                     :disabled="selected.includes('none') || selected.includes('atHome')">
                     My food is non-perishable.
                     <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
@@ -20,7 +20,7 @@
                 </collapse-text-box>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    value="pre-packaged"
+                    c_value="pre-packaged"
                     :disabled="selected.includes('none') || selected.includes('atHome')">
                     My food was commercially pre-packaged.
                     <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
@@ -30,13 +30,13 @@
                 </collapse-text-box>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    value="atHome"
+                    c_value="atHome"
                     :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('none')">
                     My food was prepared at home.
                 </custom-checkbox>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    value="none"
+                    c_value="none"
                     :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('atHome') ">
                     None of the above.
                 </custom-checkbox>
