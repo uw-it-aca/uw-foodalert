@@ -63,10 +63,8 @@
         },
         methods: {
             getNextPage() {
-                if (this.selected.includes('hasPermit')) {
+                if (this.selected.includes('hasPermit') || this.selected.includes('preparedByAuth')) {
                     this.$router.push({ name: 'h-responsibilities' });
-                } else if (this.selected.includes('preparedByAuth')) {
-                    this.$router.push({ name: 'h-need-permit' });
                 } else if (this.selected.includes('none')) {
                     this.$router.push({ name: 'h-categories' });
                 }
