@@ -9,15 +9,13 @@
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <custom-checkbox
-                    v-model="selected"
-                    name="cond1"
+                    :v-model.sync="selected"
                     value="cond1" required>
                     We cannot confirm all potential allergy ingredients.
                 </custom-checkbox>
                 <custom-checkbox
-                    v-model="selected"
-                    name="cond2"
-                    value="cond2" required>
+                    :v-model.sync="selected"
+                    c_value="cond2" required>
                     Placeholder for terms and service
                 </custom-checkbox>
                 <div class="mt-5">

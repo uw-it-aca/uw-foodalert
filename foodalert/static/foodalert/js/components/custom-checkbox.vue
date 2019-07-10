@@ -3,7 +3,7 @@
         <b-row class="justify-content-md-center">
             <b-col class="custom-checkbox-container">
                 <div class="custom-checkbox-box align-middle" @click="toggleCheckBox()" v-if="!disabled">
-                    <div class="custom-checkbox-box-on" v-if="v_model_local.includes(value)">
+                    <div class="custom-checkbox-box-on" v-if="v_model_local.includes(c_value)">
                         
                     </div>
                 </div>
@@ -13,9 +13,9 @@
             <b-col style="margin: auto">
                 <b-form-checkbox class="custom-checkbox"
                     v-model="v_model_local"
-                    :key="value"
-                    :value="value"
-                    :disabled="disabled">
+                    :key="c_value"
+                    :value="c_value"
+                    :disabled="disabled" :required="required">
 
                     <slot>
                     </slot>
@@ -29,8 +29,12 @@
 export default {
     props: {
         v_model: Array,
-        value: String,
+        c_value: String,
         disabled: Boolean,
+        required: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -39,11 +43,12 @@ export default {
     },
     methods: {
         toggleCheckBox() {
-            var index = this.v_model_local.indexOf(this.value);
+            console.log(this.c_value);
+            var index = this.v_model_local.indexOf(this.c_value);
             if (index > -1) {
                 this.v_model_local.splice(index, 1)
             } else {
-                this.v_model_local.push(this.value)
+                this.v_model_local.push(this.c_value)
             }
         }
     },
