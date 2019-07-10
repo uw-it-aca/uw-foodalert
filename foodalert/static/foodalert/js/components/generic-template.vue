@@ -27,8 +27,6 @@ export default {
         vertical-align: bottom;
         margin-top: 6px;
         border-radius: 100% !important;
-        /* background: 0; */
-        /* This still does not do what we want for styling */
     }
 
     .custom-control-label {
