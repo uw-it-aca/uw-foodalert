@@ -21,7 +21,11 @@
                     value="hasPermit"
                     :disabled="selected.includes('none')">
                     I have a UW Temporary Food Service Permit.
+                    <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
                 </custom-checkbox>
+                <collapse-text-box bid="perm-info">
+                    When providing food to the public (anyone beyond staff/faculty of your unit), UW offices are required to secure a Temporary Food Permit through <a href="#">UW Environmental Health &amp; Safety</a> to help ensure food service providers meet safety reulation and the food itself is safe for consumption.
+                </collapse-text-box>
                 <custom-checkbox
                     :v_model.sync="selected"
                     key="none"
