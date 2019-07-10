@@ -9,19 +9,19 @@
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <custom-checkbox
-                    :v-model.sync="selected"
+                    :v_model.sync="selected"
                     value="cond1" required>
                     We cannot confirm all potential allergy ingredients.
                 </custom-checkbox>
                 <custom-checkbox
-                    :v-model.sync="selected"
+                    :v_model.sync="selected"
                     c_value="cond2" required>
                     Placeholder for terms and service
                 </custom-checkbox>
-                <div class="mt-5">
+                <div class="mt-4">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
-                        <b-button class="mb-3" type="submit" block variant="primary">Continue</b-button>
+                        <b-button class="mb-3" type="submit" block variant="primary" :disabled="selected.length != 2">Continue</b-button>
                         </b-col>
                         <b-col md="4" lg="3" order-md="1">
                         </b-col>

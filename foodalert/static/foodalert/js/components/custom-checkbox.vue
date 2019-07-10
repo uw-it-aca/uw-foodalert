@@ -15,8 +15,7 @@
                     v-model="v_model_local"
                     :key="c_value"
                     :value="c_value"
-                    :disabled="disabled" :required="required">
-
+                    :disabled="disabled">
                     <slot>
                     </slot>
                 </b-form-checkbox>
@@ -31,10 +30,6 @@ export default {
         v_model: Array,
         c_value: String,
         disabled: Boolean,
-        required: {
-            type: Boolean,
-            default: false
-        }
     },
     data() {
         return {

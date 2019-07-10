@@ -20,7 +20,7 @@
                     value="cond2" required>
                     Placeholder for terms and service
                 </custom-checkbox>
-                <div class="mt-5">
+                <div class="mt-4">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
                         <b-button class="mb-3" type="submit" block variant="primary">Continue</b-button>
