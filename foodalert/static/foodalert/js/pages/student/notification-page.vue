@@ -8,18 +8,18 @@
                 Select how you will like to receive notifications. PLease choose at least one.                                                      
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
-                <b-form-checkbox
+                <custom-checkbox
                     v-model="selected"
                     name="cond1"
                     value="cond1" required>
                     We cannot confirm all potential allergy ingredients.
-                </b-form-checkbox>
-                <b-form-checkbox
+                </custom-checkbox>
+                <custom-checkbox
                     v-model="selected"
                     name="cond2"
                     value="cond2" required>
                     Placeholder for terms and service
-                </b-form-checkbox>
+                </custom-checkbox>
                 <div class="mt-5">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
@@ -37,11 +37,13 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
+    import CustomCheckbox from "../../components/custom-checkbox.vue";
 
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
+            "custom-checkbox": CustomCheckbox,
         },
         props: {
             bid: String,

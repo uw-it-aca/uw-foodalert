@@ -23,7 +23,6 @@
         background-color: #e9e9e9;
         color: #707070;
         padding: 1rem;
-        margin-bottom: 1rem;
     }
     .padding-collapse {
         height: 20px; 
