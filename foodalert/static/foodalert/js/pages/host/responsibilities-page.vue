@@ -9,9 +9,8 @@
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <custom-checkbox
-                    v-model="selected"
-                    name="cond1"
-                    value="cond1" required>
+                    :v_model.sync="selected"
+                    c_value="cond1">
                     My office is responsible for the safety of this food.
                     <b-link herf="#" v-b-toggle.cond1-info> Learn More</b-link>
                 </custom-checkbox>
@@ -19,19 +18,18 @@
                     You are responsible for food safety under the approval of the Temporary Food Permit, this same level of responsibility applies when using the Hungry Husky App.
                 </collapse-text-box>
                 <custom-checkbox
-                    v-model="selected"
-                    name="cond2"
-                    value="cond2" required>
+                    :v_model.sync="selected"
+                    c_value="cond2">
                     For potentially hazardous food, it has not been out of heating or cooling for more than <strong>four hours</strong>.
                     <b-link herf="#" v-b-toggle.cond2-info> Learn More</b-link>
                 </custom-checkbox>
                 <collapse-text-box bid="cond2-info">
                     Information is missing
                 </collapse-text-box>
-                <div class="mt-5">
+                <div class="mt-4">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
-                        <b-button class="mb-3" size="lg" type="submit" block variant="primary">Continue</b-button>
+                        <b-button class="mb-3" size="lg" type="submit" block variant="primary" :disabled="selected.length != 2">Continue</b-button>
                         </b-col>
                         <b-col md="4" lg="3" order-md="1">
                         <b-button class="hh-back-button" size="lg" type="submit" block variant="outline-secondary" @click="getBackPage()">Back</b-button>
@@ -53,9 +51,6 @@
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
             "custom-checkbox": CustomCheckbox,
-        },
-        props: {
-            bid: String,
         },
         methods: {
             getNextPage() {

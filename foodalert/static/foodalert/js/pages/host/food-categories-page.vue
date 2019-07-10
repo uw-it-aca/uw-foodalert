@@ -8,49 +8,45 @@
                 Select all that apply to your food.
             </p>
             <b-form-group>
-                <b-form-checkbox
-                    v-model="selected"
-                    key="non-perishable"
-                    value="non-perishable"
+                <custom-checkbox
+                    :v_model.sync="selected"
+                    c_value="non-perishable"
                     :disabled="selected.includes('none') || selected.includes('atHome')">
                     My food is non-perishable.
                     <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
-                </b-form-checkbox>
+                </custom-checkbox>
                 <collapse-text-box bid="non-perishable">
                 Candy, beverages (pasteruized, canned, or bottled), chips, dips.
                 </collapse-text-box>
-                <b-form-checkbox
-                    v-model="selected"
-                    key="pre-packaged"
-                    value="pre-packaged"
+                <custom-checkbox
+                    :v_model.sync="selected"
+                    c_value="pre-packaged"
                     :disabled="selected.includes('none') || selected.includes('atHome')">
                     My food was commercially pre-packaged.
                     <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
-                </b-form-checkbox>
+                </custom-checkbox>
                 <collapse-text-box bid="pre-packaged">
                     Wrapped or boxed baked goods (cakes, pies), chips, store-bought ice cream.
                 </collapse-text-box>
-                <b-form-checkbox
-                    v-model="selected"
-                    key="atHome"
-                    value="atHome"
+                <custom-checkbox
+                    :v_model.sync="selected"
+                    c_value="atHome"
                     :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('none')">
                     My food was prepared at home.
-                </b-form-checkbox>
-                <b-form-checkbox
-                    v-model="selected"
-                    key="none"
-                    value="none"
+                </custom-checkbox>
+                <custom-checkbox
+                    :v_model.sync="selected"
+                    c_value="none"
                     :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('atHome') ">
                     None of the above.
-                </b-form-checkbox>
+                </custom-checkbox>
             </b-form-group>
         </template>
         <template #navigation>
-            <div class="mt-5">
+            <div class="mt-4">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
-                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()">Continue</b-button>
+                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()" :disabled="selected.length == 0">Continue</b-button>
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
                    <b-button class="hh-back-button" type="submit" block size="lg" variant="outline-secondary" @click="getBackPage()">Back</b-button>
@@ -64,10 +60,12 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
+    import CustomCheckbox from "../../components/custom-checkbox.vue";
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
+            "custom-checkbox": CustomCheckbox,
         },
         props: {
             bid: String,

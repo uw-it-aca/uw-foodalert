@@ -10,15 +10,13 @@
             <b-form-group>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    key_="preparedByAuth"
-                    value="preparedByAuth"
+                    c_value="preparedByAuth"
                     :disabled="selected.includes('none')">
                     My food was prepared by UW Housing &amp; Food Services or Bay Laurel Catering.
                 </custom-checkbox>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    key_="hasPermit"
-                    value="hasPermit"
+                    c_value="hasPermit"
                     :disabled="selected.includes('none')">
                     I have a UW Temporary Food Service Permit.
                     <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
@@ -28,8 +26,7 @@
                 </collapse-text-box>
                 <custom-checkbox
                     :v_model.sync="selected"
-                    key="none"
-                    value="none"
+                    c_value="none"
                     :disabled="selected.includes('hasPermit') || selected.includes('preparedByAuth')">
                     None of the above.
                 </custom-checkbox>
@@ -39,7 +36,7 @@
             <div class="mt-4">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
-                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()">Continue</b-button>
+                   <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()" :disabled="selected.length == 0">Continue</b-button>
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
                    <b-button class="hh-back-button" type="submit" block size="lg" variant="outline-secondary" @click="getBackPage()">Back</b-button>
