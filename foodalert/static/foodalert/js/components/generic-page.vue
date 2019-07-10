@@ -93,6 +93,6 @@ export default {
     .col-md-8 {
       padding-left: 24px !important;
       padding-right: 24px !important;
-      padding-bottom: 24px !important;
+      padding-bottom: 8px !important;
     }
 </style>
