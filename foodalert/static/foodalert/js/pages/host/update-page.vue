@@ -27,14 +27,14 @@
             </p>
             <b-form>
                 <b-form-radio-group stacked v-model="selected">
-                    <b-form-radio value="noFoodUpdate">
+                    <custom-radio c_value="noFoodUpdate">
                         No food left
-                    </b-form-radio>
-                    <b-form-radio id="otherRadio" value="otherUpdate">
-                        <label for="otherMessage">Other Message</label>
+                    </custom-radio>
+                    <custom-radio id="otherRadio" c_value="otherUpdate">
+                        Other Message
                         <b-form-input id="other-message" aria-describedby="Other message for the subs"
                             required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText"></b-form-input>
-                    </b-form-radio>
+                    </custom-radio>
                 </b-form-radio-group>
             </b-form>
             <h2 class="h2 mt-4">Preview</h2>
@@ -62,6 +62,7 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import PreviewBox from "../../components/custom-preview-box.vue";
+    import CustomRadio from "../../components/custom-radio.vue";
     import Cookies from 'js-cookie';
     const axios = require('axios');
 
@@ -69,6 +70,7 @@
         components:{
             "generic-page": GenericPage,
             "preview-box": PreviewBox,
+            "custom-radio": CustomRadio,
         },
         props: {
             notificationText: String,
@@ -171,8 +173,8 @@
 </script>
 
 <style>
-    #otherRadio + label {
-        width: 100%;
+    #otherRadio label {
+        margin-top: 5px;
     }
 
     .h2 {
@@ -187,5 +189,9 @@
       font-weight: 400 !important;
       line-height: 1.375 !important;
       color: #484848 !important;
+    }
+
+    #other-message {
+        margin-top: 10px;
     }
 </style>

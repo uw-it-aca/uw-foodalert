@@ -4,7 +4,7 @@
             <b-col class="custom-checkbox-container">
                 <div class="custom-checkbox-box align-middle" @click="toggleCheckBox()" v-if="!disabled">
                     <div class="custom-checkbox-box-on" v-if="v_model_local.includes(c_value)">
-
+                        <img src="../../img/check.svg" class="checkbox-check-img"/>
                     </div>
                 </div>
                 <div class="custom-checkbox-box-disabled align-middle" v-else>
@@ -61,7 +61,7 @@ export default {
 <style>
 :root {
     --checkbox-size: 32px;
-    --checkbox-check-size: 23px;
+    --checkbox-check-size: 22px;
 }
 .custom-control-label::before, .custom-control-label::after{
     display: none !important;
@@ -98,5 +98,11 @@ export default {
     border-radius: 15%;
     background-color: #f1f1f1;
     border: 1.5px solid #9F9F9F;
+}
+.checkbox-check-img{
+    height: calc(var(--checkbox-check-size) - 7px);
+    width: calc(var(--checkbox-check-size) - 7px);
+    margin: 3.5px;
+    filter: invert(100%);
 }
 </style>
