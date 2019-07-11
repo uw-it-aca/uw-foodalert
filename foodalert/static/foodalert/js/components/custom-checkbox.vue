@@ -38,7 +38,6 @@ export default {
     },
     methods: {
         toggleCheckBox() {
-            console.log(this.c_value);
             var index = this.v_model_local.indexOf(this.c_value);
             if (index > -1) {
                 this.v_model_local.splice(index, 1)
@@ -53,7 +52,13 @@ export default {
         },
         v_model_local(newState, oldState) {
             this.$emit("update:v_model", this.v_model_local)
-        }
+        },
+        disabled(newState, oldState) {
+            var index = this.v_model_local.indexOf(this.c_value);
+            if (index > -1) {
+                this.v_model_local.splice(index, 1)
+            }
+        },
     }
 }
 </script>
@@ -63,7 +68,7 @@ export default {
     --checkbox-size: 32px;
     --checkbox-check-size: 22px;
 }
-.custom-control-label::before, .custom-control-label::after{
+.custom-checkbox-main-container .custom-control-label::before, .custom-checkbox-main-container .custom-control-label::after{
     display: none !important;
 }
 .custom-checkbox-container{

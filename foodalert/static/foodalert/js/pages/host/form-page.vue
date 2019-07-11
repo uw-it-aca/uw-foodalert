@@ -62,10 +62,10 @@
                 <h5 class="standard-label">Does the food contain allergens?</h5>
                 <p class="p">It's ok if you are unsure, just select to the best of your knowledge.</p>
 
-                <b-container>
+                <b-container class="px-0">
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
                         <b-row>
-                            <b-col v-for="allergen in allergens" :key="allergen" sm="6">
+                            <b-col v-for="allergen in allergens" :key="allergen" xl="4" cols="6">
                                 <custom-checkbox :c_value="allergen">{{allergen}}</custom-checkbox>
                             </b-col>
                         </b-row>
@@ -73,7 +73,7 @@
                 </b-container>
 
                 <h5 class="mt-4 standard-label">Do students need to bring food storage containers? </h5>
-                <b-container>
+                <b-container class="px-0">
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
                       <custom-radio :c_value="true">Yes</custom-radio>
                       <custom-radio :c_value="false">No</custom-radio>

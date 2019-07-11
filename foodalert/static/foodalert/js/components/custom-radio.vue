@@ -34,13 +34,9 @@ export default {
         }
     },
     methods: {
-        toggleradio(evt) {
-            console.log(evt)
-        },
         toggleradiov2() {
-            console.log(this.$refs.curRadio.$el)
             this.$refs.curRadio.$el.children[1].click();
-        }
+        },
     },
     computed: {
         local_checked() {
@@ -61,7 +57,7 @@ export default {
     --radio-size: 32px;
     --radio-check-size: 22px;
 }
-.custom-control-label::before, .custom-control-label::after{
+.custom-radio-main-container .custom-control-label::before, .custom-radio-main-container .custom-control-label::after{
     display: none !important;
 }
 .custom-radio-container{

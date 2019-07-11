@@ -27,7 +27,7 @@
                 <custom-checkbox
                     :v_model.sync="selected"
                     c_value="none"
-                    :disabled="selected.includes('hasPermit') || selected.includes('preparedByAuth')">
+                    :disabled="false">
                     None of the above.
                 </custom-checkbox>
             </b-form-group>
