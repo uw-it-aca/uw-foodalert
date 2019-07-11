@@ -84,7 +84,7 @@ export default {
     background-color: white;
     border: 1.5px solid #6B6C72;
 }
-.custom-checkbox{
+.custom-checkbox-main-container .custom-checkbox{
     margin-left: calc(var(--checkbox-size) - 75px) !important;
 }
 .custom-checkbox-main-container{

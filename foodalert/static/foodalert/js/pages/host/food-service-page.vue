@@ -30,6 +30,8 @@
                     :disabled="false">
                     None of the above.
                 </custom-checkbox>
+                <b-form-checkbox>
+                </b-form-checkbox>
             </b-form-group>
         </template>
         <template #navigation>

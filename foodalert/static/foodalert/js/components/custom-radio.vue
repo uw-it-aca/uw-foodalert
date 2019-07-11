@@ -73,7 +73,7 @@ export default {
     background-color: white;
     border: 1.5px solid #6B6C72;
 }
-.custom-radio{
+.custom-radio-main-container .custom-radio{
     margin-left: calc(var(--radio-size) - 75px) !important;
 }
 .custom-radio-main-container{
