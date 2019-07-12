@@ -11,13 +11,13 @@
                 <custom-checkbox
                     :v_model.sync="selected"
                     c_value="preparedByAuth"
-                    :disabled="selected.includes('none')">
+                    @click.native="removeInput('none')">
                     My food was prepared by UW Housing &amp; Food Services or Bay Laurel Catering.
                 </custom-checkbox>
                 <custom-checkbox
                     :v_model.sync="selected"
                     c_value="hasPermit"
-                    :disabled="selected.includes('none')">
+                    @click.native="removeInput('none')">
                     I have a UW Temporary Food Service Permit.
                     <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
                 </custom-checkbox>
@@ -27,11 +27,16 @@
                 <custom-checkbox
                     :v_model.sync="selected"
                     c_value="none"
-                    :disabled="false">
+                    @click.native="['preparedByAuth', 'hasPermit'].forEach(removeInput)">
                     None of the above.
                 </custom-checkbox>
                 <b-form-checkbox>
+                    New checkbox
                 </b-form-checkbox>
+
+                <b-form-radio>
+                </b-form-radio>
+
             </b-form-group>
         </template>
         <template #navigation>
@@ -72,6 +77,11 @@
             },
             getBackPage() {
                 this.$router.push({ name: 'h-welcome' });
+            },
+            removeInput(str) {
+                if(this.selected.includes(str)){
+                    this.selected.splice(this.selected.indexOf(str), 1);
+                }
             }
         },
         data() {
