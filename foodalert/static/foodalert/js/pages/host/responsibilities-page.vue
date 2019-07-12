@@ -8,21 +8,25 @@
                 To ensure the safety of the food being shared, we'll need you to agree to the following requirements.
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="cond1">
-                    My office is responsible for the safety of this food.
-                    <b-link herf="#" v-b-toggle.cond1-info> Learn More</b-link>
-                </custom-checkbox>
+                <b-form-checkbox
+                    v-model="selected"
+                    value="cond1">
+                    <span>
+                        My office is responsible for the safety of this food.
+                        <b-link herf="#" v-b-toggle.cond1-info> Learn More</b-link>
+                    </span>
+                </b-form-checkbox>
                 <collapse-text-box bid="cond1-info">
                     You are responsible for food safety under the approval of the Temporary Food Permit, this same level of responsibility applies when using the Hungry Husky App.
                 </collapse-text-box>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="cond2">
+                <b-form-checkbox
+                    v-model="selected"
+                    value="cond2">
+                    <span>
                     For potentially hazardous food, it has not been out of heating or cooling for more than <strong>four hours</strong>.
                     <b-link herf="#" v-b-toggle.cond2-info> Learn More</b-link>
-                </custom-checkbox>
+                    </span>
+                </b-form-checkbox>
                 <collapse-text-box bid="cond2-info">
                     Information is missing
                 </collapse-text-box>

@@ -27,14 +27,17 @@
             </p>
             <b-form>
                 <b-form-radio-group stacked v-model="selected">
-                    <custom-radio c_value="noFoodUpdate">
-                        No food left
-                    </custom-radio>
-                    <custom-radio id="otherRadio" c_value="otherUpdate">
-                        Other Message
-                        <b-form-input id="other-message" aria-describedby="Other message for the subs"
-                            required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText"></b-form-input>
-                    </custom-radio>
+                    <b-form-radio value="noFoodUpdate">
+                        <span>No food left</span>
+                    </b-form-radio>
+                    <b-form-radio id="otherRadio" value="otherUpdate">
+                        <span>
+                            Other Message
+                            <b-form-input id="other-message" aria-describedby="Other message for the subs"
+                            required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText">
+                            </b-form-input>
+                        </span>
+                    </b-form-radio>
                 </b-form-radio-group>
             </b-form>
             <h2 class="h2 mt-4">Preview</h2>

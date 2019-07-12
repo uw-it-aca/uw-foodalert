@@ -25,9 +25,11 @@
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
                     <br/>
-                    <span v-if="form.allergens.length != 0">May contain:</span>
-                    <span v-for="(list, index) in form.allergens" :key="list">
-                        <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
+                    <span v-if="form.allergens.length != 0">
+                        May contain:
+                        <span v-for="(list, index) in form.allergens" :key="list">
+                            <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
+                        </span>
                     </span>
                     <br/>
                     <p v-if="form.bring_container">
@@ -66,7 +68,11 @@
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
                         <b-row>
                             <b-col v-for="allergen in allergens" :key="allergen" xl="4" cols="6">
-                                <custom-checkbox :c_value="allergen">{{allergen}}</custom-checkbox>
+                                <b-form-checkbox :value="allergen">
+                                    <span>
+                                        {{allergen}}
+                                    </span>
+                                </b-form-checkbox>
                             </b-col>
                         </b-row>
                     </b-form-checkbox-group>
@@ -75,8 +81,12 @@
                 <h5 class="mt-4 standard-label">Do students need to bring food storage containers? </h5>
                 <b-container class="px-0">
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
-                      <custom-radio :c_value="true">Yes</custom-radio>
-                      <custom-radio :c_value="false">No</custom-radio>
+                        <b-form-radio :value="true">
+                            <span>Yes</span>
+                        </b-form-radio>
+                        <b-form-radio :value="false">
+                            <span>No</span>
+                        </b-form-radio>
                   </b-form-radio-group>
                 </b-container>
 
@@ -99,9 +109,11 @@
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
                     <br/>
-                    <span v-if="form.allergens.length != 0">May contain:</span>
-                    <span v-for="(list, index) in form.allergens" :key="list">
-                        <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
+                    <span v-if="form.allergens.length != 0">
+                        May contain:
+                        <span v-for="(list, index) in form.allergens" :key="list">
+                            <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
+                        </span>
                     </span>
                     <br/>
                     <p v-if="form.bring_container">
