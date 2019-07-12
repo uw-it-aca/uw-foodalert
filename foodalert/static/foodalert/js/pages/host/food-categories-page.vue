@@ -12,8 +12,10 @@
                     v-model="selected"
                     value="non-perishable"
                     @click.native="removeInput('none')">
-                    My food is non-perishable.
-                    <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
+                    <span>
+                        My food is non-perishable.
+                        <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
+                    </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="non-perishable">
                 Candy, beverages (pasteruized, canned, or bottled), chips, dips.
@@ -22,8 +24,10 @@
                     v-model="selected"
                     value="pre-packaged"
                     @click.native="['none', 'at-home'].forEach(removeInput)">
-                    My food was commercially pre-packaged.
-                    <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
+                    <span>
+                        My food was commercially pre-packaged.
+                        <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
+                    </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="pre-packaged">
                     Wrapped or boxed baked goods (cakes, pies), chips, store-bought ice cream.
@@ -38,7 +42,9 @@
                     v-model="selected"
                     value="none"
                     @click.native="['non-perishable', 'pre-packaged', 'at-home'].forEach(removeInput)">
-                    None of the above.
+                    <span>
+                        None of the above.
+                    </span>
                 </b-form-checkbox>
             </b-form-group>
         </template>

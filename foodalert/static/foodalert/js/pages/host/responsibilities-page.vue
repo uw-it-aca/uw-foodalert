@@ -23,8 +23,8 @@
                     v-model="selected"
                     value="cond2">
                     <span>
-                    For potentially hazardous food, it has not been out of heating or cooling for more than <strong>four hours</strong>.
-                    <b-link herf="#" v-b-toggle.cond2-info> Learn More</b-link>
+                        For potentially hazardous food, it has not been out of heating or cooling for more than <strong>four hours</strong>.
+                        <b-link herf="#" v-b-toggle.cond2-info> Learn More</b-link>
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="cond2-info">

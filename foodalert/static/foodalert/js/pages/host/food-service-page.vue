@@ -37,12 +37,6 @@
                     </span>
                 </b-form-checkbox>
             </b-form-group>
-            <b-form-group>
-                <b-form-radio v-model="selected">
-                </b-form-radio>
-                <b-form-radio v-model="selected">
-                </b-form-radio>
-            </b-form-group>
         </template>
         <template #navigation>
             <div class="mt-4">
