@@ -78,9 +78,8 @@ export default {
     }
     #standard-heading {
         font-size: 32px;
-        line-height: 1.2;
+        line-height: 1.125em;
         font-weight: 600;
-        letter-spacing: .004rem;
         color: #484848;
     }
     #standard-body {
