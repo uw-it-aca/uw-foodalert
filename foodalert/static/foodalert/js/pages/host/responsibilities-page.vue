@@ -48,13 +48,11 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
-    import CustomCheckbox from "../../components/custom-checkbox.vue";
 
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
-            "custom-checkbox": CustomCheckbox,
         },
         methods: {
             getNextPage() {

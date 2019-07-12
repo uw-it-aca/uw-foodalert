@@ -8,35 +8,40 @@
                 Let's determine you eligibility for using Hungry Husky. Select all that apply.
             </p>
             <b-form-group>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="preparedByAuth"
+                <b-form-checkbox
+                    v-model="selected"
+                    value="preparedByAuth"
                     @click.native="removeInput('none')">
-                    My food was prepared by UW Housing &amp; Food Services or Bay Laurel Catering.
-                </custom-checkbox>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="hasPermit"
+                    <span>
+                        My food was prepared by UW Housing &amp; Food Services or Bay Laurel Catering.
+                    </span>
+                </b-form-checkbox>
+                <b-form-checkbox
+                    v-model="selected"
+                    value="hasPermit"
                     @click.native="removeInput('none')">
-                    I have a UW Temporary Food Service Permit.
-                    <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
-                </custom-checkbox>
+                    <span>
+                        I have a UW Temporary Food Service Permit.
+                        <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
+                    </span>
+                </b-form-checkbox>
                 <collapse-text-box bid="perm-info">
                     When providing food to the public (anyone beyond staff/faculty of your unit), UW offices are required to secure a Temporary Food Permit through <a href="#">UW Environmental Health &amp; Safety</a> to help ensure food service providers meet safety reulation and the food itself is safe for consumption.
                 </collapse-text-box>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="none"
+                <b-form-checkbox
+                    v-model="selected"
+                    value="none"
                     @click.native="['preparedByAuth', 'hasPermit'].forEach(removeInput)">
-                    None of the above.
-                </custom-checkbox>
-                <b-form-checkbox>
-                    New checkbox
+                    <span>
+                        None of the above.
+                    </span>
                 </b-form-checkbox>
-
-                <b-form-radio>
+            </b-form-group>
+            <b-form-group>
+                <b-form-radio v-model="selected">
                 </b-form-radio>
-
+                <b-form-radio v-model="selected">
+                </b-form-radio>
             </b-form-group>
         </template>
         <template #navigation>
@@ -57,12 +62,10 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
-    import CustomCheckbox from "../../components/custom-checkbox.vue";
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
-            "custom-checkbox": CustomCheckbox,
         },
         props: {
             bid: String,

@@ -141,16 +141,12 @@
     import Cookies from 'js-cookie';
     import GenericPage from "../../components/generic-page.vue";
     import PreviewBox from "../../components/custom-preview-box.vue";
-    import CustomCheckbox from "../../components/custom-checkbox.vue";
-    import CustomRadio from "../../components/custom-radio.vue";
     const axios = require('axios');
 
     export default {
         components: {
             "generic-page": GenericPage,
             "preview-box": PreviewBox,
-            "custom-checkbox": CustomCheckbox,
-            "custom-radio": CustomRadio,
         },
         data() {
             return {

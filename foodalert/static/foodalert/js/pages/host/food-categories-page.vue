@@ -8,38 +8,38 @@
                 Select all that apply to your food.
             </p>
             <b-form-group>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="non-perishable"
-                    :disabled="selected.includes('none') || selected.includes('atHome')">
+                <b-form-checkbox
+                    v-model="selected"
+                    value="non-perishable"
+                    @click.native="removeInput('none')">
                     My food is non-perishable.
                     <b-link herf="#" v-b-toggle.non-perishable> Examples</b-link>
-                </custom-checkbox>
+                </b-form-checkbox>
                 <collapse-text-box bid="non-perishable">
                 Candy, beverages (pasteruized, canned, or bottled), chips, dips.
                 </collapse-text-box>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="pre-packaged"
-                    :disabled="selected.includes('none') || selected.includes('atHome')">
+                <b-form-checkbox
+                    v-model="selected"
+                    value="pre-packaged"
+                    @click.native="['none', 'at-home'].forEach(removeInput)">
                     My food was commercially pre-packaged.
                     <b-link herf="#" v-b-toggle.pre-packaged> Examples</b-link>
-                </custom-checkbox>
+                </b-form-checkbox>
                 <collapse-text-box bid="pre-packaged">
                     Wrapped or boxed baked goods (cakes, pies), chips, store-bought ice cream.
                 </collapse-text-box>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="atHome"
-                    :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('none')">
+                <b-form-checkbox
+                    v-model="selected"
+                    value="at-home"
+                    @click.native="['none', 'pre-packaged', 'non-perishable'].forEach(removeInput)">
                     My food was prepared at home.
-                </custom-checkbox>
-                <custom-checkbox
-                    :v_model.sync="selected"
-                    c_value="none"
-                    :disabled="selected.includes('non-perishable') || selected.includes('pre-packaged') || selected.includes('atHome') ">
+                </b-form-checkbox>
+                <b-form-checkbox
+                    v-model="selected"
+                    value="none"
+                    @click.native="['non-perishable', 'pre-packaged', 'at-home'].forEach(removeInput)">
                     None of the above.
-                </custom-checkbox>
+                </b-form-checkbox>
             </b-form-group>
         </template>
         <template #navigation>
@@ -60,12 +60,10 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
-    import CustomCheckbox from "../../components/custom-checkbox.vue";
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
-            "custom-checkbox": CustomCheckbox,
         },
         props: {
             bid: String,
@@ -80,6 +78,11 @@
             },
             getBackPage() {
                 this.$router.push({ name: 'h-food-service' });
+            },
+            removeInput(str) {
+                if(this.selected.includes(str)){
+                    this.selected.splice(this.selected.indexOf(str), 1);
+                }
             }
         },
         data() {

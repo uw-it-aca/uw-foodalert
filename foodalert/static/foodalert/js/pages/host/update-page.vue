@@ -65,7 +65,6 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import PreviewBox from "../../components/custom-preview-box.vue";
-    import CustomRadio from "../../components/custom-radio.vue";
     import Cookies from 'js-cookie';
     const axios = require('axios');
 
@@ -73,7 +72,6 @@
         components:{
             "generic-page": GenericPage,
             "preview-box": PreviewBox,
-            "custom-radio": CustomRadio,
         },
         props: {
             notificationText: String,
