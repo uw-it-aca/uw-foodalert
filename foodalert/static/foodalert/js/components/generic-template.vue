@@ -47,7 +47,6 @@ export default {
         border-color: #0D95FC;
     }
 
-
     .custom-radio .custom-control-label::before, .custom-radio .custom-control-label::after {
         height: var(--radio-size) !important;
         width: var(--radio-size) !important;
