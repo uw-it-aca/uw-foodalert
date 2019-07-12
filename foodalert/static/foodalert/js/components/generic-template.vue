@@ -1,7 +1,12 @@
 <template>
-    <router-view :subId="this.subId">
+    <div>
+        <router-view :subId="this.subId">
 
-    </router-view>
+        </router-view>
+        <!-- To load the images before they need to be displayed !-->
+        <img src="../../img/check.svg" style="display: none">
+        <img src="../../img/dot.svg" style="display: none">
+    </div>
 </template>
 
 <script>
