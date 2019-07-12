@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Host Ended Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="py-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <h2
+                style="color: white;"
+              >
+                <strong>
+                  
+         Your update was sent.
+    
+                </strong>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        Our sincere thanks
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <p>
+              Thank you for sharing food. Your generosity means that less people have to worry about food insecurity at UW. You've also contributed to decrease the University's food waste.
+            </p>
+          </div>
+           
+          <div
+            class="mt-5"
+          >
+            <div
+              class="row justify-content-between"
+            >
+              <div
+                class="col-md-5 col-lg-4 order-md-2"
+              >
+                <button
+                  class="btn mb-3 btn-primary btn-lg btn-block"
+                  style="white-space: nowrap;"
+                  type="submit"
+                >
+                  New notification
+                </button>
+              </div>
+               
+              <div
+                class="col-md-5 col-lg-4 order-md-1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

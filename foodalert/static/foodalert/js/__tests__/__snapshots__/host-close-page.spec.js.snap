@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Close Page renders correctly 1`] = `
+exports[`Host Close Page renders correctly 1`] = `
 <div
   class="page"
 >

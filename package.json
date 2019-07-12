@@ -64,7 +64,8 @@
       "!**/node_modules/**",
       "!**/coverage/**",
       "!**/webpack.config.js",
-      "!**/bundles/**"
+      "!**/bundles/**",
+      "!**/*.png"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/"

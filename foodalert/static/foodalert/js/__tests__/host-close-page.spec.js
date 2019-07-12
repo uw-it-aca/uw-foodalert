@@ -6,7 +6,7 @@ Vue.use(BootstrapVue);
 import {mount} from '@vue/test-utils';
 import ClosePage from '../pages/host/close-page.vue';
 
-describe('Close Page', function () {
+describe('Host Close Page', function () {
         test('renders correctly', function () {
             var wrapper = mount(ClosePage, {
             });

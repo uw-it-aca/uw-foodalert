@@ -31,7 +31,7 @@ export default {
         background: initial;
     }
     .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
-        background: url("../../img/check.png") no-repeat 50%/75% !important;  
+        background: url("../../img/check.svg") no-repeat 50%/75% !important;  
     }
     .custom-checkbox .custom-control-label{
         padding-left: calc(var(--checkbox-size) - 0.5rem);
@@ -62,7 +62,7 @@ export default {
         background-color: initial;
     }
     .custom-radio .custom-control-input:checked~.custom-control-label::after {
-        background: url("../../img/dot.png") no-repeat center center/69% !important;  
+        background: url("../../img/dot.svg") no-repeat center center/69% !important;  
     }
     .custom-radio .custom-control-label{
         padding-left: calc(var(--radio-size) - 0.5rem);

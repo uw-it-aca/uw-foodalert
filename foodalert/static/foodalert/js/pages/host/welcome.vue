@@ -22,6 +22,3 @@ import WelcomePage from '../../components/welcome-page.vue';
     }
   }
 </script>
-
-<style lang="scss">
-</style>
