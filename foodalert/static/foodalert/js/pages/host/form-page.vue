@@ -38,25 +38,25 @@
             </b-modal>
 
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <label class="standard-label" for="event-name">Event name</label>
+                <label class="mt-2 standard-label" for="event-name">Event name</label>
                 <b-form-input id="event-name" aria-describedby="Name of the event"
-                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="mb-4 standard-placeholder"></b-form-input>
+                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="mb-3 standard-placeholder"></b-form-input>
 
                 <label class="standard-label" for="food-description">Describe the food</label>
                 <b-form-textarea id="food-description" aria-describedby="Describe the food"
-                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="mb-4"></b-form-textarea>
+                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="mb-3 standard-placeholder"></b-form-textarea>
 
                 <label class="standard-label" for="quantity">Quantity</label>
                 <b-form-input id="quantity" aria-describedby="Quantity of food"
-                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-4"></b-form-input>
+                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-3 standard-placeholder"></b-form-input>
 
-                <label class="standard-label" for="end-time">End Time</label>
+                <label class="standard-label" for="end-time">End time</label>
                 <b-form-input id="end-time" aria-describedby="End time of the event"
-                    v-model="form.end_time" required type="time" class="mb-4"></b-form-input>
+                    v-model="form.end_time" required type="time" class="mb-3 standard-placeholder"></b-form-input>
 
                 <label class="standard-label" for="location">Location</label>
                 <b-form-input id="location" aria-describedby="Location of the event"
-                    v-model="form.location" required placeholder="e.g HUB 130" class="mb-4"></b-form-input>
+                    v-model="form.location" required placeholder="e.g HUB 130" class="mb-4 standard-placeholder"></b-form-input>
 
                 <h2 class="mt-4 h2">Food Specifications</h2>
                 <h5 class="standard-label">Does the food contain allergens?</h5>
@@ -250,13 +250,13 @@
     font-size: 16px !important;
     font-weight: 600 !important;
     line-height: 1.375 !important;
-    color: #6B6C72;
+    color: #484848;
   }
 
   .standard-placeholder::placeholder {
     font-size: 16px !important;
     font-weight: 400 !important;
-    color: #c9c9c9 !important;
+    color: #aaaaaa !important;
   }
 
   .h2 {
