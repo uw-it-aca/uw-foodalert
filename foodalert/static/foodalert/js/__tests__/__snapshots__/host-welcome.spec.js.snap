@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome Page renders correctly 1`] = `
+<div>
+  <div
+    class="page"
+  >
+    <div
+      id="standard-notification"
+    >
+      <div
+        class="collapse"
+        id="notif-container"
+        style="display: none;"
+      >
+        <div
+          class="py-3 container-fluid"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="row justify-content-center"
+            >
+              <div
+                class="col-md-8"
+              >
+                <h2
+                  style="color: white;"
+                >
+                  <strong />
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="page-content"
+    >
+      <div
+        class="pt-2 container-fluid"
+        style="background-color: rgb(75, 46, 131);"
+      >
+        <div
+          class="row justify-content-center"
+        >
+          <div
+            class="col-md-8"
+          >
+            <img
+              alt="UW Block Logo"
+              class=""
+              height="27"
+              src="test-file-stub"
+              width="40"
+            />
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="container"
+      >
+        <div
+          class="row justify-content-center"
+        >
+          <div
+            class="col-md-8"
+          >
+            <h1
+              class="pt-4 pb-2"
+              id="standard-heading"
+            >
+              
+    Welcome
+  
+            </h1>
+             
+            <div
+              id="standard-body"
+            >
+              <p>
+                Hungry Husky lets you share your leftover event food with those who need it most in the UW community. With your help, we can help reduce food insecurity among students and others—and reduce food waste at the same time.
+              </p>
+               
+              <p>
+                We’ll guide you through all the steps needed to share your food safely and responsibly.
+              </p>
+            </div>
+             
+            <div
+              class="mt-5"
+            >
+              <div
+                class="row justify-content-between"
+              >
+                <div
+                  class="col-md-5 col-lg-4 order-md-2"
+                >
+                  <button
+                    class="btn mb-3 btn-primary btn-lg btn-block"
+                    style="white-space: nowrap;"
+                    type="submit"
+                  >
+                    Let's get started
+                  </button>
+                </div>
+                 
+                <div
+                  class="col-md-5 col-lg-4 order-md-1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
