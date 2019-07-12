@@ -1,0 +1,448 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Food Categories Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="py-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <h2
+                style="color: white;"
+              >
+                <strong />
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        Compose Notification
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <div>
+              <div
+                id="submitconfirmation___BV_modal_outer_"
+                style="position: absolute; z-index: 1040;"
+              >
+                <div
+                  aria-hidden="true"
+                  class="modal fade"
+                  id="submitconfirmation"
+                  role="dialog"
+                  style="display: none;"
+                  tabindex="-1"
+                >
+                  <div
+                    class="modal-dialog modal-md"
+                  >
+                    <div
+                      aria-describedby="submitconfirmation___BV_modal_body_"
+                      aria-labelledby="submitconfirmation___BV_modal_header_"
+                      class="modal-content"
+                      id="submitconfirmation___BV_modal_content_"
+                      role="document"
+                    >
+                      <header
+                        class="modal-header"
+                        id="submitconfirmation___BV_modal_header_"
+                      >
+                        <h5
+                          class="modal-title"
+                        >
+                          Confirmation
+                        </h5>
+                        <button
+                          aria-label="Close"
+                          class="close"
+                          type="button"
+                        >
+                          ×
+                        </button>
+                      </header>
+                      <div
+                        class="modal-body"
+                        id="submitconfirmation___BV_modal_body_"
+                      >
+                        <p>
+                          
+                We will send your notification to Hungry Husky Subscribers.
+            
+                        </p>
+                         
+                        <div
+                          class="custom-preview-box"
+                        >
+                          <span>
+                            Hot Indian buffet food
+                          </span>
+                           from
+                
+                          <span>
+                            FIUTS weekly club meeting
+                          </span>
+                          .
+                
+                          <br />
+                           
+                          <br />
+                          
+                Quantity: 
+                          <span>
+                            About 8 full meals
+                          </span>
+                           
+                          <br />
+                          
+                End time:
+                
+                          <span>
+                            --:-- --
+                          </span>
+                           
+                          <br />
+                          
+                Location: 
+                          <span>
+                            HUB 130
+                          </span>
+                           
+                          <!---->
+                           
+                          <br />
+                           
+                          <!---->
+                        </div>
+                      </div>
+                      <footer
+                        class="modal-footer"
+                        id="submitconfirmation___BV_modal_footer_"
+                      >
+                        <button
+                          class="btn btn-secondary"
+                          type="button"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                        >
+                          OK
+                        </button>
+                      </footer>
+                    </div>
+                  </div>
+                </div>
+                <!---->
+                <!---->
+              </div>
+            </div>
+             
+            <form
+              class=""
+            >
+              <label
+                class="mt-2 standard-label"
+                for="event-name"
+              >
+                Event name
+              </label>
+               
+              <input
+                aria-describedby="Name of the event"
+                aria-required="true"
+                class="mb-3 standard-placeholder form-control"
+                id="event-name"
+                placeholder="FIUTS weekly club meeting"
+                required="required"
+                type="text"
+              />
+               
+              <label
+                class="standard-label"
+                for="food-description"
+              >
+                Describe the food
+              </label>
+               
+              <textarea
+                aria-describedby="Describe the food"
+                aria-required="true"
+                class="mb-3 standard-placeholder form-control"
+                id="food-description"
+                placeholder="Hot Indian buffet food"
+                required="required"
+                rows="2"
+                wrap="soft"
+              />
+               
+              <label
+                class="standard-label"
+                for="quantity"
+              >
+                Quantity
+              </label>
+               
+              <input
+                aria-describedby="Quantity of food"
+                aria-required="true"
+                class="mb-3 standard-placeholder form-control"
+                id="quantity"
+                placeholder="About 8 full meals"
+                required="required"
+                type="text"
+              />
+               
+              <label
+                class="standard-label"
+                for="end-time"
+              >
+                End time
+              </label>
+               
+              <input
+                aria-describedby="End time of the event"
+                aria-required="true"
+                class="mb-3 standard-placeholder form-control"
+                id="end-time"
+                required="required"
+                type="time"
+              />
+               
+              <label
+                class="standard-label"
+                for="location"
+              >
+                Location
+              </label>
+               
+              <input
+                aria-describedby="Location of the event"
+                aria-required="true"
+                class="mb-4 standard-placeholder form-control"
+                id="location"
+                placeholder="e.g HUB 130"
+                required="required"
+                type="text"
+              />
+               
+              <h2
+                class="mt-4 h2"
+              >
+                Food Specifications
+              </h2>
+               
+              <h5
+                class="standard-label"
+              >
+                Does the food contain allergens?
+              </h5>
+               
+              <p
+                class="p"
+              >
+                It's ok if you are unsure, just select to the best of your knowledge.
+              </p>
+               
+              <div
+                class="px-0 container"
+              >
+                <div
+                  class=""
+                  id="allergens-checkbox"
+                  role="group"
+                  tabindex="-1"
+                >
+                  <div
+                    class="row"
+                  />
+                </div>
+              </div>
+               
+              <h5
+                class="mt-4 standard-label"
+              >
+                Do students need to bring food storage containers? 
+              </h5>
+               
+              <div
+                class="px-0 container"
+              >
+                <div
+                  class=""
+                  id="bring-radio"
+                  role="radiogroup"
+                  tabindex="-1"
+                >
+                  <div
+                    class="custom-control custom-radio"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      name="bring-radio"
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      class="custom-control-label"
+                    >
+                      <span>
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                   
+                  <div
+                    class="custom-control custom-radio"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      name="bring-radio"
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      class="custom-control-label"
+                    >
+                      <span>
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+               
+              <h2
+                class="h2 mt-4"
+              >
+                Preview
+              </h2>
+               
+              <div
+                class="custom-preview-box"
+              >
+                <span>
+                  Hot Indian buffet food
+                </span>
+                 from
+                
+                <span>
+                  FIUTS weekly club meeting
+                </span>
+                .
+                
+                <br />
+                 
+                <br />
+                
+                Quantity: 
+                <span>
+                  About 8 full meals
+                </span>
+                 
+                <br />
+                
+                End time:
+                
+                <span>
+                  --:-- --
+                </span>
+                 
+                <br />
+                
+                Location: 
+                <span>
+                  HUB 130
+                </span>
+                 
+                <!---->
+                 
+                <br />
+                 
+                <!---->
+              </div>
+               
+              <div
+                class="mt-5"
+              >
+                <div
+                  class="row justify-content-between"
+                >
+                  <div
+                    class="col-md-5 col-lg-4 order-md-2"
+                  >
+                    <button
+                      class="btn mb-3 btn-primary btn-lg btn-block"
+                      style="white-space: nowrap;"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                   
+                  <div
+                    class="col-md-5 col-lg-4 order-md-1"
+                  >
+                    <button
+                      class="btn mb-3 btn-light btn-lg btn-block"
+                      style="white-space: nowrap;"
+                      type="reset"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

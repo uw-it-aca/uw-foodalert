@@ -243,7 +243,6 @@
                 if(result.data.length)
                     this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
             });
-            console.log(this.$router.history.current.name);
         },
         beforeMount() {
             axios.get("/allergen/").then((result) => {
