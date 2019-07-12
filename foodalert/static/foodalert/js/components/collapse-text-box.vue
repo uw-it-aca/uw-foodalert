@@ -5,7 +5,6 @@
                 <h1>Hello this will be content</h1>
             </slot>
         </div>
-        <div class="padding-collapse"></div>
     </b-collapse>
 </template>
 
@@ -23,8 +22,7 @@
         background-color: #e9e9e9;
         color: #707070;
         padding: 1rem;
-    }
-    .padding-collapse {
-        height: 20px; 
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 </style>

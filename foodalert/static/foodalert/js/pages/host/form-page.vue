@@ -24,8 +24,8 @@
                     <br/>
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
-                    <br/>
                     <span v-if="form.allergens.length != 0">
+                        <br />
                         May contain:
                         <span v-for="(list, index) in form.allergens" :key="list">
                             <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
@@ -108,8 +108,8 @@
                     <br/>
                     Location: <span v-if="form.location">{{form.location}}</span>
                     <span v-else>HUB 130</span>
-                    <br/>
                     <span v-if="form.allergens.length != 0">
+                        <br />
                         May contain:
                         <span v-for="(list, index) in form.allergens" :key="list">
                             <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>

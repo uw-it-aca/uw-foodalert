@@ -55,9 +55,9 @@ export default {
         }
     },
     methods: {
-        showNotification: async function() {
-            await setTimeout(() => {this.notificationState = true;}, 250);
-            await setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification + 250);
+        showNotification: function() {
+            setTimeout(() => {this.notificationState = true;}, 250);
+            setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification);
         }
     },
     beforeMount() {
