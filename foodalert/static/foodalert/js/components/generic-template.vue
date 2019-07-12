@@ -15,7 +15,7 @@ export default {
 <style>
     :root{
         --checkbox-size: 32px;
-        --checkbox-check-size: 22px;
+        --radio-size: 32px;
 
     }
     .custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
@@ -48,14 +48,34 @@ export default {
     }
 
 
-    .custom-radio .custom-control-input:checked~.custom-control-label::after{
-        background: url("../../img/dot.png") no-repeat 50%/75% !important;
-    }
     .custom-radio .custom-control-label::before, .custom-radio .custom-control-label::after {
-        height: var(--checkbox-size) !important;
-        width: var(--checkbox-size) !important;
+        height: var(--radio-size) !important;
+        width: var(--radio-size) !important;
     }
-    .custom-radio .custom-control-label {
-        padding-left: calc(var(--checkbox-size) - 1em);
+    .custom-radio .custom-control-label::before {
+        border: 1.5px solid #AAAAAA;
+    }
+    .custom-radio .custom-control-input:disabled~.custom-control-label::before {
+        border: 1.5px solid #EAEAEA;
+        background: initial;
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+        background-color: initial;
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::after {
+        background: url("../../img/dot.png") no-repeat center center/69% !important;  
+    }
+    .custom-radio .custom-control-label{
+        padding-left: calc(var(--radio-size) - 0.5rem);
+        display: flex;
+        align-items: center;
+        min-height: calc(var(--radio-size) + 0.5rem);
+    }
+    .custom-control.custom-radio {
+        min-height: calc(var(--radio-size) + 0.5rem);
+    }
+
+    .custom-radio:hover .custom-control-label::before  {
+        border-color: #0D95FC;
     }
 </style>
