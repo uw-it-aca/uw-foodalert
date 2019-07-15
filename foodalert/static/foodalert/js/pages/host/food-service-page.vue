@@ -4,7 +4,7 @@
             Food service information
         </template>
         <template #body>
-            <p style="margin-bottom: 32px">
+            <p>
                 Let’s determine whether your food can be shared with the public. Please select all that apply.
             </p>
             <b-form-group>
@@ -23,7 +23,7 @@
                     @click.native="removeInput('none')">
                     <span>
                         I have a UW Temporary Food Service Permit.
-                        <b-link herf="#" v-b-toggle.perm-info> Learn More</b-link>
+                        <b-link herf="#" v-b-toggle.perm-info> Learn more</b-link>
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="perm-info">

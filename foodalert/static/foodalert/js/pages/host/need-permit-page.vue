@@ -15,7 +15,7 @@
           <p>Keep in mind for future events, it takes two weeks to get a permit and a new permit is required for every event. If you have questions about how to share food with Hungry Husky, please email <a href="mailto:hungryhusky@uw.edu">hungryhusky@uw.edu</a>.</p>
         </template>
         <template #navigation>
-            <div class="mt-5">
+            <div style="margin-top: 32px">
             <b-row align-h="between">
               <b-col md="4" lg="3" order-md="2"><b-button href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" class="mb-3" type="submit" block size="lg" variant="primary">Get a permit</b-button>
               </b-col>
