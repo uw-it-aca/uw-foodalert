@@ -98,6 +98,7 @@ export default {
                 this.state++;
             }
             this.isOpen = !this.isOpen;
+            this.$root.$emit('bv::toggle::collapse', 'notification');
         },
         previousState() {
             if(this.state > 0){

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-collapse id="notification" visible>
+        <b-collapse id="notification">
             <b-container @click="checked=!checked">
                 <b-row> 
                     <b-col sm="9" cols="9">
@@ -28,7 +28,6 @@
 </template>
 
 <script type="text/javascript">
-    import CollapseTextbox from "./collapse-text-box.vue";
     export default{
         data() {
             return {
@@ -42,10 +41,6 @@
                 default: false,
             },
         }, 
-        
-        components: {
-            "collapse-textbox": CollapseTextbox,
-        }
         
     }
 </script>

@@ -39,7 +39,6 @@
     export default {
         components:{
             "generic-page": GenericPage,
-            "collapse-text-box": CollapseTextBox,
             "enable-notification": EnableNotif,
             "notification-option": NotifOption,
         },
