@@ -54,7 +54,7 @@
         <template #navigation>
             <div class="mt-5">
                 <b-row align-h="between">
-                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" @click="$bvModal.show('submitconfirmation')" :disabled="(otherText == '') && (selected != 'noFoodUpdate')">Send Update</b-button>
+                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" size="lg" @click="$bvModal.show('submitconfirmation')" :disabled="(otherText == '') && (selected != 'noFoodUpdate')">Send Update</b-button>
                     </b-col>
                 </b-row>
             </div>
