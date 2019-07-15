@@ -63,7 +63,7 @@ exports[`Food Categories Page renders correctly 1`] = `
           >
             <p>
               
-            To ensure the safety of the food being shared, we'll need you to agree to the following requirements.
+            To ensure the safety of the food being shared, we ask that you to agree to all of the following requirements.
         
             </p>
              
@@ -95,7 +95,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                       role="button"
                       target="_self"
                     >
-                       Learn More
+                       Learn more
                     </a>
                   </span>
                 </label>
@@ -116,7 +116,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <div
-                class="custom-control custom-checkbox"
+                class="mt-3 custom-control custom-checkbox"
               >
                 <input
                   autocomplete="off"
@@ -144,7 +144,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                       role="button"
                       target="_self"
                     >
-                       Learn More
+                       Learn more
                     </a>
                   </span>
                 </label>
@@ -165,7 +165,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <div
-                class="mt-4"
+                style="margin-top: 32px;"
               >
                 <div
                   class="row justify-content-between"
@@ -178,7 +178,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                       disabled="disabled"
                       type="submit"
                     >
-                      Continue
+                      Agree
                     </button>
                   </div>
                    

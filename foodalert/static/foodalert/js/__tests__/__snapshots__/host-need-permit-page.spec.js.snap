@@ -97,7 +97,7 @@ exports[`Need Permit Page renders correctly 1`] = `
           </div>
            
           <div
-            class="mt-5"
+            style="margin-top: 32px;"
           >
             <div
               class="row justify-content-between"

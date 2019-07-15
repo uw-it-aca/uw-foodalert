@@ -63,7 +63,7 @@ exports[`Food Categories Page renders correctly 1`] = `
           >
             <p>
               
-            Let's determine you eligibility for using Hungry Husky. Select all that apply.
+            Let’s determine whether your food can be shared with the public. Please select all that apply.
         
             </p>
              
@@ -96,7 +96,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 </div>
                  
                 <div
-                  class="custom-control custom-checkbox"
+                  class="mt-3 custom-control custom-checkbox"
                 >
                   <input
                     autocomplete="off"
@@ -120,7 +120,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                         role="button"
                         target="_self"
                       >
-                         Learn More
+                         Learn more
                       </a>
                     </span>
                   </label>
@@ -147,7 +147,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 </div>
                  
                 <div
-                  class="custom-control custom-checkbox"
+                  class="mt-3 custom-control custom-checkbox"
                 >
                   <input
                     autocomplete="off"
@@ -160,7 +160,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                   >
                     <span>
                       
-                    None of the above.
+                    None of these apply.
                 
                     </span>
                   </label>
@@ -173,7 +173,7 @@ exports[`Food Categories Page renders correctly 1`] = `
           </div>
            
           <div
-            class="mt-4"
+            style="margin-top: 32px;"
           >
             <div
               class="row justify-content-between"

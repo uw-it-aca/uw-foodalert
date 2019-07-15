@@ -35,6 +35,7 @@ describe('Food Categories Page', function () {
 	});
 
 	test('form submit', function () {
+		jest.clearAllMocks()
 		axios.get.mockImplementation(() => Promise.resolve({data: []}));
 		axios.post.mockImplementation(() => Promise.resolve({data: []}));
 	    var wrapper = mount(FormPage, {

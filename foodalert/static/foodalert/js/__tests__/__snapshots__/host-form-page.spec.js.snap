@@ -54,7 +54,7 @@ exports[`Food Categories Page redirect to update 1`] = `
             id="standard-heading"
           >
             
-        Compose Notification
+        Compose notification
     
           </h1>
            
@@ -160,7 +160,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                         id="submitconfirmation___BV_modal_footer_"
                       >
                         <button
-                          class="btn btn-secondary"
+                          class="btn btn-outline-secondary"
                           type="button"
                         >
                           Cancel
@@ -169,7 +169,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                           class="btn btn-primary"
                           type="button"
                         >
-                          OK
+                          Send
                         </button>
                       </footer>
                     </div>
@@ -239,7 +239,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 class="standard-label"
                 for="end-time"
               >
-                End time
+                End time (when food service will end)
               </label>
                
               <input
@@ -263,7 +263,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 aria-required="true"
                 class="mb-4 standard-placeholder form-control"
                 id="location"
-                placeholder="e.g HUB 130"
+                placeholder="HUB 130"
                 required="required"
                 type="text"
               />
@@ -271,7 +271,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <h2
                 class="mt-4 h2"
               >
-                Food Specifications
+                Food specifications
               </h2>
                
               <h5
@@ -336,7 +336,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                   </div>
                    
                   <div
-                    class="custom-control custom-radio"
+                    class="mt-1 custom-control custom-radio"
                   >
                     <input
                       autocomplete="off"
@@ -407,7 +407,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               </div>
                
               <div
-                class="mt-5"
+                style="margin-top: 32px;"
               >
                 <div
                   class="row justify-content-between"
@@ -428,7 +428,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                     class="col-md-5 col-lg-4 order-md-1"
                   >
                     <button
-                      class="btn mb-3 btn-light btn-lg btn-block"
+                      class="btn mb-3 btn-outline-secondary btn-lg btn-block"
                       style="white-space: nowrap;"
                       type="reset"
                     >
@@ -501,7 +501,7 @@ exports[`Food Categories Page renders correctly 1`] = `
             id="standard-heading"
           >
             
-        Compose Notification
+        Compose notification
     
           </h1>
            
@@ -607,7 +607,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                         id="submitconfirmation___BV_modal_footer_"
                       >
                         <button
-                          class="btn btn-secondary"
+                          class="btn btn-outline-secondary"
                           type="button"
                         >
                           Cancel
@@ -616,7 +616,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                           class="btn btn-primary"
                           type="button"
                         >
-                          OK
+                          Send
                         </button>
                       </footer>
                     </div>
@@ -686,7 +686,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 class="standard-label"
                 for="end-time"
               >
-                End time
+                End time (when food service will end)
               </label>
                
               <input
@@ -710,7 +710,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 aria-required="true"
                 class="mb-4 standard-placeholder form-control"
                 id="location"
-                placeholder="e.g HUB 130"
+                placeholder="HUB 130"
                 required="required"
                 type="text"
               />
@@ -718,7 +718,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <h2
                 class="mt-4 h2"
               >
-                Food Specifications
+                Food specifications
               </h2>
                
               <h5
@@ -783,7 +783,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                   </div>
                    
                   <div
-                    class="custom-control custom-radio"
+                    class="mt-1 custom-control custom-radio"
                   >
                     <input
                       autocomplete="off"
@@ -854,7 +854,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <div
-                class="mt-5"
+                style="margin-top: 32px;"
               >
                 <div
                   class="row justify-content-between"
@@ -875,7 +875,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                     class="col-md-5 col-lg-4 order-md-1"
                   >
                     <button
-                      class="btn mb-3 btn-light btn-lg btn-block"
+                      class="btn mb-3 btn-outline-secondary btn-lg btn-block"
                       style="white-space: nowrap;"
                       type="reset"
                     >
