@@ -1,11 +1,11 @@
 <template>
     <generic-page>
         <template #heading>
-            Tell us about your food
+            Tell us more about your food
         </template>
         <template #body>
             <p>
-                Select all that apply to your food.
+                We’d like to ask you more about your food to determine if it can be shared with the public.
             </p>
             <b-form-group>
                 <b-form-checkbox
@@ -22,6 +22,7 @@
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
+                    class="mt-3"
                     value="pre-packaged"
                     @click.native="['none', 'at-home'].forEach(removeInput)">
                     <span>
@@ -34,12 +35,14 @@
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
+                    class="mt-3"
                     value="at-home"
                     @click.native="['none', 'pre-packaged', 'non-perishable'].forEach(removeInput)">
                     My food was prepared at home.
                 </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
+                    class="mt-3"
                     value="none"
                     @click.native="['non-perishable', 'pre-packaged', 'at-home'].forEach(removeInput)">
                     <span>
@@ -49,7 +52,7 @@
             </b-form-group>
         </template>
         <template #navigation>
-            <div class="mt-4">
+            <div style="margin-top: 32px">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
                    <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()" :disabled="selected.length == 0">Continue</b-button>

@@ -5,7 +5,7 @@
         </template>
         <template #body>
             <p>
-                We'll need you to agree to the following terms.
+                We ask that you agree to the following terms of service.
             </p>
             <b-form @submit="getNextPage()" ref="resForm">
                 <b-form-checkbox
@@ -16,14 +16,15 @@
                 </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
+                    class="mt-3"
                     name="cond2"
                     value="cond2" required>
                     <span>Placeholder for terms and service</span>
                 </b-form-checkbox>
-                <div class="mt-4">
+                <div style="margin-top: 32px">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
-                        <b-button class="mb-3" type="submit" block variant="primary" :disabled="selected.length != 2">Continue</b-button>
+                        <b-button size="lg" class="mb-3" type="submit" block variant="primary" :disabled="selected.length != 2">Agree</b-button>
                         </b-col>
                         <b-col md="4" lg="3" order-md="1">
                         </b-col>

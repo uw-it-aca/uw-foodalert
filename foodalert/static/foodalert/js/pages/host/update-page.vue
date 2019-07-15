@@ -7,7 +7,7 @@
             Compose update
         </template>
         <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation" @ok="sendUpdate()">
+            <b-modal id="submitconfirmation" title="Confirmation ok-title="Send" cancel-variant="outline-secondary"" @ok="sendUpdate()">
                 <p>
                     We will send your update to Hungry Husky Subscribers.
                 </p>
@@ -30,7 +30,7 @@
                     <b-form-radio value="noFoodUpdate">
                         <span>No food left</span>
                     </b-form-radio>
-                    <b-form-radio id="otherRadio" value="otherUpdate">
+                    <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1">
                         <span>
                             Other Message
                             <b-form-input id="other-message" aria-describedby="Other message for the subs"
@@ -54,7 +54,7 @@
         <template #navigation>
             <div class="mt-5">
                 <b-row align-h="between">
-                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" @click="$bvModal.show('submitconfirmation')" :disabled="(otherText == '') && (selected != 'noFoodUpdate')">Send Update</b-button>
+                    <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" style="white-space: nowrap;" size="lg" @click="$bvModal.show('submitconfirmation')" :disabled="(otherText == '') && (selected != 'noFoodUpdate')">Send Update</b-button>
                     </b-col>
                 </b-row>
             </div>

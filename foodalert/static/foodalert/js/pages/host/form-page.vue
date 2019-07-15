@@ -1,10 +1,10 @@
 <template>
     <generic-page>
         <template #heading>
-            Compose Notification
+            Compose notification
         </template>
         <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation" @ok="submitAndNext()">
+            <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send" cancel-variant="outline-secondary" @ok="submitAndNext()">
                 <p>
                     We will send your notification to Hungry Husky Subscribers.
                 </p>
@@ -34,7 +34,7 @@
                     <br/>
                     <p v-if="form.bring_container">
                         <br/>
-                        You must bring food storage container.
+                        You must bring a food storage container.
                     </p>
                 </preview-box>
             </b-modal>
@@ -52,15 +52,15 @@
                 <b-form-input id="quantity" aria-describedby="Quantity of food"
                     v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-3 standard-placeholder"></b-form-input>
 
-                <label class="standard-label" for="end-time">End time</label>
+                <label class="standard-label" for="end-time">End time (when food service will end)</label>
                 <b-form-input id="end-time" aria-describedby="End time of the event"
                     v-model="form.end_time" required type="time" class="mb-3 standard-placeholder"></b-form-input>
 
                 <label class="standard-label" for="location">Location</label>
                 <b-form-input id="location" aria-describedby="Location of the event"
-                    v-model="form.location" required placeholder="e.g HUB 130" class="mb-4 standard-placeholder"></b-form-input>
+                    v-model="form.location" required placeholder="HUB 130" class="mb-4 standard-placeholder"></b-form-input>
 
-                <h2 class="mt-4 h2">Food Specifications</h2>
+                <h2 class="mt-4 h2">Food specifications</h2>
                 <h5 class="standard-label">Does the food contain allergens?</h5>
                 <p class="p">It's ok if you are unsure, just select to the best of your knowledge.</p>
 
@@ -84,7 +84,7 @@
                         <b-form-radio :value="true">
                             <span>Yes</span>
                         </b-form-radio>
-                        <b-form-radio :value="false">
+                        <b-form-radio :value="false" class="mt-1">
                             <span>No</span>
                         </b-form-radio>
                   </b-form-radio-group>
@@ -118,18 +118,18 @@
                     <br/>
                     <p v-if="form.bring_container">
                         <br/>
-                        You must bring a container.
+                        You must bring a food storage container.
                     </p>
                 </preview-box>
                 <!--b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
                 </b-card!-->
 
-                <div class="mt-5">
+                <div style="margin-top: 32px">
                     <b-row align-h="between">
                         <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
                         </b-col>
-                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="light" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
+                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="outline-secondary" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
                     </b-row>
                 </div>
             </b-form>
