@@ -4,7 +4,7 @@
             Compose notification
         </template>
         <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation" @ok="submitAndNext()">
+            <b-modal id="submitconfirmation" title="Confirmation" ok-title="  Send  " cancel-variant="outline-secondary" @ok="submitAndNext()">
                 <p>
                     We will send your notification to Hungry Husky Subscribers.
                 </p>
@@ -34,7 +34,7 @@
                     <br/>
                     <p v-if="form.bring_container">
                         <br/>
-                        You must bring food storage container.
+                        You must bring a food storage container.
                     </p>
                 </preview-box>
             </b-modal>
