@@ -4,8 +4,8 @@
             Food service information
         </template>
         <template #body>
-            <p>
-                Let's determine you eligibility for using Hungry Husky. Select all that apply.
+            <p style="margin-bottom: 32px">
+                Let’s determine whether your food can be shared with the public. Please select all that apply.
             </p>
             <b-form-group>
                 <b-form-checkbox
@@ -18,6 +18,7 @@
                 </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
+                    class="mt-3"
                     value="hasPermit"
                     @click.native="removeInput('none')">
                     <span>
@@ -31,15 +32,16 @@
                 <b-form-checkbox
                     v-model="selected"
                     value="none"
+                    class="mt-3"
                     @click.native="['preparedByAuth', 'hasPermit'].forEach(removeInput)">
                     <span>
-                        None of the above.
+                        None of these apply.
                     </span>
                 </b-form-checkbox>
             </b-form-group>
         </template>
         <template #navigation>
-            <div class="mt-4">
+            <div style="margin-top: 32px">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
                    <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()" :disabled="selected.length == 0">Continue</b-button>
@@ -68,7 +70,7 @@
             getNextPage() {
                 if (this.selected.includes('hasPermit') || this.selected.includes('preparedByAuth')) {
                     this.$router.push({ name: 'h-responsibilities' });
-                } else { // if (this.selected.includes('none')) 
+                } else { // if (this.selected.includes('none'))
                     this.$router.push({ name: 'h-categories' });
                 }
             },
