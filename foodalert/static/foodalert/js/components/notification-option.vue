@@ -7,43 +7,40 @@
                     <slot name="opt_heading">Placeholder Text</slot>
                 </b-col>
                 <b-col cols="6">
-                    <b-button block href="#" v-b-toggle="accord_id" variant="link" class="opt_link_btn p-0" @click="updateState()">
-                        <slot name="opt_link_0" v-if="state == 0">State {{state}}: add</slot>
-                        <slot name="opt_link_1" v-else-if="state == 1">State {{state}}: cancel</slot>
-                        <slot name="opt_link_2" v-else-if="state == 2">State {{state}}: edit</slot>
-                        <slot name="opt_link_3" v-else-if="state == 3">State {{state}}: cancel</slot>
+                    <b-button block href="#" v-b-toggle="accord_id" variant="link" class="opt_link_btn p-0">
+                        <slot name="opt_link_0" v-if="rendering == 0">State {{rendering}}: add</slot>
+                        <slot name="opt_link_1" v-else-if="rendering == 1">State {{rendering}}: cancel</slot>
+                        <slot name="opt_link_2" v-else-if="rendering == 2">State {{rendering}}: edit</slot>
+                        <slot name="opt_link_3" v-else-if="rendering == 3">State {{rendering}}: cancel</slot>
                         <slot name="opt_link_invalid" v-else>Placeholder Text 4</slot>
                     </b-button>
                 </b-col>
             </b-row>
         </b-container>
       <!--/b-card-header!-->
-      <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel" v-model="open">
+      <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel" v-model="isOpen">
         <b-card-body>
             <b-container class="p-0">
                 <b-row>
                     <b-col cols="12">
                         <b-card-text>
-                            <div>
-                                    <b-form v-if="state == 1" @submit.prevent="nextState()">
-                                        <!-- this is the state for initially adding a notif !-->
-                                        <small class="form-text text-muted">{{label}}</small>
-                                        <b-form-group :description="description">
-                                            <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
-                                        </b-form-group>
-                                        <b-button @click="open=false" type="submit" variant="primary" class="float-right">Verify</b-button>
-                                    </b-form>
-                                     
-                                <b-form v-if="state == 3">
-                                    <!--this is the state for updating notif !-->
-                                    <small class="form-text text-muted">{{label}}</small>
-                                    <b-form-group :description="description">
-                                        <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
-                                    </b-form-group>
-                                    <b-button>Delete(no funct)</b-button>
-                                    <b-button type="submit" variant="primary" class="float-right">Update</b-button>
-                                </b-form>
-                            </div>
+                            <b-form @submit.prevent="nextState()" v-if="state == 0">
+                                <!-- this is the state for initially adding a notif !-->
+                                <small class="form-text text-muted">{{label}}</small>
+                                <b-form-group :description="description">
+                                    <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
+                                </b-form-group>
+                                <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
+                            </b-form>
+                            <b-form v-else-if="state == 1">
+                                <!--this is the state for updating notif !-->
+                                <small class="form-text text-muted">{{label}}</small>
+                                <b-form-group :description="description">
+                                    <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
+                                </b-form-group>
+                                <b-button>Delete(no funct)</b-button>
+                                <b-button type="submit" variant="primary" class="float-right">Update</b-button>
+                            </b-form>
                         </b-card-text>
                     </b-col>
                 </b-row>
@@ -68,16 +65,16 @@ export default {
         type: {
             type: String,
             default: "phonenumber"
-        },
-        setting: {
-            type: String,
-            default: "add" //can be add , edit, or cancel       
         }
     },
     data() {
         return {
             state: 0,
-            open: false,
+            isOpen: false,
+            states: [[0, 1], [2, 3]],
+            rendering: 0,
+            collapse_1: false,
+            collapse_3: false,
         } 
     },
     methods: {
@@ -96,19 +93,11 @@ export default {
             }
             return cleaned
         },
-        updateState(){
-            if(this.state==0 || this.state==2){
-                this.state++;
-                console.log("up a state");
-            }else if(this.state==1 || this.state==3){
-                this.state--;
-                console.log("back a state");
-            }
-        },
         nextState(){
-            if(this.state < 3){ //cannot surpas max state
+            if(this.state < 1){ //cannot surpas max state
                 this.state++;
             }
+            this.isOpen = !this.isOpen;
         },
         previousState() {
             if(this.state > 0){
@@ -116,6 +105,19 @@ export default {
             }
         }          
     },
+    watch: {
+        isOpen(newOpen, prevOpen) {
+            if (newOpen) {
+                this.rendering = this.states[this.state][1]
+            } else {
+                this.rendering = this.states[this.state][0]
+            }
+            this.collapse_1 = (this.rendering == 1);
+            this.collapse_3 = (this.rendering == 3);
+        }
+    },
+    computed: {
+    }
 }
 </script>
 
