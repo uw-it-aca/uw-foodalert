@@ -7,39 +7,42 @@
                     <slot name="opt_heading">Placeholder Text</slot>
                 </b-col>
                 <b-col cols="6">
-                    <b-button block href="#" v-b-toggle="accord_id" variant="link" class="opt_link_btn p-0" @click="stateUpdate()">
-                        <slot name="opt_link_0" v-if="state == 0">Placeholder Text 0</slot>
-                        <slot name="opt_link_1" v-else-if="state == 1">Placeholder Text 1</slot>
-                        <slot name="opt_link_2" v-else-if="state == 2">Placeholder Text 2</slot>
+                    <b-button block href="#" v-b-toggle="accord_id" variant="link" class="opt_link_btn p-0" @click="updateState()">
+                        <slot name="opt_link_0" v-if="state == 0">State {{state}}: add</slot>
+                        <slot name="opt_link_1" v-else-if="state == 1">State {{state}}: cancel</slot>
+                        <slot name="opt_link_2" v-else-if="state == 2">State {{state}}: edit</slot>
+                        <slot name="opt_link_3" v-else-if="state == 3">State {{state}}: cancel</slot>
                         <slot name="opt_link_invalid" v-else>Placeholder Text 4</slot>
                     </b-button>
                 </b-col>
             </b-row>
         </b-container>
       <!--/b-card-header!-->
-      <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel">
+      <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel" v-model="open">
         <b-card-body>
             <b-container class="p-0">
                 <b-row>
                     <b-col cols="12">
                         <b-card-text>
                             <div>
-                                <transition name="slide-fade">
-                                    <b-form v-if="state == 1">
+                                    <b-form v-if="state == 1" @submit.prevent="nextState()">
+                                        <!-- this is the state for initially adding a notif !-->
                                         <small class="form-text text-muted">{{label}}</small>
                                         <b-form-group :description="description">
                                             <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
                                         </b-form-group>
-                                        <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
+                                        <b-button @click="open=false" type="submit" variant="primary" class="float-right">Verify</b-button>
                                     </b-form>
-                                    <b-form v-if="state == 2">
-                                        <small class="form-text text-muted">{{label}}</small>
-                                        <b-form-group :description="description">
-                                            <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
-                                        </b-form-group>
-                                        <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
-                                    </b-form>
-                                </transition>
+                                     
+                                <b-form v-if="state == 3">
+                                    <!--this is the state for updating notif !-->
+                                    <small class="form-text text-muted">{{label}}</small>
+                                    <b-form-group :description="description">
+                                        <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
+                                    </b-form-group>
+                                    <b-button>Delete(no funct)</b-button>
+                                    <b-button type="submit" variant="primary" class="float-right">Update</b-button>
+                                </b-form>
                             </div>
                         </b-card-text>
                     </b-col>
@@ -65,11 +68,16 @@ export default {
         type: {
             type: String,
             default: "phonenumber"
+        },
+        setting: {
+            type: String,
+            default: "add" //can be add , edit, or cancel       
         }
     },
     data() {
         return {
             state: 0,
+            open: false,
         } 
     },
     methods: {
@@ -88,13 +96,25 @@ export default {
             }
             return cleaned
         },
-        stateUpdate(){
-            if (this.state == 0) {
-                this.state = 1;
-            } else if (this.state == 1) {
-                this.state = 0;
+        updateState(){
+            if(this.state==0 || this.state==2){
+                this.state++;
+                console.log("up a state");
+            }else if(this.state==1 || this.state==3){
+                this.state--;
+                console.log("back a state");
             }
-        }           
+        },
+        nextState(){
+            if(this.state < 3){ //cannot surpas max state
+                this.state++;
+            }
+        },
+        previousState() {
+            if(this.state > 0){
+                this.state--;
+            }
+        }          
     },
 }
 </script>

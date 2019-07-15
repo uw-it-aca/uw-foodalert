@@ -1,42 +1,25 @@
 <template>
     <div>
-        <b-container>
-            <b-row>
-                <b-col>
-                    <div style="padding: .375rem .75rem;">
-                        <label><strong>Enable notifications</strong></label>
+        <b-container @click="checked=!checked">
+            <b-row align-v="center"> 
+                <b-col sm="10" cols="10">
+                    <strong>Enable notifications</strong>
+                    <slot  name="message"></slot>
+                    <div id="notif-status">
+                        <div v-if=checked class="enabled" > Notifications are enabled</div>
+                        <div v-else class="paused"> Notifications are paused </div>
                     </div>
                 </b-col>
-                <b-col> 
-                    <div>
-                        <b-form-checkbox 
-                            v-model="checked"
-                            name="enable-switch"   
-                            class="float-right" 
-                            switch>
-                        </b-form-checkbox>
-                    </div>
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col >
-                    <div style="padding: .375rem .75rem;">
-                        <slot  name="message"></slot>
-                    </div>
+                <b-col sm="2" cols="2"> 
+                    <b-form-checkbox 
+                        v-model="checked"
+                        name="enable-switch" 
+                        @click.native.prevent
+                        switch>
+                    </b-form-checkbox>
                 </b-col>
             </b-row>
-            <b-row>
-                <b-col>
-                    <div id="notif-status" >
-                        <div style="padding: .375rem .75rem;">
-                            <div v-if=checked class="enabled" > Notifications are enabled</div>
-                            <div v-else class="paused"> Notifications are paused </div>
-                        </div>
-                    </div>
-                </b-col>
-            </b-row> 
-        </b-container>
-           
+        </b-container>  
     </div>
 </template>
 
@@ -64,6 +47,11 @@
 </script>
 
 <style>
+    :root {
+        --switch-width: 50px;
+        --switch-height: 32px;
+        --switch-circle: 26px;
+    }
     #notif-status .enabled {
         color: green;
     }
@@ -71,4 +59,23 @@
     #notif-status .paused {
         color: red;
     }
+
+    .custom-switch .custom-control-label::before {
+        width: var(--switch-width) !important;
+        height: var(--switch-height) !important;
+        border-radius: 1rem !important;
+    }
+
+    .custom-switch .custom-control-label:after {
+        width: var(--switch-circle) !important;
+        height: var(--switch-circle) !important;
+        border-radius: 50% !important;
+        top: calc(.25rem + 3px) !important;
+    }
+
+    .custom-switch .custom-control-input:checked~.custom-control-label::after {
+        transform: translateX(1.2rem) !important;
+    }
+
+
 </style>
