@@ -4,7 +4,7 @@
             Compose notification
         </template>
         <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation" ok-title="  Send  " cancel-variant="outline-secondary" @ok="submitAndNext()">
+            <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send" cancel-variant="outline-secondary" @ok="submitAndNext()">
                 <p>
                     We will send your notification to Hungry Husky Subscribers.
                 </p>

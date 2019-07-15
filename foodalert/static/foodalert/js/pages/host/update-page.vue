@@ -30,7 +30,7 @@
                     <b-form-radio value="noFoodUpdate">
                         <span>No food left</span>
                     </b-form-radio>
-                    <b-form-radio id="otherRadio" value="otherUpdate">
+                    <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1">
                         <span>
                             Other Message
                             <b-form-input id="other-message" aria-describedby="Other message for the subs"
