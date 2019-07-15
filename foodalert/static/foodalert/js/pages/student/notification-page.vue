@@ -5,43 +5,43 @@
         </template>
         <template #body>
             <p>
-                Select how you will like to receive notifications. PLease choose at least one.                                                      
+                Select how you will like to receive notifications. Please choose at least one.                                                      
             </p>
-            <b-form @submit="getNextPage()" ref="resForm">
-                <b-form-checkbox
-                    v-model="selected"
-                    name="cond1"
-                    value="cond1" required>
-                    <span>We cannot confirm all potential allergy ingredients.</span>
-                </b-form-checkbox>
-                <b-form-checkbox
-                    v-model="selected"
-                    name="cond2"
-                    value="cond2" required>
-                    <span>Placeholder for terms and service</span>
-                </b-form-checkbox>
-                <div class="mt-4">
-                    <b-row align-h="between">
-                        <b-col md="4" lg="3" order-md="2">
-                        <b-button class="mb-3" type="submit" block variant="primary">Continue</b-button>
-                        </b-col>
-                        <b-col md="4" lg="3" order-md="1">
-                        </b-col>
-                    </b-row>
-                </div>
-            </b-form>
+            <enable-notification>
+                <p slot="message">Turn on to receive notifications. Please choose at least one.</p>
+            </enable-notification>
+            <notification-option 
+                accord_id="text" 
+                type="phonenumber" 
+                label="Enter a new phone number" 
+                description="Carrier rates may apply">
+                <template #opt_heading>
+                    Text 
+                </template>
+            </notification-option>
+            <notification-option 
+                accord_id="email" 
+                type="email" 
+                label="Enter an email">
+                <template #opt_heading>
+                    Email 
+                </template>
+            </notification-option>
         </template>
     </generic-page>
 </template>
 
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
-    import CollapseTextBox from "../../components/collapse-text-box.vue";
+    import EnableNotif from "../../components/enable-notification.vue";
+    import NotifOption from "../../components/notification-option.vue";
 
     export default {
         components:{
             "generic-page": GenericPage,
             "collapse-text-box": CollapseTextBox,
+            "enable-notification": EnableNotif,
+            "notification-option": NotifOption,
         },
         props: {
             bid: String,
@@ -51,10 +51,5 @@
                 this.$router.push({ name: 's-responsibilities' });
             },
         },
-        data() {
-            return {
-                selected: [],
-            }
-        }
     }
 </script>
