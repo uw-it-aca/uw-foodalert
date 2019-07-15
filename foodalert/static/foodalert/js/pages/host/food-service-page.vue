@@ -68,7 +68,7 @@
             getNextPage() {
                 if (this.selected.includes('hasPermit') || this.selected.includes('preparedByAuth')) {
                     this.$router.push({ name: 'h-responsibilities' });
-                } else if (this.selected.includes('none')) {
+                } else { // if (this.selected.includes('none')) 
                     this.$router.push({ name: 'h-categories' });
                 }
             },

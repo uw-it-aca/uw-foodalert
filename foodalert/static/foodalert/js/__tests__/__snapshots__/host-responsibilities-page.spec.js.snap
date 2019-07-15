@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Food Categories Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="py-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <h2
+                style="color: white;"
+              >
+                <strong />
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        Responsibilities
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <p>
+              
+            To ensure the safety of the food being shared, we'll need you to agree to the following requirements.
+        
+            </p>
+             
+            <form
+              class=""
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <input
+                  autocomplete="off"
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="cond1"
+                />
+                <label
+                  class="custom-control-label"
+                >
+                  <span>
+                    
+                    My office is responsible for the safety of this food.
+                    
+                    <a
+                      aria-controls="cond1-info"
+                      aria-expanded="false"
+                      class=""
+                      herf="#"
+                      href="#"
+                      role="button"
+                      target="_self"
+                    >
+                       Learn More
+                    </a>
+                  </span>
+                </label>
+              </div>
+               
+              <div
+                class="custom-collapse collapse"
+                id="cond1-info"
+                style="display: none;"
+              >
+                <div
+                  class="custom-text-box"
+                >
+                  
+                You are responsible for food safety under the approval of the Temporary Food Permit, this same level of responsibility applies when using the Hungry Husky App.
+            
+                </div>
+              </div>
+               
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <input
+                  autocomplete="off"
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="cond2"
+                />
+                <label
+                  class="custom-control-label"
+                >
+                  <span>
+                    
+                    For potentially hazardous food, it has not been out of heating or cooling for more than 
+                    <strong>
+                      four hours
+                    </strong>
+                    .
+                    
+                    <a
+                      aria-controls="cond2-info"
+                      aria-expanded="false"
+                      class=""
+                      herf="#"
+                      href="#"
+                      role="button"
+                      target="_self"
+                    >
+                       Learn More
+                    </a>
+                  </span>
+                </label>
+              </div>
+               
+              <div
+                class="custom-collapse collapse"
+                id="cond2-info"
+                style="display: none;"
+              >
+                <div
+                  class="custom-text-box"
+                >
+                  
+                Information is missing
+            
+                </div>
+              </div>
+               
+              <div
+                class="mt-4"
+              >
+                <div
+                  class="row justify-content-between"
+                >
+                  <div
+                    class="col-md-4 col-lg-3 order-md-2"
+                  >
+                    <button
+                      class="btn mb-3 btn-primary btn-lg btn-block disabled"
+                      disabled="disabled"
+                      type="submit"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                   
+                  <div
+                    class="col-md-4 col-lg-3 order-md-1"
+                  >
+                    <button
+                      class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+                      type="submit"
+                    >
+                      Back
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

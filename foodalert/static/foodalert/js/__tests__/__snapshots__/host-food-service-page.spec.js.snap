@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Food Categories Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="py-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <h2
+                style="color: white;"
+              >
+                <strong />
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        Food service information
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <p>
+              
+            Let's determine you eligibility for using Hungry Husky. Select all that apply.
+        
+            </p>
+             
+            <fieldset
+              class="form-group"
+            >
+              <!---->
+              <div
+                role="group"
+                tabindex="-1"
+              >
+                <div
+                  class="custom-control custom-checkbox"
+                >
+                  <input
+                    autocomplete="off"
+                    class="custom-control-input"
+                    type="checkbox"
+                    value="preparedByAuth"
+                  />
+                  <label
+                    class="custom-control-label"
+                  >
+                    <span>
+                      
+                    My food was prepared by UW Housing & Food Services or Bay Laurel Catering.
+                
+                    </span>
+                  </label>
+                </div>
+                 
+                <div
+                  class="custom-control custom-checkbox"
+                >
+                  <input
+                    autocomplete="off"
+                    class="custom-control-input"
+                    type="checkbox"
+                    value="hasPermit"
+                  />
+                  <label
+                    class="custom-control-label"
+                  >
+                    <span>
+                      
+                    I have a UW Temporary Food Service Permit.
+                    
+                      <a
+                        aria-controls="perm-info"
+                        aria-expanded="false"
+                        class=""
+                        herf="#"
+                        href="#"
+                        role="button"
+                        target="_self"
+                      >
+                         Learn More
+                      </a>
+                    </span>
+                  </label>
+                </div>
+                 
+                <div
+                  class="custom-collapse collapse"
+                  id="perm-info"
+                  style="display: none;"
+                >
+                  <div
+                    class="custom-text-box"
+                  >
+                    
+                When providing food to the public (anyone beyond staff/faculty of your unit), UW offices are required to secure a Temporary Food Permit through 
+                    <a
+                      href="#"
+                    >
+                      UW Environmental Health & Safety
+                    </a>
+                     to help ensure food service providers meet safety reulation and the food itself is safe for consumption.
+            
+                  </div>
+                </div>
+                 
+                <div
+                  class="custom-control custom-checkbox"
+                >
+                  <input
+                    autocomplete="off"
+                    class="custom-control-input"
+                    type="checkbox"
+                    value="none"
+                  />
+                  <label
+                    class="custom-control-label"
+                  >
+                    <span>
+                      
+                    None of the above.
+                
+                    </span>
+                  </label>
+                </div>
+                <!---->
+                <!---->
+                <!---->
+              </div>
+            </fieldset>
+          </div>
+           
+          <div
+            class="mt-4"
+          >
+            <div
+              class="row justify-content-between"
+            >
+              <div
+                class="col-md-4 col-lg-3 order-md-2"
+              >
+                <button
+                  class="btn mb-3 btn-primary btn-lg btn-block disabled"
+                  disabled="disabled"
+                  type="submit"
+                >
+                  Continue
+                </button>
+              </div>
+               
+              <div
+                class="col-md-4 col-lg-3 order-md-1"
+              >
+                <button
+                  class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+                  type="submit"
+                >
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
