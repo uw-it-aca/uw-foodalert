@@ -14,7 +14,9 @@
                 accord_id="text" 
                 type="phonenumber" 
                 label="Enter a new phone number" 
-                description="Carrier rates may apply">
+                description="Carrier rates may apply"
+                @check-collapse="checkCollapse"
+                :collapse_notif.sync="collapse_notif">
                 <template #opt_heading>
                     Text 
                 </template>
@@ -22,6 +24,7 @@
             <notification-option 
                 accord_id="email" 
                 type="email" 
+                @check-collapse="checkCollapse"
                 label="Enter an email">
                 <template #opt_heading>
                     Email 
@@ -45,10 +48,25 @@
         props: {
             bid: String,
         },
-        methods: {
-            getNextPage() {
-                this.$router.push({ name: 's-responsibilities' });
-            },
+        data() {
+            return {
+                collapse_notif: false, 
+            }
         },
+        methods: {
+            checkCollapse(id){
+                if(!this.collapse_notif){
+                    this.collapse_notif = true;
+                }
+            }
+        },
+        watch: {
+            collapse_notif(newValue, oldValue) {
+                if(newValue){
+                    this.$root.$emit('bv::toggle::collapse', 'notification');
+                    console.log("emitting toggle")
+                }
+            }
+        }
     }
 </script>

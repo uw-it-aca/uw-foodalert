@@ -34,13 +34,6 @@
                 checked: false
             }
         },
-
-        props: {
-            canNotify: {
-                type: Boolean,
-                default: false,
-            },
-        }, 
         
     }
 </script>
@@ -80,14 +73,11 @@
     .custom-control.custom-switch {
         height: var(--switch-height);
     }
-
-    #notification .collapse.show {
-        border-top: 1px solid #9B9B9B;
-    }
-
+    
     #notification .container {
         padding: .75rem 1.25rem;
         padding-left: 0px;
+        border-top: 1px solid #9B9B9B;
     }
 
 </style>

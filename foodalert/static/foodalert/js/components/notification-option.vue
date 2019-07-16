@@ -65,7 +65,8 @@ export default {
         type: {
             type: String,
             default: "phonenumber"
-        }
+        },
+        collapse_notif: Boolean,  
     },
     data() {
         return {
@@ -98,13 +99,14 @@ export default {
                 this.state++;
             }
             this.isOpen = !this.isOpen;
-            this.$root.$emit('bv::toggle::collapse', 'notification');
+            //emits when verify has been clicked on a notification
+            this.$emit('check-collapse', this.accord_id); 
         },
         previousState() {
             if(this.state > 0){
                 this.state--;
             }
-        }          
+        }, 
     },
     watch: {
         isOpen(newOpen, prevOpen) {
@@ -115,7 +117,7 @@ export default {
             }
             this.collapse_1 = (this.rendering == 1);
             this.collapse_3 = (this.rendering == 3);
-        }
+        },
     },
     computed: {
     }
