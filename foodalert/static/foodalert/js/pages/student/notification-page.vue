@@ -12,11 +12,10 @@
             </enable-notification>
             <notification-option 
                 accord_id="text" 
-                type="phonenumber" 
+                type="text" 
                 label="Enter a new phone number" 
                 description="Carrier rates may apply"
-                @check-collapse="checkCollapse"
-                :collapse_notif.sync="collapse_notif">
+                @check-collapse="checkCollapse">
                 <template #opt_heading>
                     Text 
                 </template>
@@ -24,9 +23,8 @@
             <notification-option 
                 accord_id="email" 
                 type="email" 
-                @check-collapse="checkCollapse"
-                :collapse_notif.sync="collapse_notif"
-                label="Enter an email">
+                label="Enter an email"
+                @check-collapse="checkCollapse">
                 <template #opt_heading>
                     Email 
                 </template>
@@ -59,15 +57,9 @@
             checkCollapse(id){
                 if(!this.collapse_notif){
                     this.collapse_notif = true;
-                }
-            }
-        },
-        watch: {
-            collapse_notif(newValue, oldValue) {
-                if(newValue){
                     this.$root.$emit('bv::toggle::collapse', this.collapse_id);
                 }
             }
-        }
+        },
     }
 </script>

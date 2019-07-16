@@ -28,7 +28,7 @@
                                 <!-- this is the state for initially adding a notif !-->
                                 <small class="form-text text-muted">{{label}}</small>
                                 <b-form-group :description="description">
-                                    <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
+                                    <b-form-input required :type="type" :formatter="formatter" width="300px"></b-form-input>
                                 </b-form-group>
                                 <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
                             </b-form>
@@ -36,10 +36,12 @@
                                 <!--this is the state for updating notif !-->
                                 <small class="form-text text-muted">{{label}}</small>
                                 <b-form-group :description="description">
-                                    <b-form-input required number :formatter="formatter" width="300px"></b-form-input>
+                                    <b-form-input required :type="type" :formatter="formatter" width="300px"></b-form-input>
                                 </b-form-group>
-                                <b-button>Delete(no funct)</b-button>
-                                <b-button type="submit" variant="primary" class="float-right">Update</b-button>
+                                <div class="float-right">
+                                    <b-button>Delete(no funct)</b-button>
+                                    <b-button type="submit" variant="primary">Update</b-button>
+                                </div>
                             </b-form>
                         </b-card-text>
                     </b-col>
@@ -64,9 +66,8 @@ export default {
         },
         type: {
             type: String,
-            default: "phonenumber"
-        },
-        collapse_notif: Boolean,  
+            default: "text"
+        },  
     },
     data() {
         return {
@@ -80,8 +81,10 @@ export default {
     },
     methods: {
         formatter(value, event){
-            if (this.type == "phonenumber") {
+            if (this.type == "text") {
                 return this.numberFormatter(value, event);
+            } else if (this.type == "email") {
+                return value;
             }
         },
         numberFormatter(value, event){
