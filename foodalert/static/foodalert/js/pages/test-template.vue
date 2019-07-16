@@ -1,5 +1,8 @@
 <template>
-  <generic-page>
+  <generic-page startWithNotification timeoutOfNotification="3000">
+    <template #notification>
+      Your notification has been sent.
+    </template>
     <template #body>
       <!--enable-notification>
       </enable-notification!-->
