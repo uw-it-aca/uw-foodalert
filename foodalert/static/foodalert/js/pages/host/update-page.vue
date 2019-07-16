@@ -7,7 +7,7 @@
             Compose update
         </template>
         <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation ok-title="Send" cancel-variant="outline-secondary"" @ok="sendUpdate()">
+            <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send" cancel-variant="outline-secondary" @ok="sendUpdate()">
                 <p>
                     We will send your update to Hungry Husky Subscribers.
                 </p>

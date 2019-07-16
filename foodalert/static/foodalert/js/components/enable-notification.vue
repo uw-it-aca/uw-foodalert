@@ -81,7 +81,7 @@
         height: var(--switch-height);
     }
 
-    .collapse.show {
+    #notification .collapse.show {
         border-top: 1px solid #9B9B9B;
     }
 
