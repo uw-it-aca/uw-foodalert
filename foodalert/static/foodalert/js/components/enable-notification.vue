@@ -1,6 +1,6 @@
 <template>
     <div class="notification">
-        <b-collapse :id="collapse_id">
+        <b-collapse :id="collapse_id" :v-model="collapse_notif">
             <b-container @click="checked=!checked">
                 <b-row> 
                     <b-col sm="9" cols="9">
@@ -31,12 +31,17 @@
     export default {
         props: {
             collapse_id: {
-                type: String
+                type: String,
+                required: true
+            },
+            collapse_notif: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
             return {
-                checked: false
+                checked: false,
             }
         },
     }
