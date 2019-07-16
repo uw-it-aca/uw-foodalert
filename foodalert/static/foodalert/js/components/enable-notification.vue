@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <b-collapse id="notification">
+    <div class="notification">
+        <b-collapse :id="collapse_id">
             <b-container @click="checked=!checked">
                 <b-row> 
                     <b-col sm="9" cols="9">
@@ -27,14 +27,18 @@
     </div>
 </template>
 
-<script type="text/javascript">
-    export default{
+<script>
+    export default {
+        props: {
+            collapse_id: {
+                type: String
+            }
+        },
         data() {
             return {
                 checked: false
             }
         },
-        
     }
 </script>
 
@@ -73,8 +77,8 @@
     .custom-control.custom-switch {
         height: var(--switch-height);
     }
-    
-    #notification .container {
+
+    .notification .container {
         padding: .75rem 1.25rem;
         padding-left: 0px;
         border-top: 1px solid #9B9B9B;

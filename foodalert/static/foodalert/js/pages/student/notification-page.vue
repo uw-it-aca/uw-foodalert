@@ -7,7 +7,7 @@
             <p>
                 Select how you will like to receive notifications. Please choose at least one.                                                      
             </p>
-            <enable-notification>
+            <enable-notification :collapse_id="collapse_id">
                 <p slot="message">Turn on to receive notifications. Please choose at least one.</p>
             </enable-notification>
             <notification-option 
@@ -25,6 +25,7 @@
                 accord_id="email" 
                 type="email" 
                 @check-collapse="checkCollapse"
+                :collapse_notif.sync="collapse_notif"
                 label="Enter an email">
                 <template #opt_heading>
                     Email 
@@ -50,6 +51,7 @@
         },
         data() {
             return {
+                collapse_id: "enable-notification",
                 collapse_notif: false, 
             }
         },
@@ -63,8 +65,7 @@
         watch: {
             collapse_notif(newValue, oldValue) {
                 if(newValue){
-                    this.$root.$emit('bv::toggle::collapse', 'notification');
-                    console.log("emitting toggle")
+                    this.$root.$emit('bv::toggle::collapse', this.collapse_id);
                 }
             }
         }
