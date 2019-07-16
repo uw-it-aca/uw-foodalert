@@ -2,15 +2,13 @@
     <div class="page">
         <div id="standard-notification">
             <b-collapse id="notif-container" v-model="notificationState">
-                <b-container fluid class="py-3" :style="notifStyle">
+                <b-container fluid class="text-center pt-3" :style="notifStyle">
                     <b-container>
                         <b-row class="justify-content-center">
                             <b-col md="8">
-                                <h2 style="color: white;">
-                                    <strong>
-                                        <slot name="notification"></slot>
-                                    </strong>
-                                </h2>
+                                <div class="h5 text-white">
+                                  <slot name="notification"></slot>
+                                </div>
                             </b-col>
                         </b-row>
                     </b-container>
@@ -45,7 +43,8 @@ export default {
         },
         notificationColor: {
             type: String,
-            default: "#1DA83F"
+            //default: "#1DA83F"
+            default: "#0070C9"
         }
     },
     data() {
