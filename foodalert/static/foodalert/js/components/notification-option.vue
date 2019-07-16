@@ -98,11 +98,10 @@ export default {
             return cleaned
         },
         nextState(){
-            if(this.state < 1){ //cannot surpas max state
+            if(this.state < 1){ 
                 this.state++;
             }
             this.isOpen = !this.isOpen;
-            //emits when verify has been clicked on a notification
             this.$emit('check-collapse', this.accord_id); 
         },
         previousState() {

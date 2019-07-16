@@ -64,7 +64,7 @@
     .custom-switch .custom-control-label::before {
         width: var(--switch-width) !important;
         height: var(--switch-height) !important;
-        border-radius: 1rem !important;
+        border-radius: calc(var(--switch-width) / 2) !important;
         top: 0px;
     }
 
@@ -72,11 +72,11 @@
         width: var(--switch-circle) !important;
         height: var(--switch-circle) !important;
         border-radius: 50% !important;
-        top: .2rem !important;
+        top: calc((var(--switch-height) - var(--switch-circle)) / 2) !important;
     }
 
     .custom-switch .custom-control-input:checked~.custom-control-label::after {
-        transform: translateX(1.2rem) !important;
+        transform: translateX(calc(var(--switch-width) - var(--switch-circle) - 3.5px)) !important;
     }
 
     .custom-control.custom-switch {
@@ -88,5 +88,4 @@
         padding-left: 0px;
         border-top: 1px solid #9B9B9B;
     }
-
 </style>
