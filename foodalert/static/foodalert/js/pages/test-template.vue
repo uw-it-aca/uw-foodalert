@@ -1,5 +1,5 @@
 <template>
-  <generic-page startWithNotification timeoutOfNotification="3000">
+  <generic-page startWithNotification :timeoutOfNotification="3000">
     <template #notification>
       Your notification has been sent.
     </template>

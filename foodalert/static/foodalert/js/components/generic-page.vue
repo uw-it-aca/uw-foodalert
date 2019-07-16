@@ -43,7 +43,6 @@ export default {
         },
         notificationColor: {
             type: String,
-            //default: "#1DA83F"
             default: "#0070C9"
         }
     },

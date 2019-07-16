@@ -9,7 +9,7 @@ from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
-        SubscriptionSerializer, AllergenSerializer
+        SubscriptionSerializer, AllergenSerializer, SubscriptionSerializerList
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -147,7 +147,22 @@ class UpdateList(generics.ListCreateAPIView):
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
-    serializer_class = SubscriptionSerializer
+
+    def put(self, request, pk):
+        if request.data['email'] == '' and request.data['sms_number'] == '':
+            request.data['notif_on'] = False
+        return super().put(request, pk)
+    
+    def patch(self, request, pk):
+        if request.data['email'] == '' and request.data['sms_number'] == '':
+            request.data['notif_on'] = False
+        return super().patch(request, pk)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SubscriptionSerializerList
+        else:
+            return SubscriptionSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
