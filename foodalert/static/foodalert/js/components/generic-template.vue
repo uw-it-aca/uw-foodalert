@@ -1,11 +1,11 @@
 <template>
-    <div class="">
-        <b-container class="pt-3">
-            <h2 class="heading-text"><b>{{ headerText }}</b></h2>
-        </b-container>
+    <div>
         <router-view :subId="this.subId">
 
         </router-view>
+        <!-- To load the images before they need to be displayed !-->
+        <img src="../../img/check.svg" style="display: none">
+        <img src="../../img/dot.svg" style="display: none">
     </div>
 </template>
 
@@ -14,58 +14,72 @@ export default {
     props: {
         subId: Number,
     },
-    data() {
-        return {
-            headerText: '',
-        }
-    },
-    beforeRouteUpdate(to, from, next) {
-        this.getHeader(to);
-        next();
-    },
-    beforeRouteEnter(to, from, next) {
-        next(function(vm) { vm.getHeader(to) });
-    },
-    methods: {
-        getHeader(to) {
-            switch (to.path) {
-                case '/':
-                    this.headerText = 'Create Food Notification';
-                    break;
-                case '/ended/':
-                case '/ended':
-                    this.headerText = 'Your Notification Was Sent'
-                    break;
-                case '/update/':
-                case '/update':
-                    this.headerText = 'Update An Existing Notification'
-                    break;
-                case '/signup/':
-                case '/signup':
-                    this.headerText = 'Sign-up To Receive Notifications'
-                    break;
-                case '/audit/':
-                case '/audit':
-                    this.headerText = 'Audit Logs'
-                    break;
-                case '/subscribed/':
-                case '/subscribed':
-                    this.headerText = 'You Signed Up For Food Notifications!'
-                    break;
-                case '/categories/':
-                case '/categories':
-                    this.headerText = 'Tell us about your food'
-                    break;
-                default:
-                    this.headerText = '';
-            }
-        }
-    }
 }
 </script>
 
 <style>
-    .header-text < b {
-        font-family: Helvetica;
+    :root{
+        --checkbox-size: 32px;
+        --radio-size: 32px;
+
+    }
+    .custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
+        height: var(--checkbox-size) !important;
+        width: var(--checkbox-size) !important;
+    }
+    .custom-checkbox .custom-control-label::before {
+        border: 1.5px solid #AAAAAA;
+        border-radius: 6.25% !important;
+    }
+    .custom-checkbox .custom-control-input:disabled~.custom-control-label::before {
+        border: 1.5px solid #EAEAEA;
+        background: initial;
+    }
+    .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+        background: url("../../img/check.svg") no-repeat 50%/75% !important;  
+    }
+    .custom-checkbox .custom-control-label{
+        padding-left: calc(var(--checkbox-size) - 0.5rem);
+        display: flex;
+        align-items: center;
+        min-height: calc(var(--checkbox-size) + 0.5rem);
+    }
+    .custom-control.custom-checkbox {
+        min-height: calc(var(--checkbox-size) + 0.5rem);
+    }
+
+    .custom-checkbox:hover .custom-control-label::before  {
+        border-color: #0D95FC;
+    }
+
+    .custom-radio .custom-control-label::before, .custom-radio .custom-control-label::after {
+        height: var(--radio-size) !important;
+        width: var(--radio-size) !important;
+    }
+    .custom-radio .custom-control-label::before {
+        border: 1.5px solid #AAAAAA;
+    }
+    .custom-radio .custom-control-input:disabled~.custom-control-label::before {
+        border: 1.5px solid #EAEAEA;
+        background: initial;
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+        background-color: initial;
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::after {
+        background: url("../../img/dot.svg") no-repeat center center/69% !important;  
+    }
+    .custom-radio .custom-control-label{
+        padding-left: calc(var(--radio-size) - 0.5rem);
+        display: flex;
+        align-items: center;
+        min-height: calc(var(--radio-size) + 0.5rem);
+    }
+    .custom-control.custom-radio {
+        min-height: calc(var(--radio-size) + 0.5rem);
+    }
+
+    .custom-radio:hover .custom-control-label::before  {
+        border-color: #0D95FC;
     }
 </style>

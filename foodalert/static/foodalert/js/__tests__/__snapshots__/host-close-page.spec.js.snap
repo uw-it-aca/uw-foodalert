@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Host Close Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="text-center pt-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="h5 text-white"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        Your food cannot be shared with Hungry Husky
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <p>
+              You indicated that your food is homemade which is ineligible to be shared with the public via Hungry Husky.
+            </p>
+             
+            <p>
+              You are still able to share it with your colleagues in your office. If you have questions about how to share food with Hungry Husky, please email 
+              <a
+                href="mailto:hungryhusky@uw.edu"
+              >
+                hungryhusky@uw.edu
+              </a>
+              .
+            </p>
+          </div>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

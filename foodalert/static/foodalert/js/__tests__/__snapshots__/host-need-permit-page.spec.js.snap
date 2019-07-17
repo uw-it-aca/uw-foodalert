@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Need Permit Page renders correctly 1`] = `
+<div
+  class="page"
+>
+  <div
+    id="standard-notification"
+  >
+    <div
+      class="collapse"
+      id="notif-container"
+      style="display: none;"
+    >
+      <div
+        class="text-center pt-3 container-fluid"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="row justify-content-center"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="h5 text-white"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="page-content"
+  >
+     
+    <div
+      class="container"
+    >
+      <div
+        class="row justify-content-center"
+      >
+        <div
+          class="col-md-8"
+        >
+          <h1
+            class="pt-4 pb-2"
+            id="standard-heading"
+          >
+            
+        You need a Temporary Food Service Permit
+    
+          </h1>
+           
+          <div
+            id="standard-body"
+          >
+            <p>
+              Based on what you’ve told us about your food, you’ll need to obtain a Temporary Food Service Permit to share via Hungry Husky.
+            </p>
+             
+            <p>
+              The only food you can share without a permit is either:
+            </p>
+             
+            <ul
+              class="ml-4"
+            >
+              <li>
+                Non-perishable
+              </li>
+               
+              <li>
+                Commercially pre-packaged
+              </li>
+               
+              <li>
+                Prepared by UW Housing and Food Services or Bay Laurel Catering
+              </li>
+            </ul>
+             
+            <p>
+              Keep in mind for future events, it takes two weeks to get a permit and a new permit is required for every event. If you have questions about how to share food with Hungry Husky, please email 
+              <a
+                href="mailto:hungryhusky@uw.edu"
+              >
+                hungryhusky@uw.edu
+              </a>
+              .
+            </p>
+          </div>
+           
+          <div
+            style="margin-top: 32px;"
+          >
+            <div
+              class="row justify-content-between"
+            >
+              <div
+                class="col-md-4 col-lg-3 order-md-2"
+              >
+                <a
+                  class="btn mb-3 btn-primary btn-lg btn-block"
+                  href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
+                  target="_self"
+                >
+                  Get a permit
+                </a>
+              </div>
+               
+              <div
+                class="col-md-4 col-lg-3 order-md-1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

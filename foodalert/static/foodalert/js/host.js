@@ -1,39 +1,20 @@
-import FormCategory from './components/form-category.vue';
-import Vue from 'vue';
-import AgreePop from './components/agreement-popup.vue';
-import PopContainer from './components/popup-container.vue';
-import FormTemplate from './components/form-template.vue';
-import FormController from './components/form-controller.vue';
-import UpdateTemplate from './components/update-template.vue';
-import UpdateController from './components/update-controller.vue';
-import EndedTemplate from './components/ended-template.vue';
-import EndedController from './components/ended-controller.vue';
-import WelcomeTemplate from './components/welcome-template.vue';
-import FoodCategoriesTemplate from './components/food-categories-template.vue';
-import CloseTemplate from './components/close-template.vue';
-import NeedPermit from './components/need-permit-template.vue';
-
-Object.assign(window.vueData.components, {
-    'form-category': FormCategory,
-    'agreement-popup': AgreePop,
-    'popup-container': PopContainer,
-    'form-template': FormTemplate,
-    'form-controller': FormController,
-    'update-template': UpdateTemplate,
-    'update-controller': UpdateController,
-    'ended-template': EndedTemplate,
-    'ended-controller': EndedController,
-    'welcome-template': WelcomeTemplate,
-    'food-categories-template': FoodCategoriesTemplate,
-    'close-template': CloseTemplate,
-    'need-permit': NeedPermit,
-});
+import UpdateController from './pages/host/update-page.vue';
+import EndedController from './pages/host/ended-page.vue';
+import FoodCategoriesTemplate from './pages/host/food-categories-page.vue';
+import CloseTemplate from './pages/host/close-page.vue';
+import NeedPermit from './pages/host/need-permit-page.vue';
+import FoodService from './pages/host/food-service-page.vue';
+import HostWelcome from './pages/host/welcome.vue';
+import ResponsibitiesPage from './pages/host/responsibilities-page.vue'
+import FormPage from './pages/host/form-page.vue';
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/");
-rootPath.children.find(obj => obj.path === "update").component = UpdateController;
-rootPath.children.find(obj => obj.path === "ended").component = EndedController;
-rootPath.children.find(obj => obj.path === "welcome").component = WelcomeTemplate;
-rootPath.children.find(obj => obj.path === "categories").component = FoodCategoriesTemplate;
-rootPath.children.find(obj => obj.path === "").component = FormController;
-rootPath.children.find(obj => obj.path === "close").component = CloseTemplate;
-rootPath.children.find(obj => obj.path === "need-permit").component = NeedPermit;
+rootPath.children.find(obj => obj.path === "h/update").component = UpdateController;
+rootPath.children.find(obj => obj.path === "h/ended").component = EndedController;
+rootPath.children.find(obj => obj.path === "h/welcome").component = HostWelcome;
+rootPath.children.find(obj => obj.path === "h/categories").component = FoodCategoriesTemplate;
+rootPath.children.find(obj => obj.path === "h/form").component = FormPage;
+rootPath.children.find(obj => obj.path === "h/close").component = CloseTemplate;
+rootPath.children.find(obj => obj.path === "h/need-permit").component = NeedPermit;
+rootPath.children.find(obj => obj.path === "h/food-service").component = FoodService;
+rootPath.children.find(obj => obj.path === "h/responsibilities").component = ResponsibitiesPage;

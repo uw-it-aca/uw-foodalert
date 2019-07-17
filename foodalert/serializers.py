@@ -10,13 +10,21 @@ from phonenumber_field.serializerfields import PhoneNumberField
 class SafeFoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = SafeFood
-        fields = ('name')
+        fields = ['name']
 
 
 class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
-        fields = ('name')
+        fields = ['name']
+
+    def create(self, validated_data):
+        allergen = Allergen.objects.create()
+
+        allergen.name = validated_data["name"]
+        allergen.save()
+
+        return allergen
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -146,17 +154,27 @@ class UpdateSerializer(serializers.ModelSerializer):
             return ret
 
 
+class SubscriptionSerializerList(serializers.ModelSerializer):
+    sms_number = PhoneNumberField(allow_blank=True)
+
+    class Meta:
+        model = Subscription
+        fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
+                  'email_verified', 'notif_on')
+
+
 class SubscriptionSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
 
     class Meta:
         model = Subscription
-        fields = ('id', 'netid', 'sms_number', 'email')
+        fields = ('id', 'netid', 'sms_number', 'email', 'notif_on')
 
     def to_internal_value(self, data):
         ret = {
             'email': '',
             'sms_number': '',
+            'notif_on': '',
         }
 
         if 'email' in data:
@@ -169,6 +187,11 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         else:
             ret['sms_number'] = ''
 
+        if 'notif_on' in data:
+            ret['notif_on'] = data['notif_on']
+        else:
+            ret['notif_on'] = False
+
         return ret
 
     def create(self, validated_data):
@@ -177,6 +200,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
         sub.email = validated_data["email"]
         sub.sms_number = validated_data["sms_number"]
+        sub.notif_on = False
 
         sub.save()
 

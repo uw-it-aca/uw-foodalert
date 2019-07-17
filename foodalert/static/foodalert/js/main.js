@@ -6,13 +6,10 @@ import Vuelidate from 'vuelidate'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import FormCheckboxWithTooltip from './components/form-checkbox-with-tooltip.vue';
+
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate)
 Vue.use(VueRouter)
-
-// Registering custom html tags
-Vue.component("form-checkbox-with-tooltip", FormCheckboxWithTooltip)
 
 require('../css/styles.css');
 
@@ -24,7 +21,7 @@ var router = new VueRouter({
     routes: window.vueData.routes,
 })
 
-export var app = new Vue({
+export var vm = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
     router,
@@ -35,3 +32,5 @@ export var app = new Vue({
     },
     components,
 });
+
+global.vm = vm

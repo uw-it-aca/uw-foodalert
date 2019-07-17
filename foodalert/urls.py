@@ -17,5 +17,7 @@ urlpatterns = [
         name='subscription_list'),
     url(r'^subscription/(?P<pk>[0-9]+)/$',
         SubscriptionDetail.as_view(), name='subscription_detail'),
+    url(r'^allergen/$', AllergensList.as_view(),
+        name='allergen_list'),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]

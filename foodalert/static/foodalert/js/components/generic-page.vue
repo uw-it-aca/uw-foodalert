@@ -1,0 +1,95 @@
+<template>
+    <div class="page">
+        <div id="standard-notification">
+            <b-collapse id="notif-container" v-model="notificationState">
+                <b-container fluid class="text-center pt-3" :style="notifStyle">
+                    <b-container>
+                        <b-row class="justify-content-center">
+                            <b-col md="8">
+                                <div class="h5 text-white">
+                                  <slot name="notification"></slot>
+                                </div>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                </b-container>
+            </b-collapse>
+        </div>
+        <div class="page-content">
+            <slot name="banner"></slot>
+            <b-container>
+              <b-row class="justify-content-center">
+                <b-col md="8">
+                  <h1 id="standard-heading" class="pt-4 pb-2"><slot name="heading"></slot></h1>
+                  <div id="standard-body"><slot name="body"></slot></div>
+                  <slot name="navigation"></slot>
+                </b-col>
+              </b-row>
+            </b-container>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        startWithNotification: {
+            type: Boolean,
+            default: false
+        },
+        timeoutOfNotification: {
+            type: Number,
+            default: 3000
+        },
+        notificationColor: {
+            type: String,
+            default: "#0070C9"
+        }
+    },
+    data() {
+        return {
+            notificationState: false,
+            notifStyle: "",
+        }
+    },
+    methods: {
+        showNotification: function() {
+            setTimeout(() => {this.notificationState = true;}, 250);
+            setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification);
+        }
+    },
+    beforeMount() {
+        if(this.startWithNotification) {
+            this.showNotification();
+        }
+        this.notifStyle = "background-color: " + this.notificationColor + ";";
+    },
+}
+</script>
+
+<style>
+    #standard-notification {
+        height: 0;
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+    }
+    #standard-heading {
+        font-size: 32px;
+        line-height: 1.125em;
+        font-weight: 600;
+        color: #484848;
+    }
+    #standard-body {
+        font-size:16px;
+        line-height: 1.5;
+        font-weight: 400;
+        color: #484848;
+    }
+
+    .col-md-8 {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+      padding-bottom: 8px !important;
+    }
+</style>

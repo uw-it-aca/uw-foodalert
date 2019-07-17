@@ -24,7 +24,10 @@ class Notification(models.Model):
 class Subscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
+    email_verified = models.BooleanField(default=False)
     sms_number = PhoneNumberField(blank=True)
+    number_verified = models.BooleanField(default=False)
+    notif_on = models.BooleanField(default=False)
 
     @property
     def netid(self):
@@ -44,4 +47,4 @@ class SafeFood(models.Model):
 
 
 class Allergen(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)

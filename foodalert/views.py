@@ -7,9 +7,9 @@ from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
-from foodalert.models import Notification, Update, Subscription
+from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
-        SubscriptionSerializer
+        SubscriptionSerializer, AllergenSerializer, SubscriptionSerializerList
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -82,6 +82,7 @@ class NotificationList(generics.ListCreateAPIView):
                                   email_recipients,
                                   slug)
 
+            # Sender.send_email(message, email_recipients, slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
         else:
@@ -146,7 +147,22 @@ class UpdateList(generics.ListCreateAPIView):
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
-    serializer_class = SubscriptionSerializer
+
+    def put(self, request, pk):
+        if request.data['email'] == '' and request.data['sms_number'] == '':
+            request.data['notif_on'] = False
+        return super().put(request, pk)
+
+    def patch(self, request, pk):
+        if request.data['email'] == '' and request.data['sms_number'] == '':
+            request.data['notif_on'] = False
+        return super().patch(request, pk)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return SubscriptionSerializerList
+        else:
+            return SubscriptionSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -171,3 +187,12 @@ class HomeView(TemplateView):
             user=self.request.user)
         context['subscription'] = context['subscription'].pk
         return context
+
+
+@method_decorator(login_required(), name='dispatch')
+class AllergensList(generics.ListCreateAPIView):
+    queryset = Allergen.objects.all()
+    serializer_class = AllergenSerializer
+
+    def perform_create(self, serializer, *args, **kwargs):
+        serializer.save(user=self.request.user)
