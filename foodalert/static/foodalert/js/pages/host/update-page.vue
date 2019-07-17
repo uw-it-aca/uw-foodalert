@@ -34,7 +34,7 @@
                         <span>
                             Other Message
                             <b-form-input id="other-message" aria-describedby="Other message for the subs"
-                            required placeholder="We've moved to HUB 120" class="mb-3" v-model="otherText">
+                            required placeholder="We've moved to HUB 120" class="mb-3 standard-placeholder" v-model="otherText">
                             </b-form-input>
                         </span>
                     </b-form-radio>
@@ -194,5 +194,11 @@
 
     #other-message {
         margin-top: 10px;
+    }
+
+    .standard-placeholder::placeholder {
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      color: #aaaaaa !important;
     }
 </style>

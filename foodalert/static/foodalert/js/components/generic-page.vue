@@ -2,11 +2,11 @@
     <div class="page">
         <div id="standard-notification">
             <b-collapse id="notif-container" v-model="notificationState">
-                <b-container fluid class="text-center pt-3" :style="notifStyle">
+                <b-container fluid class="text-center py-3" :style="notifStyle">
                     <b-container>
                         <b-row class="justify-content-center">
                             <b-col md="8">
-                                <div class="h5 text-white">
+                                <div class="h5 text-white pt-2">
                                   <slot name="notification"></slot>
                                 </div>
                             </b-col>
