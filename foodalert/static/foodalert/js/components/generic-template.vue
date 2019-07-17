@@ -82,4 +82,18 @@ export default {
     .custom-radio:hover .custom-control-label::before  {
         border-color: #0D95FC;
     }
+
+    h2 {
+        font-size: 22px !important;
+        font-weight: 600 !important;
+        line-height: 1.375 !important;
+        color: #484848 !important;
+    }
+
+    p {
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        line-height: 1.375 !important;
+        color: #484848 !important;
+    }
 </style>

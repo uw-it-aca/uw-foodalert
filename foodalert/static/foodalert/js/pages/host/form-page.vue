@@ -60,9 +60,9 @@
                 <b-form-input id="location" aria-describedby="Location of the event"
                     v-model="form.location" required placeholder="HUB 130" class="mb-4 standard-placeholder"></b-form-input>
 
-                <h2 class="mt-4 h2">Food specifications</h2>
+                <h2 class="mt-4">Food specifications</h2>
                 <h5 class="standard-label">Does the food contain allergens?</h5>
-                <p class="p">It's ok if you are unsure, just select to the best of your knowledge.</p>
+                <p>It's ok if you are unsure, just select to the best of your knowledge.</p>
 
                 <b-container class="px-0">
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
@@ -91,7 +91,7 @@
                 </b-container>
 
 
-                <h2 class="h2 mt-4">Preview</h2>
+                <h2 class="mt-4">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
                     <span v-else>Hot Indian buffet food</span> from
@@ -264,19 +264,5 @@
     font-size: 16px !important;
     font-weight: 400 !important;
     color: #aaaaaa !important;
-  }
-
-  .h2 {
-    font-size: 22px !important;
-    font-weight: 600 !important;
-    line-height: 1.375 !important;
-    color: #484848 !important;
-  }
-
-  .p {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 1.375 !important;
-    color: #484848 !important;
   }
 </style>
