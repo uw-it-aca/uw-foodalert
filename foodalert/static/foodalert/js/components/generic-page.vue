@@ -19,7 +19,7 @@
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
-                <b-col md="8">
+                <b-col md="8" class="page-content-padding">
                   <h1 id="standard-heading" class="pt-4 pb-2"><slot name="heading"></slot></h1>
                   <div id="standard-body"><slot name="body"></slot></div>
                   <slot name="navigation"></slot>
@@ -87,7 +87,7 @@ export default {
         color: #484848;
     }
 
-    .col-md-8 {
+    .page-content-padding {
       padding-left: 24px !important;
       padding-right: 24px !important;
       padding-bottom: 8px !important;

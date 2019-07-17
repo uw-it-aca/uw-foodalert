@@ -53,33 +53,33 @@
         --switch-height: 32px;
         --switch-circle: 26px;
     }
-    #notif-status .enabled {
+    .notification #notif-status .enabled {
         color: green;
     }
 
-    #notif-status .paused {
+    .notification #notif-status .paused {
         color: red;
     }
 
-    .custom-switch .custom-control-label::before {
+    .notification .custom-switch .custom-control-label::before {
         width: var(--switch-width) !important;
         height: var(--switch-height) !important;
         border-radius: calc(var(--switch-width) / 2) !important;
         top: 0px;
     }
 
-    .custom-switch .custom-control-label:after {
+    .notification .custom-switch .custom-control-label:after {
         width: var(--switch-circle) !important;
         height: var(--switch-circle) !important;
         border-radius: 50% !important;
         top: calc((var(--switch-height) - var(--switch-circle)) / 2) !important;
     }
 
-    .custom-switch .custom-control-input:checked~.custom-control-label::after {
+    .notification .custom-switch .custom-control-input:checked~.custom-control-label::after {
         transform: translateX(calc(var(--switch-width) - var(--switch-circle) - 3.5px)) !important;
     }
 
-    .custom-control.custom-switch {
+    .notification .custom-control.custom-switch {
         height: var(--switch-height);
     }
 

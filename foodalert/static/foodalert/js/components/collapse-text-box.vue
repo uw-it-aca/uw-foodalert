@@ -1,5 +1,5 @@
 <template>
-    <b-collapse :id="bid" class="custom-collapse">
+    <b-collapse :id="bid" class="custom-collapse collapse-text-box">
         <div class="custom-text-box">
             <slot>
                 <h1>Hello this will be content</h1>
@@ -17,7 +17,7 @@
 </script>
 
 <style>
-    .custom-text-box {
+    .collapse-text-box .custom-text-box {
         border-radius: 10px 10px 10px 10px;
         background-color: #e9e9e9;
         color: #707070;
