@@ -159,7 +159,9 @@ class SubscriptionSerializerList(serializers.ModelSerializer):
 
     class Meta:
         model = Subscription
-        fields = ('id', 'netid', 'sms_number', 'number_verified', 'email', 'email_verified', 'notif_on')
+        fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
+                  'email_verified', 'notif_on')
+
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
@@ -184,7 +186,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             ret['sms_number'] = data['sms_number']
         else:
             ret['sms_number'] = ''
-        
+
         if 'notif_on' in data:
             ret['notif_on'] = data['notif_on']
         else:

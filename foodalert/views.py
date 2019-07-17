@@ -152,7 +152,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
         if request.data['email'] == '' and request.data['sms_number'] == '':
             request.data['notif_on'] = False
         return super().put(request, pk)
-    
+
     def patch(self, request, pk):
         if request.data['email'] == '' and request.data['sms_number'] == '':
             request.data['notif_on'] = False
