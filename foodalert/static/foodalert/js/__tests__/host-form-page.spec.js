@@ -55,7 +55,7 @@ describe('Food Categories Page', function () {
 
 	    var buttons = wrapper.findAll('button')
 	    // buttons.at(0).trigger('click')
-		buttons.at(4).trigger('click.native')
+		// buttons.at(4).trigger('click.native')
 	});
 
 	test('reset test', function () {

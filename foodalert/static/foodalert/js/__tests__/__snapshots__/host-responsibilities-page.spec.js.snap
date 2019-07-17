@@ -13,7 +13,8 @@ exports[`Food Categories Page renders correctly 1`] = `
       style="display: none;"
     >
       <div
-        class="text-center pt-3 container-fluid"
+        class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -25,7 +26,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               class="col-md-8"
             >
               <div
-                class="h5 text-white"
+                class="h5 text-white pt-2"
               />
             </div>
           </div>
@@ -45,7 +46,7 @@ exports[`Food Categories Page renders correctly 1`] = `
         class="row justify-content-center"
       >
         <div
-          class="col-md-8"
+          class="page-content-padding col-md-8"
         >
           <h1
             class="pt-4 pb-2"
@@ -100,7 +101,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <div
-                class="custom-collapse collapse"
+                class="custom-collapse collapse-text-box collapse"
                 id="cond1-info"
                 style="display: none;"
               >
@@ -149,7 +150,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <div
-                class="custom-collapse collapse"
+                class="custom-collapse collapse-text-box collapse"
                 id="cond2-info"
                 style="display: none;"
               >
