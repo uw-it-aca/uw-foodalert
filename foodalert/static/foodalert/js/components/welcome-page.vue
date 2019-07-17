@@ -1,10 +1,10 @@
 <template>
     <generic-page>
       <template #banner>
-        <b-container fluid class="pt-2" style="background-color: #4b2e83">
+        <b-container fluid class="py-2" style="background-color: #4b2e83">
           <b-row class="justify-content-center">
             <b-col md="8">
-              <b-img :src="require('../../img/uw-logo.png')" alt="UW Block Logo" width="40" height="27"></b-img>
+              <b-img :src="require('../../img/uw-logo.png')" alt="UW Block Logo" width="40"></b-img>
             </b-col>
           </b-row>
         </b-container>
