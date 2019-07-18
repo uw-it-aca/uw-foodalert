@@ -48,11 +48,6 @@
 </script>
 
 <style>
-    :root {
-        --switch-width: 50px;
-        --switch-height: 32px;
-        --switch-circle: 26px;
-    }
     .notification #notif-status .enabled {
         color: green;
     }
@@ -60,29 +55,7 @@
     .notification #notif-status .paused {
         color: red;
     }
-
-    .notification .custom-switch .custom-control-label::before {
-        width: var(--switch-width) !important;
-        height: var(--switch-height) !important;
-        border-radius: calc(var(--switch-width) / 2) !important;
-        top: 0px;
-    }
-
-    .notification .custom-switch .custom-control-label:after {
-        width: var(--switch-circle) !important;
-        height: var(--switch-circle) !important;
-        border-radius: 50% !important;
-        top: calc((var(--switch-height) - var(--switch-circle)) / 2) !important;
-    }
-
-    .notification .custom-switch .custom-control-input:checked~.custom-control-label::after {
-        transform: translateX(calc(var(--switch-width) - var(--switch-circle) - 3.5px)) !important;
-    }
-
-    .notification .custom-control.custom-switch {
-        height: var(--switch-height);
-    }
-
+    
     .notification .container {
         padding: .75rem 1.25rem;
         padding-left: 0px;

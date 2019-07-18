@@ -31,7 +31,9 @@ exports[`NotFoundTemplate (404 Page) renders correctly 1`] = `
     align-self="center"
     class="row justify-content-center"
   >
-    <h2>
+    <h2
+      class="h2"
+    >
       The Page You Requested Could Not Be Found
     </h2>
   </div>

@@ -82,14 +82,14 @@ export default {
     }
     #standard-body {
         font-size:16px;
-        line-height: 1.5;
+        line-height: 1.375;
         font-weight: 400;
         color: #484848;
     }
 
-    .page-content-padding {
-      padding-left: 24px !important;
-      padding-right: 24px !important;
-      padding-bottom: 8px !important;
+    .page .page-content .page-content-padding {
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 8px;
     }
 </style>
