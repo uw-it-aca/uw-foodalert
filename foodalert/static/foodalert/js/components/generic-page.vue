@@ -68,12 +68,6 @@ export default {
         }
         this.notifStyle = "background-color: " + this.notificationColor + ";";
     },
-    mounted() {
-      var page = document.getElementsByClassName("page-content")[0];
-      var footer = document.getElementById('relative-footer')
-      var marginTop = ((page.offsetHeight + footer.offsetHeight + 20) > window.innerHeight) ? 0 : (window.innerHeight - page.offsetHeight - footer.offsetHeight - 20);
-      footer.style.marginTop = marginTop + "px";
-    }
 }
 </script>
 
@@ -103,7 +97,16 @@ export default {
       padding-bottom: 8px;
     }
 
+    .page {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        align-content: space-between;
+    }
+
     #relative-footer {
-      font-size: 12px;
+        margin-top: auto;
+        font-size: 12px;
+        width: 100%;
     }
 </style>

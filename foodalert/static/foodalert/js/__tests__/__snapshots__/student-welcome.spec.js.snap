@@ -111,6 +111,21 @@ exports[`Welcome Page renders correctly 1`] = `
         </div>
       </div>
     </div>
+     
+    <footer
+      class="text-center"
+      id="relative-footer"
+    >
+      <a
+        href="mailto:help@uw.edu?subject=Hungry Husky support"
+      >
+        Contact support
+      </a>
+       
+      <p>
+        © 2019 University of Washington
+      </p>
+    </footer>
   </div>
 </div>
 `;
