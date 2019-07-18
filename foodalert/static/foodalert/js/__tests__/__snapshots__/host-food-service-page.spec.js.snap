@@ -35,7 +35,7 @@ exports[`Food Categories Page renders correctly 1`] = `
   </div>
    
   <div
-    class="page-content"
+    class="page-content pb-2"
   >
      
     <div

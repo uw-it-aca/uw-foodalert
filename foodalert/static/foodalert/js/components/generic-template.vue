@@ -3,7 +3,7 @@
         <router-view :subId="this.subId">
 
         </router-view>
-        <!-- To load the images before they need to be displayed 
+        <!-- To load the images before they need to be displayed
             without this we can still use the default bootstrap checkmark and but they
             look worse and dont match the color that we need.
         !-->
@@ -76,7 +76,7 @@ export default {
         background-color: initial;
     }
     .foodalert .custom-radio .custom-control-input:checked~.custom-control-label::after {
-        background: url("../../img/dot.svg") no-repeat center center/69%;  
+        background: url("../../img/dot.svg") no-repeat center center/69%;
     }
     .foodalert .custom-radio .custom-control-label{
         padding-left: calc(var(--radio-size) - 0.5rem);
@@ -125,7 +125,7 @@ export default {
     .foodalert .standard-placeholder::placeholder {
       font-size: 16px;
       font-weight: 400;
-      color: #aaaaaa;
+      color: #767676;
     }
 
     .foodalert .standard-label {

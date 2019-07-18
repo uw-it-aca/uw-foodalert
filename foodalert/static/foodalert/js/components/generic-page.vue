@@ -15,7 +15,7 @@
                 </b-container>
             </b-collapse>
         </div>
-        <div class="page-content">
+        <div class="page-content pb-2">
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
