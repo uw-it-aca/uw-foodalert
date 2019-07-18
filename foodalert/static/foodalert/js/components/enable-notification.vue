@@ -55,7 +55,6 @@
     .notification #notif-status .paused {
         color: red;
     }
-    
     .notification .container {
         padding: .75rem 1.25rem;
         padding-left: 0px;

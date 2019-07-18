@@ -60,7 +60,7 @@
                 <b-form-input id="location" aria-describedby="Location of the event"
                     v-model="form.location" required placeholder="HUB 130" class="mb-4 standard-placeholder"></b-form-input>
 
-                <h2 class="mt-4 h2">Food specifications</h2>
+                <h2 class="mt-4">Food specifications</h2>
                 <h5 class="standard-label">Does the food contain allergens?</h5>
                 <p>It's ok if you are unsure, just select to the best of your knowledge.</p>
 

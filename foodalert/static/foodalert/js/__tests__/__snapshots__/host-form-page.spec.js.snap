@@ -267,7 +267,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               />
                
               <h2
-                class="mt-4 h2"
+                class="mt-4"
               >
                 Food specifications
               </h2>
@@ -710,7 +710,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               />
                
               <h2
-                class="mt-4 h2"
+                class="mt-4"
               >
                 Food specifications
               </h2>
