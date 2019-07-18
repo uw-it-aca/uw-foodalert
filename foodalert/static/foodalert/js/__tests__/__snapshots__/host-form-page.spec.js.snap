@@ -35,7 +35,7 @@ exports[`Food Categories Page redirect to update 1`] = `
   </div>
    
   <div
-    class="page-content"
+    class="page-content pb-2"
   >
      
     <div
@@ -181,8 +181,12 @@ exports[`Food Categories Page redirect to update 1`] = `
             <form
               class=""
             >
+              <p>
+                Now let's get some details about your food and event so you can send a notification.
+              </p>
+               
               <label
-                class="mt-2 standard-label"
+                class="standard-label"
                 for="event-name"
               >
                 Event name
@@ -191,7 +195,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <input
                 aria-describedby="Name of the event"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="event-name"
                 placeholder="FIUTS weekly club meeting"
                 required="required"
@@ -208,7 +212,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <textarea
                 aria-describedby="Describe the food"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="food-description"
                 placeholder="Hot Indian buffet food"
                 required="required"
@@ -226,7 +230,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <input
                 aria-describedby="Quantity of food"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="quantity"
                 placeholder="About 8 full meals"
                 required="required"
@@ -243,7 +247,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <input
                 aria-describedby="End time of the event"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="end-time"
                 required="required"
                 type="time"
@@ -259,7 +263,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <input
                 aria-describedby="Location of the event"
                 aria-required="true"
-                class="mb-4 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="location"
                 placeholder="HUB 130"
                 required="required"
@@ -267,18 +271,20 @@ exports[`Food Categories Page redirect to update 1`] = `
               />
                
               <h2
-                class="mt-4"
+                class="h2 mt-4 mb-0"
               >
                 Food specifications
               </h2>
                
               <h5
-                class="standard-label"
+                class="h3"
               >
                 Does the food contain allergens?
               </h5>
                
-              <p>
+              <p
+                class="mb-0"
+              >
                 It's ok if you are unsure, just select to the best of your knowledge.
               </p>
                
@@ -298,7 +304,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               </div>
                
               <h5
-                class="mt-4 standard-label"
+                class="h3"
               >
                 Do students need to bring food storage containers? 
               </h5>
@@ -353,7 +359,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               </div>
                
               <h2
-                class="mt-4 h2"
+                class="h2 mt-4"
               >
                 Preview
               </h2>
@@ -440,6 +446,21 @@ exports[`Food Categories Page redirect to update 1`] = `
       </div>
     </div>
   </div>
+   
+  <footer
+    class="text-center"
+    id="relative-footer"
+  >
+    <a
+      href="mailto:help@uw.edu?subject=Hungry Husky support"
+    >
+      Contact support
+    </a>
+     
+    <p>
+      © 2019 University of Washington
+    </p>
+  </footer>
 </div>
 `;
 
@@ -478,7 +499,7 @@ exports[`Food Categories Page renders correctly 1`] = `
   </div>
    
   <div
-    class="page-content"
+    class="page-content pb-2"
   >
      
     <div
@@ -624,8 +645,12 @@ exports[`Food Categories Page renders correctly 1`] = `
             <form
               class=""
             >
+              <p>
+                Now let's get some details about your food and event so you can send a notification.
+              </p>
+               
               <label
-                class="mt-2 standard-label"
+                class="standard-label"
                 for="event-name"
               >
                 Event name
@@ -634,7 +659,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <input
                 aria-describedby="Name of the event"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="event-name"
                 placeholder="FIUTS weekly club meeting"
                 required="required"
@@ -651,7 +676,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <textarea
                 aria-describedby="Describe the food"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="food-description"
                 placeholder="Hot Indian buffet food"
                 required="required"
@@ -669,7 +694,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <input
                 aria-describedby="Quantity of food"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="quantity"
                 placeholder="About 8 full meals"
                 required="required"
@@ -686,7 +711,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <input
                 aria-describedby="End time of the event"
                 aria-required="true"
-                class="mb-3 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="end-time"
                 required="required"
                 type="time"
@@ -702,7 +727,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <input
                 aria-describedby="Location of the event"
                 aria-required="true"
-                class="mb-4 standard-placeholder form-control"
+                class="standard-placeholder form-control form-control-lg"
                 id="location"
                 placeholder="HUB 130"
                 required="required"
@@ -710,18 +735,20 @@ exports[`Food Categories Page renders correctly 1`] = `
               />
                
               <h2
-                class="mt-4"
+                class="h2 mt-4 mb-0"
               >
                 Food specifications
               </h2>
                
               <h5
-                class="standard-label"
+                class="h3"
               >
                 Does the food contain allergens?
               </h5>
                
-              <p>
+              <p
+                class="mb-0"
+              >
                 It's ok if you are unsure, just select to the best of your knowledge.
               </p>
                
@@ -741,7 +768,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <h5
-                class="mt-4 standard-label"
+                class="h3"
               >
                 Do students need to bring food storage containers? 
               </h5>
@@ -796,7 +823,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               </div>
                
               <h2
-                class="mt-4 h2"
+                class="h2 mt-4"
               >
                 Preview
               </h2>
@@ -883,5 +910,20 @@ exports[`Food Categories Page renders correctly 1`] = `
       </div>
     </div>
   </div>
+   
+  <footer
+    class="text-center"
+    id="relative-footer"
+  >
+    <a
+      href="mailto:help@uw.edu?subject=Hungry Husky support"
+    >
+      Contact support
+    </a>
+     
+    <p>
+      © 2019 University of Washington
+    </p>
+  </footer>
 </div>
 `;

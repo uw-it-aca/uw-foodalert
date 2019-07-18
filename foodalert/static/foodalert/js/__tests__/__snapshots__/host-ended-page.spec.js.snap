@@ -39,7 +39,7 @@ exports[`Host Ended Page renders correctly 1`] = `
   </div>
    
   <div
-    class="page-content"
+    class="page-content pb-2"
   >
      
     <div
@@ -95,5 +95,20 @@ exports[`Host Ended Page renders correctly 1`] = `
       </div>
     </div>
   </div>
+   
+  <footer
+    class="text-center"
+    id="relative-footer"
+  >
+    <a
+      href="mailto:help@uw.edu?subject=Hungry Husky support"
+    >
+      Contact support
+    </a>
+     
+    <p>
+      © 2019 University of Washington
+    </p>
+  </footer>
 </div>
 `;

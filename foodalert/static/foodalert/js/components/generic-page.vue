@@ -15,7 +15,7 @@
                 </b-container>
             </b-collapse>
         </div>
-        <div class="page-content">
+        <div class="page-content pb-2">
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
@@ -27,6 +27,10 @@
               </b-row>
             </b-container>
         </div>
+        <footer id="relative-footer" class="text-center">
+          <a href="mailto:help@uw.edu?subject=Hungry Husky support">Contact support</a>
+          <p>© 2019 University of Washington</p>
+        </footer>
     </div>
 </template>
 
@@ -79,17 +83,33 @@ export default {
         line-height: 1.125em;
         font-weight: 600;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
     }
     #standard-body {
         font-size:16px;
         line-height: 1.375;
         font-weight: 400;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .page .page-content .page-content-padding {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
+    }
+
+    .page {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        align-content: space-between;
+    }
+
+    #relative-footer {
+        margin-top: auto;
+        font-size: 12px;
+        width: 100%;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
