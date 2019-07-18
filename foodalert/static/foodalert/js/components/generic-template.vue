@@ -116,22 +116,37 @@ export default {
     }
 
     .foodalert .h2 {
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 600;
         line-height: 1.375;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
+        padding-top: 18px;
+        padding-bottom: 2px;
+    }
+
+    .foodalert .h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.375;
+      color: #484848;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: 24px;
     }
 
     .foodalert .standard-placeholder::placeholder {
-      font-size: 16px;
-      font-weight: 400;
-      color: #767676;
+        font-size: 16px;
+        font-weight: 400;
+        color: #767676;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .foodalert .standard-label {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
         line-height: 1.375;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
+        margin-top: 24px;
     }
 </style>

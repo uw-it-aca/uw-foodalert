@@ -22,7 +22,7 @@
                 </preview-box>
             </b-modal>
             <h2 class="h2">Don't leave people stranded!</h2>
-            <p class="p">
+            <p class="p pb-3">
                 When the food is all gone, please return here to send an update. This will prevent people making unnecessary trips.
             </p>
             <b-form>
@@ -40,7 +40,7 @@
                     </b-form-radio>
                 </b-form-radio-group>
             </b-form>
-            <h2 class="h2 mt-4">Preview</h2>
+            <h2 class="h2">Preview</h2>
             <preview-box>
                 Update:
                 <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>

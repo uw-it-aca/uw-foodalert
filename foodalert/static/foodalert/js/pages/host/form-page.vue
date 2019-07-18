@@ -40,29 +40,30 @@
             </b-modal>
 
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <label class="mt-2 standard-label" for="event-name">Event name</label>
+              <p>Now let's get some details about your food and event so you can send a notification.</p>
+                <label class="standard-label" for="event-name">Event name</label>
                 <b-form-input id="event-name" aria-describedby="Name of the event"
-                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="mb-3 standard-placeholder"></b-form-input>
+                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="standard-placeholder" size="lg"></b-form-input>
 
                 <label class="standard-label" for="food-description">Describe the food</label>
                 <b-form-textarea id="food-description" aria-describedby="Describe the food"
-                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="mb-3 standard-placeholder"></b-form-textarea>
+                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="standard-placeholder" size="lg"></b-form-textarea>
 
                 <label class="standard-label" for="quantity">Quantity</label>
                 <b-form-input id="quantity" aria-describedby="Quantity of food"
-                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="mb-3 standard-placeholder"></b-form-input>
+                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="standard-placeholder" size="lg"></b-form-input>
 
                 <label class="standard-label" for="end-time">End time (when food service will end)</label>
                 <b-form-input id="end-time" aria-describedby="End time of the event"
-                    v-model="form.end_time" required type="time" class="mb-3 standard-placeholder"></b-form-input>
+                    v-model="form.end_time" required type="time" class="standard-placeholder" size="lg"></b-form-input>
 
                 <label class="standard-label" for="location">Location</label>
                 <b-form-input id="location" aria-describedby="Location of the event"
-                    v-model="form.location" required placeholder="HUB 130" class="mb-4 standard-placeholder"></b-form-input>
+                    v-model="form.location" required placeholder="HUB 130" class="standard-placeholder" size="lg"></b-form-input>
 
-                <h2 class="mt-4">Food specifications</h2>
-                <h5 class="standard-label">Does the food contain allergens?</h5>
-                <p>It's ok if you are unsure, just select to the best of your knowledge.</p>
+                <h2 class="h2 mt-4 mb-0">Food specifications</h2>
+                <h5 class="h3">Does the food contain allergens?</h5>
+                <p class="mb-0">It's ok if you are unsure, just select to the best of your knowledge.</p>
 
                 <b-container class="px-0">
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
@@ -78,7 +79,7 @@
                     </b-form-checkbox-group>
                 </b-container>
 
-                <h5 class="mt-4 standard-label">Do students need to bring food storage containers? </h5>
+                <h5 class="h3">Do students need to bring food storage containers? </h5>
                 <b-container class="px-0">
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
                         <b-form-radio :value="true">
@@ -91,7 +92,7 @@
                 </b-container>
 
 
-                <h2 class="mt-4 h2">Preview</h2>
+                <h2 class="h2 mt-4">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
                     <span v-else>Hot Indian buffet food</span> from

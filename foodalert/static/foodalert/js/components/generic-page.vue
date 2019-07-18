@@ -83,12 +83,14 @@ export default {
         line-height: 1.125em;
         font-weight: 600;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
     }
     #standard-body {
         font-size:16px;
         line-height: 1.375;
         font-weight: 400;
         color: #484848;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .page .page-content .page-content-padding {
@@ -108,5 +110,6 @@ export default {
         margin-top: auto;
         font-size: 12px;
         width: 100%;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
