@@ -27,6 +27,10 @@
               </b-row>
             </b-container>
         </div>
+        <footer id="relative-footer" class="text-center">
+          <a href="mailto:help@uw.edu?subject=Hungry Husky support">Contact support</a>
+          <p>© 2019 University of Washington</p>
+        </footer>
     </div>
 </template>
 
@@ -64,6 +68,12 @@ export default {
         }
         this.notifStyle = "background-color: " + this.notificationColor + ";";
     },
+    mounted() {
+      var page = document.getElementsByClassName("page-content")[0];
+      var footer = document.getElementById('relative-footer')
+      var marginTop = ((page.offsetHeight + footer.offsetHeight + 20) > window.innerHeight) ? 0 : (window.innerHeight - page.offsetHeight - footer.offsetHeight - 20);
+      footer.style.marginTop = marginTop + "px";
+    }
 }
 </script>
 
@@ -91,5 +101,9 @@ export default {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
+    }
+
+    #relative-footer {
+      font-size: 12px;
     }
 </style>
