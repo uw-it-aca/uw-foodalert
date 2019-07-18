@@ -1,5 +1,5 @@
 <template>
-     <div>
+     <div class="audit-parent">
          <div>
              <b-dropdown text="Year" v-on:click.native="setYear($event)">
                 <b-dropdown-item v-for="year in this.years">
@@ -63,7 +63,7 @@
 </script>
 
 <style>
-    .table-update td {
-        border-top : 0 !important;
+    .audit-parent .table-update td {
+        border-top : 0;
     }
 </style>

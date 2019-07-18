@@ -91,7 +91,7 @@
                 </b-container>
 
 
-                <h2 class="mt-4">Preview</h2>
+                <h2 class="mt-4 h2">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
                     <span v-else>Hot Indian buffet food</span> from
@@ -252,17 +252,3 @@
         },
     }
 </script>
-<style>
-  .standard-label {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    line-height: 1.375 !important;
-    color: #484848;
-  }
-
-  .standard-placeholder::placeholder {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #aaaaaa !important;
-  }
-</style>

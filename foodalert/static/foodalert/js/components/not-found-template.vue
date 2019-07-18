@@ -9,7 +9,7 @@
         </b-row>
         <br>
         <b-row align-self="center" align-h="center">
-            <h2>The Page You Requested Could Not Be Found</h2>
+            <h2 class="h2">The Page You Requested Could Not Be Found</h2>
         </b-row>
         <br>
         <b-row align-self="center" align-h="center">
@@ -28,10 +28,11 @@
 </script>
 
 <style>
-    .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
-        background-color: #4b2e83 !important;
+    .btn:hover.btn-outline-primary:hover, .btn:active.btn-outline-primary:active, .btn:visited.btn-outline-primary:visited {
+        background-color: #4b2e83;
+        border-color: #4b2e83;
     }
-    .btn-outline-primary {
-        border-color: #4b2e83 !important;
+    .btn.btn-outline-primary {
+        border-color: #4b2e83;
     }
 </style>

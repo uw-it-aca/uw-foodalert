@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Audit Controller renders correctly textarea 1`] = `
-<div>
+<div
+  class="audit-parent"
+>
   <div>
     <div
       class="btn-group b-dropdown dropdown"

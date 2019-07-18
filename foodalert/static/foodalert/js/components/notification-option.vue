@@ -128,36 +128,36 @@ export default {
 
 <style>
     .notif-option-card .card-header{
-        background-color: inherit !important;
-        border-bottom: none !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        background-color: inherit;
+        border-bottom: none;
+        padding-left: 0;
+        padding-right: 0;
     }
     .notif-option-card .text-muted{
         padding-top: 10px;
         padding-bottom: 10px;
     }
     .notif-option-card .card-body{
-        padding: 0 !important;
-        padding-bottom: 10px !important;
+        padding: 0;
+        padding-bottom: 10px;
     }
     .notif-option-card .form-group{
-        margin-bottom: -10px !important;
+        margin-bottom: -10px;
     }
     .notif-option-card .opt_link_btn {
-        text-align: right !important;
+        text-align: right;
     }
-    .notif-option-card {
-        border-radius: 0 !important;
-        border: unset !important;
-        border-top: 1px solid #9B9B9B !important;
-        border-bottom: 1px solid #9B9B9B !important;
+    .notif-option-card.notif-option-card {
+        border-radius: 0;
+        border: unset;
+        border-top: 1px solid #9B9B9B;
+        border-bottom: 1px solid #9B9B9B;
     }
     .notif-option-card~.notif-option-card{
-        border-top: unset !important;
+        border-top: unset;
     }
     .notif-option-card input.form-control~small {
-        margin-top: 1px !important;
+        margin-top: 1px;
     }
     .notif-option-card .slide-fade-enter-active {
         transition: all 1s ease;
