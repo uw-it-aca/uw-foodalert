@@ -23,6 +23,5 @@
         color: #707070;
         padding: 1rem;
         margin-top: 10px;
-        margin-bottom: 10px;
     }
 </style>
