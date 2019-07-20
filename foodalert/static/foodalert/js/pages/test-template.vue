@@ -4,8 +4,6 @@
       Your notification has been sent.
     </template>
     <template #body>
-      <!--enable-notification>
-      </enable-notification!-->
       <notification-option accord_id="abcd1">
         Hello 1
       </notification-option>
@@ -22,12 +20,10 @@
 <script type="text/javascript">
 import GenericPage from '../components/generic-page.vue';
 import NotificationOption from '../components/notification-option.vue';
-import EnableNotification from '../components/enable-notification.vue';
   export default {
     components: {
       "generic-page": GenericPage,
       "notification-option": NotificationOption,
-      "enable-notification": EnableNotification,
     },
 
     data() {
