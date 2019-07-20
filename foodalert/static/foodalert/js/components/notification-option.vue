@@ -3,17 +3,37 @@
       <!--b-card-header header-tag="header" class="p-1" role="tab"!-->
         <b-container slot="header" class="p-0">
             <b-row>
-                <b-col cols="6">
-                    <slot name="opt_heading">Placeholder Text</slot>
+                <b-col cols="8">
+                    <slot name="opt_heading">Placeholder Text</slot> 
+                    <span v-if="serverData.text != ''">
+                        &#xb7; 
+                        <span v-if="!serverData.verified" class="text-unverified"> 
+                            Unverified
+                        </span>
+                        <span v-else-if="serverData.verified" class="text-verified"> 
+                            Verified
+                        </span>
+                    </span>
+                    <div v-if="serverData.verified" class="pt-1">
+                        {{serverData.text}}
+                    </div>
                 </b-col>
-                <b-col cols="6">
-                    <b-button block href="#" v-b-toggle="accord_id" variant="link" class="opt_link_btn p-0">
-                        <slot name="opt_link_0" v-if="rendering == 0">State {{rendering}}: add</slot>
-                        <slot name="opt_link_1" v-else-if="rendering == 1">State {{rendering}}: cancel</slot>
-                        <slot name="opt_link_2" v-else-if="rendering == 2">State {{rendering}}: edit</slot>
-                        <slot name="opt_link_3" v-else-if="rendering == 3">State {{rendering}}: cancel</slot>
-                        <slot name="opt_link_invalid" v-else>Placeholder Text 4</slot>
-                    </b-button>
+                <b-col cols="4">
+                    <div v-if="!isOpen">
+                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                  class="opt_link_btn p-0" v-if="serverData.text == ''">
+                            Add
+                        </b-button>
+                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                  class="opt_link_btn p-0" v-else>
+                            Edit
+                        </b-button>
+                    </div>
+                    <div v-else>
+                        <b-button block href="#" variant="link" class="opt_link_btn p-0" @click="cancelUpdate">
+                        <slot name="opt_cancel">Cancel</slot>
+                        </b-button>
+                    </div>
                 </b-col>
             </b-row>
         </b-container>
@@ -24,25 +44,30 @@
                 <b-row>
                     <b-col cols="12">
                         <b-card-text>
-                            <b-form @submit.prevent="nextState()" v-if="state == 0">
-                                <!-- this is the state for initially adding a notif !-->
+                            <!-- this is the state for initially adding a notif !-->
+                            <b-form @submit.prevent="getNewState()" v-if="serverData.text == ''">
                                 <small class="form-text text-muted">{{label}}</small>
                                 <b-form-group :description="description">
-                                    <b-form-input required :type="type" :formatter="formatter" width="300px"></b-form-input>
+                                    <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
                                 </b-form-group>
                                 <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
                             </b-form>
-                            <b-form v-else-if="state == 1">
-                                <!--this is the state for updating notif !-->
+                            <div v-else-if="!serverData.Unverified">
+                                <div v-if="!updateMode">
+                                    <slot name="unverifNotifText" :switchToUpdate="()=>{updateMode = true}">
+                                    </slot>
+                                    <br />
+                                    <b-button variant="link" @click="resendVerif" class="px-0">Resend text</b-button>
+                                </div>
+                                <b-form @submit.prevent="getNewState()" @reset.prevent="deleteData" v-else>
                                 <small class="form-text text-muted">{{label}}</small>
                                 <b-form-group :description="description">
-                                    <b-form-input required :type="type" :formatter="formatter" width="300px"></b-form-input>
+                                    <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
                                 </b-form-group>
-                                <div class="float-right">
-                                    <b-button>Delete(no funct)</b-button>
-                                    <b-button type="submit" variant="primary">Update</b-button>
-                                </div>
+                                <b-button type="submit" variant="primary" class="float-right mt-4 ml-2 px-3">Update</b-button>
+                                <b-button type="reset" variant="danger" class="float-right mt-4 ml-2 px-3">Delete</b-button>
                             </b-form>
+                            </div>
                         </b-card-text>
                     </b-col>
                 </b-row>
@@ -67,16 +92,20 @@ export default {
         type: {
             type: String,
             default: "text"
-        },  
+        },
+        visible: Boolean,
+        serverData: Object,
+        requestUpdate: Function,
+        resendVerif: Function,
     },
     data() {
         return {
-            state: 0,
+            localData: {
+                text: "",
+                verified: false,
+            },
             isOpen: false,
-            states: [[0, 1], [2, 3]],
-            rendering: 0,
-            collapse_1: false,
-            collapse_3: false,
+            updateMode: false,
         } 
     },
     methods: {
@@ -97,32 +126,43 @@ export default {
             }
             return cleaned
         },
-        nextState(){
-            if(this.state < 1){ 
-                this.state++;
+        getNewState() {
+            // TODO: change this function to make a axios request to the server
+
+            // IMPORTANT: MOCK IMPLEMENTATION
+            this.requestUpdate()
+
+            if (this.newData) {
+                this.newData = false
             }
-            this.isOpen = !this.isOpen;
-            this.$emit('check-collapse', this.accord_id); 
         },
-        previousState() {
-            if(this.state > 0){
-                this.state--;
+        deleteData() {
+            // TODO: Implement based on the type maybe? or just make the parent pass this
+        },
+        cancelUpdate(event) {
+            if (this.serverData.text == '')
+                this.isOpen = false
+            else if (this.updateMode)
+                this.updateMode = false
+            else if (!this.serverData.verified) {
+                // TODO: Cancel this event by sending a patch request to the api
+                this.getNewState() // This will only work when the TODO is done
             }
-        }, 
+        }
     },
     watch: {
-        isOpen(newOpen, prevOpen) {
-            if (newOpen) {
-                this.rendering = this.states[this.state][1]
-            } else {
-                this.rendering = this.states[this.state][0]
-            }
-            this.collapse_1 = (this.rendering == 1);
-            this.collapse_3 = (this.rendering == 3);
-        },
+        serverData(newVal, oldVal) {
+            this.localData.text = newVal.text
+            this.localData.verified = newVal.verified
+        }
     },
     computed: {
-    }
+    },
+    beforeMount() {
+        this.localData.text = this.serverData.text
+        this.localData.verified = this.serverData.verified
+        this.isOpen = this.visible
+    },
 }
 </script>
 
@@ -164,5 +204,13 @@ export default {
     }
     .notif-option-card .slide-fade-leave-active {
         transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    .notif-option-card .text-unverified {
+        color: #E05018;
+    }
+
+    .notif-option-card .text-verified {
+        color: #1C834B;
     }
 </style>
