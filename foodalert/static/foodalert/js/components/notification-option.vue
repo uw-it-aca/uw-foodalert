@@ -1,6 +1,5 @@
 <template>
     <b-card no-body class="notif-option-card">
-      <!--b-card-header header-tag="header" class="p-1" role="tab"!-->
         <b-container slot="header" class="p-0">
             <b-row>
                 <b-col cols="8">
@@ -20,60 +19,79 @@
                 </b-col>
                 <b-col cols="4">
                     <div v-if="!isOpen">
-                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                                  class="opt_link_btn p-0" v-if="serverData.text == ''">
-                            Add
-                        </b-button>
-                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                                  class="opt_link_btn p-0" v-else>
-                            Edit
-                        </b-button>
+                        <div v-if="serverData.verified">
+                            <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                    class="opt_link_btn p-0" v-if="serverData.text == ''">
+                                Add
+                            </b-button>
+                            <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                    class="opt_link_btn p-0" v-else>
+                                Edit
+                            </b-button>
+                        </div>
+                        <div v-else>
+                            <!-- add cancel here for the unverfied section !-->
+                        </div>
                     </div>
                     <div v-else>
-                        <b-button block href="#" variant="link" class="opt_link_btn p-0" @click="cancelUpdate">
-                        <slot name="opt_cancel">Cancel</slot>
+                        <b-button block href="#" variant="link" class="opt_link_btn p-0" @click="cancelUpdate($event, spinners.cancel)">
+                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.cancel.state}"></b-spinner>
+                            <slot name="opt_cancel">Cancel</slot>
                         </b-button>
                     </div>
                 </b-col>
             </b-row>
         </b-container>
-      <!--/b-card-header!-->
-      <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel" v-model="isOpen">
-        <b-card-body>
-            <b-container class="p-0">
-                <b-row>
-                    <b-col cols="12">
-                        <b-card-text>
-                            <!-- this is the state for initially adding a notif !-->
-                            <b-form @submit.prevent="getNewState()" v-if="serverData.text == ''">
-                                <small class="form-text text-muted">{{label}}</small>
-                                <b-form-group :description="description">
-                                    <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
-                                </b-form-group>
-                                <b-button type="submit" variant="primary" class="float-right">Verify</b-button>
-                            </b-form>
-                            <div v-else-if="!serverData.Unverified">
-                                <div v-if="!updateMode">
-                                    <slot name="unverifNotifText" :switchToUpdate="()=>{updateMode = true}">
-                                    </slot>
-                                    <br />
-                                    <b-button variant="link" @click="resendVerif" class="px-0">Resend text</b-button>
+        <b-collapse :id="accord_id" accordion="my-accordion" role="tabpanel" v-model="isOpen">
+            <b-card-body>
+                <b-container class="p-0">
+                    <b-row>
+                        <b-col cols="12">
+                            <b-card-text>
+                                <b-form @submit.prevent="getNewState(spinners.verify)" v-if="serverData.text == ''">
+                                    <small class="form-text text-muted pt-0">{{label}}</small>
+                                    <b-form-group :description="description">
+                                        <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
+                                    </b-form-group>
+                                    <small class="form-text pt-2 pb-0 error-desp" v-if="errorDesc != ''">{{errorDesc}}</small>
+                                    <b-button type="submit" variant="primary" class="float-right mt-2 px-3">
+                                        <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.verify.state}"></b-spinner>
+                                        Verify
+                                    </b-button>
+                                </b-form>
+                                <div v-else-if="!serverData.Unverified">
+                                    <div v-if="!updateMode">
+                                        <slot name="unverifNotifText" :switchToUpdate="()=>{updateMode = true}">
+                                        </slot>
+                                        <small class="form-text pt-2 pb-0 error-desp" v-if="errorDesc != ''">{{errorDesc}}</small>
+                                        <br />
+                                        <b-button variant="link" @click="resendVerif(spinners.resend)" class="px-0">
+                                            Resend text
+                                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.resend.state}"></b-spinner>
+                                        </b-button>
+                                    </div>
+                                    <b-form @submit.prevent="getNewState(spinners.update)" @reset.prevent="deleteData(spinners.delete)" v-else>
+                                        <small class="form-text text-muted">{{label}}</small>
+                                        <b-form-group :description="description">
+                                            <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
+                                        </b-form-group>
+                                        <small class="form-text pt-2 pb-0 error-desp" v-if="errorDesc != ''">{{errorDesc}}</small>
+                                        <b-button type="submit" variant="primary" class="float-right mt-2 ml-2 px-3">
+                                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.update.state}"></b-spinner>
+                                            Update
+                                        </b-button>
+                                        <b-button type="reset" variant="danger" class="float-right mt-2 ml-2 px-3">
+                                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.delete.state}"></b-spinner>
+                                            Delete
+                                        </b-button>
+                                    </b-form>
                                 </div>
-                                <b-form @submit.prevent="getNewState()" @reset.prevent="deleteData" v-else>
-                                <small class="form-text text-muted">{{label}}</small>
-                                <b-form-group :description="description">
-                                    <b-form-input required :type="type" :formatter="formatter" v-model="localData.text" width="300px"></b-form-input>
-                                </b-form-group>
-                                <b-button type="submit" variant="primary" class="float-right mt-4 ml-2 px-3">Update</b-button>
-                                <b-button type="reset" variant="danger" class="float-right mt-4 ml-2 px-3">Delete</b-button>
-                            </b-form>
-                            </div>
-                        </b-card-text>
-                    </b-col>
-                </b-row>
-            </b-container>
-        </b-card-body>
-      </b-collapse>
+                            </b-card-text>
+                        </b-col>
+                    </b-row>
+                </b-container>
+            </b-card-body>
+        </b-collapse>
     </b-card>
 </template>
 
@@ -104,8 +122,16 @@ export default {
                 text: "",
                 verified: false,
             },
+            spinners: {
+                cancel: { state: false },
+                verify: { state: false },
+                resend: { state: false },
+                update: { state: false },
+                delete: { state: false },
+            },
             isOpen: false,
             updateMode: false,
+            errorDesc: "",
         } 
     },
     methods: {
@@ -126,28 +152,36 @@ export default {
             }
             return cleaned
         },
-        getNewState() {
+        getNewState(spinnerOpt) {
             // TODO: change this function to make a axios request to the server
 
             // IMPORTANT: MOCK IMPLEMENTATION
-            this.requestUpdate()
-
-            if (this.newData) {
-                this.newData = false
-            }
+            spinnerOpt.state = true
+            setTimeout(()=>{
+                this.requestUpdate()
+                
+                spinnerOpt.state = false
+                if (this.newData) {
+                    this.newData = false
+                }
+            }, 2000)
         },
         deleteData() {
             // TODO: Implement based on the type maybe? or just make the parent pass this
         },
-        cancelUpdate(event) {
-            if (this.serverData.text == '')
-                this.isOpen = false
-            else if (this.updateMode)
-                this.updateMode = false
-            else if (!this.serverData.verified) {
-                // TODO: Cancel this event by sending a patch request to the api
-                this.getNewState() // This will only work when the TODO is done
-            }
+        cancelUpdate(event, spinnerOpt) {
+            spinnerOpt.state = true
+            setTimeout(()=>{
+                if (this.serverData.text == '')
+                    this.isOpen = false
+                else if (this.updateMode)
+                    this.updateMode = false
+                else if (!this.serverData.verified) {
+                    // TODO: Cancel this event by sending a patch request to the api
+                    this.getNewState(spinnerOpt) // This will only work when the TODO is done
+                }
+                spinnerOpt.state = false
+            }, 2000)
         }
     },
     watch: {
@@ -212,5 +246,17 @@ export default {
 
     .notif-option-card .text-verified {
         color: #1C834B;
+    }
+
+    .notif-option-card .form-text.error-desp {
+        color: #E05018;
+    }
+
+    .notif-option-card .spinner-padding {
+        margin-bottom: .125rem;
+    }
+
+    .notif-option-card .spinner-hide {
+        display: none;
     }
 </style>
