@@ -19,23 +19,22 @@
                 </b-col>
                 <b-col cols="4">
                     <div v-if="!isOpen">
-                        <div v-if="serverData.verified">
-                            <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                                    class="opt_link_btn p-0" v-if="serverData.text == ''">
-                                Add
-                            </b-button>
-                            <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                                    class="opt_link_btn p-0" v-else>
-                                Edit
-                            </b-button>
-                        </div>
-                        <div v-else>
-                            <!-- add cancel here for the unverfied section !-->
-                        </div>
+                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                class="opt_link_btn p-0" v-if="serverData.text == ''">
+                            Add
+                        </b-button>
+                        <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                                class="opt_link_btn p-0" v-else>
+                            Edit
+                        </b-button>
                     </div>
                     <div v-else>
-                        <b-button block href="#" variant="link" class="opt_link_btn p-0" @click="cancelUpdate($event, spinners.cancel)">
-                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.cancel.state}"></b-spinner>
+                        <b-button block href="#" variant="link" class="opt_link_btn p-0" v-b-toggle="accord_id" @click="localData.text = ''" v-if="serverData.text == ''">
+                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.cancel.state}" ></b-spinner>
+                            <slot name="opt_cancel">Cancel</slot>
+                        </b-button>
+                        <b-button block href="#" variant="link" class="opt_link_btn p-0" @click="cancelUpdate($event, spinners.cancel)" v-else>
+                            <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.cancel.state}" ></b-spinner>
                             <slot name="opt_cancel">Cancel</slot>
                         </b-button>
                     </div>
