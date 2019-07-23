@@ -75,7 +75,8 @@ export default {
     #standard-notification {
         height: 0;
         overflow: visible;
-        position: relative;
+        position: fixed;
+        width: 100%;
         z-index: 1;
     }
     #standard-heading {

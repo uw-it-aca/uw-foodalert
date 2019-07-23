@@ -19,6 +19,9 @@ var components = window.vueData.components;
 var router = new VueRouter({
     mode: 'history',
     routes: window.vueData.routes,
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    },
 })
 
 export var vm = new Vue({
