@@ -1,5 +1,11 @@
 environmentVariables:
-  - name: "DB"
-    value: "postgres"
   - name: "AUTH"
     value: "SAML_MOCK"
+  - name: "DATABASE_HOSTNAME"
+    value: "rds-postgres"
+  - name: "DB"
+    value: "postgres"
+  - name: "ENV"
+    value: "dev"
+  - name: "PORT"
+    value: "8080"

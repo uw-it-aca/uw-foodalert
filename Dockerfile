@@ -1,8 +1,9 @@
-FROM acait/django-container:feature-refactor as django
+FROM acait/django-container:develop as django
 
 USER root
 RUN apt-get update
 RUN apt-get install -y libpq-dev
+RUN apt-get install -y postgresql-client-10
 USER acait
 
 ADD --chown=acait:acait setup.py /app/
