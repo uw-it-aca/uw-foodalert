@@ -23,7 +23,7 @@
             </b-modal>
             <h2 class="h2">Don't leave people stranded!</h2>
             <p class="p pb-3">
-                When the food is all gone, please return here to send an update. This will prevent people making unnecessary trips.
+                When the food is all gone, please return here to send an update. This will prevent people from making unnecessary trips.
             </p>
             <b-form>
                 <b-form-radio-group stacked v-model="selected">
@@ -32,7 +32,7 @@
                     </b-form-radio>
                     <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1">
                         <span>
-                            Other Message
+                            Other message
                             <b-form-input id="other-message" aria-describedby="Other message for the subs"
                             required placeholder="We've moved to HUB 120" class="mb-3 standard-placeholder" v-model="otherText">
                             </b-form-input>
@@ -46,7 +46,7 @@
                 <span v-if="selected == 'noFoodUpdate'"> No food left at {{state.location}} </span>
                 <span v-else-if="selected == 'otherUpdate'">
                     <span v-if="otherText == ''"> We've moved to HUB 120 </span>
-                    <span v-else> {{otherText}} </span>
+                    <span v-else> {{otherText}}</span>
                 </span>.
                 Re: {{state.food.served}} leftover from {{state.event}}...
             </preview-box>

@@ -7,7 +7,7 @@
             Our sincere thanks
         </template>
         <template #body>
-            <p>Thank you for sharing food. Your generosity means that less people have to worry about food insecurity at UW. You've also contributed to decrease the University's food waste.</p>
+            <p>Thank you for sharing food. Your generosity means that fewer people have to worry about food insecurity at UW. You've also contributed to decreasing the University's food waste. We really appreciate your generosity and thoughtfulness. Please visit Hungry Husky next time you have leftover food to share.</p>
         </template>
         <template #navigation>
             <div class="mt-5">

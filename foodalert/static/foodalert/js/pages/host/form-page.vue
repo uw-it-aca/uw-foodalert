@@ -79,7 +79,7 @@
                     </b-form-checkbox-group>
                 </b-container>
 
-                <h5 class="h3">Do students need to bring food storage containers? </h5>
+                <h5 class="h3">Do people need to bring food storage containers? </h5>
                 <b-container class="px-0">
                     <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
                         <b-form-radio :value="true">

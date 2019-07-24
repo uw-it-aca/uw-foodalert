@@ -5,14 +5,14 @@
         </template>
         <template #body>
          <p>Based on what you’ve told us about your food, you’ll need to obtain a Temporary Food Service Permit to share via Hungry Husky.</p>
-          <p>The only food you can share without a permit is either:</p>
+          <p>The only food that can be shared without a permit is:</p>
           <ul class="ml-4">
-            <li>Non-perishable</li>
-            <li>Commercially pre-packaged</li>
+            <li>Non-perishable, or</li>
+            <li>Commercially pre-packaged, or</li>
             <li>Prepared by UW Housing and Food Services or Bay Laurel Catering</li>
           </ul>
 
-          <p>Keep in mind for future events, it takes two weeks to get a permit and a new permit is required for every event. If you have questions about how to share food with Hungry Husky, please email <a href="mailto:hungryhusky@uw.edu">hungryhusky@uw.edu</a>.</p>
+          <p>Keep in mind for future events, it takes two weeks to get a permit and a new permit is required for every event. If you have questions about how to share food with Hungry Husky, please email <a href="mailto:hungryhusky@uw.edu">hungryhusky@uw.edu</a>. And thanks for thinking of Hungry Husky!</p>
         </template>
         <template #navigation>
             <div style="margin-top: 32px">
