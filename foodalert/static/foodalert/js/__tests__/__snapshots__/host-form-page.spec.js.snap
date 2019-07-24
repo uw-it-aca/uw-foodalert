@@ -306,7 +306,7 @@ exports[`Food Categories Page redirect to update 1`] = `
               <h5
                 class="h3"
               >
-                Do students need to bring food storage containers? 
+                Do people need to bring food storage containers? 
               </h5>
                
               <div
@@ -770,7 +770,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               <h5
                 class="h3"
               >
-                Do students need to bring food storage containers? 
+                Do people need to bring food storage containers? 
               </h5>
                
               <div

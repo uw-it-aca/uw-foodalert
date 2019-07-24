@@ -64,18 +64,18 @@ exports[`Need Permit Page renders correctly 1`] = `
             </p>
              
             <p>
-              The only food you can share without a permit is either:
+              The only food that can be shared without a permit is:
             </p>
              
             <ul
               class="ml-4"
             >
               <li>
-                Non-perishable
+                Non-perishable, or
               </li>
                
               <li>
-                Commercially pre-packaged
+                Commercially pre-packaged, or
               </li>
                
               <li>
@@ -90,7 +90,7 @@ exports[`Need Permit Page renders correctly 1`] = `
               >
                 hungryhusky@uw.edu
               </a>
-              .
+              . And thanks for thinking of Hungry Husky!
             </p>
           </div>
            
