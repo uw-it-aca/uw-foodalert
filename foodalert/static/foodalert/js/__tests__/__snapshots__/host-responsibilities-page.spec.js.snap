@@ -108,7 +108,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                   class="custom-text-box"
                 >
                   
-                You are responsible for food safety under the approval of the Temporary Food Permit, this same level of responsibility applies when using the Hungry Husky App.
+                You are responsible for food safety under the approval of the Temporary Food Permit. This same level of responsibility applies when using the Hungry Husky App.
             
                 </div>
               </div>
@@ -127,7 +127,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 >
                   <span>
                     
-                    For potentially hazardous food, it has not been out of heating or cooling for more than 
+                    Potentially hazardous food must be kept at proper temperatures and have been sitting at room temperature for no more than 
                     <strong>
                       four hours
                     </strong>

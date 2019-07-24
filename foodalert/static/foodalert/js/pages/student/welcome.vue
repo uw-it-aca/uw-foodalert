@@ -2,7 +2,7 @@
 <div>
   <welcome-page nextPageName="s-responsibilities">
     <template #paragraph>
-      <p>With Hungry Husky, you’ll receive notifications through email, text, or both whenever events on campus have available food.</p>
+      <p>When you sign up with Hungry Husky, you’ll receive notifications through email, text, or both whenever events on campus have available food.</p>
     </template>
   </welcome-page>
 </div>

@@ -5,7 +5,7 @@
         </template>
         <template #body>
             <p>
-                We’d like to ask you more about your food to determine if it can be shared with the public.
+                The following will help determine whether your food can be shared with the public.
             </p>
             <b-form-group>
                 <b-form-checkbox
@@ -18,7 +18,7 @@
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="non-perishable">
-                Candy, beverages (pasteruized, canned, or bottled), chips, dips.
+                Candy, beverages (pasteurized, canned, or bottled), chips, dips.
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"

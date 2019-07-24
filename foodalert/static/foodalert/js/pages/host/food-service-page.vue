@@ -27,7 +27,7 @@
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="perm-info">
-                    When providing food to the public (anyone beyond staff/faculty of your unit), UW offices are required to secure a Temporary Food Permit through <a href="#">UW Environmental Health &amp; Safety</a> to help ensure food service providers meet safety reulation and the food itself is safe for consumption.
+                    When providing food to the public (anyone beyond the staff or /faculty of your unit), UW offices are required to secure a Temporary Food Permit through <a href="#">UW Environmental Health &amp; Safety</a> to help ensure that food service providers meet safety regulations and the food itself is safe for consumption.
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"

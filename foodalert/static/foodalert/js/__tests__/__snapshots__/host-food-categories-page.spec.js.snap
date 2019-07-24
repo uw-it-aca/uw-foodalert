@@ -61,7 +61,7 @@ exports[`Food Categories Page renders correctly 1`] = `
           >
             <p>
               
-            We’d like to ask you more about your food to determine if it can be shared with the public.
+            The following will help determine whether your food can be shared with the public.
         
             </p>
              
@@ -113,7 +113,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                     class="custom-text-box"
                   >
                     
-            Candy, beverages (pasteruized, canned, or bottled), chips, dips.
+            Candy, beverages (pasteurized, canned, or bottled), chips, dips.
             
                   </div>
                 </div>

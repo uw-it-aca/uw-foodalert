@@ -17,14 +17,14 @@
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="cond1-info">
-                    You are responsible for food safety under the approval of the Temporary Food Permit, this same level of responsibility applies when using the Hungry Husky App.
+                    You are responsible for food safety under the approval of the Temporary Food Permit. This same level of responsibility applies when using the Hungry Husky App.
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
                     class="mt-3"
                     value="cond2">
                     <span>
-                        For potentially hazardous food, it has not been out of heating or cooling for more than <strong>four hours</strong>.
+                        Potentially hazardous food must be kept at proper temperatures and have been sitting at room temperature for no more than <strong>four hours</strong>.
                         <b-link herf="#" v-b-toggle.cond2-info> Learn more</b-link>
                     </span>
                 </b-form-checkbox>
