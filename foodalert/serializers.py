@@ -192,7 +192,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         else:
             ret['notif_on'] = False
 
-        return ret
+        return data
 
     def create(self, validated_data):
         sub, created = Subscription.objects.get_or_create(
