@@ -22,6 +22,9 @@ class AllergenTest(TestCase):
                                             email="testuser1@test.com",
                                             password=passw,
                                             is_active=1)
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
 
     def test_create_allergen(self):
         """
