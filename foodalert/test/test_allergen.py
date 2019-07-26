@@ -22,11 +22,15 @@ class AllergenTest(TestCase):
                                             email="testuser1@test.com",
                                             password=passw,
                                             is_active=1)
+
+    def setUp(self):
+        self.client.force_login(self.user)
+
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
 
-    def test_create_allergen(self):
+    def test_post_allergen(self):
         """
         This tests that an allergen should be created 
         correctly from post request. Should return a 201
@@ -35,8 +39,9 @@ class AllergenTest(TestCase):
         valid_payload = {
             "name": "wheat"
         }
+
         original_len = len(Allergen.objects.all())
-        response = self.client.post('/allergen', valid_payload)
+        response = self.client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(1, new_len - original_len)
@@ -53,7 +58,7 @@ class AllergenTest(TestCase):
         response = self.client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.data[0]
-        self.assertEqual(data["name", "test allergen"])
+        self.assertEqual(data["name"], "test allergen")
 
 
     def test_update_allergen(self):
