@@ -22,16 +22,20 @@ class AllergenTest(TestCase):
                                             email="testuser@test.com",
                                             password=passw,
                                             is_active=1)
-
-    def setUp(self):
-        self.realAllergen = Allergen.objects.create(
+        cls.realAllergen = Allergen.objects.create(
                 name= "test allergen"
                 )
+
+    def setUp(self):
         self.client.force_login(self.user)
 
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        cls.realAllergen.delete()
+
+    def tearDownn(self):
+        pass
 
     def test_get_allergen_list(self):
         """
