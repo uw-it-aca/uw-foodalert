@@ -16,10 +16,10 @@ class AllergenTest(TestCase):
         Sets up a single mock user that can be used for all tests on
         notification tests
         """
-        user = "testuser1"
+        user = "testuser"
         passw = "test"
         cls.user = User.objects.create_user(username=user,
-                                            email="testuser1@test.com",
+                                            email="testuser@test.com",
                                             password=passw,
                                             is_active=1)
 
