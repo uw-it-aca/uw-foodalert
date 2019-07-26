@@ -39,8 +39,8 @@ class AllergenTest(TestCase):
         valid_payload = {
             "name": "wheat"
         }
-
         original_len = len(Allergen.objects.all())
+
         response = self.client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Allergen.objects.all())
@@ -60,17 +60,42 @@ class AllergenTest(TestCase):
         data = response.data[0]
         self.assertEqual(data["name"], "test allergen")
 
-
-    def test_update_allergen(self):
+    def test_invalid_put_allergen(self):
         """
         This tests that you allergens should not be 
         alterable after they are entered into the db.
-        Put and Patch reuests should return a 405 resposnse
+        Put requests should return a 405 resposnse
         """
+        invalidRequest = {
+            "name": "update"
+        }
+        response = self.client.put('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
 
-    def test_delete_allergen(self):
+    def test_invalid_patch_allergen(self):
+        """
+        This tests that you allergens should not be 
+        alterable after they are entered into the db.
+        Patch requests should return a 405 resposnse
+        """
+        invalidRequest = {
+            "name": "update"
+        }
+        response = self.client.patch('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
+
+    def test_invalid_delete_allergen(self):
         """
         This tests that you can delete a single
         allergen from the db. Should return a 200 response
         after successfully deleting
         """
+        newAllergen = Allergen.objects.create(name = "test allergen")
+        original_len = len(Allergen.objects.all())
+        invalidRequest = {
+            "name": "test allergen"
+        }
+        after_len = len(Allergen.objects.all())
+        response = self.client.delete('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
+        self.assertEqual(original_len, after_len)
