@@ -24,6 +24,9 @@ class AllergenTest(TestCase):
                                             is_active=1)
 
     def setUp(self):
+        self.realAllergen = Allergen.objects.create(
+                name= "test allergen"
+                )
         self.client.force_login(self.user)
 
     @classmethod
@@ -52,13 +55,21 @@ class AllergenTest(TestCase):
         in the db from a get request. Should return a 
         200 response upon success
         """
-        newAllergen = Allergen.objects.create(
-                name= "test allergen"
-                )
         response = self.client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.data[0]
-        self.assertEqual(data["name"], "test allergen")
+        self.assertEqual(data["name"], self.realAllergen.name)
+    
+    def test_get_allergen_detail(self):
+        """
+        This tests that you can read allergen detail
+        corresponding to the id
+        """
+        id = self.realAllergen.id
+        response = self.client.get('/allergen/{}/'.format(id))
+        self.assertEqual(200, response.status_code)
+        data = response.data
+        self.assertEqual(self.realAllergen.name, data["name"])
 
     def test_invalid_put_allergen(self):
         """
@@ -67,9 +78,10 @@ class AllergenTest(TestCase):
         Put requests should return a 405 resposnse
         """
         invalidRequest = {
-            "name": "update"
+            "name": "put update"
         }
-        response = self.client.put('/allergen/', invalidRequest)
+        id = self.realAllergen.id
+        response = self.client.put('/allergen/{}/'.format(id), invalidRequest)
         self.assertEqual(405, response.status_code)
 
     def test_invalid_patch_allergen(self):
@@ -79,9 +91,10 @@ class AllergenTest(TestCase):
         Patch requests should return a 405 resposnse
         """
         invalidRequest = {
-            "name": "update"
+            "name": "patch update"
         }
-        response = self.client.patch('/allergen/', invalidRequest)
+        id = self.realAllergen.id
+        response = self.client.patch('/allergen/{}/'.format(id), invalidRequest)
         self.assertEqual(405, response.status_code)
 
     def test_invalid_delete_allergen(self):
@@ -90,12 +103,12 @@ class AllergenTest(TestCase):
         allergen from the db. Should return a 200 response
         after successfully deleting
         """
-        newAllergen = Allergen.objects.create(name = "test allergen")
         original_len = len(Allergen.objects.all())
         invalidRequest = {
-            "name": "test allergen"
+            "name": "delete update"
         }
         after_len = len(Allergen.objects.all())
-        response = self.client.delete('/allergen/', invalidRequest)
+        id = self.realAllergen.id
+        response = self.client.delete('/allergen/{}/'.format(id), invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
