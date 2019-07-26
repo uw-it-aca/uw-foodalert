@@ -33,22 +33,6 @@ class AllergenTest(TestCase):
     def tearDownClass(cls):
         cls.user.delete()
 
-    def test_post_allergen(self):
-        """
-        This tests that an allergen should be created 
-        correctly from post request. Should return a 201
-        response upon success
-        """
-        valid_payload = {
-            "name": "wheat"
-        }
-        original_len = len(Allergen.objects.all())
-
-        response = self.client.post('/allergen/', valid_payload)
-        self.assertEqual(201, response.status_code)
-        new_len = len(Allergen.objects.all())
-        self.assertEqual(1, new_len - original_len)
-
     def test_get_allergen_list(self):
         """
         This tests that you can read all allergens
@@ -71,11 +55,54 @@ class AllergenTest(TestCase):
         data = response.data
         self.assertEqual(self.realAllergen.name, data["name"])
 
+    def test_post_allergen(self):
+        """
+        This tests that an allergen should be created 
+        correctly from post request. Should return a 201
+        response upon success
+        """
+        valid_payload = {
+            "name": "wheat"
+        }
+        original_len = len(Allergen.objects.all())
+
+        response = self.client.post('/allergen/', valid_payload)
+        self.assertEqual(201, response.status_code)
+        new_len = len(Allergen.objects.all())
+        self.assertEqual(1, new_len - original_len)
+
+    def test_post_existing_allergen(self):
+        """
+        Test should return a 400 bad request error if post request contains an 
+        allergen name that already exists in the database. New object should not
+        be made
+        """
+        original_len = len(Allergen.objects.all())
+        payload = {
+            "name": self.realAllergen.name
+        }
+        response = self.client.post('/allergen/', payload)
+        self.assertEqual(400, response.status_code)
+        after_len = len(Allergen.objects.all())
+        self.assertEqual(original_len, after_len)
+
     def test_invalid_put_allergen(self):
         """
-        This tests that you allergens should not be 
+        This tests that allergens should not be 
         alterable after they are entered into the db.
-        Put requests should return a 405 resposnse
+        Put requests  to /allergen/ endpoint should return a 405 resposnse
+        """
+        invalidRequest = {
+            "name": "put update"
+        }
+        response = self.client.put('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
+    
+    def test_invalid_put_allergen_with_id(self):
+        """
+        This tests that you allergens should not be alterable after 
+        they are entered into the db. Put requests to /allergen/<id>/ 
+        endpoint should return a 405 resposnse
         """
         invalidRequest = {
             "name": "put update"
@@ -93,11 +120,38 @@ class AllergenTest(TestCase):
         invalidRequest = {
             "name": "patch update"
         }
+        response = self.client.patch('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
+
+    def test_invalid_patch_allergen_with_id(self):
+        """
+        This tests that you allergens should not be 
+        alterable after they are entered into the db.
+        Patch requests should return a 405 resposnse
+        """
+        invalidRequest = {
+            "name": "patch update"
+        }
         id = self.realAllergen.id
         response = self.client.patch('/allergen/{}/'.format(id), invalidRequest)
         self.assertEqual(405, response.status_code)
 
     def test_invalid_delete_allergen(self):
+        """
+        This tests that you can delete a single
+        allergen from the db. Should return a 200 response
+        after successfully deleting
+        """
+        original_len = len(Allergen.objects.all())
+        invalidRequest = {
+            "name": "delete update"
+        }
+        after_len = len(Allergen.objects.all())
+        response = self.client.delete('/allergen/', invalidRequest)
+        self.assertEqual(405, response.status_code)
+        self.assertEqual(original_len, after_len)
+    
+    def test_invalid_delete_allergen_with_id(self):
         """
         This tests that you can delete a single
         allergen from the db. Should return a 200 response
