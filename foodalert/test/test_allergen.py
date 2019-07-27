@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from rest_framework.test import APIRequestFactory, force_authenticate
-#from parameterized import parameterized, param
 from django.contrib.auth.models import User
 from django.db import connection, transaction
 
@@ -9,6 +8,7 @@ from foodalert.models import Allergen
 from foodalert.serializers import AllergenSerializer
 from foodalert.views import AllergensList
 
+
 class AllergenTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -16,14 +16,14 @@ class AllergenTest(TestCase):
         Sets up a single mock user that can be used for all tests on
         notification tests
         """
-        user = "testuser"
+        user = "testuser1"
         passw = "test"
         cls.user = User.objects.create_user(username=user,
-                                            email="testuser@test.com",
+                                            email="testuser1@test.com",
                                             password=passw,
                                             is_active=1)
         cls.realAllergen = Allergen.objects.create(
-                name= "test allergen"
+                name="test allergen"
                 )
 
     def setUp(self):
@@ -32,22 +32,18 @@ class AllergenTest(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
-        cls.realAllergen.delete()
-
-    def tearDownn(self):
-        pass
 
     def test_get_allergen_list(self):
         """
         This tests that you can read all allergens
-        in the db from a get request. Should return a 
+        in the db from a get request. Should return a
         200 response upon success
         """
         response = self.client.get('/allergen/')
         self.assertEqual(200, response.status_code)
-        data = response.data[0]
-        self.assertEqual(data["name"], self.realAllergen.name)
-    
+        data = response.json()
+        self.assertEqual(data[0]["name"], self.realAllergen.name)
+
     def test_get_allergen_detail(self):
         """
         This tests that you can read allergen detail
@@ -56,12 +52,12 @@ class AllergenTest(TestCase):
         id = self.realAllergen.id
         response = self.client.get('/allergen/{}/'.format(id))
         self.assertEqual(200, response.status_code)
-        data = response.data
+        data = response.json()
         self.assertEqual(self.realAllergen.name, data["name"])
 
     def test_post_allergen(self):
         """
-        This tests that an allergen should be created 
+        This tests that an allergen should be created
         correctly from post request. Should return a 201
         response upon success
         """
@@ -77,9 +73,9 @@ class AllergenTest(TestCase):
 
     def test_post_existing_allergen(self):
         """
-        Test should return a 400 bad request error if post request contains an 
-        allergen name that already exists in the database. New object should not
-        be made
+        Test should return a 400 bad request error if post request contains
+        anallergen name that already exists in the database. New object
+        should not be made
         """
         original_len = len(Allergen.objects.all())
         payload = {
@@ -92,20 +88,20 @@ class AllergenTest(TestCase):
 
     def test_invalid_put_allergen(self):
         """
-        This tests that allergens should not be 
-        alterable after they are entered into the db.
-        Put requests  to /allergen/ endpoint should return a 405 resposnse
+        This tests that allergens should not be alterable after
+        they are entered into the db. Put requests to /allergen/
+        endpoint should return a 405 resposnse
         """
         invalidRequest = {
             "name": "put update"
         }
         response = self.client.put('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
-    
+
     def test_invalid_put_allergen_with_id(self):
         """
-        This tests that you allergens should not be alterable after 
-        they are entered into the db. Put requests to /allergen/<id>/ 
+        This tests that you allergens should not be alterable after
+        they are entered into the db. Put requests to /allergen/<id>/
         endpoint should return a 405 resposnse
         """
         invalidRequest = {
@@ -117,7 +113,7 @@ class AllergenTest(TestCase):
 
     def test_invalid_patch_allergen(self):
         """
-        This tests that you allergens should not be 
+        This tests that you allergens should not be
         alterable after they are entered into the db.
         Patch requests should return a 405 resposnse
         """
@@ -129,7 +125,7 @@ class AllergenTest(TestCase):
 
     def test_invalid_patch_allergen_with_id(self):
         """
-        This tests that you allergens should not be 
+        This tests that you allergens should not be
         alterable after they are entered into the db.
         Patch requests should return a 405 resposnse
         """
@@ -137,7 +133,8 @@ class AllergenTest(TestCase):
             "name": "patch update"
         }
         id = self.realAllergen.id
-        response = self.client.patch('/allergen/{}/'.format(id), invalidRequest)
+        response = self.client.patch('/allergen/{}/'.format(id),
+                                     invalidRequest)
         self.assertEqual(405, response.status_code)
 
     def test_invalid_delete_allergen(self):
@@ -154,7 +151,7 @@ class AllergenTest(TestCase):
         response = self.client.delete('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
-    
+
     def test_invalid_delete_allergen_with_id(self):
         """
         This tests that you can delete a single
@@ -167,6 +164,7 @@ class AllergenTest(TestCase):
         }
         after_len = len(Allergen.objects.all())
         id = self.realAllergen.id
-        response = self.client.delete('/allergen/{}/'.format(id), invalidRequest)
+        response = self.client.delete('/allergen/{}/'.format(id),
+                                      invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
