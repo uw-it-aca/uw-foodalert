@@ -33,6 +33,10 @@ class AllergenTest(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        cls.realAllergen.delete()
+
+    def tearDown(self):
+        pass
 
     def test_get_allergen_list(self):
         """
