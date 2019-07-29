@@ -41,6 +41,7 @@ class NotificationTest(TestCase):
             host=self.user,
             host_user_agent="browser")
         self.notification = notification
+        self.client = Client()
         self.client.force_login(self.user)
 
     def tearDown(self):
@@ -67,6 +68,7 @@ class NotificationTest(TestCase):
         actual_json = response.json()
         # Set the created time to match as this field is dynamic/based on time
         expected_json[0]["id"] = actual_json[0]["id"]
+        expected_json[0]["host"]["hostID"] = actual_json[0]["host"]["hostID"]
         expected_json[0]["time"]["created"] = actual_json[0]["time"]["created"]
         # Assert that the content is a list with a single notification entry
         self.assertEqual(len(actual_json), 1)
@@ -91,6 +93,7 @@ class NotificationTest(TestCase):
         actual_json = response.json()
         # Set the created time to match as this field is dynamic/based on time
         expected_json["id"] = actual_json["id"]
+        expected_json["host"]["hostID"] = actual_json["host"]["hostID"]
         expected_json["time"]["created"] = actual_json["time"]["created"]
         self.assertEqual(expected_json, actual_json)
 
@@ -153,6 +156,7 @@ class NotificationTest(TestCase):
             actual_json = response.data
             # Set the created time to match: this field is dynamic
             expected_json["id"] = actual_json["id"]
+            expected_json["host"]["hostID"] = actual_json["host"]["hostID"]
             expected_json["time"]["created"] = actual_json["time"]["created"]
             self.assertEqual(expected_json, actual_json)
 
