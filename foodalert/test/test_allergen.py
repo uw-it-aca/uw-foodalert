@@ -119,9 +119,9 @@ class AllergenTest(TestCase):
         }
         before_len = len(Allergen.objects.all())
         id = self.realAllergen.id
-        response = self.client.put('/allergen/{}/'.format(id), 
-                                    json.dumps(payload),
-                                    content_type='application/json')
+        response = self.client.put('/allergen/{}/'.format(id),
+                                   json.dumps(payload),
+                                   content_type='application/json')
         self.assertEqual(200, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(before_len, after_len)
