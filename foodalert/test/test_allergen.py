@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase, Client
 from rest_framework.test import APIRequestFactory, force_authenticate
 from django.contrib.auth.models import User
@@ -107,18 +108,27 @@ class AllergenTest(TestCase):
         response = self.client.put('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
 
-    def test_invalid_put_allergen_with_id(self):
+    def test_put_allergen_with_id(self):
         """
         This tests that you allergens should not be alterable after
         they are entered into the db. Put requests to /allergen/<id>/
         endpoint should return a 405 resposnse
         """
-        invalidRequest = {
+        payload = {
             "name": "put update"
         }
+        before_len = len(Allergen.objects.all())
         id = self.realAllergen.id
-        response = self.client.put('/allergen/{}/'.format(id), invalidRequest)
-        self.assertEqual(405, response.status_code)
+        response = self.client.put('/allergen/{}/'.format(id), 
+                                    json.dumps(payload),
+                                    content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        after_len = len(Allergen.objects.all())
+        self.assertEqual(before_len, after_len)
+        put_result = self.client.get('/allergen/{}/'.format(id))
+        put_result = put_result.json()
+        self.assertEqual(put_result['name'], payload['name'])
+        self.assertEqual(put_result['id'], id)
 
     def test_invalid_patch_allergen(self):
         """
@@ -132,19 +142,27 @@ class AllergenTest(TestCase):
         response = self.client.patch('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
 
-    def test_invalid_patch_allergen_with_id(self):
+    def test_patch_allergen_with_id(self):
         """
         This tests that you allergens should not be
         alterable after they are entered into the db.
         Patch requests should return a 405 resposnse
         """
-        invalidRequest = {
+        payload = {
             "name": "patch update"
         }
+        before_len = len(Allergen.objects.all())
         id = self.realAllergen.id
         response = self.client.patch('/allergen/{}/'.format(id),
-                                     invalidRequest)
-        self.assertEqual(405, response.status_code)
+                                     json.dumps(payload),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        after_len = len(Allergen.objects.all())
+        self.assertEqual(before_len, after_len)
+        patch_result = self.client.get('/allergen/{}/'.format(id))
+        patch_result = patch_result.json()
+        self.assertEqual(patch_result['name'], payload['name'])
+        self.assertEqual(patch_result['id'], id)
 
     def test_invalid_delete_allergen(self):
         """
@@ -161,7 +179,7 @@ class AllergenTest(TestCase):
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
 
-    def test_invalid_delete_allergen_with_id(self):
+    def test_delete_allergen_with_id(self):
         """
         This tests that you can delete a single
         allergen from the db. Should return a 200 response
@@ -171,9 +189,9 @@ class AllergenTest(TestCase):
         invalidRequest = {
             "name": "delete update"
         }
-        after_len = len(Allergen.objects.all())
         id = self.realAllergen.id
         response = self.client.delete('/allergen/{}/'.format(id),
                                       invalidRequest)
-        self.assertEqual(405, response.status_code)
-        self.assertEqual(original_len, after_len)
+        after_len = len(Allergen.objects.all())
+        self.assertEqual(204, response.status_code)
+        self.assertEqual(1, original_len - after_len)

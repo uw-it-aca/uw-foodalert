@@ -199,6 +199,6 @@ class AllergensList(generics.ListCreateAPIView):
 
 
 @method_decorator(login_required(), name='dispatch')
-class AllergensDetail(generics.RetrieveAPIView):
+class AllergensDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
