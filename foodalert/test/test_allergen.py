@@ -110,9 +110,9 @@ class AllergenTest(TestCase):
 
     def test_put_allergen_with_id(self):
         """
-        This tests that you allergens should not be alterable after
-        they are entered into the db. Put requests to /allergen/<id>/
-        endpoint should return a 405 resposnse
+        This tests that you are able to make changes to an
+        allergen with a put request to the endpoint '/allergen/{id}/'
+        Request should return a 200 success status code
         """
         payload = {
             "name": "put update"
@@ -144,9 +144,9 @@ class AllergenTest(TestCase):
 
     def test_patch_allergen_with_id(self):
         """
-        This tests that you allergens should not be
-        alterable after they are entered into the db.
-        Patch requests should return a 405 resposnse
+        This tests that you should be able to alter an allergen
+        with a patch request to '/allergen/{id}/' endpoint.
+        Should return a 200 success status code
         """
         payload = {
             "name": "patch update"
@@ -181,9 +181,8 @@ class AllergenTest(TestCase):
 
     def test_delete_allergen_with_id(self):
         """
-        This tests that you can delete a single
-        allergen from the db. Should return a 200 response
-        after successfully deleting
+        This tests that you should be able to delete an allergen
+        with a delete request to the '/allergen/{id}/' endpoint
         """
         original_len = len(Allergen.objects.all())
         invalidRequest = {
