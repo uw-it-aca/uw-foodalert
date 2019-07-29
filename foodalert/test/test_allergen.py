@@ -27,6 +27,7 @@ class AllergenTest(TestCase):
                 )
 
     def setUp(self):
+        self.client = Client()
         self.client.force_login(self.user)
 
     @classmethod
@@ -65,11 +66,12 @@ class AllergenTest(TestCase):
             "name": "wheat"
         }
         original_len = len(Allergen.objects.all())
-
         response = self.client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(1, new_len - original_len)
+        posted_allergen = response.json()
+        self.assertEqual(posted_allergen["name"], valid_payload["name"])
 
     def test_post_existing_allergen(self):
         """
@@ -78,6 +80,7 @@ class AllergenTest(TestCase):
         should not be made
         """
         original_len = len(Allergen.objects.all())
+        data_before = self.client.get("/allergen/")
         payload = {
             "name": self.realAllergen.name
         }
@@ -85,6 +88,8 @@ class AllergenTest(TestCase):
         self.assertEqual(400, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(original_len, after_len)
+        data_after = self.client.get('/allergen/')
+        self.assertEqual(data_before.json(), data_after.json())
 
     def test_invalid_put_allergen(self):
         """
