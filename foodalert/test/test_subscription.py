@@ -76,6 +76,11 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_create_subscription(self, email=None, sms=None):
+        """
+        Tests that subscription object is correctly created in db by
+        sending a post request to the '/subscription/' endpoint. Post
+        request should return a 200 status code
+        """
         valid_payload = {
             "email": email,
             "sms_number": sms,
@@ -93,6 +98,11 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_get_subscriptionlist(self, email='', sms=''):
+        """
+        Tests that subscription list is returned from a get
+        request to '/subscription/' endpoint. Request should return
+        a 200 status code and the id and netid of each subscription.
+        """
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
@@ -108,6 +118,14 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_update_subscription(self, email=None, sms=None):
+        """
+        Tests that subscription is correctly updated. Only sms or
+        email should be altered by the user
+
+        -->NOTE: RIGHT NOW POST IS DOING WHAT PATCH/PUT IS DOING....
+        WRITE TESTS FOR SPECIFICALLY PATCH/PUT
+
+        """
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
