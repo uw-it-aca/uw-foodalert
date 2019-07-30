@@ -154,7 +154,7 @@ class UpdateSerializer(serializers.ModelSerializer):
             return ret
 
 
-class SubscriptionSerializerList(serializers.ModelSerializer):
+class SubscriptionDetailSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
 
     class Meta:
@@ -168,7 +168,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subscription
-        fields = ('id', 'netid', 'sms_number', 'email', 'notif_on')
+        fields = ('id', 'netid')
 
     def to_internal_value(self, data):
         ret = {

@@ -9,7 +9,8 @@ from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
-        SubscriptionSerializer, AllergenSerializer, SubscriptionSerializerList
+        SubscriptionSerializer, AllergenSerializer,\
+        SubscriptionDetailSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -170,7 +171,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return SubscriptionSerializerList
+            return SubscriptionDetailSerializer
         else:
             return SubscriptionSerializer
 
