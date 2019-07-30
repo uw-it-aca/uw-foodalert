@@ -162,9 +162,10 @@
                 var notifValue = this.localData.text;
                 if(inputType === "text"){
                     inputType = "sms_number";
-                    notifValue = ('' + notifValue).replace(/\D/g, '')
-                    if (notifValue != "")
+                    if (notifValue != ""){
+                        notifValue = ('' + notifValue).replace(/\D/g, '')
                         notifValue = "+1" + notifValue;
+                    }
                 }
                 var data = new FormData();
                 data.set(inputType, notifValue);
