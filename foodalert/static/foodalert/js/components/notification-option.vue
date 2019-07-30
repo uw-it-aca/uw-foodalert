@@ -157,17 +157,17 @@
                 return cleaned
             },
             getNewState(spinnerOpt) {
-                // TODO: change this function to make a axios request to the server
+                // TODO: change this function to make a axios request to the server with correct id endpoint
                 var inputType = this.type;
                 var notifValue = this.localData.text;
                 if(inputType === "text"){
                     inputType = "sms_number";
-                    notifValue = ('' + notifValue).replace(/\D/g, '')
-                    if (notifValue != "")
+                    if (notifValue != ""){
+                        notifValue = ('' + notifValue).replace(/\D/g, '')
                         notifValue = "+1" + notifValue;
+                    }
                 }
                 var data = new FormData();
-                //data.set('id', this._uid);
                 data.set(inputType, notifValue);
                 var csrftoken = Cookies.get('csrftoken');
                 var headers = {
@@ -177,8 +177,6 @@
                 spinnerOpt.state = true
                 axios.patch("/subscription/1/", data, {"headers" : headers})
                     .then(response => {
-                        console.log("this is after the patch request")
-                        console.log(response);
                         this.requestUpdate()
                     
                         spinnerOpt.state = false
@@ -188,7 +186,6 @@
                         this.updateMode = false
                     })
                     .catch(console.log);
-                console.log(this.localData.text)
             },
             deleteData(spinnerOpt) {
                 this.localData.text = ""
@@ -201,7 +198,6 @@
                 else if (this.updateMode)
                     this.updateMode = false
                 else if (!this.serverData.verified) {
-                    // TODO: Cancel this event by sending a patch request to the api
                     this.deleteData(spinnerOpt);
                     
                 }
