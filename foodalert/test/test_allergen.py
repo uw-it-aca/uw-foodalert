@@ -55,8 +55,8 @@ class AllergenTest(TestCase):
         This tests that you can read allergen detail
         corresponding to the id
         """
-        id = self.realAllergen.id
-        response = self.client.get('/allergen/{}/'.format(id))
+        get_id = self.realAllergen.id
+        response = self.client.get('/allergen/{}/'.format(get_id))
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(self.realAllergen.name, data["name"])
@@ -122,17 +122,17 @@ class AllergenTest(TestCase):
             "name": "put update"
         }
         before_len = len(Allergen.objects.all())
-        id = self.realAllergen.id
-        response = self.client.put('/allergen/{}/'.format(id),
+        put_id = self.realAllergen.id
+        response = self.client.put('/allergen/{}/'.format(put_id),
                                    json.dumps(payload),
                                    content_type='application/json')
         self.assertEqual(200, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(before_len, after_len)
-        put_result = self.client.get('/allergen/{}/'.format(id))
+        put_result = self.client.get('/allergen/{}/'.format(put_id))
         put_result = put_result.json()
         self.assertEqual(put_result['name'], payload['name'])
-        self.assertEqual(put_result['id'], id)
+        self.assertEqual(put_result['id'], put_id)
 
     def test_invalid_patch_allergen(self):
         """
@@ -156,17 +156,17 @@ class AllergenTest(TestCase):
             "name": "patch update"
         }
         before_len = len(Allergen.objects.all())
-        id = self.realAllergen.id
-        response = self.client.patch('/allergen/{}/'.format(id),
+        patch_id = self.realAllergen.id
+        response = self.client.patch('/allergen/{}/'.format(patch_id),
                                      json.dumps(payload),
                                      content_type='application/json')
         self.assertEqual(200, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(before_len, after_len)
-        patch_result = self.client.get('/allergen/{}/'.format(id))
+        patch_result = self.client.get('/allergen/{}/'.format(patch_id))
         patch_result = patch_result.json()
         self.assertEqual(patch_result['name'], payload['name'])
-        self.assertEqual(patch_result['id'], id)
+        self.assertEqual(patch_result['id'], patch_id)
 
     def test_invalid_delete_allergen(self):
         """
@@ -189,12 +189,8 @@ class AllergenTest(TestCase):
         with a delete request to the '/allergen/{id}/' endpoint
         """
         original_len = len(Allergen.objects.all())
-        invalidRequest = {
-            "name": "delete update"
-        }
-        id = self.realAllergen.id
-        response = self.client.delete('/allergen/{}/'.format(id),
-                                      invalidRequest)
+        delete_id = self.realAllergen.id
+        response = self.client.delete('/allergen/{}/'.format(delete_id))
         after_len = len(Allergen.objects.all())
         self.assertEqual(204, response.status_code)
         self.assertEqual(1, original_len - after_len)
