@@ -161,11 +161,10 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
                   'email_verified', 'notif_on')
+        read_only_fields = ('number_verified', 'email_verified', 'notif_on')
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    sms_number = PhoneNumberField(allow_blank=True)
-
     class Meta:
         model = Subscription
         fields = ('id', 'netid')
