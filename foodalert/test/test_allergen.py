@@ -77,6 +77,10 @@ class AllergenTest(TestCase):
         self.assertEqual(1, new_len - original_len)
         posted_allergen = response.json()
         self.assertEqual(posted_allergen["name"], valid_payload["name"])
+        post_id = response.json()["id"]
+        get_res = self.client.get('/allergen/{}/'.format(post_id))
+        res = get_res.json()
+        self.assertEqual(res["name"], valid_payload["name"])
 
     def test_post_existing_allergen(self):
         """
