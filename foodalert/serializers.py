@@ -16,7 +16,7 @@ class SafeFoodSerializer(serializers.ModelSerializer):
 class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
-        fields = ['name']
+        fields = ['id', 'name']
 
     def create(self, validated_data):
         allergen = Allergen.objects.create()

@@ -17,7 +17,7 @@
         "safeToShareFood": []
     },
     "host": {
-        "hostID": 1,
+        "hostID": 2,
         "netID": "testuser",
         "userAgent": "browser"
     }

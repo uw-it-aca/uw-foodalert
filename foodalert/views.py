@@ -196,3 +196,9 @@ class AllergensList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
+
+
+@method_decorator(login_required(), name='dispatch')
+class AllergensDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Allergen.objects.all()
+    serializer_class = AllergenSerializer

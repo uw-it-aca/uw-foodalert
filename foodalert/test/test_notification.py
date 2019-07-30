@@ -41,6 +41,7 @@ class NotificationTest(TestCase):
             host=self.user,
             host_user_agent="browser")
         self.notification = notification
+        self.client = Client()
         self.client.force_login(self.user)
 
     def tearDown(self):
