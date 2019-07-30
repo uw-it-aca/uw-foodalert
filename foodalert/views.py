@@ -9,8 +9,12 @@ from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
+<<<<<<< HEAD
         SubscriptionSerializer, AllergenSerializer,\
         SubscriptionDetailSerializer
+=======
+        SubscriptionSerializer, AllergenSerializer, SubscriptionDetailSerializer
+>>>>>>> chnged name of serializer and fields it returns
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
