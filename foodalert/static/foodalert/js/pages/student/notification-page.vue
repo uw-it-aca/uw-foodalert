@@ -98,11 +98,9 @@
         },
         methods: {
             requestUpdate() {
-                // TODO: change this function to make a axios request to the server
+                // TODO: change this function to make a axios request to the correct id endpoint
                 axios.get("/subscription/1/")
                 .then((response) => {
-                    console.log("this is after the get request")
-                    console.log(response)
                     this.notif_info = response.data;
                     // Control the b-collapse
                     if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
