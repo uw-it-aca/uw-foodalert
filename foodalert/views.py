@@ -10,11 +10,16 @@ from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationSerializer, UpdateSerializer,\
 <<<<<<< HEAD
+<<<<<<< HEAD
         SubscriptionSerializer, AllergenSerializer,\
         SubscriptionDetailSerializer
 =======
         SubscriptionSerializer, AllergenSerializer, SubscriptionDetailSerializer
 >>>>>>> chnged name of serializer and fields it returns
+=======
+        SubscriptionSerializer, AllergenSerializer,\
+        SubscriptionDetailSerializer
+>>>>>>> pycodestyle :/
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
