@@ -111,9 +111,94 @@ class SubscriptionTest(TestCase):
 
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
-        data = response.data[0]
-        self.assertEqual("testuser@test.com", data['netid'])
-        self.assertEqual(sub.id, data["id"])
+        data = response.json()
+        self.assertEqual("testuser@test.com", data[0]['netid'])
+        self.assertEqual(sub.id, data[0]["id"])
+        # get response should just return id and netid
+        data_len = len(data[0])
+        self.assertEqual(data_len, 2)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_get_subscription_detail(self, email='', sms=''):
+        """
+        Calling get request to '/subscription/{id}/' endpoint should return
+        a 200 status code. Returns json containing id, netid, email/sms,
+        email/sms verified state, and notif on state
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+
+        sub_id = sub.id
+        response = self.client.get('/subscription/{}/'.format(sub_id))
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        # email and sms should be updated with correct values
+        self.assertEqual(sub.email, data["email"])
+        self.assertEqual(sub.sms_number, data["sms_number"])
+        # all boolean fields should be false at this point
+        self.assertFalse(data["email_verified"])
+        self.assertFalse(data["number_verified"])
+        self.assertFalse(data["notif_on"])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_patch_subscription(self, email=None, sms=None):
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+
+        payload = {
+            "sms_number": "+14084388625"
+        }
+        patch_id = sub.id
+
+        original_len = len(Subscription.objects.all())
+        response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                     data=json.dumps(payload),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+        data = response.json()
+        self.assertEqual(payload['sms_number'], data['sms_number'])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_invalid_patch_subscription(self, email='', sms=''):
+        """
+        Tests that email_verified value cannot be changed from patch
+        request. Ensures that it is a read_only_field
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        patch_id = sub.id
+        # current value of read only fields
+        get_res = self.client.get('/subscription/{}/'.format(patch_id))
+        email_verif_state = get_res.json()['email_verified']
+        sms_verif_state = get_res.json()['number_verified']
+        notif_state = get_res.json()['notif_on']
+        invalid_payload = {
+            'email_verified': not email_verif_state,
+            'number_verified': not sms_verif_state,
+            'notif_state': not notif_state
+        }
+
+        response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                     data=json.dumps(invalid_payload),
+                                     content_type='application/json')
+        data = response.json()
+        self.assertEqual(email_verif_state, data['email_verified'])
+        self.assertEqual(sms_verif_state, data['number_verified'])
+        self.assertEqual(notif_state, data['notif_on'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

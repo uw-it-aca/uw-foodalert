@@ -170,27 +170,6 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         fields = ('id', 'netid')
 
     def to_internal_value(self, data):
-        ret = {
-            'email': '',
-            'sms_number': '',
-            'notif_on': '',
-        }
-
-        if 'email' in data:
-            ret['email'] = data['email']
-        else:
-            ret['email'] = ''
-
-        if 'sms_number' in data:
-            ret['sms_number'] = data['sms_number']
-        else:
-            ret['sms_number'] = ''
-
-        if 'notif_on' in data:
-            ret['notif_on'] = data['notif_on']
-        else:
-            ret['notif_on'] = False
-
         return data
 
     def create(self, validated_data):

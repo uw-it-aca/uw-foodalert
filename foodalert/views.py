@@ -148,6 +148,7 @@ class UpdateList(generics.ListCreateAPIView):
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
+    serializer_class = SubscriptionDetailSerializer
 
     def put(self, request, pk):
         if (((request.data['email'] == '') if ('email' in request.data)
@@ -158,22 +159,6 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
             if 'notif_on' in request.data:
                 request.data['notif_on'] = False
         return super().put(request, pk)
-
-    def patch(self, request, pk):
-        if (((request.data['email'] == '') if ('email' in request.data)
-            else (Subscription.objects.get(pk=pk).email == ''))
-            and ((request.data['sms_number'] == '')
-                 if ('sms_number' in request.data)
-                 else (Subscription.objects.get(pk=pk).sms_number == ''))):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
-        return super().patch(request, pk)
-
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return SubscriptionDetailSerializer
-        else:
-            return SubscriptionSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
