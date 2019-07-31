@@ -92,7 +92,7 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
-    def test_read_subscription(self, email='', sms=''):
+    def test_get_subscriptionlist(self, email='', sms=''):
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
@@ -102,9 +102,8 @@ class SubscriptionTest(TestCase):
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.data[0]
-        self.assertEqual(email, data['email'])
-        self.assertEqual(sms, data['sms_number'])
         self.assertEqual("testuser@test.com", data['netid'])
+        self.assertEqual(sub.id, data["id"])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

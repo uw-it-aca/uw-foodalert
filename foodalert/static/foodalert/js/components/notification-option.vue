@@ -24,12 +24,12 @@
                             Add
                         </b-button>
                         <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                                class="opt_link_btn p-0" v-else>
+                                class="opt_link_btn p-0" @click="updateMode=localData.verified" v-else>
                             Edit
                         </b-button>
                     </div>
                     <div v-else>
-                        <b-button block href="#" variant="link" class="opt_link_btn p-0" v-b-toggle="accord_id" @click="localData.text = ''" v-if="serverData.text == ''">
+                        <b-button block href="#" variant="link" class="opt_link_btn p-0" v-b-toggle="accord_id" @click="localData.text = ''; updateMode=false" v-if="serverData.text == '' || updateMode">
                             <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.cancel.state}" ></b-spinner>
                             <slot name="opt_cancel">Cancel</slot>
                         </b-button>
@@ -65,7 +65,7 @@
                                         <small class="form-text pt-2 pb-0 error-desp" v-if="errorDesc != ''">{{errorDesc}}</small>
                                         <br />
                                         <b-button variant="link" @click="resendVerif(spinners.resend)" class="px-0">
-                                            Resend text
+                                            Resend {{type}}
                                             <b-spinner small class="mr-2 spinner-padding" :class="{'spinner-hide': !spinners.resend.state}"></b-spinner>
                                         </b-button>
                                     </div>
@@ -95,108 +95,128 @@
 </template>
 
 <script>
-export default {
-    props: {
-        accord_id: String,
-        label: {
-            type: String,
-            default: "Placeholder label",
-        },
-        description: {
-            type: String,
-            default: "Placeholder description",
-        },
-        type: {
-            type: String,
-            default: "text"
-        },
-        visible: Boolean,
-        serverData: Object,
-        requestUpdate: Function,
-        resendVerif: Function,
-    },
-    data() {
-        return {
-            localData: {
-                text: "",
-                verified: false,
-            },
-            spinners: {
-                cancel: { state: false },
-                verify: { state: false },
-                resend: { state: false },
-                update: { state: false },
-                delete: { state: false },
-            },
-            isOpen: false,
-            updateMode: false,
-            errorDesc: "",
-        } 
-    },
-    methods: {
-        formatter(value, event){
-            if (this.type == "text") {
-                return this.numberFormatter(value, event);
-            } else if (this.type == "email") {
-                return value;
-            }
-        },
-        numberFormatter(value, event){
-            if (value.length > 14)
-                return value.substr(0, 14)
-            var cleaned = ('' + value).replace(/\D/g, '')
-            var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-            if (match) {
-                return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-            }
-            return cleaned
-        },
-        getNewState(spinnerOpt) {
-            // TODO: change this function to make a axios request to the server
+    const axios = require('axios');
+    import Cookies from 'js-cookie';
 
-            // IMPORTANT: MOCK IMPLEMENTATION
-            spinnerOpt.state = true
-            setTimeout(()=>{
-                this.requestUpdate()
-                
-                spinnerOpt.state = false
-                if (this.newData) {
-                    this.newData = false
+    export default {
+        props: {
+            accord_id: String,
+            label: {
+                type: String,
+                default: "Placeholder label",
+            },
+            description: {
+                type: String,
+                default: "Placeholder description",
+            },
+            type: {
+                type: String,
+                default: "text"
+            },
+            visible: Boolean,
+            serverData: Object,
+            requestUpdate: Function,
+            resendVerif: Function,
+        },
+        data() {
+            return {
+                localData: {
+                    text: "",
+                    verified: false,
+                },
+                spinners: {
+                    cancel: { state: false },
+                    verify: { state: false },
+                    resend: { state: false },
+                    update: { state: false },
+                    delete: { state: false },
+                },
+                isOpen: false,
+                updateMode: false,
+                errorDesc: "",
+
+                notif_input: "",
+            } 
+        },
+        methods: {
+            formatter(value, event){
+                if (this.type == "text") {
+                    return this.numberFormatter(value, event);
+                } else if (this.type == "email") {
+                    return value;
                 }
-            }, 2000)
-        },
-        deleteData() {
-            // TODO: Implement based on the type maybe? or just make the parent pass this
-        },
-        cancelUpdate(event, spinnerOpt) {
-            spinnerOpt.state = true
-            setTimeout(()=>{
+            },
+            numberFormatter(value, event){
+                if (value.length > 14)
+                    return value.substr(0, 14)
+                var cleaned = ('' + value).replace(/\D/g, '')
+                var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+                if (match) {
+                    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+                }
+                return cleaned
+            },
+            getNewState(spinnerOpt) {
+                // TODO: change this function to make a axios request to the server with correct id endpoint
+                var inputType = this.type;
+                var notifValue = this.localData.text;
+                if(inputType === "text"){
+                    inputType = "sms_number";
+                    if (notifValue != ""){
+                        notifValue = ('' + notifValue).replace(/\D/g, '')
+                        notifValue = "+1" + notifValue;
+                    }
+                }
+                var data = new FormData();
+                data.set(inputType, notifValue);
+                var csrftoken = Cookies.get('csrftoken');
+                var headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+                spinnerOpt.state = true
+                axios.patch("/subscription/1/", data, {"headers" : headers})
+                    .then(response => {
+                        this.requestUpdate()
+                    
+                        spinnerOpt.state = false
+                        if (this.newData) {
+                            this.newData = false
+                        }
+                        this.updateMode = false
+                    })
+                    .catch(console.log);
+            },
+            deleteData(spinnerOpt) {
+                this.localData.text = ""
+                this.getNewState(spinnerOpt)
+            },
+            cancelUpdate(event, spinnerOpt) {
+                spinnerOpt.state = true;
                 if (this.serverData.text == '')
                     this.isOpen = false
                 else if (this.updateMode)
                     this.updateMode = false
                 else if (!this.serverData.verified) {
-                    // TODO: Cancel this event by sending a patch request to the api
-                    this.getNewState(spinnerOpt) // This will only work when the TODO is done
+                    this.deleteData(spinnerOpt);
+                    
                 }
-                spinnerOpt.state = false
-            }, 2000)
-        }
-    },
-    watch: {
-        serverData(newVal, oldVal) {
-            this.localData.text = newVal.text
-            this.localData.verified = newVal.verified
-        }
-    },
-    computed: {
-    },
-    beforeMount() {
-        this.localData.text = this.serverData.text
-        this.localData.verified = this.serverData.verified
-        this.isOpen = this.visible
-    },
-}
+            }
+        },
+        watch: {
+            serverData(newVal, oldVal) {
+                this.localData.text = newVal.text   //this is inputting sms with +1
+                this.localData.verified = newVal.verified
+            }
+        },
+        computed: {
+        },
+        beforeMount() {
+            this.localData.text = this.serverData.text   //inputting sms with +1
+            this.localData.verified = this.serverData.verified
+            this.isOpen = this.visible
+        },
+    }
 </script>
 
 <style>
