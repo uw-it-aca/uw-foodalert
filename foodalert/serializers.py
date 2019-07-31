@@ -161,11 +161,7 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
                   'email_verified', 'notif_on')
-<<<<<<< HEAD
-        read_only_fields = ('number_verified', 'email_verified', 'notif_on')
-=======
         read_only_fields = ("number_verified", 'email_verified', 'notif_on')
->>>>>>> documentation for tests and added read only fields to subscription
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
