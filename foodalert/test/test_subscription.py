@@ -78,8 +78,8 @@ class SubscriptionTest(TestCase):
     def test_create_subscription(self, email=None, sms=None):
         """
         Tests that subscription object is correctly created in db by
-        sending a post request to the '/subscription/' endpoint. Post
-        request should return a 200 status code
+        sending a post request3 the '/subscription/' endpoint. Post
+        request should return 300 status code
         """
         valid_payload = {
             "email": email,
@@ -152,12 +152,11 @@ class SubscriptionTest(TestCase):
             email=email,
             sms_number=sms
         )
+        patch_id = sub.id
 
         payload = {
             "sms_number": "+14084388625"
         }
-        patch_id = sub.id
-
         original_len = len(Subscription.objects.all())
         response = self.client.patch('/subscription/{}/'.format(patch_id),
                                      data=json.dumps(payload),
@@ -167,6 +166,19 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, after_len)
         data = response.json()
         self.assertEqual(payload['sms_number'], data['sms_number'])
+
+        payload2 = {
+            "email": "practice@mail.com"
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                     data=json.dumps(payload2),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+        data = response.json()
+        self.assertEqual(payload2['sms_number'], data['sms_number'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -250,10 +262,10 @@ class SubscriptionTest(TestCase):
         }
 
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/subscription/',
-                                    data=json.dumps(update),
-                                    content_type='application/json')
-        self.assertEqual(201, response.status_code)
+        response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                     data=json.dumps(update),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)
 
@@ -265,6 +277,11 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_delete_subscription(self, email=None, sms=None):
+        """
+        Tests that you can successfully delete a subscription
+        from the db. Delete request to '/subscription/{id}/'
+        endpoint should return a 204 status code
+        """
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
