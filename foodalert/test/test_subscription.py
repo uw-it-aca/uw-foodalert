@@ -75,7 +75,7 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
-    def test_create_subscription(self, email=None, sms=None):
+    def test_post_subscription(self, email=None, sms=None):
         """
         Tests that subscription object is correctly created in db by
         sending a post request3 the '/subscription/' endpoint. Post
@@ -94,6 +94,32 @@ class SubscriptionTest(TestCase):
         self.assertEqual("testuser@test.com", model.netid)
         self.assertEqual(email, model.email)
         self.assertEqual(sms, model.sms_number)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_invalid_post_subscription(self, email='', sms=''):
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        invalid_payload = {
+            "email": "invalidemailpost@test.com",
+            "sms": "+14083429456",
+        }
+        original_len = len(Subscription.objects.all())
+        original_data = self.client.get('/subscription/{}/'.format(sub.id))
+        original_data = original_data.json()
+        response = self.client.post('/subscription/{}/'.format(sub.id),
+                                     data=json.dumps(invalid_payload),
+                                     content_type='application/json')
+        self.assertEqual(405, response.status_code)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+        after_data = self.client.get('/subscription/{}/'.format(sub.id))
+        after_data = after_data.json()
+        self.assertEqual(original_data, after_data)
+
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -178,7 +204,32 @@ class SubscriptionTest(TestCase):
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
         data = response.json()
-        self.assertEqual(payload2['sms_number'], data['sms_number'])
+        self.assertEqual(payload2['email'], data['email'])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_verified_patch_subscription(self, email='', sms=''):
+        """
+        If user has a verified email or number, they should be able to
+        change the value of 'notif_on' with a patch request.
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms,
+            email_verified=True,
+        )
+        notif_state = sub.notif_on
+        valid_payload = {
+            'notif_on': not notif_state
+        }
+        response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                     data=json.dumps(valid_payload),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        self.assertEqual(valid_payload['notif_on'], data['notif_on'])
+
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -207,10 +258,27 @@ class SubscriptionTest(TestCase):
         response = self.client.patch('/subscription/{}/'.format(patch_id),
                                      data=json.dumps(invalid_payload),
                                      content_type='application/json')
+        self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(email_verif_state, data['email_verified'])
         self.assertEqual(sms_verif_state, data['number_verified'])
         self.assertEqual(notif_state, data['notif_on'])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_put_subscription(self, email=None, sms=None):
+        """
+        Tests that you can make updates to subscription by making
+        put request to '/subscription/{id}/' endpoint
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        payload = {
+            'email'
+        }
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -230,15 +298,15 @@ class SubscriptionTest(TestCase):
         )
 
         update = {
-            'email': 'prefix-' + sub.email,
+            'email': 'updated_email@mail.com',
             'sms_number': ' +12024561414',
         }
 
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/subscription/',
+        response = self.client.patch('/subscription/{}/'.format(sub.id),
                                     data=json.dumps(update),
                                     content_type='application/json')
-        self.assertEqual(201, response.status_code)
+        self.assertEqual(200, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)
 
