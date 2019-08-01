@@ -230,12 +230,35 @@ class SubscriptionTest(TestCase):
         data = response.json()
         self.assertEqual(valid_payload['notif_on'], data['notif_on'])
 
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_unverified_patch_subscription(self, email='', sms=''):
+        """
+        If user does not have a verified email or number, they should not
+        be able to change the value of 'notif_on' with a patch request.
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms,
+        )
+        notif_state = sub.notif_on
+        valid_payload = {
+            'notif_on': not notif_state
+        }
+        response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                     data=json.dumps(valid_payload),
+                                     content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        self.assertEqual(notif_state, data['notif_on'])
+
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_invalid_patch_subscription(self, email='', sms=''):
         """
-        Tests that email_verified value cannot be changed from patch
+        Tests that email_verified and number_verified value cannot be changed from patch
         request. Ensures that it is a read_only_field
         """
         sub = Subscription.objects.create(
@@ -248,11 +271,9 @@ class SubscriptionTest(TestCase):
         get_res = self.client.get('/subscription/{}/'.format(patch_id))
         email_verif_state = get_res.json()['email_verified']
         sms_verif_state = get_res.json()['number_verified']
-        notif_state = get_res.json()['notif_on']
         invalid_payload = {
             'email_verified': not email_verif_state,
-            'number_verified': not sms_verif_state,
-            'notif_state': not notif_state
+            'number_verified': not sms_verif_state
         }
 
         response = self.client.patch('/subscription/{}/'.format(patch_id),
@@ -262,7 +283,6 @@ class SubscriptionTest(TestCase):
         data = response.json()
         self.assertEqual(email_verif_state, data['email_verified'])
         self.assertEqual(sms_verif_state, data['number_verified'])
-        self.assertEqual(notif_state, data['notif_on'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
