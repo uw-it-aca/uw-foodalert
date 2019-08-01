@@ -44,10 +44,8 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
-        for food in message['foodServiceInfo']['safeToShareFood']:
-            food += ' ' + food
         text = "A new Hungry Husky Event: '" + event + "' has been posted! \n"
-        time = dateutil.parser.parse(message['time']['ended']).strftime("%c")
+        time = datetime.strftime(message['time']['end'], "%c")
         details = {
             'Food Served:': message['food']['served'],
             'Location:': message['location'],
@@ -61,7 +59,7 @@ class Sender:
             for allergen in message['food']['allergens']:
                 text += ' ' + allergen
             text += '\n'
-        if message['bringContainers']:
+        if message['bring_container']:
             text += 'Please bring a container!'
 
         return text
