@@ -57,8 +57,8 @@ class SMSTest(TestCase):
             'location': 'UW Campus',
             'event': 'UW Event',
             'time': {
-                'end': datetime.strptime('2018-09-13T19:23:06.508534',\
-                    "%Y-%m-%dT%H:%M:%S.%f"),
+                'end': datetime.strptime('2018-09-13T19:23:06.508534',
+                                         "%Y-%m-%dT%H:%M:%S.%f"),
             },
             'food': {
                 'served': 'Food',

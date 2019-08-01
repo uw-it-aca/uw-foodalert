@@ -27,19 +27,19 @@ class NotificationTest(TestCase):
         notification tests
         """
         cls.user1 = User.objects.create_user(username="testuser_one",
-                                            email="testuser_one@test.com",
-                                            password="test")
+                                             email="testuser_one@test.com",
+                                             password="test")
         cls.user2 = User.objects.create_user(username="testuser_two",
-                                            email="testuser_two@test.com",
-                                            password="test")
+                                             email="testuser_two@test.com",
+                                             password="test")
         cls.user3 = User.objects.create_user(username="testuser_three",
-                                            email="testuser_three@test.com",
-                                            password="test")
+                                             email="testuser_three@test.com",
+                                             password="test")
         # Load test_data mock resource
         path = os.path.join(RESOURCE_DIR, 'notification_details.json')
         with open(path) as data_file:
             cls.test_data = json.load(data_file)
-        
+
         cls.create_notification_from_data(0, cls.user1)
         cls.create_notification_from_data(1, cls.user2)
 
@@ -67,13 +67,13 @@ class NotificationTest(TestCase):
         response = self.client.get('/notification/')
         # Assert that the response is successful (200 HTTP Response Code)
         self.assertEqual(response.status_code, 200)
-        
+
         # Assert that the json of the notification is correct
         self.assertEqual(len(response.json()), 2)
         actual_json = json.dumps(response.json())
 
-        expected_reponse_json = json.dumps([self.data_to_list_representation(data) \
-            for data in self.test_data[:2]])
+        expected_reponse_json = json.dumps([self.data_to_list_represent(data)
+                                            for data in self.test_data[:2]])
         self.assertEqual(expected_reponse_json, actual_json)
 
     def test_get_notification_detail_by_id(self):
@@ -89,7 +89,8 @@ class NotificationTest(TestCase):
         actual_json1 = json.dumps(response.json())
 
         # Assert that the json of the notification is correct
-        self.assertEqual(self.data_to_detail_json(self.test_data[0]), actual_json1)
+        self.assertEqual(self.data_to_detail_json(self.test_data[0]),
+                         actual_json1)
 
         url = '/notification/' + str(self.test_data[1]["id"]) + '/'
         response = self.client.get(url)
@@ -98,7 +99,8 @@ class NotificationTest(TestCase):
         actual_json2 = json.dumps(response.json())
 
         # Assert that the json of the notification is correct
-        self.assertEqual(self.data_to_detail_json(self.test_data[1]), actual_json2)
+        self.assertEqual(self.data_to_detail_json(self.test_data[1]),
+                         actual_json2)
 
         # Assert that the two responses were not equal
         self.assertNotEqual(actual_json1, actual_json2)
@@ -109,7 +111,8 @@ class NotificationTest(TestCase):
     def test_post_valid_notification(self):
         """
         Attempts to post a valid notification payload and tests that the
-        request is successful and the response json is matches the request data
+        request is successful and the response json is matches the request
+        data
         """
         ret = Mock()
         ret.body = ''
@@ -139,10 +142,13 @@ class NotificationTest(TestCase):
             actual_json = json.dumps(response.json())
             # Set the created time to match: this field is dynamic
             self.test_data[2]["id"] = response.data["id"]
-            self.test_data[2]["created_time"] = response.data["time"]["created"]
-            self.test_data[2]["end_time"] = response.data["time"]["created"] + timedelta(seconds=3600)
-            self.test_data[2]["end_time"] = \
-                self.test_data[2]["end_time"].replace(microsecond=response.data["time"]["end"].microsecond)
+            self.test_data[2]["created_time"] = \
+                response.data["time"]["created"]
+            self.test_data[2]["end_time"] = response.data["time"]["created"] \
+                + timedelta(seconds=3600)
+            temp_ms = response.data["time"]["end"]
+            self.test_data[2]["end_time"] = self.test_data[2]["end_time"]\
+                .replace(microsecond=temp_ms.microsecond)
             expected_json = self.data_to_detail_json(self.test_data[2])
             self.assertEqual(expected_json, actual_json)
 
@@ -158,11 +164,13 @@ class NotificationTest(TestCase):
             # Assert that the response is successful (200 HTTP Response Code)
             self.assertEqual(response.status_code, 200)
             actual_json = response.json()
-            
+
             # Assert that the json of the notification is correct
             self.assertEqual(len(actual_json), 3)
 
-            expected_reponse_json = json.dumps([self.data_to_list_representation(data) for data in self.test_data[:3]])
+            expected_reponse_json = json.dumps([
+                self.data_to_list_represent(data)
+                for data in self.test_data[:3]])
             self.assertEqual(expected_reponse_json, json.dumps(actual_json))
 
     def test_post_malformed_notification(self):
@@ -214,12 +222,11 @@ class NotificationTest(TestCase):
                     data=invalid_payload,
                     content_type='application/json'
                 )
-            #import pdb; pdb.set_trace();
             self.assertEqual(response.status_code, 409)
             self.assertEqual(json.dumps(
                 {"error": "event with this netId is already in progress"}),
                 json.dumps(response.json()))
-            
+
             self.test_data[3]["host"] = self.user2
             valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
 
@@ -235,10 +242,13 @@ class NotificationTest(TestCase):
             actual_json = json.dumps(response.json())
             # Set the created time to match: this field is dynamic
             self.test_data[3]["id"] = response.data["id"]
-            self.test_data[3]["created_time"] = response.data["time"]["created"]
-            self.test_data[3]["end_time"] = response.data["time"]["created"] + timedelta(seconds=3600)
+            self.test_data[3]["created_time"] = \
+                response.data["time"]["created"]
             self.test_data[3]["end_time"] = \
-                self.test_data[3]["end_time"].replace(microsecond=response.data["time"]["end"].microsecond)
+                response.data["time"]["created"] + timedelta(seconds=3600)
+            temp_ms = response.data["time"]["end"]
+            self.test_data[3]["end_time"] = self.test_data[3]["end_time"]\
+                .replace(microsecond=temp_ms.microsecond)
 
             expected_json = self.data_to_detail_json(self.test_data[3])
             self.assertEqual(expected_json, actual_json)
@@ -293,7 +303,7 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
-    
+
     def test_patch_notification_id(self):
         """
         Attempts to patch a notification at id expect a 405
@@ -314,10 +324,7 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
-    
-    """
-    DELETE testes
-    """
+
     """
     DELETE testes
     """
@@ -330,7 +337,7 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
-    
+
     def test_delete_notification_id(self):
         """
         Attempts to patch a notification at id expect a 405
@@ -352,7 +359,8 @@ class NotificationTest(TestCase):
         notif_obj = Notification.objects.create(
             location=cls.test_data[index]["location"],
             event=cls.test_data[index]["event"],
-            end_time=datetime.strptime(cls.test_data[index]["end_time"]+"+0000", "%Y-%m-%dT%H:%M:%S.%fZ%z"),
+            end_time=datetime.strptime(cls.test_data[index]["end_time"]
+                                       + "+0000", "%Y-%m-%dT%H:%M:%S.%fZ%z"),
             food_served=cls.test_data[index]["food_served"],
             amount_of_food_left=cls.test_data[index]["amount_of_food_left"],
             bring_container=cls.test_data[index]["bring_container"],
@@ -366,14 +374,14 @@ class NotificationTest(TestCase):
         cls.test_data[index]["end_time"] = notif_obj.end_time
         cls.test_data[index]["host"] = user
 
-    def data_to_list_representation(self, data):
+    def data_to_list_represent(self, data):
         return {
                 "id": data["id"],
                 "netID": data["host"].username,
                 "event": data["event"],
                 "ended": data["ended"]
             }
-    
+
     def data_to_detail_json(self, data):
         return json.dumps(
             {
@@ -382,7 +390,8 @@ class NotificationTest(TestCase):
                 "location": data["location"],
                 "event": data["event"],
                 "time": {
-                    "created": data["created_time"].strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                    "created": data["created_time"]
+                    .strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                     "end": data["end_time"].strftime("%Y-%m-%dT%H:%M:%S.%fZ")
                 },
                 "bring_container": data["bring_container"],
@@ -395,7 +404,7 @@ class NotificationTest(TestCase):
                 "ended": data["ended"]
             },
         )
-    
+
     def data_to_payload_json(self, data, duration):
         return json.dumps(
             {

@@ -20,12 +20,13 @@ class AllergenSerializer(serializers.ModelSerializer):
 
         return allergen
 
+
 class NotificationListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('event', 'host', 'ended')
         read_only_fields = ['event', 'host', 'ended']
-    
+
     def to_representation(self, notif):
         user = User.objects.get(pk=notif.host.id)
         return {
@@ -90,7 +91,7 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 "Bad Request": "Post data must have a duration field"})
         if 'food' not in data or "served" not in data["food"] or "amount" \
-            not in data["food"]:
+                not in data["food"]:
             raise ValidationError({
                 "Bad Request": "Post data must have a food field"})
         if 'bring_container' not in data:
@@ -111,26 +112,26 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
 
         current_time = datetime.now().astimezone()
         end_time = current_time + timedelta(seconds=data["duration"])
-        #import pdb; pdb.set_trace();
         ret["created_time"] = current_time
         ret["end_time"] = end_time
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
             ret["allergens"] = data["food"]["allergens"]
-        if ret["location"] == "" or ret["location"] == None:
+        if ret["location"] == "" or ret["location"] is None:
             raise ValidationError({"location": "A location must be provided"})
-        if ret["event"] == "" or ret["event"] == None:
+        if ret["event"] == "" or ret["event"] is None:
             raise ValidationError({"event": "An event must be provided"})
-        if ret["food_served"] == "" or ret["food_served"] == None:
+        if ret["food_served"] == "" or ret["food_served"] is None:
             raise ValidationError(
                 {"food_served": "At least one food served is required"})
-        if ret["amount_of_food_left"] == "" or ret["amount_of_food_left"] == None:
+        if ret["amount_of_food_left"] == "" or \
+                ret["amount_of_food_left"] is None:
             raise ValidationError(
                 {"amount_of_food_left": "Food amounts must be specified"})
-        if ret["host_user_agent"] == "" or ret["host_user_agent"] == None:
+        if ret["host_user_agent"] == "" or ret["host_user_agent"] is None:
             raise ValidationError(
                 {"host_user_agent": "User agent information is required"})
-        
+
         return ret
 
 
