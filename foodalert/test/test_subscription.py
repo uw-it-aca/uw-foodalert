@@ -111,15 +111,14 @@ class SubscriptionTest(TestCase):
         original_data = self.client.get('/subscription/{}/'.format(sub.id))
         original_data = original_data.json()
         response = self.client.post('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(invalid_payload),
-                                     content_type='application/json')
+                                    data=json.dumps(invalid_payload),
+                                    content_type='application/json')
         self.assertEqual(405, response.status_code)
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
         after_data = self.client.get('/subscription/{}/'.format(sub.id))
         after_data = after_data.json()
         self.assertEqual(original_data, after_data)
-
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -253,13 +252,12 @@ class SubscriptionTest(TestCase):
         data = response.json()
         self.assertEqual(notif_state, data['notif_on'])
 
-
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_invalid_patch_subscription(self, email='', sms=''):
         """
-        Tests that email_verified and number_verified value cannot be changed from patch
-        request. Ensures that it is a read_only_field
+        Tests that email_verified and number_verified value cannot be changed
+        from patch request. Ensures that it is a read_only_field
         """
         sub = Subscription.objects.create(
             user=self.user,
@@ -324,8 +322,8 @@ class SubscriptionTest(TestCase):
 
         original_len = len(Subscription.objects.all())
         response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                    data=json.dumps(update),
-                                    content_type='application/json')
+                                     data=json.dumps(update),
+                                     content_type='application/json')
         self.assertEqual(200, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)
