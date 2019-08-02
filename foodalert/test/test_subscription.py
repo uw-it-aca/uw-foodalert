@@ -370,7 +370,8 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
-    def test_verified_unsubscribe(self, email="", sms="", email_verified="", number_verified="", notif_on=""):
+    def test_verified_unsubscribe(self, email="", sms="", email_verified="",
+                                  number_verified="", notif_on=""):
         """
         When notification type is emptied, its verified state should be false.
         If both verified states are false notif_on should be false too
