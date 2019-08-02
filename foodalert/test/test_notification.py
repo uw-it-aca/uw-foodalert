@@ -229,7 +229,7 @@ class NotificationTest(TestCase):
                 )
             self.assertEqual(response.status_code, 409)
             self.assertEqual(json.dumps(
-                {"error": "event with this netId is already in progress"}),
+                {"Conflict": "event with this netId is already in progress"}),
                 json.dumps(response.json()))
 
             self.test_data[3]["host"] = self.user2
@@ -263,14 +263,45 @@ class NotificationTest(TestCase):
         Attempts to post an incomplete payload that does not have the
         required fields
         """
+        proper_payload = \
+            json.loads(self.data_to_payload_json(self.test_data[3], 3600))
         incomplete_payload = {}
 
-        response = self.client.post(
+        for key in proper_payload:
+            incomplete_payload[key] = ""
+            response = self.client.post(
                 "/notification/",
                 data=json.dumps(incomplete_payload),
                 content_type='application/json'
             )
-        self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 400)
+
+        for key in proper_payload:
+            ret = Mock()
+            ret.body = ''
+            ret.status = 200
+            m2 = Mock()
+            m2.notifications = Mock()
+            m2.notifications.create = PropertyMock(return_value=ret)
+
+            m1 = Mock()
+            m1.notify = Mock()
+            m1.notify.services = PropertyMock(return_value=m2)
+
+            with patch.object(
+                            TwilioSender, 'c',
+                            new_callable=PropertyMock) as mock:
+                mock.return_value = m1
+                incomplete_payload[key] = proper_payload[key]
+                response = self.client.post(
+                    "/notification/",
+                    data=json.dumps(incomplete_payload),
+                    content_type='application/json'
+                )
+                if incomplete_payload != proper_payload:
+                    self.assertEqual(response.status_code, 400)
+                else:
+                    self.assertEqual(response.status_code, 201)
 
     def test_post_to_id(self):
         """

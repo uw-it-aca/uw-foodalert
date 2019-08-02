@@ -81,7 +81,8 @@ class NotificationList(generics.ListCreateAPIView):
                     data, status=status.HTTP_201_CREATED, headers=headers)
             else:
                 return Response(
-                    {"error": "event with this netId is already in progress"},
+                    {"Conflict":
+                        "event with this netId is already in progress"},
                     status=status.HTTP_409_CONFLICT)
         else:
             print("failed to post notification")
