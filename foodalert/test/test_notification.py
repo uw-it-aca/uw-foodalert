@@ -119,22 +119,7 @@ class NotificationTest(TestCase):
         request is successful and the response json is matches the request
         data
         """
-        ret = Mock()
-        ret.body = ''
-        ret.status = 200
-        m2 = Mock()
-        m2.notifications = Mock()
-        m2.notifications.create = PropertyMock(return_value=ret)
-
-        m1 = Mock()
-        m1.notify = Mock()
-        m1.notify.services = PropertyMock(return_value=m2)
-
-        with patch.object(
-                         TwilioSender, 'c',
-                         new_callable=PropertyMock) as mock:
-            mock.return_value = m1
-
+        with self.generate_twilio_mock() as mock:
             response = self.client.post(
                     "/notification/",
                     data=self.data_to_payload_json(self.test_data[2], 3600),
@@ -204,22 +189,7 @@ class NotificationTest(TestCase):
         """
         invalid_payload = self.data_to_payload_json(self.test_data[2], 3600)
 
-        ret = Mock()
-        ret.body = ''
-        ret.status = 200
-        m2 = Mock()
-        m2.notifications = Mock()
-        m2.notifications.create = PropertyMock(return_value=ret)
-
-        m1 = Mock()
-        m1.notify = Mock()
-        m1.notify.services = PropertyMock(return_value=m2)
-
-        with patch.object(
-                         TwilioSender, 'c',
-                         new_callable=PropertyMock) as mock:
-            mock.return_value = m1
-
+        with self.generate_twilio_mock() as mock:
             temp_client = Client()
             temp_client.force_login(self.user1)
             response = temp_client.post(
@@ -267,6 +237,13 @@ class NotificationTest(TestCase):
             json.loads(self.data_to_payload_json(self.test_data[3], 3600))
         incomplete_payload = {}
 
+        response = self.client.post(
+                "/notification/",
+                data=json.dumps(incomplete_payload),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 400)
+
         for key in proper_payload:
             incomplete_payload[key] = ""
             response = self.client.post(
@@ -277,21 +254,7 @@ class NotificationTest(TestCase):
             self.assertEqual(response.status_code, 400)
 
         for key in proper_payload:
-            ret = Mock()
-            ret.body = ''
-            ret.status = 200
-            m2 = Mock()
-            m2.notifications = Mock()
-            m2.notifications.create = PropertyMock(return_value=ret)
-
-            m1 = Mock()
-            m1.notify = Mock()
-            m1.notify.services = PropertyMock(return_value=m2)
-
-            with patch.object(
-                            TwilioSender, 'c',
-                            new_callable=PropertyMock) as mock:
-                mock.return_value = m1
+            with self.generate_twilio_mock() as mock:
                 incomplete_payload[key] = proper_payload[key]
                 response = self.client.post(
                     "/notification/",
@@ -459,3 +422,21 @@ class NotificationTest(TestCase):
                 }
             }
         )
+
+    def generate_twilio_mock(self):
+        ret = Mock()
+        ret.body = ''
+        ret.status = 200
+        m2 = Mock()
+        m2.notifications = Mock()
+        m2.notifications.create = PropertyMock(return_value=ret)
+
+        m1 = Mock()
+        m1.notify = Mock()
+        m1.notify.services = PropertyMock(return_value=m2)
+
+        mock = patch.object(TwilioSender, 'c',
+                            new_callable=PropertyMock)
+        mock.return_value = m1
+
+        return mock
