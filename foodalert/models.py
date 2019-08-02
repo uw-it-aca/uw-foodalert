@@ -12,8 +12,6 @@ class Notification(models.Model):
     food_served = models.CharField(max_length=100, blank=False)
     amount_of_food_left = models.CharField(max_length=100, blank=False)
     bring_container = models.BooleanField(default=False)
-    safe_foods = models.ManyToManyField(
-        'SafeFood', related_name='safe_foods', blank=True)
     allergens = models.ManyToManyField(
         'Allergen', related_name='allergens', blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,10 +38,6 @@ class Update(models.Model):
                                             blank=False,
                                             on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
-
-
-class SafeFood(models.Model):
-    name = models.CharField(max_length=30)
 
 
 class Allergen(models.Model):
