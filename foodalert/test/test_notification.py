@@ -253,8 +253,7 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 400)
 
-        with patch.object(settings, 'FOODALERT_USE_SMS',
-                          return_value="amazon"):
+        with patch.multiple(settings, FOODALERT_USE_SMS="amazon"):
             with self.generate_amazon_mock() as mock:
                 for key in proper_payload:
                     incomplete_payload[key] = proper_payload[key]
