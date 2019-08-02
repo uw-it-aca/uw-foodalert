@@ -8,7 +8,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
-from foodalert.models import Notification, Allergen
+from foodalert.models import Notification, Allergen, Subscription
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.sender import TwilioSender, Sender
@@ -42,6 +42,14 @@ class NotificationTest(TestCase):
 
         for allergen in cls.test_data["allergens"]:
             Allergen.objects.create(name=allergen)
+
+        Subscription.objects.create(
+            user=cls.user1, email=cls.test_data["subscription"]["email"],
+            email_verified=cls.test_data["subscription"]["email_verified"],
+            sms_number=cls.test_data["subscription"]["sms_number"],
+            number_verified=cls.test_data["subscription"]["number_verified"],
+            notif_on=cls.test_data["subscription"]["notif_on"]
+        )
 
         cls.test_data = cls.test_data["notifications"]
 

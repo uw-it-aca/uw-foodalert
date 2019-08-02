@@ -52,5 +52,12 @@
         "userAgent": "Test Browser Four",
         "ended": false
     }],
-    "allergens": ["wheat", "nuts", "fish", "eggs", "milk"]
+    "allergens": ["wheat", "nuts", "fish", "eggs", "milk"],
+    "subscription": {
+        "email": "testemail@test.com",
+        "email_verified": true,
+        "sms_number": "+16282462222",
+        "number_verified": true,
+        "notif_on": true
+    }
 }

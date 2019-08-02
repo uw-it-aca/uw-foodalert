@@ -90,14 +90,14 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         if 'duration' not in data or data['duration'] is None:
             raise ValidationError({
                 "Bad Request": "Post data must have a duration field"})
+        if not self.check_valid(data, "bring_container"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a bring_container field"})
         if not self.check_valid(data, "food") or \
            not self.check_valid(data["food"], "served") or \
            not self.check_valid(data["food"], "amount"):
             raise ValidationError({
                 "Bad Request": "Post data must have a proper food field"})
-        if not self.check_valid(data, "bring_container"):
-            raise ValidationError({
-                "Bad Request": "Post data must have a bring_container field"})
         if not self.check_valid(data, "host") or \
            not self.check_valid(data["host"], "userAgent"):
             raise ValidationError({

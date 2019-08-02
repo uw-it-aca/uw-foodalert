@@ -45,11 +45,7 @@ class NotificationList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            try:
-                notifs = \
-                    Notification.objects.all().filter(host=self.request.user)
-            except Notification.DoesNotExist:
-                notifs = {}
+            notifs = Notification.objects.all().filter(host=self.request.user)
             if any(notif.ended for notif in notifs) or not notifs:
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
@@ -63,10 +59,11 @@ class NotificationList(generics.ListCreateAPIView):
                 email_recipients = []
                 sms_recipients = []
                 for sub in Subscription.objects.all():
-                    if sub.email != '':
-                        email_recipients.append(sub.email)
-                    if sub.sms_number != '':
-                        sms_recipients.append(str(sub.sms_number))
+                    if sub.notif_on:
+                        if sub.email != '' and sub.email_verified:
+                            email_recipients.append(sub.email)
+                        if sub.sms_number != '' and sub.number_verified:
+                            sms_recipients.append(str(sub.sms_number))
 
                 message = Sender.format_message(data)
 
