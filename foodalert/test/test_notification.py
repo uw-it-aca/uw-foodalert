@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 from django.test import TestCase, Client
 from django.db import connection
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
 from rest_framework.test import APIRequestFactory, force_authenticate
@@ -11,7 +12,7 @@ import foodalert
 from foodalert.models import Notification, Allergen, Subscription
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
-from foodalert.sender import TwilioSender, Sender
+from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
 from unittest.mock import patch, Mock, PropertyMock
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
@@ -252,18 +253,20 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 400)
 
-        for key in proper_payload:
-            with self.generate_twilio_mock() as mock:
-                incomplete_payload[key] = proper_payload[key]
-                response = self.client.post(
-                    "/notification/",
-                    data=json.dumps(incomplete_payload),
-                    content_type='application/json'
-                )
-                if incomplete_payload != proper_payload:
-                    self.assertEqual(response.status_code, 400)
-                else:
-                    self.assertEqual(response.status_code, 201)
+        with patch.object(settings, 'FOODALERT_USE_SMS',
+                          return_value="amazon"):
+            with self.generate_amazon_mock() as mock:
+                for key in proper_payload:
+                    incomplete_payload[key] = proper_payload[key]
+                    response = self.client.post(
+                        "/notification/",
+                        data=json.dumps(incomplete_payload),
+                        content_type='application/json'
+                    )
+                    if incomplete_payload != proper_payload:
+                        self.assertEqual(response.status_code, 400)
+                    else:
+                        self.assertEqual(response.status_code, 201)
 
     def test_post_to_id(self):
         """
@@ -434,8 +437,13 @@ class NotificationTest(TestCase):
         m1.notify = Mock()
         m1.notify.services = PropertyMock(return_value=m2)
 
-        mock = patch.object(TwilioSender, 'c',
-                            new_callable=PropertyMock)
-        mock.return_value = m1
+        return patch.object(TwilioSender, 'c',
+                            new_callable=PropertyMock, return_value=m1)
 
-        return mock
+    def generate_amazon_mock(self):
+        ret = {
+            'failed': [],
+            'successful': ['test']
+        }
+        return patch.object(AmazonSNSProvider, 'send_message',
+                            return_value=ret)

@@ -81,10 +81,6 @@ class NotificationList(generics.ListCreateAPIView):
                     {"Conflict":
                         "event with this netId is already in progress"},
                     status=status.HTTP_409_CONFLICT)
-        else:
-            print("failed to post notification")
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(host=self.request.user)
