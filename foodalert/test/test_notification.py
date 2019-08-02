@@ -40,6 +40,11 @@ class NotificationTest(TestCase):
         with open(path) as data_file:
             cls.test_data = json.load(data_file)
 
+        for allergen in cls.test_data["allergens"]:
+            Allergen.objects.create(name=allergen)
+
+        cls.test_data = cls.test_data["notifications"]
+
         cls.create_notification_from_data(0, cls.user1)
         cls.create_notification_from_data(1, cls.user2)
 
