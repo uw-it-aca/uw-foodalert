@@ -78,26 +78,28 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
-        if 'netID' not in data:
+        if not self.check_valid(data, "netID"):
             raise ValidationError({
                 "Bad Request": "Post data must have a netID field"})
-        if 'location' not in data:
+        if 'location' not in data or data['location'] is None:
             raise ValidationError({
                 "Bad Request": "Post data must have a location field"})
-        if 'event' not in data:
+        if 'event' not in data or data['event'] is None:
             raise ValidationError({
                 "Bad Request": "Post data must have an event field"})
-        if 'duration' not in data:
+        if 'duration' not in data or data['duration'] is None:
             raise ValidationError({
                 "Bad Request": "Post data must have a duration field"})
-        if 'food' not in data or "served" not in data["food"] or "amount" \
-                not in data["food"]:
+        if not self.check_valid(data, "food") or \
+           not self.check_valid(data["food"], "served") or \
+           not self.check_valid(data["food"], "amount"):
             raise ValidationError({
-                "Bad Request": "Post data must have a food field"})
-        if 'bring_container' not in data:
+                "Bad Request": "Post data must have a proper food field"})
+        if not self.check_valid(data, "bring_container"):
             raise ValidationError({
                 "Bad Request": "Post data must have a bring_container field"})
-        if 'host' not in data or 'userAgent' not in data["host"]:
+        if not self.check_valid(data, "host") or \
+           not self.check_valid(data["host"], "userAgent"):
             raise ValidationError({
                 "Bad Request": "Post data must have a host.userAgent field"})
         ret = {
@@ -117,22 +119,11 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
             ret["allergens"] = data["food"]["allergens"]
-        if ret["location"] == "" or ret["location"] is None:
-            raise ValidationError({"location": "A location must be provided"})
-        if ret["event"] == "" or ret["event"] is None:
-            raise ValidationError({"event": "An event must be provided"})
-        if ret["food_served"] == "" or ret["food_served"] is None:
-            raise ValidationError(
-                {"food_served": "At least one food served is required"})
-        if ret["amount_of_food_left"] == "" or \
-                ret["amount_of_food_left"] is None:
-            raise ValidationError(
-                {"amount_of_food_left": "Food amounts must be specified"})
-        if ret["host_user_agent"] == "" or ret["host_user_agent"] is None:
-            raise ValidationError(
-                {"host_user_agent": "User agent information is required"})
 
         return ret
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None and obj[field] != ""
 
 
 class UpdateSerializer(serializers.ModelSerializer):
