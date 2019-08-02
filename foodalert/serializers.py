@@ -51,9 +51,10 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         allergen_data = validated_data.pop('allergens')
         notif = Notification.objects.create(**validated_data)
         notif.save()
-        for allergen in [] if not allergen_data else allergen_data:
-            entry = Allergen.objects.get(name=allergen)
-            notif.allergens.add(entry)
+        if allergen_data:
+            for allergen in allergen_data:
+                entry = Allergen.objects.get(name=allergen)
+                notif.allergens.add(entry)
         return notif
 
     def to_representation(self, notif):
@@ -81,13 +82,13 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         if not self.check_valid(data, "netID"):
             raise ValidationError({
                 "Bad Request": "Post data must have a netID field"})
-        if 'location' not in data or data['location'] is None:
+        if not self.check_valid(data, "location"):
             raise ValidationError({
                 "Bad Request": "Post data must have a location field"})
-        if 'event' not in data or data['event'] is None:
+        if not self.check_valid(data, "event"):
             raise ValidationError({
                 "Bad Request": "Post data must have an event field"})
-        if 'duration' not in data or data['duration'] is None:
+        if not self.check_valid(data, "duration"):
             raise ValidationError({
                 "Bad Request": "Post data must have a duration field"})
         if not self.check_valid(data, "bring_container"):
