@@ -156,6 +156,7 @@ class UpdateSerializer(serializers.ModelSerializer):
 
 class SubscriptionDetailSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
+    queryset = User.objects.all()
 
     class Meta:
         model = Subscription
@@ -164,19 +165,21 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ("number_verified", 'email_verified')
 
     def to_internal_value(self, data):
+        obj = self.context['view'].get_object()
         ret = {
+            'email_verified': obj.email_verified,
+            'number_verified': obj.number_verified
         }
         if 'email' in data:
             ret['email'] = data['email']
-            if data['email'] == '':
+            if data['email'] != obj.email:
                 ret['email_verified'] = False
         if 'sms_number' in data:
             ret['sms_number'] = data['sms_number']
-            if data['sms_number'] == '':
+            if data['sms_number'] != obj.sms_number:
                 ret['number_verified'] = False
-        if 'email_verified' in ret and 'number_verified' in ret:
-            if not ret['email_verified'] and not ret['number_verified']:
-                ret['notif_on'] = False
+        if not ret['email_verified'] and not ret['number_verified']:
+            ret['notif_on'] = False
         elif 'notif_on' in data:
             ret['notif_on'] = data['notif_on']
 

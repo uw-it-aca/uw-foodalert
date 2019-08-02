@@ -18,6 +18,17 @@ VALID_TEST_CASES = [
     param(email="testuser@test.com", sms=""),
 ]
 
+VERIFIED_TEST_CASES = [
+    param(email="testuser@test.com", sms="+41524204242",
+          email_verified=True, number_verified=True, notif_on=True),
+    param(email="testuser@test.com", sms="",
+          email_verified=True, number_verified=False, notif_on=True),
+    param(email="", sms="+41524204242",
+          email_verified=False, number_verified=True, notif_on=True),
+    param(email="", sms="",
+          email_verified=False, number_verified=False, notif_on=False)
+]
+
 INVALID_TEST_CASES = [
     param(sms="+41524204242"),
     param(email="testuser@test.com"),
@@ -357,28 +368,28 @@ class SubscriptionTest(TestCase):
         self.assertEqual(update['email'], sub.email)
         self.assertEqual(update['sms_number'], sub.sms_number)
 
-    @parameterized.expand(VALID_TEST_CASES)
+    @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
-    def test_verified_unsubscribe(self, email=None, sms=None):
+    def test_verified_unsubscribe(self, email="", sms="", email_verified="", number_verified="", notif_on=""):
         """
-        Patch request successfully empties both sms and email fields.
-        When input is emptied, its verified state should be false.
-        If both fields are empty, both verified states should be false
-        rendering notif_on to be false too
+        When notification type is emptied, its verified state should be false.
+        If both verified states are false notif_on should be false too
         """
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
             sms_number=sms,
-            email_verified=True,
-            number_verified=True,
-            notif_on=True
+            email_verified=email_verified,
+            number_verified=number_verified,
+            notif_on=notif_on
         )
 
         update = {
-            'email': '',
-            'sms_number': '',
         }
+        if email != "":
+            update['email'] = ""
+        if sms != "":
+            update['sms_number'] = ""
 
         original_len = len(Subscription.objects.all())
         response = self.client.patch('/subscription/{}/'.format(sub.id),
@@ -389,9 +400,9 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, new_len)
 
         sub = Subscription.objects.get(pk=sub.id)
-
-        self.assertEqual(update['email'], sub.email)
-        self.assertEqual(update['sms_number'], sub.sms_number)
+        data = response.json()
+        self.assertEqual(data['email'], sub.email)
+        self.assertEqual(data['sms_number'], sub.sms_number)
         self.assertFalse(sub.email_verified)
         self.assertFalse(sub.number_verified)
         self.assertFalse(sub.notif_on)
