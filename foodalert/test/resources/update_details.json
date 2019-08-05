@@ -1,0 +1,63 @@
+{
+    "notifications": [{
+        "id": null,
+        "location": "Test Location One",
+        "event": "Test Event One",
+        "created_time": null,
+        "end_time": "2019-09-13T19:25:40.440859Z",
+        "food_served": "Test Food Type One",
+        "amount_of_food_left": "Test Food Amount One",
+        "bring_container": false,
+        "allergens": ["wheat", "fish", "eggs"],
+        "host": null,
+        "userAgent": "Test Browser One",
+        "ended": false
+    }, {
+        "id": null,
+        "location": "Test Location Two",
+        "event": "Test Event Two",
+        "created_time": null,
+        "end_time": "2019-08-31T00:30:28.421213Z",
+        "food_served": "Test Food Type Two",
+        "amount_of_food_left": "Test Food Amount Two",
+        "bring_container": false,
+        "allergens": ["milk"],
+        "host": null,
+        "userAgent": "Test Browser Two",
+        "ended": true
+    }, {
+        "id": null,
+        "location": "Test Location Three",
+        "event": "Test Event Three",
+        "created_time": null,
+        "end_time": null,
+        "food_served": "Test Food Type Three",
+        "amount_of_food_left": "Test Food Amount Three",
+        "bring_container": false,
+        "allergens": [],
+        "host": null,
+        "userAgent": "Test Browser Three",
+        "ended": false
+    }, {
+        "id": null,
+        "location": "Test Location Four",
+        "event": "Test Event Four",
+        "created_time": null,
+        "end_time": null,
+        "food_served": "Test Food Type Four",
+        "amount_of_food_left": "Test Food Amount Four",
+        "bring_container": false,
+        "allergens": ["nuts", "eggs"],
+        "host": null,
+        "userAgent": "Test Browser Four",
+        "ended": false
+    }],
+    "allergens": ["wheat", "nuts", "fish", "eggs", "milk"],
+    "subscription": {
+        "email": "testemail@test.com",
+        "email_verified": true,
+        "sms_number": "+16282462222",
+        "number_verified": true,
+        "notif_on": true
+    }
+}

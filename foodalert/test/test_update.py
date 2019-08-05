@@ -13,6 +13,38 @@ from foodalert.views import UpdateDetail, UpdateList
 from foodalert.sender import TwilioSender
 from unittest.mock import patch, Mock, PropertyMock
 
+"""
+Stuff to test:
+Real points
+
+GET /update/
+    - Test the format is right when multiple updates are listed.
+GET /update/?parent_notification_id=<integer>
+    - Test the format is right when multiple updates are listed.
+    - Test that only the relevent updates are listed
+    - Test that only children of notificatons created by the user are accessible
+GET /update/<id>/
+    - Test that the right json is returned
+    - Test the case when the element with that id does not exist
+POST /update/
+    - Test if this action creates an update.
+    - Test if multiple updates are created porperly
+    - Test an update request with fields missing.
+    - Test that a update with ended: true ends and notification
+    - Test that an update with ended: false dosen't affect the notification
+    - Test that no more updates can be created under an ended notificaitons
+    - Test that ended: true always creates the same message.
+
+405 points
+
+POST /update/<id>
+PUT /update/
+PUT /update/<id>
+PATCH /update/
+PATCH /update/<id>
+DELETE /update/
+DELETE /update/<id>
+"""
 
 VALID_TEST_CASES = [
     param(text="test update"),
