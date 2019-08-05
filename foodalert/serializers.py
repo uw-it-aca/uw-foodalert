@@ -189,7 +189,11 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = ('id', 'netid')
+        fields = ('id', 'netid', 'email', 'sms_number')
+        extra_kwargs = {
+            'email': {'write_only':True},
+            'sms_number': {'write_only': True}
+        }
 
     def to_internal_value(self, data):
         return data
