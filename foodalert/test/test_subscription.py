@@ -436,3 +436,22 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len - 1, new_len)
         model_list = Subscription.objects.all().filter(pk=sub.id)
         self.assertEqual(0, len(model_list))
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_invalid_delete_subscription(self, email=None, sms=None):
+        """
+        Tests that delete requests cannot be made to '/subscription/{id}/'
+        endpoint. Returns a 405 status code
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+
+        original_len = len(Subscription.objects.all())
+        response = self.client.delete('/subscription/')
+        self.assertEqual(405, response.status_code)
+        new_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, new_len)
