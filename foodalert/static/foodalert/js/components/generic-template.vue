@@ -1,5 +1,6 @@
 <template>
     <div class="foodalert">
+
         <router-view :subId="this.subId">
 
         </router-view>
@@ -121,8 +122,9 @@ export default {
         line-height: 1.375;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
-        padding-top: 18px;
+        padding-top: 32px;
         padding-bottom: 2px;
+        margin-top: 0px !important;
     }
 
     .foodalert .h3 {
@@ -132,6 +134,8 @@ export default {
       color: #484848;
       -moz-osx-font-smoothing: grayscale;
       padding-top: 24px;
+      padding-bottom: 16px;
+      margin-bottom: 0px;
     }
 
     .foodalert .standard-placeholder::placeholder {
@@ -142,11 +146,13 @@ export default {
     }
 
     .foodalert .standard-label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1.375;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
         margin-top: 24px;
     }
+
+
 </style>

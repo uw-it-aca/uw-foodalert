@@ -19,8 +19,8 @@
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
-                <b-col md="8" class="page-content-padding">
-                  <h1 id="standard-heading" class="pt-4 pb-2"><slot name="heading"></slot></h1>
+                <b-col md="7" class="page-content-padding">
+                  <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2"><slot name="heading"></slot></h1>
                   <div id="standard-body"><slot name="body"></slot></div>
                   <slot name="navigation"></slot>
                 </b-col>
@@ -81,14 +81,14 @@ export default {
     }
     #standard-heading {
         font-size: 32px;
-        line-height: 1.125em;
+        line-height: 1.375em;
         font-weight: 600;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
     #standard-body {
         font-size:16px;
-        line-height: 1.375;
+        line-height: 1.375em;
         font-weight: 400;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;

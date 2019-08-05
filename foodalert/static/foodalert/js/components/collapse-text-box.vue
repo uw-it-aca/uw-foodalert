@@ -19,8 +19,8 @@
 <style>
     .collapse-text-box .custom-text-box {
         border-radius: 10px 10px 10px 10px;
-        background-color: #e9e9e9;
-        color: #707070;
+        background-color: #F1F0F0;
+        color: #484848;
         padding: 1rem;
         margin-top: 10px;
     }

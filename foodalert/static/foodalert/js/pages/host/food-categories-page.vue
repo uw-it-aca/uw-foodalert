@@ -52,7 +52,7 @@
             </b-form-group>
         </template>
         <template #navigation>
-            <div style="margin-top: 32px">
+            <div class="mt-5">
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
                    <b-button class="mb-3" type="submit" block size="lg" variant="primary" @click="getNextPage()" :disabled="selected.length == 0">Continue</b-button>
