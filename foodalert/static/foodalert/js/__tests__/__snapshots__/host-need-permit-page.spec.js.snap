@@ -45,10 +45,10 @@ exports[`Need Permit Page renders correctly 1`] = `
         class="row justify-content-center"
       >
         <div
-          class="page-content-padding col-md-8"
+          class="page-content-padding col-md-7"
         >
           <h1
-            class="pt-4 pb-2"
+            class="pt-md-5 pt-3 pb-2"
             id="standard-heading"
           >
             
@@ -95,7 +95,7 @@ exports[`Need Permit Page renders correctly 1`] = `
           </div>
            
           <div
-            style="margin-top: 32px;"
+            class="mt-5"
           >
             <div
               class="row justify-content-between"
