@@ -191,7 +191,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         model = Subscription
         fields = ('id', 'netid', 'email', 'sms_number')
         extra_kwargs = {
-            'email': {'write_only':True},
+            'email': {'write_only': True},
             'sms_number': {'write_only': True}
         }
 
