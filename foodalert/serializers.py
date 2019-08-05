@@ -195,7 +195,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        sub, created = Subscription.objects.get_or_create(   # delete??
+        sub = Subscription.objects.create(
             user=self.context.get('request').user)
 
         sub.email = validated_data["email"]
