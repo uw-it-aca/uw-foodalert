@@ -16,7 +16,7 @@ class SafeFoodSerializer(serializers.ModelSerializer):
 class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Allergen
-        fields = ['name']
+        fields = ['id', 'name']
 
     def create(self, validated_data):
         allergen = Allergen.objects.create()
@@ -154,21 +154,20 @@ class UpdateSerializer(serializers.ModelSerializer):
             return ret
 
 
-class SubscriptionSerializerList(serializers.ModelSerializer):
+class SubscriptionDetailSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
 
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
                   'email_verified', 'notif_on')
+        read_only_fields = ('number_verified', 'email_verified', 'notif_on')
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    sms_number = PhoneNumberField(allow_blank=True)
-
     class Meta:
         model = Subscription
-        fields = ('id', 'netid', 'sms_number', 'email', 'notif_on')
+        fields = ('id', 'netid')
 
     def to_internal_value(self, data):
         ret = {
@@ -192,7 +191,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         else:
             ret['notif_on'] = False
 
-        return ret
+        return data
 
     def create(self, validated_data):
         sub, created = Subscription.objects.get_or_create(
