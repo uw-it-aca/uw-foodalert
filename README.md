@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/uw-it-aca/uw-foodalert.svg?branch=develop)](https://travis-ci.org/uw-it-aca/uw-foodalert)
+[![Build Status](https://api.travis-ci.com/uw-it-aca/uw-foodalert.svg?branch=develop)](https://travis-ci.org/uw-it-aca/uw-foodalert)
 [![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/uw-foodalert/badge.svg?branch=develop)](https://coveralls.io/github/uw-it-aca/uw-foodalert?branch=develop)
 
 # Foodalert

@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 from django.test import TestCase, Client
 from django.test.utils import override_settings
 from django.db import connection
@@ -56,17 +57,15 @@ class SMSTest(TestCase):
             'location': 'UW Campus',
             'event': 'UW Event',
             'time': {
-                'ended': '2018-09-13T19:23:06.508534Z'
+                'end': datetime.strptime('2018-09-13T19:23:06.508534',
+                                         "%Y-%m-%dT%H:%M:%S.%f"),
             },
             'food': {
                 'served': 'Food',
                 'amount': 'One box',
                 'allergens': ['wheat']
             },
-            'bringContainers': True,
-            'foodServiceInfo': {
-                'safeToShareFood': ['pasta']
-            },
+            'bring_container': True,
         }
         expected = ("A new Hungry Husky Event: 'UW Event' has been posted! \n"
                     "Food Served: Food\n"
