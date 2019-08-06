@@ -8,6 +8,7 @@ from foodalert.models import Notification, Update, SafeFood, Allergen,\
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
+
 class IsSelf(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to read or
@@ -32,7 +33,8 @@ class AuditReadOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS) and
-                is_member_of_group(request.user, audit_group)
+        is_member_of_group(request.user, audit_group)
+
 
 class HostRead(permissions.BasePermission):
     """
@@ -41,7 +43,8 @@ class HostRead(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS) and
-                is_member_of_group(request.user, create_group)
+        is_member_of_group(request.user, create_group)
+
 
 class HostCreate(permissions.BasePermission):
     """
@@ -50,4 +53,4 @@ class HostCreate(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method == "POST") and
-                is_member_of_group(request.user, create_group)
+        is_member_of_group(request.user, create_group)

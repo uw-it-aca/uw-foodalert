@@ -59,5 +59,33 @@
         "sms_number": "+16282462222",
         "number_verified": true,
         "notif_on": true
-    }
+    },
+    "updates": [
+        {
+            "id": null,
+            "text": "Test update one",
+            "parent_notification_id": 0,
+            "created_time": null
+        },
+        {
+            "id": null,
+            "text": "Test update two",
+            "parent_notification_id": 0,
+            "created_time": null
+        },
+        {
+            "id": null,
+            "text": "Test update three",
+            "parent_notification_id": 0,
+            "created_time": null,
+            "ended": true
+        },
+        {
+            "id": null,
+            "text": "Test update four",
+            "parent_notification_id": 1,
+            "created_time": null,
+            "ended": true
+        }
+    ]
 }

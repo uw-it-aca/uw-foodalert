@@ -1,8 +1,9 @@
 import os
 import json
+from unittest.mock import patch, Mock, PropertyMock
+
 from django.test import TestCase, Client
 from parameterized import parameterized, param
-from django.db import connection, transaction
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 
@@ -11,7 +12,8 @@ from foodalert.models import Update, Notification
 from foodalert.serializers import UpdateSerializer
 from foodalert.views import UpdateDetail, UpdateList
 from foodalert.sender import TwilioSender
-from unittest.mock import patch, Mock, PropertyMock
+from foodalert.test.test_utils import create_notification_from_data, \
+    create_update_from_data
 
 """
 Stuff to test:
@@ -22,7 +24,8 @@ GET /update/
 GET /update/?parent_notification_id=<integer>
     - Test the format is right when multiple updates are listed.
     - Test that only the relevent updates are listed
-    - Test that only children of notificatons created by the user are accessible
+    - Test that only children of notificatons created by the user are
+      accessible
 GET /update/<id>/
     - Test that the right json is returned
     - Test the case when the element with that id does not exist
@@ -46,14 +49,9 @@ DELETE /update/
 DELETE /update/<id>
 """
 
-VALID_TEST_CASES = [
-    param(text="test update"),
-]
-
-INVALID_TEST_CASES = [
-    param(parent_notification=""),
-    param(),
-]
+RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
+                            'test',
+                            'resources')
 
 
 class UpdateTest(TestCase):
@@ -63,35 +61,45 @@ class UpdateTest(TestCase):
         Sets up a mock user for testing API calls
         to the update endpoint
         """
-        cls.user = User.objects.create_user(username="testuser",
-                                            email="testuser@test.com",
-                                            password="test")
+        cls.user1 = User.objects.create_user(username="testuser_one",
+                                             email="testuser_one@test.com",
+                                             password="test")
+        cls.user2 = User.objects.create_user(username="testuser_two",
+                                             email="testuser_two@test.com",
+                                             password="test")
+        cls.user3 = User.objects.create_user(username="testuser_three",
+                                             email="testuser_three@test.com",
+                                             password="test")
 
-        cls.notification = Notification.objects.create(
-            location="UW Campus",
-            event="UW Event",
-            food_served="Food",
-            amount_of_food_left="No Food",
-            host=cls.user,
-            host_user_agent="browser")
+        # Load test_data mock resource
+        path = os.path.join(RESOURCE_DIR, 'update_details.json')
+        with open(path) as data_file:
+            cls.test_data = json.load(data_file)
+
+        create_notification_from_data(cls.test_data["notifications"][0],
+                                      cls.user1)
+        create_notification_from_data(cls.test_data["notifications"][1],
+                                      cls.user2)
+
+        create_update_from_data(
+            cls.test_data["updates"][0],
+            cls.test_data["notifications"]
+        )
+        create_update_from_data(
+            cls.test_data["updates"][3],
+            cls.test_data["notifications"]
+        )
 
     @classmethod
     def tearDownClass(cls):
-        cls.user.delete()
-        cls.notification.delete()
+        User.objects.all().delete()
+        Notification.objects.all().delete()
 
-    @transaction.atomic
     def setUp(self):
         self.client = Client()
         self.client.force_login(self.user)
 
-    @transaction.atomic
-    def tearDown(self):
-        Update.objects.all().delete()
-
-    @parameterized.expand(VALID_TEST_CASES)
-    @transaction.atomic
-    def test_valid_update_models(self, text=None):
+    """def test_valid_update_models(self, text=None):
         update = Update.objects.create(
             text=text,
             parent_notification=self.notification
@@ -99,8 +107,6 @@ class UpdateTest(TestCase):
         self.assertEqual(update.text, text)
         self.assertEqual(update.parent_notification, self.notification)
 
-    @parameterized.expand(INVALID_TEST_CASES)
-    @transaction.atomic
     def test_invalid_update_models(self, text=None, parent_notification=None):
         with self.assertRaises((IntegrityError, ValueError)):
             update = Update.objects.create(
@@ -108,7 +114,6 @@ class UpdateTest(TestCase):
                 parent_notification=parent_notification
             )
 
-    @transaction.atomic
     def test_create_update(self):
         valid_payload = {
             "text": "test update",
@@ -143,7 +148,6 @@ class UpdateTest(TestCase):
             model = Update.objects.get(parent_notification=self.notification)
             self.assertEqual(model.text, valid_payload["text"])
 
-    @transaction.atomic
     def test_read_update(self):
         update = Update.objects.create(
             text="test update",
@@ -153,4 +157,4 @@ class UpdateTest(TestCase):
         self.assertEqual(200, response.status_code)
         data = response.data[0]
         self.assertEqual(data["text"], "test update")
-        self.assertEqual(data["parent_notification"], self.notification.id)
+        self.assertEqual(data["parent_notification"], self.notification.id)"""

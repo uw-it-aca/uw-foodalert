@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import datetime, timedelta
+from unittest.mock import patch, Mock, PropertyMock
 from django.test import TestCase, Client
 from django.db import connection
 from django.conf import settings
@@ -13,7 +14,8 @@ from foodalert.models import Notification, Allergen, Subscription
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
-from unittest.mock import patch, Mock, PropertyMock
+
+from foodalert.test.test_utils import create_notification_from_data
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
                             'test',
@@ -54,8 +56,8 @@ class NotificationTest(TestCase):
 
         cls.test_data = cls.test_data["notifications"]
 
-        cls.create_notification_from_data(0, cls.user1)
-        cls.create_notification_from_data(1, cls.user2)
+        create_notification_from_data(cls.test_data[0], cls.user1)
+        create_notification_from_data(cls.test_data[1], cls.user2)
 
     def setUp(self):
         # Set up a test notification with arbitrary field values
@@ -63,12 +65,10 @@ class NotificationTest(TestCase):
         self.client.force_login(self.user3)
         self.test_data[2]["host"] = self.user3
 
-    def tearDown(self):
-        Notification.objects.all().delete()
-
     @classmethod
     def tearDownClass(cls):
         User.objects.all().delete()
+        Notification.objects.all().delete()
 
     """
     GET testes
@@ -353,26 +353,6 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
-
-    @classmethod
-    def create_notification_from_data(cls, index, user):
-        notif_obj = Notification.objects.create(
-            location=cls.test_data[index]["location"],
-            event=cls.test_data[index]["event"],
-            end_time=datetime.strptime(cls.test_data[index]["end_time"]
-                                       + "+0000", "%Y-%m-%dT%H:%M:%S.%fZ%z"),
-            food_served=cls.test_data[index]["food_served"],
-            amount_of_food_left=cls.test_data[index]["amount_of_food_left"],
-            bring_container=cls.test_data[index]["bring_container"],
-            host=user,
-            host_user_agent=cls.test_data[index]["userAgent"],
-            ended=cls.test_data[index]["ended"])
-        for allergen in cls.test_data[index]["allergens"]:
-            notif_obj.allergens.add(Allergen.objects.get(name=allergen))
-        cls.test_data[index]["id"] = notif_obj.id
-        cls.test_data[index]["created_time"] = notif_obj.created_time
-        cls.test_data[index]["end_time"] = notif_obj.end_time
-        cls.test_data[index]["host"] = user
 
     def data_to_list_represent(self, data):
         return {
