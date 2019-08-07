@@ -4,11 +4,15 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+            var netid = '{{ netid }}';
+        </script>
     </head>
     <body>
         <div id="app">
             <router-view
-                :sub-id="{{subscription}}"></router-view>
+                :sub-id="{{subscription}}">
+            </router-view>
         </div>
 
         {% render_bundle 'base' %}
@@ -22,5 +26,5 @@
             {% render_bundle 'audit' %}
         {% endif %}
         {% render_bundle 'main' %}
-    </body>
+    </body>  
 </html>
