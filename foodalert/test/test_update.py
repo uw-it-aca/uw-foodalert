@@ -121,7 +121,7 @@ class UpdateTest(TestCase):
              self.data_to_list_represent(self.test_data["updates"][1]),
              self.data_to_list_represent(self.test_data["updates"][3])]
         self.assertEqual(expected_reponse_json, response.json())
-    
+
     def test_get_update_list_query_args(self):
         """
         Compares the test data to what is actually returned from GET with
@@ -155,7 +155,7 @@ class UpdateTest(TestCase):
             response.json()["created_time"]
         )
         self.assertEqual(expected_reponse_json, response.json())
-    
+
     def test_get_update_detail_by_bad_id(self):
         """
         Compares the test data to what is actually returned from GET
@@ -164,7 +164,7 @@ class UpdateTest(TestCase):
         response = self.client.get("/updates/100/")
 
         self.assertEqual(response.status_code, 404)
-    
+
     def test_post_valid_update(self):
         """
         Attempts to post a valid notification payload and tests that the
@@ -176,22 +176,21 @@ class UpdateTest(TestCase):
         with generate_twilio_mock() as mock:
             response = self.client.post("/updates/", payload)
             self.assertEqual(response.status_code, 201)
-            
+
             self.test_data["updates"][4]["id"] = response.json()["id"]
             expected_reponse_json = self.data_to_detail_represent(
                 self.test_data["updates"][4],
                 response.json()["created_time"]
             )
-            
+
             self.assertEqual(expected_reponse_json, response.json())
-            
+
             response2 = self.client.get("/updates/{0}/".format(
                 self.test_data["updates"][4]["id"]
             ))
 
             self.assertEqual(response2.status_code, 200)
             self.assertEqual(response.json(), response2.json())
-
 
     """
     def test_create_update(self):
@@ -238,16 +237,22 @@ class UpdateTest(TestCase):
         data = response.data[0]
         self.assertEqual(data["text"], "test update")
         self.assertEqual(data["parent_notification"], self.notification.id)"""
-    
+
     def data_to_list_represent(self, data):
-        parent_notification_id = self.test_data["notifications"][data["parent_notification_id"]]["id"]
+        parent_notification_id = \
+            self.test_data["notifications"][
+                data["parent_notification_id"]
+            ]["id"]
         return {
             "id": data["id"],
             "parent_notification_id": parent_notification_id
         }
 
     def data_to_detail_represent(self, data, created_time):
-        parent_notification_id = self.test_data["notifications"][data["parent_notification_id"]]["id"]
+        parent_notification_id = \
+            self.test_data["notifications"][
+                data["parent_notification_id"]
+            ]["id"]
         return {
             "id": data["id"],
             "netID": Notification.objects.get(
@@ -259,16 +264,18 @@ class UpdateTest(TestCase):
         }
 
     def data_to_payload_represent(self, data, ended=None):
-        parent_notification_id = self.test_data["notifications"][data["parent_notification_id"]]["id"]
+        parent_notification_id = \
+            self.test_data["notifications"][
+                data["parent_notification_id"]
+            ]["id"]
         payload = {
             "text": data["text"],
             "parent_notification_id": parent_notification_id
         }
-        
+
         if "ended" in data:
             payload["ended"] = data["ended"]
         if ended is not None:
             payload["ended"] = ended
-        
-        return payload
 
+        return payload

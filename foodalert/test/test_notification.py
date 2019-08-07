@@ -403,5 +403,3 @@ class NotificationTest(TestCase):
                 }
             }
         )
-
-    

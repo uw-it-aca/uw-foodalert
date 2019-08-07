@@ -96,11 +96,13 @@ class UpdateDetail(generics.RetrieveAPIView):
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
-    
+
     def get_queryset(self):
         qs = super().get_queryset()
         if 'parent_notification' in self.request.query_params:
-            return qs.filter(parent_notification=Notification.objects.get(pk=self.request.query_params['parent_notification']))
+            return qs.filter(parent_notification=Notification.objects.get(
+                pk=self.request.query_params['parent_notification']
+            ))
         return qs
 
     def get_serializer_class(self):
@@ -127,7 +129,9 @@ class UpdateList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            parent = Notification.objects.get(pk=data['parent_notification_id'])
+            parent = Notification.objects.get(
+                pk=data['parent_notification_id']
+            )
             if not settings.DEBUG:
                 if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,

@@ -35,6 +35,7 @@ def create_update_from_data(data, notifs):
     data["id"] = update_data.id
     data["created_time"] = update_data.created_time
 
+
 def generate_twilio_mock():
     ret = Mock()
     ret.body = ''
@@ -49,6 +50,7 @@ def generate_twilio_mock():
 
     return patch.object(TwilioSender, 'c',
                         new_callable=PropertyMock, return_value=m1)
+
 
 def generate_amazon_mock():
     ret = {
