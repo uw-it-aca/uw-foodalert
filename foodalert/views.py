@@ -9,8 +9,9 @@ from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
-        UpdateSerializer, SubscriptionSerializer, AllergenSerializer, \
-        SubscriptionDetailSerializer, NotificationListSerializer
+        UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
+        SubscriptionDetailSerializer, SubscriptionSerializer, \
+        NotificationListSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -89,13 +90,24 @@ class NotificationList(generics.ListCreateAPIView):
 @method_decorator(login_required(), name='dispatch')
 class UpdateDetail(generics.RetrieveAPIView):
     queryset = Update.objects.all()
-    serializer_class = UpdateSerializer
+    serializer_class = UpdateDetailSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
-    serializer_class = UpdateSerializer
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'parent_notification' in self.request.query_params:
+            return qs.filter(parent_notification=Notification.objects.get(pk=self.request.query_params['parent_notification']))
+        return qs
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return UpdateListSerializer
+        else:
+            return UpdateDetailSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -115,7 +127,7 @@ class UpdateList(generics.ListCreateAPIView):
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
 
-            parent = Notification.objects.get(pk=data['parent_notification'])
+            parent = Notification.objects.get(pk=data['parent_notification_id'])
             if not settings.DEBUG:
                 if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,

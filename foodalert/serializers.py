@@ -127,19 +127,40 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         return field in obj and obj[field] is not None and obj[field] != ""
 
 
-class UpdateSerializer(serializers.ModelSerializer):
+class UpdateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification', 'created_time')
+        fields = ['id', 'parent_notification']
 
-        def to_internal_value(self, data):
-            ret = {
-                'text': data['text']
-            }
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "parent_notification_id": update.parent_notification.id
+        }
 
-            ret['parent_notification'] = Notification.objects.get(
-                                         pk=data['parent_notification'])
-            return ret
+
+class UpdateDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Update
+        fields = ('id', 'text', 'parent_notification', 'created_time')
+
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "netID": update.parent_notification.host.username,
+            "text": update.text,
+            "parent_notification_id": update.parent_notification.id,
+            "created_time": update.created_time
+        }
+
+    def to_internal_value(self, data):
+        ret = {
+            'text': data['text']
+        }
+
+        ret['parent_notification'] = Notification.objects.get(
+                                        pk=data['parent_notification_id'])
+        return ret
 
 
 class SubscriptionDetailSerializer(serializers.ModelSerializer):
