@@ -40,7 +40,7 @@
             </b-modal>
 
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <p>Now let's get some details about your food and event so you can send a notification.</p>
+              <p class="mb-0 pb-0">Now let's get some details about your food and event so you can send a notification.</p>
                 <label class="standard-label" for="event-name">Event name</label>
                 <b-form-input id="event-name" aria-describedby="Name of the event"
                     v-model="form.event" required placeholder="FIUTS weekly club meeting" class="standard-placeholder" size="lg"></b-form-input>
@@ -61,15 +61,15 @@
                 <b-form-input id="location" aria-describedby="Location of the event"
                     v-model="form.location" required placeholder="HUB 130" class="standard-placeholder" size="lg"></b-form-input>
 
-                <h2 class="h2 mt-4 mb-0">Food specifications</h2>
-                <h5 class="h3">Does the food contain allergens?</h5>
-                <p class="mb-0">It's ok if you are unsure, just select to the best of your knowledge.</p>
+                <h2 class="h2 pb-0 mb-0">Food specifications</h2>
+                <h5 class="h3 mb-2 pb-0">Does the food contain allergens?</h5>
+                <p class="mb-3">It's ok if you are unsure, just select to the best of your knowledge.</p>
 
                 <b-container class="px-0">
                     <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
                         <b-row>
-                            <b-col v-for="allergen in allergens" :key="allergen" xl="4" cols="6">
-                                <b-form-checkbox :value="allergen">
+                            <b-col v-for="allergen in allergens" :key="allergen"  cols="6">
+                                <b-form-checkbox :value="allergen" class="mb-2">
                                     <span>
                                         {{allergen}}
                                     </span>
@@ -92,7 +92,7 @@
                 </b-container>
 
 
-                <h2 class="h2 mt-4">Preview</h2>
+                <h2 class="h2">Preview</h2>
                 <preview-box>
                     <span v-if="form.food_served">{{form.food_served}}</span>
                     <span v-else>Hot Indian buffet food</span> from
@@ -126,11 +126,12 @@
                     <pre class="m-0">{{ form }}</pre>
                 </b-card!-->
 
-                <div style="margin-top: 32px">
+                <div class="mt-5">
                     <b-row align-h="between">
+                        <b-col md="5" lg="4" order-md="2">
+                        </b-col>
                         <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
                         </b-col>
-                        <b-col md="5" lg="4" order-md="1"><b-button class="mb-3" type="reset" block variant="outline-secondary" size="lg" style="white-space: nowrap;">Reset</b-button></b-col>
                     </b-row>
                 </div>
             </b-form>
