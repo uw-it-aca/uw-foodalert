@@ -24,6 +24,20 @@ var router = new VueRouter({
     },
 })
 
+if (netid != undefined) {
+    var _netID = netid
+    Vue.mixin({
+        data: function() {
+            return {
+                get netID() {
+                    return _netID;
+                }
+            }
+        }
+    })
+    netid = undefined
+}
+
 export var vm = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app',
