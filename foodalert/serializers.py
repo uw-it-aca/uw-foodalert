@@ -154,13 +154,34 @@ class UpdateDetailSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
+        if not self.check_valid(data, "text"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid text field"})
+        if not self.check_valid(data, "parent_notification_id"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid" +
+                "parent_notification_id field"})
+
         ret = {
             'text': data['text']
         }
 
-        ret['parent_notification'] = Notification.objects.get(
-                                        pk=data['parent_notification_id'])
+        try:
+            ret['parent_notification'] = Notification.objects.get(
+                                            pk=data['parent_notification_id'])
+        except Notification.DoesNotExist:
+            raise ValidationError({
+                "Bad Request": "Bad notification ID"})
+        if (ret['parent_notification'].ended):
+            raise ValidationError({
+                "Bad Request": "Parent notification has already ended"})
+        if 'ended' in data and data['ended']:
+            ret['parent_notification'].ended = True
+            ret['parent_notification'].save()
         return ret
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None
 
 
 class SubscriptionDetailSerializer(serializers.ModelSerializer):

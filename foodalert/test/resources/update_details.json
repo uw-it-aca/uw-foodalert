@@ -24,7 +24,7 @@
         "allergens": ["milk"],
         "host": null,
         "userAgent": "Test Browser Two",
-        "ended": true
+        "ended": false
     }, {
         "id": null,
         "location": "Test Location Three",
@@ -85,14 +85,35 @@
             "text": "Test update four",
             "parent_notification_id": 1,
             "created_time": null,
-            "ended": true
+            "ended": false
         },
         {
             "id": null,
             "text": "Test update five",
             "parent_notification_id": 0,
             "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update six",
+            "parent_notification_id": 0,
+            "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update seven",
+            "parent_notification_id": 1,
+            "created_time": null,
             "ended": true
+        },
+        {
+            "id": null,
+            "text": "Test update eight",
+            "parent_notification_id": 1,
+            "created_time": null,
+            "ended": false
         }
     ]
 }

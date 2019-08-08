@@ -33,14 +33,13 @@ GET /updates/<id>/
     - Test the case when the element with that id does not exist - X
 POST /updates/
     - Test if this action creates an update. - X
-    - Test if multiple updates are created porperly
-    - Test an update request with fields missing.
-    - Test that a update with ended: true ends and notification
-    - Test that an update with ended: false dosen't affect the notification
-    - Test that no more updates can be created under an ended notificaitons
-    - Test that ended: true always creates the same message.
+    - Test an update request with fields missing. - X
+    - Test that a update with ended: true ends and notification - X
+    - Test that an update with ended: false dosen't affect the notification - X
+    - Test that no more updates can be created under an ended notificaitons - X
+    - Test that ended: true always creates the same message. - TODO:: TBD
     - Test that a user can not create a update under a diffrent users
-      notification.
+      notification. - TODO:: Need to add perm class
 
 405 endpoints
 
@@ -192,51 +191,74 @@ class UpdateTest(TestCase):
             self.assertEqual(response2.status_code, 200)
             self.assertEqual(response.json(), response2.json())
 
-    """
-    def test_create_update(self):
-        valid_payload = {
-            "text": "test update",
-            "parent_notification": self.notification.id
-        }
-        original_len = len(Update.objects.all())
+    def test_post_malformed_update(self):
+        payload = self.data_to_payload_represent(self.test_data["updates"][5])
 
-        ret = Mock()
-        ret.body = ''
-        ret.status = 200
-        m2 = Mock()
-        m2.notifications = Mock()
-        m2.notifications.create = PropertyMock(return_value=ret)
-
-        m1 = Mock()
-        m1.notify = Mock()
-        m1.notify.services = PropertyMock(return_value=m2)
-
-        with patch.object(
-                         TwilioSender,
-                         'c',
-                         new_callable=PropertyMock) as mock:
-            mock.return_value = m1
-
-            response = self.client.post('/updates/',
-                                        data=json.dumps(valid_payload),
-                                        content_type='application/json')
-            self.assertEqual(201, response.status_code)
-            application/json
-            updated_len = len(Update.objects.all())
-            self.assertEqual(updated_len - original_len, 1)
-            model = Update.objects.get(parent_notification=self.notification)
-            self.assertEqual(model.text, valid_payload["text"])
-
-    def test_read_update(self):
-        update = Update.objects.create(
-            text="test update",
-            parent_notification=self.notification
-        )
         response = self.client.get('/updates/')
-        self.assertEqual(200, response.status_code)
-        data = response.data[0]
-        self.assertEqual(data["text"], "test update")
-        self.assertEqual(data["parent_notification"], self.notification.id)"""
+        self.assertEqual(response.status_code, 200)
+
+        init_len = len(response.json())
+
+        with generate_twilio_mock() as mock:
+            response = self.client.post("/updates/", {})
+            self.assertEqual(response.status_code, 400)
+            response = self.client.get('/updates/')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.json()), init_len)
+
+            invalid_payload = payload
+            del invalid_payload["text"]
+
+            response = self.client.post("/updates/", invalid_payload)
+            self.assertEqual(response.status_code, 400)
+            response = self.client.get('/updates/')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.json()), init_len)
+
+            invalid_payload = payload
+            del invalid_payload["parent_notification_id"]
+
+            response = self.client.post("/updates/", invalid_payload)
+            self.assertEqual(response.status_code, 400)
+            response = self.client.get('/updates/')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.json()), init_len)
+
+    def test_post_ends_notif(self):
+        payload = self.data_to_payload_represent(self.test_data["updates"][6])
+
+        self.assertIs(
+                Notification.objects.get(
+                    pk=payload["parent_notification_id"]
+                ).ended,
+                False
+            )
+
+        with generate_twilio_mock() as mock:
+            response = self.client.post("/updates/", payload)
+            self.assertEqual(response.status_code, 201)
+
+            self.assertIs(
+                Notification.objects.get(
+                    pk=payload["parent_notification_id"]
+                ).ended,
+                True
+            )
+
+            len_updates = len(Update.objects.all())
+            payload = self.data_to_payload_represent(
+                self.test_data["updates"][7]
+            )
+            response = self.client.post("/updates/", payload)
+            self.assertEqual(response.status_code, 400)
+
+            self.assertIs(
+                Notification.objects.get(
+                    pk=payload["parent_notification_id"]
+                ).ended,
+                True
+            )
+            self.assertIs(len_updates, len(Update.objects.all()))
 
     def data_to_list_represent(self, data):
         parent_notification_id = \
