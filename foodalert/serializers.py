@@ -127,19 +127,61 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         return field in obj and obj[field] is not None and obj[field] != ""
 
 
-class UpdateSerializer(serializers.ModelSerializer):
+class UpdateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification', 'created_time')
+        fields = ['id', 'parent_notification']
 
-        def to_internal_value(self, data):
-            ret = {
-                'text': data['text']
-            }
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "parent_notification_id": update.parent_notification.id
+        }
 
+
+class UpdateDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Update
+        fields = ('id', 'text', 'parent_notification', 'created_time')
+
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "netID": update.parent_notification.host.username,
+            "text": update.text,
+            "parent_notification_id": update.parent_notification.id,
+            "created_time": update.created_time
+        }
+
+    def to_internal_value(self, data):
+        if not self.check_valid(data, "text"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid text field"})
+        if not self.check_valid(data, "parent_notification_id"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid" +
+                "parent_notification_id field"})
+
+        ret = {
+            'text': data['text']
+        }
+
+        try:
             ret['parent_notification'] = Notification.objects.get(
-                                         pk=data['parent_notification'])
-            return ret
+                                            pk=data['parent_notification_id'])
+        except Notification.DoesNotExist:
+            raise ValidationError({
+                "Bad Request": "Bad notification ID"})
+        if (ret['parent_notification'].ended):
+            raise ValidationError({
+                "Bad Request": "Parent notification has already ended"})
+        if 'ended' in data and data['ended']:
+            ret['parent_notification'].ended = True
+            ret['parent_notification'].save()
+        return ret
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None
 
 
 class SubscriptionDetailSerializer(serializers.ModelSerializer):

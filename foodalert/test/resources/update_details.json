@@ -1,0 +1,119 @@
+{
+    "notifications": [{
+        "id": null,
+        "location": "Test Location One",
+        "event": "Test Event One",
+        "created_time": null,
+        "end_time": "2019-09-13T19:25:40.440859Z",
+        "food_served": "Test Food Type One",
+        "amount_of_food_left": "Test Food Amount One",
+        "bring_container": false,
+        "allergens": ["wheat", "fish", "eggs"],
+        "host": null,
+        "userAgent": "Test Browser One",
+        "ended": false
+    }, {
+        "id": null,
+        "location": "Test Location Two",
+        "event": "Test Event Two",
+        "created_time": null,
+        "end_time": "2019-08-31T00:30:28.421213Z",
+        "food_served": "Test Food Type Two",
+        "amount_of_food_left": "Test Food Amount Two",
+        "bring_container": false,
+        "allergens": ["milk"],
+        "host": null,
+        "userAgent": "Test Browser Two",
+        "ended": false
+    }, {
+        "id": null,
+        "location": "Test Location Three",
+        "event": "Test Event Three",
+        "created_time": "2019-07-31T00:30:28.421213Z",
+        "end_time": null,
+        "food_served": "Test Food Type Three",
+        "amount_of_food_left": "Test Food Amount Three",
+        "bring_container": false,
+        "allergens": [],
+        "host": null,
+        "userAgent": "Test Browser Three",
+        "ended": false
+    }, {
+        "id": null,
+        "location": "Test Location Four",
+        "event": "Test Event Four",
+        "created_time": null,
+        "end_time": null,
+        "food_served": "Test Food Type Four",
+        "amount_of_food_left": "Test Food Amount Four",
+        "bring_container": false,
+        "allergens": ["nuts", "eggs"],
+        "host": null,
+        "userAgent": "Test Browser Four",
+        "ended": false
+    }],
+    "allergens": ["wheat", "nuts", "fish", "eggs", "milk"],
+    "subscription": {
+        "email": "testemail@test.com",
+        "email_verified": true,
+        "sms_number": "+16282462222",
+        "number_verified": true,
+        "notif_on": true
+    },
+    "updates": [
+        {
+            "id": null,
+            "text": "Test update one",
+            "parent_notification_id": 0,
+            "created_time": null
+        },
+        {
+            "id": null,
+            "text": "Test update two",
+            "parent_notification_id": 0,
+            "created_time": null
+        },
+        {
+            "id": null,
+            "text": "Test update three",
+            "parent_notification_id": 0,
+            "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update four",
+            "parent_notification_id": 1,
+            "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update five",
+            "parent_notification_id": 0,
+            "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update six",
+            "parent_notification_id": 0,
+            "created_time": null,
+            "ended": false
+        },
+        {
+            "id": null,
+            "text": "Test update seven",
+            "parent_notification_id": 1,
+            "created_time": null,
+            "ended": true
+        },
+        {
+            "id": null,
+            "text": "Test update eight",
+            "parent_notification_id": 1,
+            "created_time": null,
+            "ended": false
+        }
+    ]
+}
