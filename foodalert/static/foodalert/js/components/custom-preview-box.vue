@@ -13,9 +13,9 @@
 
 <style>
     .custom-preview-box {
-        border-radius: 18px 18px 6px 18px;
-        background-color: #e9e9e9;
-        color: #707070;
+        border-radius: 18px 18px 18px 18px;
+        background-color: #F1F0F0;
+        color: #484848;
         padding: 1rem;
         margin-bottom: 1rem;
     }

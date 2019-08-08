@@ -1,6 +1,6 @@
 <template>
     <generic-page>
-        <template #heading>
+        <template tabindex="0" #heading>
             Responsibilities
         </template>
         <template #body>
@@ -21,7 +21,7 @@
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
-                    class="mt-3"
+                    class="mt-2"
                     value="cond2">
                     <span>
                         Potentially hazardous food must be kept at proper temperatures and have been sitting at room temperature for no more than <strong>four hours</strong>.
@@ -31,7 +31,7 @@
                 <collapse-text-box bid="cond2-info">
                     Information is missing
                 </collapse-text-box>
-                <div style="margin-top: 32px">
+                <div class="mt-5">
                     <b-row align-h="between">
                         <b-col md="4" lg="3" order-md="2">
                         <b-button class="mb-3" size="lg" type="submit" block variant="primary" :disabled="selected.length != 2">Agree</b-button>

@@ -127,62 +127,109 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         return field in obj and obj[field] is not None and obj[field] != ""
 
 
-class UpdateSerializer(serializers.ModelSerializer):
+class UpdateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Update
-        fields = ('text', 'parent_notification', 'created_time')
+        fields = ['id', 'parent_notification']
 
-        def to_internal_value(self, data):
-            ret = {
-                'text': data['text']
-            }
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "parent_notification_id": update.parent_notification.id
+        }
 
+
+class UpdateDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Update
+        fields = ('id', 'text', 'parent_notification', 'created_time')
+
+    def to_representation(self, update):
+        return {
+            "id": update.id,
+            "netID": update.parent_notification.host.username,
+            "text": update.text,
+            "parent_notification_id": update.parent_notification.id,
+            "created_time": update.created_time
+        }
+
+    def to_internal_value(self, data):
+        if not self.check_valid(data, "text"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid text field"})
+        if not self.check_valid(data, "parent_notification_id"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid" +
+                "parent_notification_id field"})
+
+        ret = {
+            'text': data['text']
+        }
+
+        try:
             ret['parent_notification'] = Notification.objects.get(
-                                         pk=data['parent_notification'])
-            return ret
+                                            pk=data['parent_notification_id'])
+        except Notification.DoesNotExist:
+            raise ValidationError({
+                "Bad Request": "Bad notification ID"})
+        if (ret['parent_notification'].ended):
+            raise ValidationError({
+                "Bad Request": "Parent notification has already ended"})
+        if 'ended' in data and data['ended']:
+            ret['parent_notification'].ended = True
+            ret['parent_notification'].save()
+        return ret
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None
 
 
 class SubscriptionDetailSerializer(serializers.ModelSerializer):
     sms_number = PhoneNumberField(allow_blank=True)
+    queryset = User.objects.all()
 
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
                   'email_verified', 'notif_on')
-        read_only_fields = ('number_verified', 'email_verified', 'notif_on')
+        read_only_fields = ("number_verified", 'email_verified')
+
+    def to_internal_value(self, data):
+        obj = self.context['view'].get_object()
+        ret = {
+            'email_verified': obj.email_verified,
+            'number_verified': obj.number_verified
+        }
+        if 'email' in data:
+            ret['email'] = data['email']
+            if data['email'] != obj.email:
+                ret['email_verified'] = False
+        if 'sms_number' in data:
+            ret['sms_number'] = data['sms_number']
+            if data['sms_number'] != obj.sms_number:
+                ret['number_verified'] = False
+        if not ret['email_verified'] and not ret['number_verified']:
+            ret['notif_on'] = False
+        elif 'notif_on' in data:
+            ret['notif_on'] = data['notif_on']
+
+        return ret
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = ('id', 'netid')
-
-    def to_internal_value(self, data):
-        ret = {
-            'email': '',
-            'sms_number': '',
-            'notif_on': '',
+        fields = ('id', 'netid', 'email', 'sms_number')
+        extra_kwargs = {
+            'email': {'write_only': True},
+            'sms_number': {'write_only': True}
         }
 
-        if 'email' in data:
-            ret['email'] = data['email']
-        else:
-            ret['email'] = ''
-
-        if 'sms_number' in data:
-            ret['sms_number'] = data['sms_number']
-        else:
-            ret['sms_number'] = ''
-
-        if 'notif_on' in data:
-            ret['notif_on'] = data['notif_on']
-        else:
-            ret['notif_on'] = False
-
+    def to_internal_value(self, data):
         return data
 
     def create(self, validated_data):
-        sub, created = Subscription.objects.get_or_create(
+        sub = Subscription.objects.create(
             user=self.context.get('request').user)
 
         sub.email = validated_data["email"]

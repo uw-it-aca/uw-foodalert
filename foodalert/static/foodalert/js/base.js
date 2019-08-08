@@ -1,6 +1,7 @@
 import GenericTemplate from './components/generic-template.vue';
 import NotFoundTemplate from './components/not-found-template.vue';
 import UnauthzTemplate from './components/unauthz-template.vue';
+import UnrecoverablePage from './pages/unrecoverable-page.vue';
 import TestTemplate from './pages/test-template.vue';
 window.vueData = {};
 
@@ -10,6 +11,7 @@ window.vueData.routes = [
         component: GenericTemplate,
         children: [
             { path: "test-template", component: TestTemplate, name: "test-template" },
+            { path: "unrecoverable", component: UnrecoverablePage, name: "unrecoverable", props: true },
             { path: "a/audit", component: UnauthzTemplate, name: "a-audit" },
             { path: "h/welcome", component: UnauthzTemplate, name: "h-welcome" },
             { path: "h/food-service", component: UnauthzTemplate, name: "h-food-service" },

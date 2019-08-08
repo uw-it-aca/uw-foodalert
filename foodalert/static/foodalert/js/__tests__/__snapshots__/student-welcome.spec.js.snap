@@ -65,10 +65,10 @@ exports[`Welcome Page renders correctly 1`] = `
           class="row justify-content-center"
         >
           <div
-            class="page-content-padding col-md-8"
+            class="page-content-padding col-md-7"
           >
             <h1
-              class="pt-4 pb-2"
+              class="pt-md-5 pt-3 pb-2"
               id="standard-heading"
             >
               
@@ -91,7 +91,7 @@ exports[`Welcome Page renders correctly 1`] = `
                 class="row justify-content-between"
               >
                 <div
-                  class="col-md-6 col-lg-4 order-md-2"
+                  class="col-md-6 col-lg-5 order-md-2"
                 >
                   <button
                     class="btn mb-3 btn-primary btn-lg btn-block"
@@ -103,7 +103,7 @@ exports[`Welcome Page renders correctly 1`] = `
                 </div>
                  
                 <div
-                  class="col-md-5 col-lg-4 order-md-1"
+                  class="col-md-6 col-lg-5 order-md-1"
                 />
               </div>
             </div>
