@@ -1,6 +1,6 @@
 <template>
     <div class="foodalert">
-        <router-view :subId="this.subId">
+        <router-view>
 
         </router-view>
         <!-- To load the images before they need to be displayed
@@ -14,9 +14,7 @@
 
 <script>
 export default {
-    props: {
-        subId: Number,
-    },
+
 }
 </script>
 

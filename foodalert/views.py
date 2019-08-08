@@ -192,9 +192,6 @@ class HomeView(TemplateView):
         context['netid'] = self.request.user
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
-        context['subscription'], created = Subscription.objects.get_or_create(
-            user=self.request.user)
-        context['subscription'] = context['subscription'].pk
         return context
 
 
