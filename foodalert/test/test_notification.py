@@ -132,7 +132,8 @@ class NotificationTest(TestCase):
             end_time = datetime.now().astimezone() + timedelta(seconds=3600)
             response = self.client.post(
                     "/notification/",
-                    data=self.data_to_payload_json(self.test_data[2], end_time.isoformat()),
+                    data=self.data_to_payload_json(self.test_data[2],
+                                                   end_time.isoformat()),
                     content_type='application/json'
                 )
 
@@ -178,7 +179,8 @@ class NotificationTest(TestCase):
                     timedelta(seconds=3600)).isoformat()
         temp_location = self.test_data[2]["location"]
         self.test_data[2]["location"] = None
-        invalid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+        invalid_payload = self.data_to_payload_json(self.test_data[2],
+                                                    end_time)
         self.test_data[2]["location"] = temp_location
 
         response = self.client.post(

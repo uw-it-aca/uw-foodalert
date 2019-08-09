@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import dateutil.parser 
+import dateutil.parser
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -117,7 +117,6 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         }
 
         ret["created_time"] = datetime.now().astimezone()
-        #import pdb; pdb.set_trace()
         ret["end_time"] = dateutil.parser.parse(data["end_time"])
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
