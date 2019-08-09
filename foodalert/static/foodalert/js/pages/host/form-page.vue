@@ -55,7 +55,9 @@
 
                 <label class="standard-label" for="end-time">End time (when food service will end)</label>
                 <b-form-input id="end-time" aria-describedby="End time of the event"
-                    v-model="form.end_time" required type="time" class="standard-placeholder" size="lg"></b-form-input>
+                    v-model="form.end_time" required type="time" class="standard-placeholder" size="lg" v-if="isMobile"></b-form-input>
+                <ctk-date-time-picker id="end-time" v-model="form.end_time"
+                    class="standard-placeholder" format="hh:mm a" formatted="hh:mm a" :onlyTime="true" :noLabel="true" v-else></ctk-date-time-picker>
 
                 <label class="standard-label" for="location">Location</label>
                 <b-form-input id="location" aria-describedby="Location of the event"
@@ -143,12 +145,15 @@
     import Cookies from 'js-cookie';
     import GenericPage from "../../components/generic-page.vue";
     import PreviewBox from "../../components/custom-preview-box.vue";
+    import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+    import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
     const axios = require('axios');
 
     export default {
         components: {
             "generic-page": GenericPage,
             "preview-box": PreviewBox,
+            "ctk-date-time-picker": VueCtkDateTimePicker
         },
         data() {
             return {
@@ -165,7 +170,8 @@
                     ended: false
                 },
                 allergens: [],
-                show: true
+                show: true,
+                isMobile: false
             }
         },
         methods: {
@@ -187,42 +193,57 @@
                 this.form.host_user_agent = "",
                 this.form.ended = false
             },
-            formatedTimeToStr(){
-                var hours = parseInt(this.form.end_time.substr(0,2));
-                var mins = parseInt(this.form.end_time.substr(3,2));
-                var time_ext = "AM"
-                if (hours == 0) {
-                    hours = 12;
-                } else if (hours == 12) {
-                    time_ext = "PM"
-                } else if (hours > 12) {
-                    hours -= 12;
-                    time_ext = "PM"
+            formatedTimeToStr() {
+                if (this.isMobile) {
+                    var hours = parseInt(this.form.end_time.substr(0,2));
+                    var mins = parseInt(this.form.end_time.substr(3,2));
+                    var time_ext = "AM"
+                    if (hours == 0) {
+                        hours = 12;
+                    } else if (hours == 12) {
+                        time_ext = "PM"
+                    } else if (hours > 12) {
+                        hours -= 12;
+                        time_ext = "PM"
+                    }
+                    return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext;
                 }
-                return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext;
+                return this.form.end_time;
             },
             submitAndNext(){
+                var splitTime = this.form.end_time.split(/\:/);
+                splitTime[0] = parseInt(splitTime[0])
+                // Converting split time to 24 hours format
+                if (splitTime[1].split(" ").length != 1) {
+                    splitTime[0] += (splitTime[1].split(" ")[1] == "PM") ? 12 : 0
+                    splitTime[1] = splitTime[1].split(" ")[0]
+                }
+                splitTime[1] = parseInt(splitTime[0])
+
+                var datetime = new Date();
+                datetime.setHours(splitTime[0], splitTime[1])
+                if (datetime < new Date()) {
+                    datetime.setDate(datetime.getDate() + 1)
+                }
+
                 var data = {
-                     "location": this.form.location,
-                     "event": this.form.event,
-                     "time": {
-                         "created": new Date(),
-                         "ended": new Date((new Date()).toString().substring(0,16) + this.form.end_time + ":00")
-                     },
-                     "food": {
-                         "served": this.form.food_served,
-                         "amount": this.form.amount_of_food_left,
-                         "allergens": this.form.allergens
-                     },
-                     "bringContainers": this.form.bring_container,
-                     "foodServiceInfo": {
-                         "safeToShareFood": this.form.safe_foods
-                     },
-                     "host": {
-                         "hostID": this._uid,
-                         "userAgent": navigator.userAgent
-                     }
+                    "netID": this.netID,
+                    "location": this.form.location,
+                    "event": this.form.event,
+                    "end_time": datetime.toISOString(),
+                    "food": {
+                        "served": this.form.food_served,
+                        "amount": this.form.amount_of_food_left,
+                        "allergens": this.form.allergens
+                    },
+                    "bring_container": this.form.bring_container,
+                    "host": {
+                        "hostID": this._uid,
+                        "userAgent": navigator.userAgent
+                    }
                 };
+
+                console.log(data)
 
                 var csrftoken = Cookies.get('csrftoken');
                 var headers = {
@@ -251,6 +272,12 @@
                 this.allergens = []
                 result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
             });
+            this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(" ")
+            if (this.form.end_time.length < 8)
+                this.form.end_time = "0" + this.form.end_time
         },
+        mounted() {
+            this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        }
     }
 </script>

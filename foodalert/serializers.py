@@ -1,4 +1,7 @@
 from datetime import datetime, timedelta
+
+import dateutil.parser
+
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
@@ -88,9 +91,9 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         if not self.check_valid(data, "event"):
             raise ValidationError({
                 "Bad Request": "Post data must have an event field"})
-        if not self.check_valid(data, "duration"):
+        if not self.check_valid(data, "end_time"):
             raise ValidationError({
-                "Bad Request": "Post data must have a duration field"})
+                "Bad Request": "Post data must have a end_time field"})
         if not self.check_valid(data, "bring_container"):
             raise ValidationError({
                 "Bad Request": "Post data must have a bring_container field"})
@@ -113,10 +116,8 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
             'host_user_agent': data["host"]["userAgent"]
         }
 
-        current_time = datetime.now().astimezone()
-        end_time = current_time + timedelta(seconds=data["duration"])
-        ret["created_time"] = current_time
-        ret["end_time"] = end_time
+        ret["created_time"] = datetime.now().astimezone()
+        ret["end_time"] = dateutil.parser.parse(data["end_time"])
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
             ret["allergens"] = data["food"]["allergens"]
