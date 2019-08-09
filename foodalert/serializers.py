@@ -196,25 +196,28 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ("number_verified", 'email_verified')
 
     def to_internal_value(self, data):
-        obj = self.context['view'].get_object()
-        ret = {
-            'email_verified': obj.email_verified,
-            'number_verified': obj.number_verified
-        }
-        if 'email' in data:
-            ret['email'] = data['email']
-            if data['email'] != obj.email:
-                ret['email_verified'] = False
-        if 'sms_number' in data:
-            ret['sms_number'] = data['sms_number']
-            if data['sms_number'] != obj.sms_number:
-                ret['number_verified'] = False
-        if not ret['email_verified'] and not ret['number_verified']:
-            ret['notif_on'] = False
-        elif 'notif_on' in data:
-            ret['notif_on'] = data['notif_on']
-
-        return ret
+        r = self.context['request']._request.method
+        if(r == 'PATCH' or r == 'PUT'):
+            obj = self.context['view'].get_object()
+            ret = {
+                'email_verified': obj.email_verified,
+                'number_verified': obj.number_verified
+            }
+            if 'email' in data:
+                ret['email'] = data['email']
+                if data['email'] != obj.email:
+                    ret['email_verified'] = False
+            if 'sms_number' in data:
+                ret['sms_number'] = data['sms_number']
+                if data['sms_number'] != obj.sms_number:
+                    ret['number_verified'] = False
+            if not ret['email_verified'] and not ret['number_verified']:
+                ret['notif_on'] = False
+            elif 'notif_on' in data:
+                ret['notif_on'] = data['notif_on']
+            return ret
+        else:
+            return data
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
@@ -225,18 +228,3 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             'email': {'write_only': True},
             'sms_number': {'write_only': True}
         }
-
-    def to_internal_value(self, data):
-        return data
-
-    def create(self, validated_data):
-        sub = Subscription.objects.create(
-            user=self.context.get('request').user)
-
-        sub.email = validated_data["email"]
-        sub.sms_number = validated_data["sms_number"]
-        sub.notif_on = False
-
-        sub.save()
-
-        return sub
