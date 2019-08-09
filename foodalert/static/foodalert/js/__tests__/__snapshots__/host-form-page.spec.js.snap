@@ -136,7 +136,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 End time:
                 
                           <span>
-                            --:-- --
+                            03:26 PM
                           </span>
                            
                           <br />
@@ -246,14 +246,55 @@ exports[`Food Categories Page redirect to update 1`] = `
                 End time (when food service will end)
               </label>
                
-              <input
-                aria-describedby="End time of the event"
-                aria-required="true"
-                class="standard-placeholder form-control form-control-lg"
+              <div
+                class="date-time-picker standard-placeholder"
                 id="end-time"
-                required="required"
-                type="time"
-              />
+              >
+                <div
+                  class="field flex align-center has-value no-label"
+                  data-v-a0144ed0=""
+                >
+                  <input
+                    class="field-input"
+                    data-v-a0144ed0=""
+                    id="end-time"
+                    placeholder="Select date & time"
+                    readonly="readonly"
+                    type="text"
+                  />
+                  <!---->
+                  <button
+                    class="custom-button flex align-center justify-content-center field-clear-button round"
+                    data-v-02b1f8d2=""
+                    data-v-a0144ed0=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="custom-button-effect"
+                      data-v-02b1f8d2=""
+                      style="background-color: rgba(0, 0, 0, 0.54);"
+                    />
+                    <span
+                      class="custom-button-content flex align-center justify-content-center flex-1"
+                      data-v-02b1f8d2=""
+                      style="color: rgba(0, 0, 0, 0.54); fill: rgba(0, 0, 0, 0.54);"
+                    >
+                      <span
+                        class="fs-16"
+                        data-v-02b1f8d2=""
+                        data-v-a0144ed0=""
+                      >
+                        
+      ✕
+    
+                      </span>
+                    </span>
+                  </button>
+                </div>
+                <!---->
+                <!---->
+              </div>
                
               <label
                 class="standard-label"
@@ -393,7 +434,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 End time:
                 
                 <span>
-                  --:-- --
+                  03:26 PM
                 </span>
                  
                 <br />
@@ -594,7 +635,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 End time:
                 
                           <span>
-                            --:-- --
+                            03:26 PM
                           </span>
                            
                           <br />
@@ -704,14 +745,55 @@ exports[`Food Categories Page renders correctly 1`] = `
                 End time (when food service will end)
               </label>
                
-              <input
-                aria-describedby="End time of the event"
-                aria-required="true"
-                class="standard-placeholder form-control form-control-lg"
+              <div
+                class="date-time-picker standard-placeholder"
                 id="end-time"
-                required="required"
-                type="time"
-              />
+              >
+                <div
+                  class="field flex align-center has-value no-label"
+                  data-v-a0144ed0=""
+                >
+                  <input
+                    class="field-input"
+                    data-v-a0144ed0=""
+                    id="end-time"
+                    placeholder="Select date & time"
+                    readonly="readonly"
+                    type="text"
+                  />
+                  <!---->
+                  <button
+                    class="custom-button flex align-center justify-content-center field-clear-button round"
+                    data-v-02b1f8d2=""
+                    data-v-a0144ed0=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="custom-button-effect"
+                      data-v-02b1f8d2=""
+                      style="background-color: rgba(0, 0, 0, 0.54);"
+                    />
+                    <span
+                      class="custom-button-content flex align-center justify-content-center flex-1"
+                      data-v-02b1f8d2=""
+                      style="color: rgba(0, 0, 0, 0.54); fill: rgba(0, 0, 0, 0.54);"
+                    >
+                      <span
+                        class="fs-16"
+                        data-v-02b1f8d2=""
+                        data-v-a0144ed0=""
+                      >
+                        
+      ✕
+    
+                      </span>
+                    </span>
+                  </button>
+                </div>
+                <!---->
+                <!---->
+              </div>
                
               <label
                 class="standard-label"
@@ -851,7 +933,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 End time:
                 
                 <span>
-                  --:-- --
+                  03:26 PM
                 </span>
                  
                 <br />
