@@ -104,7 +104,7 @@ class SubscriptionTest(TestCase):
         new_len = len(Subscription.objects.all())
         self.assertEqual(1, new_len - original_len)
         model = Subscription.objects.get(user=self.user)
-        self.assertEqual("testuser@test.com", model.netid)
+        self.assertEqual(self.user.username, model.netid)
         self.assertEqual(email, model.email)
         self.assertEqual(sms, model.sms_number)
 
@@ -154,7 +154,7 @@ class SubscriptionTest(TestCase):
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        self.assertEqual("testuser@test.com", data[0]['netid'])
+        self.assertEqual(self.user.username, data[0]['netID'])
         self.assertEqual(sub.id, data[0]["id"])
         # get response should just return id and netid
         data_len = len(data[0])

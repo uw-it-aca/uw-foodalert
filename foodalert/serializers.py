@@ -228,3 +228,22 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             'email': {'write_only': True},
             'sms_number': {'write_only': True}
         }
+
+    def to_representation(self, update):
+        r = self.context['request']._request.method
+        if r == 'POST':
+            return {
+                "id": update.id,
+                "netID": update.netid,
+                "email": update.email,
+                "email_verified": update.email_verified,
+                "sms_number": str(update.sms_number),
+                "number_verified": update.number_verified,
+                "notif_on": update.notif_on,
+            }
+        else:
+            return {
+                "id": update.id,
+                "netID": update.netid,
+            }
+        

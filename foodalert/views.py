@@ -185,6 +185,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
+    serializer_class = SubscriptionSerializer
     def get_queryset(self):
         queryset = Subscription.objects.all()
         netid = self.request.query_params.get('netid', None)
@@ -209,12 +210,6 @@ class SubscriptionList(generics.ListCreateAPIView):
             print("failed to post update")
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return SubscriptionSerializer
-        else:
-            return SubscriptionDetailSerializer
 
 
 @method_decorator(login_required(), name='dispatch')
