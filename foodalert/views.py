@@ -186,6 +186,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
     serializer_class = SubscriptionSerializer
+
     def get_queryset(self):
         queryset = Subscription.objects.all()
         netid = self.request.query_params.get('netid', None)

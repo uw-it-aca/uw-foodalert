@@ -246,4 +246,3 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                 "id": update.id,
                 "netID": update.netid,
             }
-        
