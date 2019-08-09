@@ -23,14 +23,20 @@ describe('Food Categories Page', function () {
 		axios.post.mockImplementation(() => Promise.resolve({data: [{name: "allergne_1"}, {name: "allergen_2"}]}));
 		var wrapper = mount(FormPage, {
 		});
-		expect(wrapper.element).toMatchSnapshot();
-	});
-
-	test('redirect to update', function () {
-		axios.get.mockImplementation(() => Promise.resolve({data: [{ended: true}]}));
-		axios.post.mockImplementation(() => Promise.resolve({data: []}));
-		var wrapper = mount(FormPage, {
-		});
+		//var temp_date = new Date('2019-05-14T11:01:58.135Z')
+		//jest.spyOn(global, 'Date').mockImplementation(() => temp_date)
+		wrapper.setData({form:{
+			location: "",
+			event: "",
+			end_time: "11:11 PM",
+			food_served: "",
+			amount_of_food_left: "",
+			bring_container: false,
+			safe_foods: [],
+			allergens: [],
+			host_user_agent: "",
+			ended: false
+		}})
 		expect(wrapper.element).toMatchSnapshot();
 	});
 
