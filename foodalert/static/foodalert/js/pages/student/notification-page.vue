@@ -39,6 +39,7 @@
                 type="text" 
                 label="Enter a new phone number" 
                 description="Carrier rates may apply"
+                :subid="subid"
                 :serverData="{ text: notif_info.sms_number, verified: notif_info.number_verified }"
                 :requestUpdate="requestUpdate"
                 :resendVerif="()=>{return 1}" visible>
@@ -54,6 +55,7 @@
                 accord_id="email" 
                 type="email" 
                 label="Enter an email"
+                :subid="subid"
                 :serverData="{ text: notif_info.email, verified: notif_info.email_verified }"
                 :requestUpdate="requestUpdate"
                 :resendVerif="()=>{return 1}">
@@ -94,31 +96,44 @@
                 } , //fetched from server
                 checked: false,
                 disableNotif: false,
+                subid: undefined,
             }
         },
         methods: {
+            getSubID(response) {
+                this.subid = response.data[0].id;
+                return this.subid;
+            },
             requestUpdate() {
                 // TODO: change this function to make a axios request to the correct id endpoint
-                axios.get("/subscription/1/")
-                .then((response) => {
-                    this.notif_info = response.data;
-                    // Control the b-collapse
-                    if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
-                        this.collapse_notif = true
-                        if (this.notif_info.email_verified || this.notif_info.number_verified)
-                            this.disableNotif = false
-                        else
-                            this.disableNotif = true
-                    }
-                    else
-                        this.collapse_notif = false
-                })
-                .catch(console.log);
-            }
+                axios.get('/subscription/?netID=' + this.netID)
+                    .then(this.getSubID)
+                    .then(data => {
+                        if(this.subid){
+                            var url = "/subscription/" + this.subid + "/";
+                            axios.get(url)
+                                .then((response) => {
+                                    this.notif_info = response.data;
+                                    // Control the b-collapse
+                                    if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
+                                        this.collapse_notif = true
+                                        if (this.notif_info.email_verified || this.notif_info.number_verified)
+                                            this.disableNotif = false
+                                        else
+                                            this.disableNotif = true
+                                    }
+                                    else
+                                        this.collapse_notif = false
+                                })
+                                .catch(console.log);
+                        }
+                    })
+                    .catch(console.log)
+            },
         },
         beforeMount() {
             this.requestUpdate();
-        }
+        },
     }
 </script>
 

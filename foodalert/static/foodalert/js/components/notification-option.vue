@@ -117,6 +117,7 @@
             serverData: Object,
             requestUpdate: Function,
             resendVerif: Function,
+            subid: Number,
         },
         data() {
             return {
@@ -175,7 +176,9 @@
                     'X-CSRFToken': csrftoken,
                 }
                 spinnerOpt.state = true
-                axios.patch("/subscription/1/", data, {"headers" : headers})
+                if(this.subid){
+                    var url = '/subscription/' + this.subid + "/";
+                    axios.patch(url, data, {"headers" : headers})
                     .then(response => {
                         this.requestUpdate()
                     
@@ -186,6 +189,26 @@
                         this.updateMode = false
                     })
                     .catch(console.log);
+                }
+                else{
+                    var postData = {
+                        "email": "",
+                        "sms_number": "",
+                    }
+                    postData[inputType] = notifValue;
+                    axios.post('/subscription/', postData, {"headers": headers})
+                    .then(response => {
+                        this.requestUpdate();
+                    
+                        spinnerOpt.state = false
+                        if (this.newData) {
+                            this.newData = false
+                        }
+                        this.updateMode = false
+                    })
+                    .catch(console.log);
+                }
+                
             },
             deleteData(spinnerOpt) {
                 this.localData.text = ""
