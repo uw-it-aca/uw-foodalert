@@ -23,14 +23,8 @@ describe('Food Categories Page', function () {
 		axios.post.mockImplementation(() => Promise.resolve({data: [{name: "allergne_1"}, {name: "allergen_2"}]}));
 		var wrapper = mount(FormPage, {
 		});
-		expect(wrapper.element).toMatchSnapshot();
-	});
-
-	test('redirect to update', function () {
-		axios.get.mockImplementation(() => Promise.resolve({data: [{ended: true}]}));
-		axios.post.mockImplementation(() => Promise.resolve({data: []}));
-		var wrapper = mount(FormPage, {
-		});
+		var inputs = wrapper.findAll('input')
+	    inputs.at(2).setValue("12:00 AM")
 		expect(wrapper.element).toMatchSnapshot();
 	});
 
