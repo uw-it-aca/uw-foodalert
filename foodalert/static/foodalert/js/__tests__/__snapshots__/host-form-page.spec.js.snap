@@ -136,7 +136,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 End time:
                 
                           <span>
-                            03:26 PM
+                            03:38 PM
                           </span>
                            
                           <br />
@@ -434,7 +434,7 @@ exports[`Food Categories Page redirect to update 1`] = `
                 End time:
                 
                 <span>
-                  03:26 PM
+                  03:38 PM
                 </span>
                  
                 <br />
@@ -635,7 +635,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 End time:
                 
                           <span>
-                            03:26 PM
+                            03:38 PM
                           </span>
                            
                           <br />
@@ -933,7 +933,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                 End time:
                 
                 <span>
-                  03:26 PM
+                  03:38 PM
                 </span>
                  
                 <br />
