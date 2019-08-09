@@ -28,6 +28,7 @@ setup(
         'ua-parser',
         'user-agents',
         'django-user-agents',
+        'python-dateutil',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',

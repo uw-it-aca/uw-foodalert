@@ -129,9 +129,10 @@ class NotificationTest(TestCase):
         data
         """
         with generate_twilio_mock() as mock:
+            end_time = datetime.now().astimezone() + timedelta(seconds=3600)
             response = self.client.post(
                     "/notification/",
-                    data=self.data_to_payload_json(self.test_data[2], 3600),
+                    data=self.data_to_payload_json(self.test_data[2], end_time.isoformat()),
                     content_type='application/json'
                 )
 
@@ -143,11 +144,7 @@ class NotificationTest(TestCase):
             self.test_data[2]["id"] = response.data["id"]
             self.test_data[2]["created_time"] = \
                 response.data["time"]["created"]
-            self.test_data[2]["end_time"] = response.data["time"]["created"] \
-                + timedelta(seconds=3600)
-            temp_ms = response.data["time"]["end"]
-            self.test_data[2]["end_time"] = self.test_data[2]["end_time"]\
-                .replace(microsecond=temp_ms.microsecond)
+            self.test_data[2]["end_time"] = end_time
             expected_json = self.data_to_detail_json(self.test_data[2])
             self.assertEqual(expected_json, actual_json)
 
@@ -177,9 +174,11 @@ class NotificationTest(TestCase):
         Attempts to post an malformed notification payload and tests that the
         request is unsuccessful
         """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
         temp_location = self.test_data[2]["location"]
         self.test_data[2]["location"] = None
-        invalid_payload = self.data_to_payload_json(self.test_data[2], 3600)
+        invalid_payload = self.data_to_payload_json(self.test_data[2], end_time)
         self.test_data[2]["location"] = temp_location
 
         response = self.client.post(
@@ -196,7 +195,11 @@ class NotificationTest(TestCase):
         has an notification that has ended. The first one should cause an
         error 409 and the second one should return with a 201
         """
-        invalid_payload = self.data_to_payload_json(self.test_data[2], 3600)
+        end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+        invalid_payload = self.data_to_payload_json(
+            self.test_data[2],
+            end_time.isoformat()
+        )
 
         with generate_twilio_mock() as mock:
             temp_client = Client()
@@ -212,7 +215,10 @@ class NotificationTest(TestCase):
                 json.dumps(response.json()))
 
             self.test_data[3]["host"] = self.user2
-            valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
+            valid_payload = self.data_to_payload_json(
+                self.test_data[3],
+                end_time.isoformat()
+            )
 
             temp_client = Client()
             temp_client.force_login(self.user2)
@@ -228,11 +234,7 @@ class NotificationTest(TestCase):
             self.test_data[3]["id"] = response.data["id"]
             self.test_data[3]["created_time"] = \
                 response.data["time"]["created"]
-            self.test_data[3]["end_time"] = \
-                response.data["time"]["created"] + timedelta(seconds=3600)
-            temp_ms = response.data["time"]["end"]
-            self.test_data[3]["end_time"] = self.test_data[3]["end_time"]\
-                .replace(microsecond=temp_ms.microsecond)
+            self.test_data[3]["end_time"] = end_time
 
             expected_json = self.data_to_detail_json(self.test_data[3])
             self.assertEqual(expected_json, actual_json)
@@ -242,8 +244,10 @@ class NotificationTest(TestCase):
         Attempts to post an incomplete payload that does not have the
         required fields
         """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
         proper_payload = \
-            json.loads(self.data_to_payload_json(self.test_data[3], 3600))
+            json.loads(self.data_to_payload_json(self.test_data[3], end_time))
         incomplete_payload = {}
 
         response = self.client.post(
@@ -271,8 +275,10 @@ class NotificationTest(TestCase):
         """
         Attempts to post to 1 valid ID and 1 invalid ID and expects 405
         """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
         self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
+        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
 
         response = self.client.post(
                 "/notification/0/",
@@ -295,8 +301,10 @@ class NotificationTest(TestCase):
         """
         Attempts to patch a notification expect a 405
         """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
         self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
+        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
         response = self.client.patch(
                 "/notification/",
                 data=valid_payload,
@@ -308,8 +316,10 @@ class NotificationTest(TestCase):
         """
         Attempts to patch a notification at id expect a 405
         """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
         self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
+        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
         response = self.client.patch(
                 "/notification/0/",
                 data=valid_payload,
@@ -317,7 +327,7 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 405)
 
-        valid_payload = self.data_to_payload_json(self.test_data[3], 3600)
+        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
         response = self.client.patch(
                 "/notification/5/",
                 data=valid_payload,
@@ -385,13 +395,13 @@ class NotificationTest(TestCase):
             },
         )
 
-    def data_to_payload_json(self, data, duration):
+    def data_to_payload_json(self, data, end):
         return json.dumps(
             {
                 "netID": data["host"].username,
                 "location": data["location"],
                 "event": data["event"],
-                "duration": duration,
+                "end_time": end,
                 "bring_container": data["bring_container"],
                 "food": {
                     "served": data["food_served"],
