@@ -260,14 +260,12 @@
                     })
             }
         },
-        beforeCreate() {
-            axios.get("/notification/").then((result) => {
+        beforeMount() {
+            axios.get("/notification/?host_netid=" + this.netID).then((result) => {
                 result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
                     this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
             });
-        },
-        beforeMount() {
             axios.get("/allergen/").then((result) => {
                 this.allergens = []
                 result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
