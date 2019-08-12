@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.views.generic import RedirectView
 
 from . import views
 from foodalert.views import *
@@ -21,5 +22,6 @@ urlpatterns = [
         name='allergen_list'),
     url(r'^allergen/(?P<pk>[0-9]+)/$', AllergensDetail.as_view(),
         name='allergen_detail'),
+    url("", RedirectView.as_view(url='http://www.washington.edu/anyhungryhusky/')),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]
