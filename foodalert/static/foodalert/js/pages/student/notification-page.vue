@@ -102,7 +102,6 @@
         methods: {
             getSubID(response) {
                 if (response.data[0]){
-                    console.log(response.data[0].id);
                     this.subid = response.data[0].id;
                 }
                 return this.subid;
