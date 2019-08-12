@@ -189,11 +189,14 @@ class SubscriptionList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Subscription.objects.all()
-        netid = self.request.query_params.get('netid', None)
-        if netid is not None:
-            queryset = queryset.filter(netid=Subscription.objects.get(
-                netid=netid
-            ))
+        if 'netID' in self.request.query_params:
+            try:
+                netid = User.objects.get(
+                    username=self.request.query_params['netID']
+                )
+                return queryset.filter(user=netid)
+            except User.DoesNotExist:
+                return Subscription.objects.none()
         return queryset
 
     def perform_create(self, serializer, *args, **kwargs):

@@ -184,10 +184,7 @@
                         }
                         this.updateMode = false
                     })
-                    .catch((error) => {
-                        alert("There was an error processing the request");
-                        console.log(error)
-                    });
+                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
                 }
                 else {
                     var postData = {
@@ -205,10 +202,7 @@
                         }
                         this.updateMode = false
                     })
-                    .catch((error) => {
-                        alert("There was an error processing the request");
-                        console.log(error)
-                    });
+                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
                 }
                 
             },

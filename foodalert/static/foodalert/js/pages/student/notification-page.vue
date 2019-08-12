@@ -137,16 +137,10 @@
                                     else
                                         this.collapse_notif = false
                                 })
-                                .catch((error) => {
-                                        alert("There was an error processing the request");
-                                        console.log(error)
-                                    });
+                                .catch((error) => this.showErrorPage(error.response, "s-notifications"));
                         }
                     })
-                    .catch((error) => {
-                            alert("There was a n error processing the requestS")
-                            console.log(error)
-                        });
+                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
             },
         },
         beforeMount() {

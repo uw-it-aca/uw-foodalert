@@ -48,12 +48,17 @@ class SubscriptionTest(TestCase):
         cls.user = User.objects.create_user(username=user,
                                             email="testuser@test.com",
                                             password=passw)
+        user2 = "testuser2"
+        passw2 = "test2"
+        cls.user2 = User.objects.create_user(username=user2,
+                                             email="testuser2@test.com",
+                                             password=passw2)
 
         cls.client = Client()
 
     @classmethod
     def tearDownClass(cls):
-        cls.user.delete()
+        User.objects.all().delete()
 
     @transaction.atomic
     def setUp(self):
@@ -180,6 +185,31 @@ class SubscriptionTest(TestCase):
         # get response should just return id and netid
         data_len = len(data[0])
         self.assertEqual(data_len, 2)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_get_subscriptionlist_with_queryparam(self, email='', sms=''):
+        """
+        Subscription list is filtered down using 'netID' query param.
+        Netid field is unique so list should only contain one item
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/?netID={}'.format(sub.user.username))
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        self.assertEqual(self.user.username, data[0]['netID'])
+        self.assertEqual(sub.id, data[0]["id"])
+        self.assertEqual(len(data), 1)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
