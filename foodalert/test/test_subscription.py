@@ -139,6 +139,27 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
+    def test_invalid_payload_post_subscription(self, email='', sms=''):
+        """
+        Post request should include both email and sms_number fields. Should
+        return a 400 bad request status code. No object should be made
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        invalid_payload = {
+            "email": "invalidemailpost@test.com",
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload)
+        self.assertEqual(response.status_code, 400)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
     def test_get_subscriptionlist(self, email='', sms=''):
         """
         Tests that subscription list is returned from a get
