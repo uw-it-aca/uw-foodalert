@@ -196,38 +196,30 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ("number_verified", 'email_verified')
 
     def to_internal_value(self, data):
-        r = self.context['request']._request.method
-        if(r == 'PATCH' or r == 'PUT'):
-            obj = self.context['view'].get_object()
-            ret = {
-                'email_verified': obj.email_verified,
-                'number_verified': obj.number_verified
-            }
-            if 'email' in data:
-                ret['email'] = data['email']
-                if data['email'] != obj.email:
-                    ret['email_verified'] = False
-            if 'sms_number' in data:
-                ret['sms_number'] = data['sms_number']
-                if data['sms_number'] != obj.sms_number:
-                    ret['number_verified'] = False
-            if not ret['email_verified'] and not ret['number_verified']:
-                ret['notif_on'] = False
-            elif 'notif_on' in data:
-                ret['notif_on'] = data['notif_on']
-            return ret
-        else:
-            return data
+        obj = self.context['view'].get_object()
+        ret = {
+            'email_verified': obj.email_verified,
+            'number_verified': obj.number_verified
+        }
+        if 'email' in data:
+            ret['email'] = data['email']
+            if data['email'] != obj.email:
+                ret['email_verified'] = False
+        if 'sms_number' in data:
+            ret['sms_number'] = data['sms_number']
+            if data['sms_number'] != obj.sms_number:
+                ret['number_verified'] = False
+        if not ret['email_verified'] and not ret['number_verified']:
+            ret['notif_on'] = False
+        elif 'notif_on' in data:
+            ret['notif_on'] = data['notif_on']
+        return ret
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'email', 'sms_number')
-        extra_kwargs = {
-            'email': {'write_only': True},
-            'sms_number': {'write_only': True}
-        }
 
     def to_representation(self, update):
         r = self.context['request']._request.method
@@ -246,3 +238,16 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                 "id": update.id,
                 "netID": update.netid,
             }
+
+    def to_internal_value(self, data):
+        if not self.check_valid(data, "email"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid email field"})
+        if not self.check_valid(data, "sms_number"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid sms_number field"
+                })
+        return data
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None
