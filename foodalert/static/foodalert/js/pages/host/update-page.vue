@@ -106,16 +106,24 @@
                             then(response => {
                                 console.log(response.data)
                                 this.state = response.data
-                            }).catch(error => {
-                                console.log("There was an error processing the request");
-                                console.log(error);
-                            })
+                            }).catch(function (error) {
+                                this.$router.push({ name: 'unrecoverable', params: {
+                                    errorHeading: error.response.statusText,
+                                    errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                                    errorCode: error.response.status,
+                                    tryAgainPage: "h-update",
+                                }});
+                            }.bind(this))
                     }
                 })
-                .catch(error => {
-                    console.log("There was an error processing the request");
-                    console.log(error);
-                })
+                .catch(function (error) {
+                    this.$router.push({ name: 'unrecoverable', params: {
+                        errorHeading: error.response.statusText,
+                        errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                        errorCode: error.response.status,
+                        tryAgainPage: "h-update",
+                    }});
+                }.bind(this))
         },
         methods: {
             sendUpdate() {
@@ -137,9 +145,13 @@
                             this.$router.push({ name: 'h-ended' });
                         }.bind(this))
                         .catch(function (error) {
-                            console.log("There was an error processing the request");
-                            console.log(error);
-                        })
+                            this.$router.push({ name: 'unrecoverable', params: {
+                                errorHeading: error.response.statusText,
+                                errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                                errorCode: error.response.status,
+                                tryAgainPage: "h-update",
+                            }});
+                        }.bind(this))
                 } else {
                     var data = {
                         "text": this.otherText,
@@ -157,9 +169,13 @@
                             this.$refs.notifBox.showNotification()
                         }.bind(this))
                         .catch(function (error) {
-                            console.log("There was an error processing the request");
-                            console.log(error);
-                        })
+                            this.$router.push({ name: 'unrecoverable', params: {
+                                errorHeading: error.response.statusText,
+                                errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                                errorCode: error.response.status,
+                                tryAgainPage: "h-update",
+                            }});
+                        }.bind(this))
                 }
                 this.selected = "noFoodUpdate";
                 this.otherText= "";
