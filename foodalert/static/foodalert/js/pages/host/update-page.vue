@@ -90,33 +90,34 @@
                 privNotifText: this.notificationText,
             }
         },
-        beforeCreate() {
+        beforeMount() {
             var headers = {
-                    'Content-Type': 'application/json',
-                }
-            axios.get('/notification/', {"headers": headers})
+                'Content-Type': 'application/json',
+            }
+            axios.get('/notification/?host_netid=' + this.netID, {"headers": headers})
                 .then(response => {
                     var data = response.data.filter(function(notif) {
                         return notif.ended == false;
                     });
                     if (data.length === 0) {
-                        this.$router.push({ name: 'h-form'});
+                        this.$router.push({ name: 'h-welcomes'});
                     } else {
-                        this.state = data[0]
+                        axios.get('/notification/' + data[0]["id"] + '/', {"headers": headers}).
+                            then(response => {
+                                console.log(response.data)
+                                this.state = response.data
+                            }).catch((error) => this.showErrorPage(error.response, "h-update"))
                     }
-                    this.state.uid = this._uid;
                 })
-                .catch(error => {
-                    console.log("There was an error processing the request");
-                    console.log(error);
-                })
+                .catch((error) => this.showErrorPage(error.response, "h-update"))
         },
         methods: {
             sendUpdate() {
                 if (this.selected == "noFoodUpdate") {
                     var data = {
                         "text": "No Food left! The event: " + this.state.event + " has ended and is no longer serving food",
-                        "parent_notification": this.state.id
+                        "parent_notification_id": this.state.id,
+                        "ended": true
                     };
                     var csrftoken = Cookies.get('csrftoken');
                     var headers = {
@@ -127,28 +128,13 @@
                     axios.post('/updates/', data, {"headers": headers})
                         .then(function(response) {
                             console.log(response);
-                        }.bind(this))
-                        .catch(function (error) {
-                            console.log("There was an error processing the request");
-                            console.log(error);
-                        })
-
-                    var data = {
-                        "ended": true,
-                    };
-
-                    axios.patch("/notification/" + this.state.id + "/", data, {"headers": headers})
-                        .then(response => {
-                            console.log(response);
                             this.$router.push({ name: 'h-ended' });
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
+                        }.bind(this))
+                        .catch((error) => this.showErrorPage(error.response, "h-update"))
                 } else {
                     var data = {
                         "text": this.otherText,
-                        "parent_notification": this.state.id
+                        "parent_notification_id": this.state.id
                     };
                     var csrftoken = Cookies.get('csrftoken');
                     var headers = {
@@ -161,10 +147,7 @@
                             this.privNotifText = "Your update was sent.";
                             this.$refs.notifBox.showNotification()
                         }.bind(this))
-                        .catch(function (error) {
-                            console.log("There was an error processing the request");
-                            console.log(error);
-                        })
+                        .catch((error) => this.showErrorPage(error.response, "h-update"))
                 }
                 this.selected = "noFoodUpdate";
                 this.otherText= "";

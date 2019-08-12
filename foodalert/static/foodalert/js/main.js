@@ -33,6 +33,16 @@ if (netid != undefined) {
                     return _netID;
                 }
             }
+        },
+        methods: {
+            showErrorPage(errorData, redirectPage) {
+                this.$router.push({ name: 'unrecoverable', params: {
+                    errorHeading: errorData.statusText,
+                    errorMessage: errorData.data[Object.keys(errorData.data)[0]],
+                    errorCode: errorData.status,
+                    tryAgainPage: redirectPage,
+                }});
+            }
         }
     })
     netid = undefined

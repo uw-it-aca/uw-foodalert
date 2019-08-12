@@ -243,8 +243,6 @@
                     }
                 };
 
-                console.log(data)
-
                 var csrftoken = Cookies.get('csrftoken');
                 var headers = {
                     'Content-Type': 'application/json',
@@ -254,24 +252,19 @@
                     .then(function(response) {
                         this.$router.push({ name: 'h-update', params: {notificationText: "Your notification was sent."}});
                     }.bind(this))
-                    .catch(function (error) {
-                        alert("There was an error processing the request");
-                        console.log(error);
-                    })
+                    .catch((error) => this.showErrorPage(error.response, "h-form"))
             }
         },
-        beforeCreate() {
-            axios.get("/notification/").then((result) => {
+        beforeMount() {
+            axios.get("/notification/?host_netid=" + this.netID).then((result) => {
                 result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
                     this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
-            });
-        },
-        beforeMount() {
+            }).catch((error) => this.showErrorPage(error.response, "h-form"));
             axios.get("/allergen/").then((result) => {
                 this.allergens = []
                 result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
-            });
+            }).catch((error) => this.showErrorPage(error.response, "h-form"));
             this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(" ")
             if (this.form.end_time.length < 8)
                 this.form.end_time = "0" + this.form.end_time

@@ -90,6 +90,26 @@ class NotificationTest(TestCase):
                                             for data in self.test_data[:2]])
         self.assertEqual(expected_reponse_json, actual_json)
 
+    def test_get_notification_list_with_host_netid(self):
+        """
+        Compares the test data to what is actually returned from GET with
+        host_netid
+        """
+        # Get all notifications from the notification endpoint
+        response = self.client.get('/notification/?host_netid=' +
+                                   self.user1.username)
+        # Assert that the response is successful (200 HTTP Response Code)
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the json of the notification is correct
+        self.assertEqual(len(response.json()), 1)
+        actual_json = response.json()
+
+        expected_reponse_json = [self.data_to_list_represent(
+            self.test_data[0]
+        )]
+        self.assertEqual(expected_reponse_json, actual_json)
+
     def test_get_notification_detail_by_id(self):
         """
         Compares the test data to what is actually returned from GET

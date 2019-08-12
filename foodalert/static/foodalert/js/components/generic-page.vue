@@ -19,7 +19,7 @@
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
-                <b-col md="7" class="page-content-padding">
+                <b-col lg=8 md=12 class="page-content-padding">
                   <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2"><slot name="heading"></slot></h1>
                   <div id="standard-body"><slot name="body"></slot></div>
                   <slot name="navigation"></slot>

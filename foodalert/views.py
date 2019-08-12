@@ -12,6 +12,7 @@ from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
+from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,10 +33,16 @@ class NotificationDetail(generics.RetrieveAPIView):
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
     def get_queryset(self):
-        # if is_member_of_group(self.request, audit_group):
-        return Notification.objects.all()
-        # else:
-        #   return self.request.user.notification_set.all()
+        qs = Notification.objects.all()
+        if 'host_netid' in self.request.query_params:
+            try:
+                user = User.objects.get(
+                    username=self.request.query_params['host_netid']
+                )
+                return qs.filter(host=user)
+            except User.DoesNotExist:
+                return Notification.objects.none()
+        return qs
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -100,9 +107,13 @@ class UpdateList(generics.ListCreateAPIView):
     def get_queryset(self):
         qs = super().get_queryset()
         if 'parent_notification' in self.request.query_params:
-            return qs.filter(parent_notification=Notification.objects.get(
-                pk=self.request.query_params['parent_notification']
-            ))
+            try:
+                notif = Notification.objects.get(
+                    pk=self.request.query_params['parent_notification']
+                )
+                return qs.filter(parent_notification=notif)
+            except Notification.DoesNotExist:
+                return Update.objects.none()
         return qs
 
     def get_serializer_class(self):
