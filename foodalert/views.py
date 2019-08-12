@@ -112,7 +112,7 @@ class UpdateList(generics.ListCreateAPIView):
                     pk=self.request.query_params['parent_notification']
                 )
                 return qs.filter(parent_notification=notif)
-            except User.DoesNotExist:
+            except Notification.DoesNotExist:
                 return Update.objects.none()
         return qs
 
