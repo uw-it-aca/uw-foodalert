@@ -204,7 +204,9 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        response = self.client.get('/subscription/?netID={}'.format(sub.user.username))
+        response = self.client.get('/subscription/?netID={}'.format(
+            sub.user.username
+        ))
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(self.user.username, data[0]['netID'])
