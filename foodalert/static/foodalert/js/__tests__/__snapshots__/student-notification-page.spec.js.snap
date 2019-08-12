@@ -353,12 +353,7 @@ exports[`Notification Page renders correctly 1`] = `
                                 />
                                 <!---->
                                 <!---->
-                                <small
-                                  class="form-text text-muted"
-                                  tabindex="-1"
-                                >
-                                  Placeholder description
-                                </small>
+                                <!---->
                               </div>
                             </fieldset>
                              

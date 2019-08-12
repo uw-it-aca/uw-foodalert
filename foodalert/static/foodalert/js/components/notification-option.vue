@@ -103,20 +103,18 @@
             accord_id: String,
             label: {
                 type: String,
-                default: "Placeholder label",
             },
             description: {
                 type: String,
-                default: "Placeholder description",
             },
             type: {
                 type: String,
-                default: "text"
             },
             visible: Boolean,
             serverData: Object,
             requestUpdate: Function,
             resendVerif: Function,
+            subid: Number,
         },
         data() {
             return {
@@ -134,8 +132,6 @@
                 isOpen: false,
                 updateMode: false,
                 errorDesc: "",
-
-                notif_input: "",
             } 
         },
         methods: {
@@ -157,7 +153,6 @@
                 return cleaned
             },
             getNewState(spinnerOpt) {
-                // TODO: change this function to make a axios request to the server with correct id endpoint
                 var inputType = this.type;
                 var notifValue = this.localData.text;
                 if(inputType === "text"){
@@ -175,7 +170,11 @@
                     'X-CSRFToken': csrftoken,
                 }
                 spinnerOpt.state = true
-                axios.patch("/subscription/1/", data, {"headers" : headers})
+
+                //make patch request if subid is set; post if not
+                if(this.subid){
+                    var url = '/subscription/' + this.subid + "/";
+                    axios.patch(url, data, {"headers" : headers})
                     .then(response => {
                         this.requestUpdate()
                     
@@ -185,7 +184,27 @@
                         }
                         this.updateMode = false
                     })
-                    .catch(console.log);
+                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
+                }
+                else {
+                    var postData = {
+                        "email": "",
+                        "sms_number": "",
+                    }
+                    postData[inputType] = notifValue;
+                    axios.post('/subscription/', postData, {"headers": headers})
+                    .then(response => {
+                        this.requestUpdate();
+                    
+                        spinnerOpt.state = false
+                        if (this.newData) {
+                            this.newData = false
+                        }
+                        this.updateMode = false
+                    })
+                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
+                }
+                
             },
             deleteData(spinnerOpt) {
                 this.localData.text = ""

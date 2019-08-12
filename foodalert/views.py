@@ -157,10 +157,6 @@ class UpdateList(generics.ListCreateAPIView):
                                   slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
-        else:
-            print("failed to post update")
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -189,13 +185,31 @@ class SubscriptionList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Subscription.objects.all()
-        netid = self.request.query_params.get('netid', None)
-        if netid is not None:
-            queryset = queryset.filter(subscription__netid=netid)
+        if 'netID' in self.request.query_params:
+            try:
+                netid = User.objects.get(
+                    username=self.request.query_params['netID']
+                )
+                return queryset.filter(user=netid)
+            except User.DoesNotExist:
+                return Subscription.objects.none()
         return queryset
 
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if (serializer.is_valid(raise_exception=True)):
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            data = serializer.data
+            return Response(
+                data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            print("failed to post update")
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -216,6 +230,7 @@ class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
 
+    # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
 

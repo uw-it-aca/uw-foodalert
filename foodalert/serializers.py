@@ -213,7 +213,6 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
             ret['notif_on'] = False
         elif 'notif_on' in data:
             ret['notif_on'] = data['notif_on']
-
         return ret
 
 
@@ -221,22 +220,34 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'email', 'sms_number')
-        extra_kwargs = {
-            'email': {'write_only': True},
-            'sms_number': {'write_only': True}
-        }
+
+    def to_representation(self, update):
+        r = self.context['request']._request.method
+        if r == 'POST':
+            return {
+                "id": update.id,
+                "netID": update.netid,
+                "email": update.email,
+                "email_verified": update.email_verified,
+                "sms_number": str(update.sms_number),
+                "number_verified": update.number_verified,
+                "notif_on": update.notif_on,
+            }
+        else:
+            return {
+                "id": update.id,
+                "netID": update.netid,
+            }
 
     def to_internal_value(self, data):
+        if not self.check_valid(data, "email"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid email field"})
+        if not self.check_valid(data, "sms_number"):
+            raise ValidationError({
+                "Bad Request": "Post data must have a valid sms_number field"
+                })
         return data
 
-    def create(self, validated_data):
-        sub = Subscription.objects.create(
-            user=self.context.get('request').user)
-
-        sub.email = validated_data["email"]
-        sub.sms_number = validated_data["sms_number"]
-        sub.notif_on = False
-
-        sub.save()
-
-        return sub
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None

@@ -48,12 +48,17 @@ class SubscriptionTest(TestCase):
         cls.user = User.objects.create_user(username=user,
                                             email="testuser@test.com",
                                             password=passw)
+        user2 = "testuser2"
+        passw2 = "test2"
+        cls.user2 = User.objects.create_user(username=user2,
+                                             email="testuser2@test.com",
+                                             password=passw2)
 
         cls.client = Client()
 
     @classmethod
     def tearDownClass(cls):
-        cls.user.delete()
+        User.objects.all().delete()
 
     @transaction.atomic
     def setUp(self):
@@ -104,7 +109,7 @@ class SubscriptionTest(TestCase):
         new_len = len(Subscription.objects.all())
         self.assertEqual(1, new_len - original_len)
         model = Subscription.objects.get(user=self.user)
-        self.assertEqual("testuser@test.com", model.netid)
+        self.assertEqual(self.user.username, model.netid)
         self.assertEqual(email, model.email)
         self.assertEqual(sms, model.sms_number)
 
@@ -139,6 +144,27 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
+    def test_invalid_payload_post_subscription(self, email='', sms=''):
+        """
+        Post request should include both email and sms_number fields. Should
+        return a 400 bad request status code. No object should be made
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        invalid_payload = {
+            "email": "invalidemailpost@test.com",
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload)
+        self.assertEqual(response.status_code, 400)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
     def test_get_subscriptionlist(self, email='', sms=''):
         """
         Tests that subscription list is returned from a get
@@ -154,11 +180,38 @@ class SubscriptionTest(TestCase):
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        self.assertEqual("testuser@test.com", data[0]['netid'])
+        self.assertEqual(self.user.username, data[0]['netID'])
         self.assertEqual(sub.id, data[0]["id"])
         # get response should just return id and netid
         data_len = len(data[0])
         self.assertEqual(data_len, 2)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_get_subscriptionlist_with_queryparam(self, email='', sms=''):
+        """
+        Subscription list is filtered down using 'netID' query param.
+        Netid field is unique so list should only contain one item
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms
+        )
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/?netID={}'.format(
+            sub.user.username
+        ))
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        self.assertEqual(self.user.username, data[0]['netID'])
+        self.assertEqual(sub.id, data[0]["id"])
+        self.assertEqual(len(data), 1)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

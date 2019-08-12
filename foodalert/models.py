@@ -29,7 +29,7 @@ class Subscription(models.Model):
 
     @property
     def netid(self):
-        return self.user.email
+        return self.user.username
 
 
 class Update(models.Model):
