@@ -243,8 +243,6 @@
                     }
                 };
 
-                console.log(data)
-
                 var csrftoken = Cookies.get('csrftoken');
                 var headers = {
                     'Content-Type': 'application/json',
@@ -255,9 +253,13 @@
                         this.$router.push({ name: 'h-update', params: {notificationText: "Your notification was sent."}});
                     }.bind(this))
                     .catch(function (error) {
-                        alert("There was an error processing the request");
-                        console.log(error);
-                    })
+                        this.$router.push({ name: 'unrecoverable', params: {
+                            errorHeading: error.response.statusText,
+                            errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                            errorCode: error.response.status,
+                            tryAgainPage: "h-form",
+                        }});
+                    }.bind(this))
             }
         },
         beforeMount() {
@@ -265,11 +267,25 @@
                 result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
                     this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
-            });
+            }).catch(function (error) {
+                this.$router.push({ name: 'unrecoverable', params: {
+                    errorHeading: error.response.statusText,
+                    errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                    errorCode: error.response.status,
+                    tryAgainPage: "h-form",
+                }});
+            }.bind(this));
             axios.get("/allergen/").then((result) => {
                 this.allergens = []
                 result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
-            });
+            }).catch(function (error) {
+                this.$router.push({ name: 'unrecoverable', params: {
+                    errorHeading: error.response.statusText,
+                    errorMessage: error.response.data[Object.keys(error.response.data)[0]],
+                    errorCode: error.response.status,
+                    tryAgainPage: "h-form",
+                }});
+            }.bind(this));
             this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(" ")
             if (this.form.end_time.length < 8)
                 this.form.end_time = "0" + this.form.end_time
