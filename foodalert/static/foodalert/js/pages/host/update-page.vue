@@ -100,7 +100,7 @@
                         return notif.ended == false;
                     });
                     if (data.length === 0) {
-                        this.$router.push({ name: 'h-form'});
+                        this.$router.push({ name: 'h-welcomes'});
                     } else {
                         axios.get('/notification/' + data[0]["id"] + '/', {"headers": headers}).
                             then(response => {
