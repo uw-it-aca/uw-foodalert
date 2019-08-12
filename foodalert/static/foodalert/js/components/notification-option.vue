@@ -135,8 +135,6 @@
                 isOpen: false,
                 updateMode: false,
                 errorDesc: "",
-
-                notif_input: "",
             } 
         },
         methods: {
@@ -158,7 +156,6 @@
                 return cleaned
             },
             getNewState(spinnerOpt) {
-                // TODO: change this function to make a axios request to the server with correct id endpoint
                 var inputType = this.type;
                 var notifValue = this.localData.text;
                 if(inputType === "text"){
@@ -176,6 +173,8 @@
                     'X-CSRFToken': csrftoken,
                 }
                 spinnerOpt.state = true
+
+                //make patch request if subid is set; post if not
                 if(this.subid){
                     var url = '/subscription/' + this.subid + "/";
                     axios.patch(url, data, {"headers" : headers})
@@ -188,9 +187,12 @@
                         }
                         this.updateMode = false
                     })
-                    .catch(console.log);
+                    .catch((error) => {
+                        alert("There was an error processing the request");
+                        console.log(error)
+                    });
                 }
-                else{
+                else {
                     var postData = {
                         "email": "",
                         "sms_number": "",
@@ -206,7 +208,10 @@
                         }
                         this.updateMode = false
                     })
-                    .catch(console.log);
+                    .catch((error) => {
+                        alert("There was an error processing the request");
+                        console.log(error)
+                    });
                 }
                 
             },

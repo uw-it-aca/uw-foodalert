@@ -93,7 +93,7 @@
                     sms_number: "",
                     number_verified: false,
                     notif_on: "",
-                } , //fetched from server
+                }, 
                 checked: false,
                 disableNotif: false,
                 subid: undefined,
@@ -101,11 +101,22 @@
         },
         methods: {
             getSubID(response) {
-                this.subid = response.data[0].id;
+                if (response.data[0]){
+                    console.log(response.data[0].id);
+                    this.subid = response.data[0].id;
+                }
                 return this.subid;
             },
+            formatSms(data){
+                // strips sms of the +1
+                if(data["sms_number"]){
+                    var num = data["sms_number"];
+                    num = num.replace("+1", "");
+                    data["sms_number"] = num;
+                }
+                return data;
+            },
             requestUpdate() {
-                // TODO: change this function to make a axios request to the correct id endpoint
                 axios.get('/subscription/?netID=' + this.netID)
                     .then(this.getSubID)
                     .then(data => {
@@ -113,7 +124,9 @@
                             var url = "/subscription/" + this.subid + "/";
                             axios.get(url)
                                 .then((response) => {
+                                    response.data = this.formatSms(response.data)
                                     this.notif_info = response.data;
+                                    
                                     // Control the b-collapse
                                     if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
                                         this.collapse_notif = true
@@ -125,10 +138,16 @@
                                     else
                                         this.collapse_notif = false
                                 })
-                                .catch(console.log);
+                                .catch((error) => {
+                                        alert("There was an error processing the request");
+                                        console.log(error)
+                                    });
                         }
                     })
-                    .catch(console.log)
+                    .catch((error) => {
+                            alert("There was a n error processing the requestS")
+                            console.log(error)
+                        });
             },
         },
         beforeMount() {
