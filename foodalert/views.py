@@ -157,10 +157,6 @@ class UpdateList(generics.ListCreateAPIView):
                                   slug)
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
-        else:
-            print("failed to post update")
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(login_required(), name='dispatch')
