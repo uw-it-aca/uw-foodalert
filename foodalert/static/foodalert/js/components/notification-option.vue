@@ -103,15 +103,12 @@
             accord_id: String,
             label: {
                 type: String,
-                default: "Placeholder label",
             },
             description: {
                 type: String,
-                default: "Placeholder description",
             },
             type: {
                 type: String,
-                default: "text"
             },
             visible: Boolean,
             serverData: Object,
