@@ -27,6 +27,7 @@ window.vueData.routes = [
             { path: "s/notifications", component: UnauthzTemplate, name: "s-notifications" },
             { path: "s/signup", component: UnauthzTemplate, name: "s-signup" },
             { path: "s/subscribed", component: UnauthzTemplate, name: "s-subscribed" },
+            { path: "", redirect: to => { window.location.replace("http://www.washington.edu/anyhungryhusky/"); } }
         ],
     },
     {
