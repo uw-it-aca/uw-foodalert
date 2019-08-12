@@ -106,24 +106,10 @@
                             then(response => {
                                 console.log(response.data)
                                 this.state = response.data
-                            }).catch(function (error) {
-                                this.$router.push({ name: 'unrecoverable', params: {
-                                    errorHeading: error.response.statusText,
-                                    errorMessage: error.response.data[Object.keys(error.response.data)[0]],
-                                    errorCode: error.response.status,
-                                    tryAgainPage: "h-update",
-                                }});
-                            }.bind(this))
+                            }).catch((error) => this.showErrorPage(error.response, "h-update"))
                     }
                 })
-                .catch(function (error) {
-                    this.$router.push({ name: 'unrecoverable', params: {
-                        errorHeading: error.response.statusText,
-                        errorMessage: error.response.data[Object.keys(error.response.data)[0]],
-                        errorCode: error.response.status,
-                        tryAgainPage: "h-update",
-                    }});
-                }.bind(this))
+                .catch((error) => this.showErrorPage(error.response, "h-update"))
         },
         methods: {
             sendUpdate() {
@@ -144,14 +130,7 @@
                             console.log(response);
                             this.$router.push({ name: 'h-ended' });
                         }.bind(this))
-                        .catch(function (error) {
-                            this.$router.push({ name: 'unrecoverable', params: {
-                                errorHeading: error.response.statusText,
-                                errorMessage: error.response.data[Object.keys(error.response.data)[0]],
-                                errorCode: error.response.status,
-                                tryAgainPage: "h-update",
-                            }});
-                        }.bind(this))
+                        .catch((error) => this.showErrorPage(error.response, "h-update"))
                 } else {
                     var data = {
                         "text": this.otherText,
@@ -168,14 +147,7 @@
                             this.privNotifText = "Your update was sent.";
                             this.$refs.notifBox.showNotification()
                         }.bind(this))
-                        .catch(function (error) {
-                            this.$router.push({ name: 'unrecoverable', params: {
-                                errorHeading: error.response.statusText,
-                                errorMessage: error.response.data[Object.keys(error.response.data)[0]],
-                                errorCode: error.response.status,
-                                tryAgainPage: "h-update",
-                            }});
-                        }.bind(this))
+                        .catch((error) => this.showErrorPage(error.response, "h-update"))
                 }
                 this.selected = "noFoodUpdate";
                 this.otherText= "";
