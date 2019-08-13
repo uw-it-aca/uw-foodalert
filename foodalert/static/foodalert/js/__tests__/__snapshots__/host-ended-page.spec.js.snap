@@ -28,8 +28,8 @@ exports[`Host Ended Page renders correctly 1`] = `
                 class="h5 text-white pt-2"
               >
                 
-         Your update was sent.
-    
+    Your update was sent.
+  
               </div>
             </div>
           </div>
@@ -56,15 +56,19 @@ exports[`Host Ended Page renders correctly 1`] = `
             id="standard-heading"
           >
             
-        Our sincere thanks
-    
+    Our sincere thanks
+  
           </h1>
            
           <div
             id="standard-body"
           >
             <p>
-              Thank you for sharing food. Your generosity means that fewer people have to worry about food insecurity at UW. You've also contributed to decreasing the University's food waste. We really appreciate your generosity and thoughtfulness. Please visit Hungry Husky next time you have leftover food to share.
+              Thank you for sharing food. Your generosity means that fewer people
+       have to worry about food insecurity at UW. You've also contributed
+       to decreasing the University's food waste. We really appreciate your
+       generosity and thoughtfulness. Please visit Hungry Husky next time
+       you have leftover food to share.
             </p>
           </div>
            
@@ -82,7 +86,9 @@ exports[`Host Ended Page renders correctly 1`] = `
                   style="white-space: nowrap;"
                   type="submit"
                 >
-                  New notification
+                  
+                      New notification
+          
                 </button>
               </div>
                
@@ -103,7 +109,9 @@ exports[`Host Ended Page renders correctly 1`] = `
     <a
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
-      Contact support
+      
+        Contact support
+      
     </a>
      
     <p>

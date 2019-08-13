@@ -52,8 +52,8 @@ exports[`Food Categories Page renders correctly 1`] = `
             id="standard-heading"
           >
             
-        Before you receive notifications
-    
+    Before you receive notifications
+  
           </h1>
            
           <div
@@ -61,8 +61,8 @@ exports[`Food Categories Page renders correctly 1`] = `
           >
             <p>
               
-            We ask that you agree to the following terms of service.
-        
+      We ask that you agree to the following terms of service.
+    
             </p>
              
             <form
@@ -124,7 +124,9 @@ exports[`Food Categories Page renders correctly 1`] = `
                       disabled="disabled"
                       type="submit"
                     >
-                      Agree
+                      
+                Agree
+            
                     </button>
                   </div>
                    
@@ -148,7 +150,9 @@ exports[`Food Categories Page renders correctly 1`] = `
     <a
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
-      Contact support
+      
+        Contact support
+      
     </a>
      
     <p>

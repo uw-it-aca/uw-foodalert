@@ -52,8 +52,8 @@ exports[`Food Categories Page renders correctly 1`] = `
             id="standard-heading"
           >
             
-        Compose notification
-    
+    Compose notification
+  
           </h1>
            
           <div
@@ -105,8 +105,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                       >
                         <p>
                           
-                We will send your notification to Hungry Husky Subscribers.
-            
+        We will send your notification to Hungry Husky Subscribers.
+      
                         </p>
                          
                         <div
@@ -116,32 +116,33 @@ exports[`Food Categories Page renders correctly 1`] = `
                             Hot Indian buffet food
                           </span>
                            from
-                
+        
                           <span>
                             FIUTS weekly club meeting
                           </span>
                           .
-                
+        
                           <br />
                            
                           <br />
                           
-                Quantity: 
+        Quantity:
+        
                           <span>
                             About 8 full meals
                           </span>
                            
                           <br />
                           
-                End time:
-                
+        End time:
+        
                           <span>
                             11:11 PM
                           </span>
                            
                           <br />
                           
-                Location: 
+        Location: 
                           <span>
                             HUB 130
                           </span>
@@ -184,7 +185,10 @@ exports[`Food Categories Page renders correctly 1`] = `
               <p
                 class="mb-0 pb-0"
               >
-                Now let's get some details about your food and event so you can send a notification.
+                
+        Now let's get some details about your food and event so
+        you can send a notification.
+      
               </p>
                
               <label
@@ -208,7 +212,9 @@ exports[`Food Categories Page renders correctly 1`] = `
                 class="standard-label"
                 for="food-description"
               >
-                Describe the food
+                
+        Describe the food
+      
               </label>
                
               <textarea
@@ -243,7 +249,9 @@ exports[`Food Categories Page renders correctly 1`] = `
                 class="standard-label"
                 for="end-time"
               >
-                End time (when food service will end)
+                
+        End time (when food service will end)
+      
               </label>
                
               <div
@@ -1951,7 +1959,10 @@ exports[`Food Categories Page renders correctly 1`] = `
               <p
                 class="mb-3"
               >
-                It's ok if you are unsure, just select to the best of your knowledge.
+                
+        It's ok if you are unsure, just select to the best of your
+        knowledge.
+      
               </p>
                
               <div
@@ -2037,32 +2048,33 @@ exports[`Food Categories Page renders correctly 1`] = `
                   Hot Indian buffet food
                 </span>
                  from
-                
+        
                 <span>
                   FIUTS weekly club meeting
                 </span>
                 .
-                
+        
                 <br />
                  
                 <br />
                 
-                Quantity: 
+        Quantity:
+        
                 <span>
                   About 8 full meals
                 </span>
                  
                 <br />
                 
-                End time:
-                
+        End time:
+        
                 <span>
                   11:11 PM
                 </span>
                  
                 <br />
                 
-                Location: 
+        Location: 
                 <span>
                   HUB 130
                 </span>
@@ -2092,7 +2104,9 @@ exports[`Food Categories Page renders correctly 1`] = `
                       style="white-space: nowrap;"
                       type="submit"
                     >
-                      Submit
+                      
+              Submit
+            
                     </button>
                   </div>
                 </div>
@@ -2112,7 +2126,9 @@ exports[`Food Categories Page renders correctly 1`] = `
     <a
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
-      Contact support
+      
+        Contact support
+      
     </a>
      
     <p>

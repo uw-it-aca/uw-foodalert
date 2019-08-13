@@ -80,11 +80,15 @@ exports[`Welcome Page renders correctly 1`] = `
               id="standard-body"
             >
               <p>
-                Hungry Husky lets you share your leftover event food with those who need it most in the UW community. With your help, we can help reduce food insecurity among students and others—and reduce food waste at the same time.
+                Hungry Husky lets you share your leftover event food with those who
+        need it most in the UW community. With your help, we can help reduce
+        food insecurity among students and others—and reduce food waste at
+        the same time.
               </p>
                
               <p>
-                We’ll guide you through all the steps needed to share your food safely and responsibly.
+                We’ll guide you through all the steps needed to share your food
+        safely and responsibly.
               </p>
             </div>
              
@@ -102,7 +106,9 @@ exports[`Welcome Page renders correctly 1`] = `
                     style="white-space: nowrap;"
                     type="submit"
                   >
-                    Let's get started
+                    
+                      Let's get started
+          
                   </button>
                 </div>
                  
@@ -123,7 +129,9 @@ exports[`Welcome Page renders correctly 1`] = `
       <a
         href="mailto:help@uw.edu?subject=Hungry Husky support"
       >
+        
         Contact support
+      
       </a>
        
       <p>

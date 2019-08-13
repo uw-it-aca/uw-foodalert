@@ -80,7 +80,9 @@ exports[`Welcome Page renders correctly 1`] = `
               id="standard-body"
             >
               <p>
-                When you sign up with Hungry Husky, you’ll receive notifications through email, text, or both whenever events on campus have available food.
+                When you sign up with Hungry Husky, you’ll receive notifications
+        through email, text, or both whenever events on campus
+        have available food.
               </p>
             </div>
              
@@ -98,7 +100,9 @@ exports[`Welcome Page renders correctly 1`] = `
                     style="white-space: nowrap;"
                     type="submit"
                   >
-                    Let's get started
+                    
+                      Let's get started
+          
                   </button>
                 </div>
                  
@@ -119,7 +123,9 @@ exports[`Welcome Page renders correctly 1`] = `
       <a
         href="mailto:help@uw.edu?subject=Hungry Husky support"
       >
+        
         Contact support
+      
       </a>
        
       <p>

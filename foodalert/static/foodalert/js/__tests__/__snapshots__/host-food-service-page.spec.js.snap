@@ -52,8 +52,8 @@ exports[`Food Categories Page renders correctly 1`] = `
             id="standard-heading"
           >
             
-        Food service information
-    
+    Food service information
+  
           </h1>
            
           <div
@@ -61,8 +61,9 @@ exports[`Food Categories Page renders correctly 1`] = `
           >
             <p>
               
-            Let’s determine whether your food can be shared with the public. Please select all that apply.
-        
+      Let’s determine whether your food can be shared with the public.
+      Please select all that apply.
+    
             </p>
              
             <fieldset
@@ -87,8 +88,9 @@ exports[`Food Categories Page renders correctly 1`] = `
                   >
                     <span>
                       
-                    My food was prepared by UW Housing & Food Services or Bay Laurel Catering.
-                
+          My food was prepared by UW Housing &
+          Food Services or Bay Laurel Catering.
+        
                     </span>
                   </label>
                 </div>
@@ -107,8 +109,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                   >
                     <span>
                       
-                    I have a UW Temporary Food Service Permit.
-                    
+          I have a UW Temporary Food Service Permit.
+          
                       <a
                         aria-controls="perm-info"
                         aria-expanded="false"
@@ -133,14 +135,18 @@ exports[`Food Categories Page renders correctly 1`] = `
                     class="custom-text-box"
                   >
                     
-                When providing food to the public (anyone beyond the staff or /faculty of your unit), UW offices are required to secure a Temporary Food Permit through 
+        When providing food to the public (anyone beyond the staff or
+        /faculty of your unit), UW offices are required to secure a
+        Temporary Food Permit through 
                     <a
                       href="#"
                     >
-                      UW Environmental Health & Safety
+                      UW Environmental
+        Health & Safety
                     </a>
-                     to help ensure that food service providers meet safety regulations and the food itself is safe for consumption.
-            
+                     to help ensure that food service providers
+        meet safety regulations and the food itself is safe for consumption.
+      
                   </div>
                 </div>
                  
@@ -158,8 +164,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                   >
                     <span>
                       
-                    None of these apply.
-                
+          None of these apply.
+        
                     </span>
                   </label>
                 </div>
@@ -212,7 +218,9 @@ exports[`Food Categories Page renders correctly 1`] = `
     <a
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
-      Contact support
+      
+        Contact support
+      
     </a>
      
     <p>
