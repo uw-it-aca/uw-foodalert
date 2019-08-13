@@ -1,74 +1,76 @@
 <template>
-    <generic-page>
-        <template #heading>
-            Notification preferences
-        </template>
-        <template #body>
-            <p>
-                Select how you will like to receive notifications. Please choose at least one.
-            </p>
-            <div class="notification" :disabled="disableNotif" :class="{ 'notif-disabled' : disableNotif }">
-                <b-collapse id="enable-notification" v-model="collapse_notif">
-                    <b-container @click="checked=(!checked && !disableNotif)">
-                        <b-row>
-                            <b-col sm="9" cols="9">
-                                <strong>Enable notifications</strong>
-                                <p>Turn on to receive notifications. Please choose at least one.</p>
-                                <div id="notif-status">
-                                    <div v-if=checked class="enabled" > Notifications are enabled</div>
-                                    <div v-else class="paused"> Notifications are paused </div>
-                                </div>
-                            </b-col>
+  <generic-page>
+    <template #heading>
+      Notification preferences
+    </template>
+    <template #body>
+      <p>
+        Select how you will like to receive notifications.
+        Please choose at least one.
+      </p>
+      <div class="notification" :disabled="disableNotif"
+           :class="{ 'notif-disabled' : disableNotif }">
+        <b-collapse id="enable-notification" v-model="collapse_notif">
+          <b-container @click="checked=(!checked && !disableNotif)">
+            <b-row>
+              <b-col sm="9" cols="9">
+                <strong>Enable notifications</strong>
+                <p>Turn on to receive notifications.
+                  Please choose at least one.</p>
+                <div id="notif-status">
+                  <div v-if=checked class="enabled">
+                    Notifications are enabled</div>
+                  <div v-else class="paused"> Notifications are paused </div>
+                </div>
+              </b-col>
 
-                            <b-col sm="3" cols="3" align-self="center">
-                                <b-form-checkbox
-                                    v-model="checked"
-                                    name="enable-switch"
-                                    @click.native.prevent
-                                    class="float-right"
-                                    :disabled="disableNotif"
-                                    switch>
-                                </b-form-checkbox>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-collapse>
-            </div>
-            <notification-option
-                accord_id="text"
-                type="text"
-                label="Enter a new phone number"
-                description="Carrier rates may apply"
-                :subid="subid"
-                :serverData="{ text: notif_info.sms_number, verified: notif_info.number_verified }"
-                :requestUpdate="requestUpdate"
-                :resendVerif="()=>{return 1}" visible>
-                <template #opt_heading>
-                    Text
-                </template>
-                <template #unverifNotifText="{switchToUpdate}">
-                    We sent a text to <b-button variant="link" @click="switchToUpdate" class="px-0">{{notif_info.sms_number}}</b-button>.
-                    Please reply YES to finish signup. <br />
-                </template>
-            </notification-option>
-            <notification-option
-                accord_id="email"
-                type="email"
-                label="Enter an email"
-                :subid="subid"
-                :serverData="{ text: notif_info.email, verified: notif_info.email_verified }"
-                :requestUpdate="requestUpdate"
-                :resendVerif="()=>{return 1}">
-                <template #opt_heading>
-                    Email
-                </template>
-                <template #unverifNotifText="{switchToUpdate}">
-                    We sent a verification email to <b-button variant="link" @click="switchToUpdate" class="px-0">{{notif_info.email}}</b-button>. <br />
-                    Check your spam folder if you don't receive our email. <br />
-                </template>
-            </notification-option>
+              <b-col sm="3" cols="3" align-self="center">
+                <b-form-checkbox v-model="checked"
+                  name="enable-switch" @click.native.prevent
+                  class="float-right"
+                  :disabled="disableNotif" switch>
+                </b-form-checkbox>
+              </b-col>
+            </b-row>
+          </b-container>
+        </b-collapse>
+      </div>
+      <notification-option accord_id="text" type="text"
+        label="Enter a new phone number"
+        description="Carrier rates may apply" :subid="subid"
+        :serverData="{ text: notif_info.sms_number,
+          verified: notif_info.number_verified }"
+        :requestUpdate="requestUpdate" :resendVerif="()=>{return 1}" visible>
+        <template #opt_heading>
+          Text
         </template>
-    </generic-page>
+        <template #unverifNotifText="{switchToUpdate}">
+          We sent a text to
+          <b-button variant="link" @click="switchToUpdate" class="px-0">
+            {{notif_info.sms_number}}
+          </b-button>.
+          Please reply YES to finish signup. <br />
+        </template>
+      </notification-option>
+      <notification-option accord_id="email" type="email"
+        label="Enter an email" :subid="subid"
+        :serverData="{ text: notif_info.email,
+          verified: notif_info.email_verified }"
+        :requestUpdate="requestUpdate"
+        :resendVerif="()=>{return 1}">
+        <template #opt_heading>
+          Email
+        </template>
+        <template #unverifNotifText="{switchToUpdate}">
+          We sent a verification email to
+          <b-button variant="link" @click="switchToUpdate" class="px-0">
+            {{notif_info.email}}
+          </b-button>. <br />
+          Check your spam folder if you don't receive our email. <br />
+        </template>
+      </notification-option>
+    </template>
+  </generic-page>
 </template>
 
 <script type="text/javascript">
@@ -127,9 +129,11 @@ export default {
                     this.notif_info = response.data;
 
                     // Control the b-collapse
-                    if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
+                    if (this.notif_info.sms_number != '' ||
+                      this.notif_info.email != '') {
                       this.collapse_notif = true;
-                      if (this.notif_info.email_verified || this.notif_info.number_verified) {
+                      if (this.notif_info.email_verified ||
+                        this.notif_info.number_verified) {
                         this.disableNotif = false;
                       } else {
                         this.disableNotif = true;
@@ -138,10 +142,12 @@ export default {
                       this.collapse_notif = false;
                     }
                   })
-                  .catch((error) => this.showErrorPage(error.response, 's-notifications'));
+                  .catch((error) =>
+                    this.showErrorPage(error.response, 's-notifications'));
             }
           })
-          .catch((error) => this.showErrorPage(error.response, 's-notifications'));
+          .catch((error) =>
+            this.showErrorPage(error.response, 's-notifications'));
     },
   },
   beforeMount() {
