@@ -9,11 +9,11 @@
 </template>
 
 <script type="text/javascript">
-  export default {
-      props: {
-          bid: String,
-      }
-  }
+export default {
+  props: {
+    bid: String,
+  },
+};
 </script>
 
 <style>

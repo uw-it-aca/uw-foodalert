@@ -72,81 +72,81 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../../components/generic-page.vue";
-    import NotifOption from "../../components/notification-option.vue";
-    const axios = require('axios');
+import GenericPage from "../../components/generic-page.vue";
+import NotifOption from "../../components/notification-option.vue";
+const axios = require('axios');
 
-    export default {
-        components:{
-            "generic-page": GenericPage,
-            "notification-option": NotifOption,
-        },
-        props: {
-            bid: String,
-        },
-        data() {
-            return {
-                collapse_notif: false,
-                notif_info: {
-                    email: "",
-                    email_verified: false,
-                    sms_number: "",
-                    number_verified: false,
-                    notif_on: "",
-                }, 
-                checked: false,
-                disableNotif: false,
-                subid: undefined,
-            }
-        },
-        methods: {
-            getSubID(response) {
-                if (response.data[0]){
-                    this.subid = response.data[0].id;
-                }
-                return this.subid;
-            },
-            formatSms(data){
-                // strips sms of the +1
-                if(data["sms_number"]){
-                    var num = data["sms_number"];
-                    num = num.replace("+1", "");
-                    data["sms_number"] = num;
-                }
-                return data;
-            },
-            requestUpdate() {
-                axios.get('/subscription/?netID=' + this.netID)
-                    .then(this.getSubID)
-                    .then(data => {
-                        if(this.subid){
-                            var url = "/subscription/" + this.subid + "/";
-                            axios.get(url)
-                                .then((response) => {
-                                    response.data = this.formatSms(response.data)
-                                    this.notif_info = response.data;
-                                    
-                                    // Control the b-collapse
-                                    if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
-                                        this.collapse_notif = true
-                                        if (this.notif_info.email_verified || this.notif_info.number_verified)
-                                            this.disableNotif = false
-                                        else
-                                            this.disableNotif = true
-                                    }
-                                    else
-                                        this.collapse_notif = false
-                                })
-                                .catch((error) => this.showErrorPage(error.response, "s-notifications"));
-                        }
-                    })
-                    .catch((error) => this.showErrorPage(error.response, "s-notifications"));
-            },
-        },
-        beforeMount() {
-            this.requestUpdate();
-        },
+export default {
+  components:{
+    "generic-page": GenericPage,
+    "notification-option": NotifOption,
+  },
+  props: {
+    bid: String,
+  },
+  data() {
+    return {
+      collapse_notif: false,
+      notif_info: {
+        email: "",
+        email_verified: false,
+        sms_number: "",
+        number_verified: false,
+        notif_on: "",
+      }, 
+      checked: false,
+      disableNotif: false,
+      subid: undefined,
     }
+  },
+  methods: {
+    getSubID(response) {
+      if (response.data[0]){
+        this.subid = response.data[0].id;
+      }
+        return this.subid;
+    },
+    formatSms(data){
+      // strips sms of the +1
+      if(data["sms_number"]){
+        var num = data["sms_number"];
+        num = num.replace("+1", "");
+        data["sms_number"] = num;
+      }
+      return data;
+    },
+    requestUpdate() {
+      axios.get('/subscription/?netID=' + this.netID)
+        .then(this.getSubID)
+        .then(data => {
+          if(this.subid){
+            var url = "/subscription/" + this.subid + "/";
+            axios.get(url)
+              .then((response) => {
+                response.data = this.formatSms(response.data)
+                this.notif_info = response.data;
+
+                // Control the b-collapse
+                if (this.notif_info.sms_number != '' || this.notif_info.email != '') {
+                  this.collapse_notif = true
+                  if (this.notif_info.email_verified || this.notif_info.number_verified)
+                    this.disableNotif = false
+                  else
+                    this.disableNotif = true
+                }
+                else
+                  this.collapse_notif = false
+              })
+              .catch((error) => this.showErrorPage(error.response, "s-notifications"));
+            }
+          })
+          .catch((error) => this.showErrorPage(error.response, "s-notifications"));
+        },
+    },
+    beforeMount() {
+      this.requestUpdate();
+    },
+}
 </script>
 
 <style>

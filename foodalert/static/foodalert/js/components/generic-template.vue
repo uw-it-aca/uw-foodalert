@@ -3,8 +3,8 @@
         <router-view>
         </router-view>
         <!-- To load the images before they need to be displayed
-            without this we can still use the default bootstrap checkmark and but they
-            look worse and dont match the color that we need.
+            without this we can still use the default bootstrap checkmark and
+            but they look worse and dont match the color that we need.
         !-->
         <img src="../../img/check.svg" style="display: none">
         <img src="../../img/dot.svg" style="display: none">
@@ -14,7 +14,7 @@
 <script>
 export default {
 
-}
+};
 </script>
 
 <style>
@@ -25,7 +25,8 @@ export default {
         --switch-height: 32px;
         --switch-circle: 26px;
     }
-    .foodalert .custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
+    .foodalert .custom-checkbox .custom-control-label::before,
+    .custom-checkbox .custom-control-label::after {
         height: var(--checkbox-size);
         width: var(--checkbox-size);
     }
@@ -33,14 +34,17 @@ export default {
         border: 1.5px solid #AAAAAA;
         border-radius: 6.25%;
     }
-    .foodalert .custom-checkbox .custom-control-input:disabled~.custom-control-label::before {
+    .foodalert .custom-checkbox
+    .custom-control-input:disabled~.custom-control-label::before {
         border: 1.5px solid #EAEAEA;
         background: initial;
     }
-    .foodalert .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    .foodalert .custom-checkbox
+    .custom-control-input:checked~.custom-control-label::before {
         border-color: #0D95FC;
     }
-    .foodalert .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    .foodalert .custom-checkbox
+    .custom-control-input:checked~.custom-control-label::after {
         background: url("../../img/check.svg") no-repeat 50%/75%;
     }
     .foodalert .custom-checkbox .custom-control-label{
@@ -57,22 +61,26 @@ export default {
         border-color: #0D95FC;
     }
 
-    .foodalert .custom-radio .custom-control-label::before, .custom-radio .custom-control-label::after {
+    .foodalert .custom-radio .custom-control-label::before,
+    .custom-radio .custom-control-label::after {
         height: var(--radio-size);
         width: var(--radio-size);
     }
     .foodalert .custom-radio .custom-control-label::before {
         border: 1.5px solid #AAAAAA;
     }
-    .foodalert .custom-radio .custom-control-input:disabled~.custom-control-label::before {
+    .foodalert .custom-radio
+    .custom-control-input:disabled~.custom-control-label::before {
         border: 1.5px solid #EAEAEA;
         background: initial;
     }
-    .foodalert .custom-radio .custom-control-input:checked~.custom-control-label::before {
+    .foodalert .custom-radio
+    .custom-control-input:checked~.custom-control-label::before {
         border-color: #0D95FC;
         background-color: initial;
     }
-    .foodalert .custom-radio .custom-control-input:checked~.custom-control-label::after {
+    .foodalert .custom-radio
+    .custom-control-input:checked~.custom-control-label::after {
         background: url("../../img/dot.svg") no-repeat center center/69%;
     }
     .foodalert .custom-radio .custom-control-label{
@@ -104,8 +112,10 @@ export default {
         top: calc((var(--switch-height) - var(--switch-circle)) / 2);
     }
 
-    .foodalert .custom-switch .custom-control-input:checked~.custom-control-label::after {
-        transform: translateX(calc(var(--switch-width) - var(--switch-circle) - 5.5px));
+    .foodalert .custom-switch
+    .custom-control-input:checked~.custom-control-label::after {
+        transform: translateX(calc(var(--switch-width) -
+            var(--switch-circle) - 5.5px));
     }
 
     .foodalert .custom-control.custom-switch {

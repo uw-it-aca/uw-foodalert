@@ -20,7 +20,9 @@
             <b-container>
               <b-row class="justify-content-center">
                 <b-col lg=8 md=12 class="page-content-padding">
-                  <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2"><slot name="heading"></slot></h1>
+                  <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2">
+                    <slot name="heading"></slot>
+                  </h1>
                   <div id="standard-body"><slot name="body"></slot></div>
                   <slot name="navigation"></slot>
                 </b-col>
@@ -28,7 +30,9 @@
             </b-container>
         </div>
         <footer id="relative-footer" class="text-center">
-          <a href="mailto:help@uw.edu?subject=Hungry Husky support">Contact support</a>
+          <a href="mailto:help@uw.edu?subject=Hungry Husky support">
+            Contact support
+          </a>
           <p>© 2019 University of Washington</p>
         </footer>
     </div>
@@ -36,39 +40,43 @@
 
 <script>
 export default {
-    props: {
-        startWithNotification: {
-            type: Boolean,
-            default: false
-        },
-        timeoutOfNotification: {
-            type: Number,
-            default: 3000
-        },
-        notificationColor: {
-            type: String,
-            default: "#0070C9"
-        }
+  props: {
+    startWithNotification: {
+      type: Boolean,
+      default: false,
     },
-    data() {
-        return {
-            notificationState: false,
-            notifStyle: "",
-        }
+    timeoutOfNotification: {
+      type: Number,
+      default: 3000,
     },
-    methods: {
-        showNotification: function() {
-            setTimeout(() => {this.notificationState = true;}, 250);
-            setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification);
-        }
+    notificationColor: {
+      type: String,
+      default: '#0070C9',
     },
-    beforeMount() {
-        if(this.startWithNotification) {
-            this.showNotification();
-        }
-        this.notifStyle = "background-color: " + this.notificationColor + ";";
+  },
+  data() {
+    return {
+      notificationState: false,
+      notifStyle: '',
+    };
+  },
+  methods: {
+    showNotification: function() {
+      setTimeout(() => {
+        this.notificationState = true;
+      }, 250);
+      setTimeout(() => {
+        this.notificationState = false;
+      }, this.timeoutOfNotification);
     },
-}
+  },
+  beforeMount() {
+    if (this.startWithNotification) {
+      this.showNotification();
+    }
+    this.notifStyle = 'background-color: ' + this.notificationColor + ';';
+  },
+};
 </script>
 
 <style>
