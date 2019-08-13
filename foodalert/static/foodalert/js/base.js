@@ -7,34 +7,48 @@ window.vueData = {};
 
 window.vueData.routes = [
     {
-        path: "/",
+        path: "/a/",
         component: GenericTemplate,
         children: [
-            { path: "test-template", component: TestTemplate, name: "test-template" },
-            { path: "unrecoverable", component: UnrecoverablePage, name: "unrecoverable", props: true },
-            { path: "a/audit", component: UnauthzTemplate, name: "a-audit" },
-            { path: "h", redirect: { name: "h-welcome" } },
-            { path: "h/welcome", component: UnauthzTemplate, name: "h-welcome" },
-            { path: "h/food-service", component: UnauthzTemplate, name: "h-food-service" },
-            { path: "h/categories", component: UnauthzTemplate, name: "h-categories" },
-            { path: "h/responsibilities", component: UnauthzTemplate,name: "h-responsibilities" },
-            { path: "h/need-permit", component: UnauthzTemplate, name: "h-need-permit" },
-            { path: "h/form", component: UnauthzTemplate, name: "h-form" },
-            { path: "h/update", component: UnauthzTemplate, name: "h-update", props: true },
-            { path: "h/close", component: UnauthzTemplate, name: "h-close" },
-            { path: "h/ended", component: UnauthzTemplate, name: "h-ended" },
-            { path: "s", redirect: { name: "s-welcome" } },
-            { path: "s/welcome", component: UnauthzTemplate, name: "s-welcome" },
-            { path: "s/responsibilities", component: UnauthzTemplate, name: "s-responsibilities" },
-            { path: "s/notifications", component: UnauthzTemplate, name: "s-notifications" },
-            { path: "s/signup", component: UnauthzTemplate, name: "s-signup" },
-            { path: "s/subscribed", component: UnauthzTemplate, name: "s-subscribed" },
-            { path: "", redirect: to => { window.location.replace("http://www.washington.edu/anyhungryhusky/"); } }
+            { path: "audit", component: UnauthzTemplate, name: "a-audit" },
         ],
     },
     {
-        path: "*",
-        component: NotFoundTemplate,
-        name: "notfound"
+        path: "/h/",
+        component: GenericTemplate,
+        redirect: { name: "h-welcome" },
+        children: [
+            { path: "welcome", component: UnauthzTemplate, name: "h-welcome" },
+            { path: "food-service", component: UnauthzTemplate, name: "h-food-service" },
+            { path: "categories", component: UnauthzTemplate, name: "h-categories" },
+            { path: "responsibilities", component: UnauthzTemplate,name: "h-responsibilities" },
+            { path: "need-permit", component: UnauthzTemplate, name: "h-need-permit" },
+            { path: "form", component: UnauthzTemplate, name: "h-form" },
+            { path: "update", component: UnauthzTemplate, name: "h-update", props: true },
+            { path: "close", component: UnauthzTemplate, name: "h-close" },
+            { path: "ended", component: UnauthzTemplate, name: "h-ended" },
+        ],
     },
+    {
+        path: "/s/",
+        component: GenericTemplate,
+        redirect: { name: "s-welcome" },
+        children: [
+            { path: "welcome", component: UnauthzTemplate, name: "s-welcome" },
+            { path: "responsibilities", component: UnauthzTemplate, name: "s-responsibilities" },
+            { path: "notifications", component: UnauthzTemplate, name: "s-notifications" },
+            { path: "signup", component: UnauthzTemplate, name: "s-signup" },
+            { path: "subscribed", component: UnauthzTemplate, name: "s-subscribed" },
+        ],
+    },
+    {
+        path: "/",
+        component: GenericTemplate,
+        redirect: to => { window.location.replace("http://www.washington.edu/anyhungryhusky/"); },
+        children: [
+            { path: "test-template", component: TestTemplate, name: "test-template" },
+            { path: "unrecoverable", component: UnrecoverablePage, name: "unrecoverable", props: true },
+        ],
+    },
+    { path: "*", component: NotFoundTemplate, name: "notfound" }
 ];

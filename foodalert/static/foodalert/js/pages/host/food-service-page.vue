@@ -58,6 +58,8 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     import CollapseTextBox from "../../components/collapse-text-box.vue";
+    const axios = require('axios');
+    
     export default {
         components:{
             "generic-page": GenericPage,
@@ -87,6 +89,13 @@
             return {
                 selected: [],
             }
-        }
+        },
+        beforeMount() {
+            axios.get("/notification/?host_netid=" + this.netID).then((result) => {
+                result.data = result.data.filter((d)=>!d.ended)
+                if(result.data.length)
+                    this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
+            }).catch((error) => this.showErrorPage(error.response, "h-food-service"));
+        },
     }
 </script>
