@@ -12,6 +12,8 @@
 
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
+    const axios = require('axios');
+    
     export default {
         components:{
             "generic-page": GenericPage,

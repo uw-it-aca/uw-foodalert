@@ -44,20 +44,14 @@ exports[`NotFoundTemplate (404 Page) renders correctly 1`] = `
     align-self="center"
     class="row justify-content-center"
   >
-    <a
-      class=""
-      href="/"
-      target="_self"
+    <button
+      class="btn btn-outline-primary"
+      type="button"
     >
-      <button
-        class="btn btn-outline-primary"
-        type="button"
-      >
-        
-                  Go To Homepage
-              
-      </button>
-    </a>
+      
+              Go To Homepage
+          
+    </button>
   </div>
 </div>
 `;
