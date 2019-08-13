@@ -1,144 +1,185 @@
 <template>
-    <generic-page>
-        <template #heading>
-            Compose notification
-        </template>
-        <template #body>
-            <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send" cancel-variant="outline-secondary" @ok="submitAndNext()">
-                <p>
-                    We will send your notification to Hungry Husky Subscribers.
-                </p>
-                <preview-box>
-                    <span v-if="form.food_served">{{form.food_served}}</span>
-                    <span v-else>Hot Indian buffet food</span> from
-                    <span v-if="form.event">{{form.event}}</span>
-                    <span v-else>FIUTS weekly club meeting</span>.
-                    <br/>
-                    <br/>
-                    Quantity: <span v-if="form.amount_of_food_left">{{form.amount_of_food_left}}</span>
-                    <span v-else>About 8 full meals</span>
-                    <br/>
-                    End time:
-                    <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
-                    <span v-else>--:-- --</span>
-                    <br/>
-                    Location: <span v-if="form.location">{{form.location}}</span>
-                    <span v-else>HUB 130</span>
-                    <span v-if="form.allergens.length != 0">
-                        <br />
-                        May contain:
-                        <span v-for="(list, index) in form.allergens" :key="list">
-                            <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
-                        </span>
-                    </span>
-                    <br/>
-                    <p v-if="form.bring_container">
-                        <br/>
-                        You must bring a food storage container.
-                    </p>
-                </preview-box>
-            </b-modal>
+  <generic-page>
+    <template #heading>
+      Compose notification
+    </template>
+    <template #body>
+      <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send"
+        cancel-variant="outline-secondary"
+        @ok="submitAndNext()">
+        <p>
+          We will send your notification to Hungry Husky Subscribers.
+        </p>
+        <preview-box>
+          <span v-if="form.food_served">{{form.food_served}}</span>
+          <span v-else>Hot Indian buffet food</span> from
+          <span v-if="form.event">{{form.event}}</span>
+          <span v-else>FIUTS weekly club meeting</span>.
+          <br />
+          <br />
+          Quantity:
+          <span v-if="form.amount_of_food_left">
+            {{form.amount_of_food_left}}
+          </span>
+          <span v-else>About 8 full meals</span>
+          <br />
+          End time:
+          <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
+          <span v-else>--:-- --</span>
+          <br />
+          Location: <span v-if="form.location">{{form.location}}</span>
+          <span v-else>HUB 130</span>
+          <span v-if="form.allergens.length != 0">
+            <br />
+            May contain:
+            <span v-for="(list, index) in form.allergens" :key="list">
+              <span>{{list}}</span>
+              <span v-if="index+1 < form.allergens.length">, </span>
+            </span>
+          </span>
+          <br />
+          <p v-if="form.bring_container">
+            <br />
+            You must bring a food storage container.
+          </p>
+        </preview-box>
+      </b-modal>
 
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <p class="mb-0 pb-0">Now let's get some details about your food and event so you can send a notification.</p>
-                <label class="standard-label" for="event-name">Event name</label>
-                <b-form-input id="event-name" aria-describedby="Name of the event"
-                    v-model="form.event" required placeholder="FIUTS weekly club meeting" class="standard-placeholder" size="lg"></b-form-input>
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <p class="mb-0 pb-0">
+          Now let's get some details about your food and event so
+          you can send a notification.
+        </p>
+        <label class="standard-label" for="event-name">Event name</label>
+        <b-form-input id="event-name" aria-describedby="Name of the event"
+          v-model="form.event" required
+          placeholder="FIUTS weekly club meeting" class="standard-placeholder"
+          size="lg">
+        </b-form-input>
 
-                <label class="standard-label" for="food-description">Describe the food</label>
-                <b-form-textarea id="food-description" aria-describedby="Describe the food"
-                    v-model="form.food_served" required placeholder="Hot Indian buffet food" class="standard-placeholder" size="lg"></b-form-textarea>
+        <label class="standard-label" for="food-description">
+          Describe the food
+        </label>
+        <b-form-textarea id="food-description"
+                         aria-describedby="Describe the food"
+                         v-model="form.food_served" required
+                         placeholder="Hot Indian buffet food"
+                         class="standard-placeholder" size="lg">
+        </b-form-textarea>
 
-                <label class="standard-label" for="quantity">Quantity</label>
-                <b-form-input id="quantity" aria-describedby="Quantity of food"
-                    v-model="form.amount_of_food_left" required placeholder="About 8 full meals" class="standard-placeholder" size="lg"></b-form-input>
+        <label class="standard-label" for="quantity">Quantity</label>
+        <b-form-input id="quantity" aria-describedby="Quantity of food"
+          v-model="form.amount_of_food_left" required
+          placeholder="About 8 full meals" class="standard-placeholder"
+          size="lg"></b-form-input>
 
-                <label class="standard-label" for="end-time">End time (when food service will end)</label>
-                <b-form-input id="end-time" aria-describedby="End time of the event"
-                    v-model="form.end_time" required type="time" class="standard-placeholder" size="lg" v-if="isMobile"></b-form-input>
-                <ctk-date-time-picker id="end-time" v-model="form.end_time"
-                    class="standard-placeholder" format="hh:mm a" formatted="hh:mm a" :onlyTime="true" :noLabel="true" v-else></ctk-date-time-picker>
+        <label class="standard-label" for="end-time">
+          End time (when food service will end)
+        </label>
+        <b-form-input id="end-time" aria-describedby="End time of the event"
+          v-model="form.end_time" required
+          type="time" class="standard-placeholder" size="lg"
+          v-if="isMobile"></b-form-input>
+        <ctk-date-time-picker id="end-time" v-model="form.end_time"
+          class="standard-placeholder" format="hh:mm a"
+          formatted="hh:mm a" :onlyTime="true" :noLabel="true" v-else>
+          </ctk-date-time-picker>
 
-                <label class="standard-label" for="location">Location</label>
-                <b-form-input id="location" aria-describedby="Location of the event"
-                    v-model="form.location" required placeholder="HUB 130" class="standard-placeholder" size="lg"></b-form-input>
+        <label class="standard-label" for="location">Location</label>
+        <b-form-input id="location" aria-describedby="Location of the event"
+          v-model="form.location" required
+          placeholder="HUB 130" class="standard-placeholder" size="lg">
+          </b-form-input>
 
-                <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-                <h5 class="h3 mb-2 pb-0">Does the food contain allergens?</h5>
-                <p class="mb-3">It's ok if you are unsure, just select to the best of your knowledge.</p>
+        <h2 class="h2 pb-0 mb-0">Food specifications</h2>
+        <h5 class="h3 mb-2 pb-0">Does the food contain allergens?</h5>
+        <p class="mb-3">
+          It's ok if you are unsure, just select to the best of your
+          knowledge.
+        </p>
 
-                <b-container class="px-0">
-                    <b-form-checkbox-group id="allergens-checkbox" v-model="form.allergens">
-                        <b-row>
-                            <b-col v-for="allergen in allergens" :key="allergen"  cols="6">
-                                <b-form-checkbox :value="allergen" class="mb-2">
-                                    <span>
-                                        {{allergen}}
-                                    </span>
-                                </b-form-checkbox>
-                            </b-col>
-                        </b-row>
-                    </b-form-checkbox-group>
-                </b-container>
+        <b-container class="px-0">
+          <b-form-checkbox-group id="allergens-checkbox"
+            v-model="form.allergens">
+            <b-row>
+              <b-col v-for="allergen in allergens" :key="allergen" cols="6">
+                <b-form-checkbox :value="allergen" class="mb-2">
+                  <span>
+                    {{allergen}}
+                  </span>
+                </b-form-checkbox>
+              </b-col>
+            </b-row>
+          </b-form-checkbox-group>
+        </b-container>
 
-                <h5 class="h3">Do people need to bring food storage containers? </h5>
-                <b-container class="px-0">
-                    <b-form-radio-group id="bring-radio" v-model="form.bring_container" stacked>
-                        <b-form-radio :value="true">
-                            <span>Yes</span>
-                        </b-form-radio>
-                        <b-form-radio :value="false" class="mt-1">
-                            <span>No</span>
-                        </b-form-radio>
-                  </b-form-radio-group>
-                </b-container>
+        <h5 class="h3">Do people need to bring food storage containers? </h5>
+        <b-container class="px-0">
+          <b-form-radio-group id="bring-radio"
+            v-model="form.bring_container" stacked>
+            <b-form-radio :value="true">
+              <span>Yes</span>
+            </b-form-radio>
+            <b-form-radio :value="false" class="mt-1">
+              <span>No</span>
+            </b-form-radio>
+          </b-form-radio-group>
+        </b-container>
 
 
-                <h2 class="h2">Preview</h2>
-                <preview-box>
-                    <span v-if="form.food_served">{{form.food_served}}</span>
-                    <span v-else>Hot Indian buffet food</span> from
-                    <span v-if="form.event">{{form.event}}</span>
-                    <span v-else>FIUTS weekly club meeting</span>.
-                    <br/>
-                    <br/>
-                    Quantity: <span v-if="form.amount_of_food_left">{{form.amount_of_food_left}}</span>
-                    <span v-else>About 8 full meals</span>
-                    <br/>
-                    End time:
-                    <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
-                    <span v-else>--:-- --</span>
-                    <br/>
-                    Location: <span v-if="form.location">{{form.location}}</span>
-                    <span v-else>HUB 130</span>
-                    <span v-if="form.allergens.length != 0">
-                        <br />
-                        May contain:
-                        <span v-for="(list, index) in form.allergens" :key="list">
-                            <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
-                        </span>
-                    </span>
-                    <br/>
-                    <p v-if="form.bring_container">
-                        <br/>
-                        You must bring a food storage container.
-                    </p>
-                </preview-box>
-                <!--b-card class="mt-3" header="Form Data Result">
+        <h2 class="h2">Preview</h2>
+        <preview-box>
+          <span v-if="form.food_served">{{form.food_served}}</span>
+          <span v-else>Hot Indian buffet food</span> from
+          <span v-if="form.event">{{form.event}}</span>
+          <span v-else>FIUTS weekly club meeting</span>.
+          <br />
+          <br />
+          Quantity:
+          <span v-if="form.amount_of_food_left">
+            {{form.amount_of_food_left}}
+          </span>
+          <span v-else>About 8 full meals</span>
+          <br />
+          End time:
+          <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
+          <span v-else>--:-- --</span>
+          <br />
+          Location: <span v-if="form.location">{{form.location}}</span>
+          <span v-else>HUB 130</span>
+          <span v-if="form.allergens.length != 0">
+            <br />
+            May contain:
+            <span v-for="(list, index) in form.allergens" :key="list">
+              <span>{{list}}</span>
+              <span v-if="index+1 < form.allergens.length">, </span>
+            </span>
+          </span>
+          <br />
+          <p v-if="form.bring_container">
+            <br />
+            You must bring a food storage container.
+          </p>
+        </preview-box>
+        <!--b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
                 </b-card!-->
 
-                <div class="mt-5">
-                    <b-row align-h="between">
-                        <b-col md="5" lg="4" order-md="2">
-                        </b-col>
-                        <b-col md="5" lg="4" order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;">Submit</b-button>
-                        </b-col>
-                    </b-row>
-                </div>
-            </b-form>
-        </template>
-    </generic-page>
+        <div class="mt-5">
+          <b-row align-h="between">
+            <b-col md="5" lg="4" order-md="2">
+            </b-col>
+            <b-col md="5" lg="4" order-md="2">
+              <b-button class="mb-3" type="submit" block variant="primary"
+                size="lg" style="white-space: nowrap;">
+                Submit
+              </b-button>
+            </b-col>
+          </b-row>
+        </div>
+      </b-form>
+    </template>
+  </generic-page>
 </template>
 
 <script type="text/javascript">
@@ -197,16 +238,17 @@ export default {
       if (this.isMobile) {
         let hours = parseInt(this.form.end_time.substr(0, 2));
         const mins = parseInt(this.form.end_time.substr(3, 2));
-        let time_ext = 'AM';
+        let timeExt = 'AM';
         if (hours == 0) {
           hours = 12;
         } else if (hours == 12) {
-          time_ext = 'PM';
+          timeExt = 'PM';
         } else if (hours > 12) {
           hours -= 12;
-          time_ext = 'PM';
+          timeExt = 'PM';
         }
-        return (hours < 10 ? '0' : '') + hours + ':' + (mins < 10 ? '0' : '') + mins + ' ' + time_ext;
+        return (hours < 10 ? '0' : '') + hours + ':' +
+          (mins < 10 ? '0' : '') + mins + ' ' + timeExt;
       }
       return this.form.end_time;
     },
@@ -250,7 +292,9 @@ export default {
       };
       axios.post('/notification/', data, {'headers': headers})
           .then(function(response) {
-            this.$router.push({name: 'h-update', params: {notificationText: 'Your notification was sent.'}});
+            this.$router.push({name: 'h-update', params: {
+              notificationText: 'Your notification was sent.',
+            }});
           }.bind(this))
           .catch((error) => this.showErrorPage(error.response, 'h-form'));
     },
@@ -259,7 +303,9 @@ export default {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
       if (result.data.length) {
-        this.$router.push({name: 'h-update', params: {notificationText: 'You already have an event running.'}});
+        this.$router.push({name: 'h-update', params: {
+          notificationText: 'You already have an event running.',
+        }});
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
     axios.get('/allergen/').then((result) => {
@@ -268,7 +314,8 @@ export default {
         this.allergens.push(allergen.name);
       });
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-    this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(' ');
+    this.form.end_time =
+      new Date().toLocaleTimeString().split(/\:\d\d /).join(' ');
     if (this.form.end_time.length < 8) {
       this.form.end_time = '0' + this.form.end_time;
     }
