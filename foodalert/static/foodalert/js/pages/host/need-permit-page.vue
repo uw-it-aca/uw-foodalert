@@ -29,7 +29,7 @@
 <script type="text/javascript">
     import GenericPage from "../../components/generic-page.vue";
     const axios = require('axios');
-    
+
     export default {
         components:{
             "generic-page": GenericPage,
@@ -39,7 +39,7 @@
                 result.data = result.data.filter((d)=>!d.ended)
                 if(result.data.length)
                     this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
-            }).catch((error) => this.showErrorPage(error.response, "h-welcome"));
+            }).catch((error) => this.showErrorPage(error.response, "h-need-permit"));
         },
     }
 </script>
