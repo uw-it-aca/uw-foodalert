@@ -13,18 +13,21 @@
         </b-row>
         <br>
         <b-row align-self="center" align-h="center">
-            <b-link to="/">
-                <button style="c" type="button" class="btn btn-outline-primary">
-                    Go To Homepage
-                </button>
-            </b-link>
+            <button style="c" type="button" class="btn btn-outline-primary" @click="goHome">
+                Go To Homepage
+            </button>
         </b-row>
   </b-container>
 </template>
 
 <script type="text/javascript">
-  export default {
-  }
+    export default {
+        methods: {
+            goHome() {
+                this.$router.push("/")
+            }
+        }
+    }
 </script>
 
 <style>
