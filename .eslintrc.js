@@ -2,22 +2,18 @@ module.exports = {
   'env': {
     'browser': true,
     'commonjs': true,
-    'es6': true,
+    'es6': true
   },
   'extends': [
-    'plugin:vue/essential',
     'eslint:recommended',
+    'plugin:vue/essential',
   ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
-  },
-  'parserOptions': {
-    'ecmaVersion': 2018,
-  },
   'plugins': [
     'vue',
   ],
   'rules': {
+    "semi": [2, "always"],
+    "vue/max-attributes-per-line": "off",
+    "vue/script-indent" : ["error", 2, { "baseIndent": 1 }]
   },
 };
