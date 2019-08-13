@@ -20,17 +20,17 @@
 <script type="text/javascript">
 import GenericPage from '../components/generic-page.vue';
 import NotificationOption from '../components/notification-option.vue';
-  export default {
-    components: {
-      "generic-page": GenericPage,
-      "notification-option": NotificationOption,
-    },
+export default {
+  components: {
+    'generic-page': GenericPage,
+    'notification-option': NotificationOption,
+  },
 
-    data() {
-      return {
-      }
-    }
-  }
+  data() {
+    return {
+    };
+  },
+};
 </script>
 
 <style lang="scss">

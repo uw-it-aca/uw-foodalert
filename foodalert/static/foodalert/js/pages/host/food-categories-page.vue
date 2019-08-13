@@ -67,46 +67,47 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../../components/generic-page.vue";
-    import CollapseTextBox from "../../components/collapse-text-box.vue";
-    const axios = require('axios');
+import GenericPage from '../../components/generic-page.vue';
+import CollapseTextBox from '../../components/collapse-text-box.vue';
+const axios = require('axios');
 
-    export default {
-        components:{
-            "generic-page": GenericPage,
-            "collapse-text-box": CollapseTextBox,
-        },
-        props: {
-            bid: String,
-        },
-        methods: {
-            getNextPage() {
-                if (this.selected.includes('non-perishable') || this.selected.includes('pre-packaged')) {
-                    this.$router.push({ name: 'h-need-permit' });
-                } else if (this.selected.includes('none') || this.selected.includes('atHome')) {
-                    this.$router.push({ name: 'h-close' });
-                }
-            },
-            getBackPage() {
-                this.$router.push({ name: 'h-food-service' });
-            },
-            removeInput(str) {
-                if(this.selected.includes(str)){
-                    this.selected.splice(this.selected.indexOf(str), 1);
-                }
-            }
-        },
-        data() {
-            return {
-                selected: [],
-            }
-        },
-        beforeMount() {
-            axios.get("/notification/?host_netid=" + this.netID).then((result) => {
-                result.data = result.data.filter((d)=>!d.ended)
-                if(result.data.length)
-                    this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
-            }).catch((error) => this.showErrorPage(error.response, "h-categories"));
-        },
-    }
+export default {
+  components: {
+    'generic-page': GenericPage,
+    'collapse-text-box': CollapseTextBox,
+  },
+  props: {
+    bid: String,
+  },
+  methods: {
+    getNextPage() {
+      if (this.selected.includes('non-perishable') || this.selected.includes('pre-packaged')) {
+        this.$router.push({name: 'h-need-permit'});
+      } else if (this.selected.includes('none') || this.selected.includes('atHome')) {
+        this.$router.push({name: 'h-close'});
+      }
+    },
+    getBackPage() {
+      this.$router.push({name: 'h-food-service'});
+    },
+    removeInput(str) {
+      if (this.selected.includes(str)) {
+        this.selected.splice(this.selected.indexOf(str), 1);
+      }
+    },
+  },
+  data() {
+    return {
+      selected: [],
+    };
+  },
+  beforeMount() {
+    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+      result.data = result.data.filter((d)=>!d.ended);
+      if (result.data.length) {
+        this.$router.push({name: 'h-update', params: {notificationText: 'You already have an event running.'}});
+      }
+    }).catch((error) => this.showErrorPage(error.response, 'h-categories'));
+  },
+};
 </script>

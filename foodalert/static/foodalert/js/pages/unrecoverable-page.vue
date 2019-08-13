@@ -28,39 +28,39 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../components/generic-page.vue";
-    export default {
-        components:{
-            "generic-page": GenericPage,
-        },
-        props: {
-            errorHeading: {
-                type: String,
-                default: "SMS verification failed"
-            },
-            errorMessage: {
-                type: String,
-                default: "There was an error connecting to the Hungry Husky server"
-            },
-            errorCode: {
-                type: Number,
-                default: 500
-            },
-            tryAgainPage: {
-                type: String,
-                default: "s-welcome"
-            }
-        },
-        methods: {
-            getNextPage() {
-                this.$router.push({ name: this.tryAgainPage });
-            },
-        },
-        data() {
-            return {
-            }
-        }
-    }
+import GenericPage from '../components/generic-page.vue';
+export default {
+  components: {
+    'generic-page': GenericPage,
+  },
+  props: {
+    errorHeading: {
+      type: String,
+      default: 'SMS verification failed',
+    },
+    errorMessage: {
+      type: String,
+      default: 'There was an error connecting to the Hungry Husky server',
+    },
+    errorCode: {
+      type: Number,
+      default: 500,
+    },
+    tryAgainPage: {
+      type: String,
+      default: 's-welcome',
+    },
+  },
+  methods: {
+    getNextPage() {
+      this.$router.push({name: this.tryAgainPage});
+    },
+  },
+  data() {
+    return {
+    };
+  },
+};
 </script>
 
 <style>

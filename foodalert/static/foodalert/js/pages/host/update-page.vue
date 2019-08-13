@@ -63,97 +63,97 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../../components/generic-page.vue";
-    import PreviewBox from "../../components/custom-preview-box.vue";
-    import Cookies from 'js-cookie';
-    const axios = require('axios');
+import GenericPage from '../../components/generic-page.vue';
+import PreviewBox from '../../components/custom-preview-box.vue';
+import Cookies from 'js-cookie';
+const axios = require('axios');
 
-    export default {
-        components:{
-            "generic-page": GenericPage,
-            "preview-box": PreviewBox,
+export default {
+  components: {
+    'generic-page': GenericPage,
+    'preview-box': PreviewBox,
+  },
+  props: {
+    notificationText: String,
+  },
+  data() {
+    return {
+      selected: 'noFoodUpdate',
+      state: {
+        food: {
+          served: '',
         },
-        props: {
-            notificationText: String,
-        },
-        data() {
-            return {
-                selected: "noFoodUpdate",
-                state: {
-                    food: {
-                        served: "",
-                    },
-                    event: "",
-                    location: "",
-                },
-                otherText: "",
-                privNotifText: this.notificationText,
-            }
-        },
-        beforeMount() {
-            var headers = {
-                'Content-Type': 'application/json',
-            }
-            axios.get('/notification/?host_netid=' + this.netID, {"headers": headers})
-                .then(response => {
-                    var data = response.data.filter(function(notif) {
-                        return notif.ended == false;
-                    });
-                    if (data.length === 0) {
-                        this.$router.push({ name: 'h-welcomes'});
-                    } else {
-                        axios.get('/notification/' + data[0]["id"] + '/', {"headers": headers}).
-                            then(response => {
-                                console.log(response.data)
-                                this.state = response.data
-                            }).catch((error) => this.showErrorPage(error.response, "h-update"))
-                    }
-                })
-                .catch((error) => this.showErrorPage(error.response, "h-update"))
-        },
-        methods: {
-            sendUpdate() {
-                if (this.selected == "noFoodUpdate") {
-                    var data = {
-                        "text": "No Food left! The event: " + this.state.event + " has ended and is no longer serving food",
-                        "parent_notification_id": this.state.id,
-                        "ended": true
-                    };
-                    var csrftoken = Cookies.get('csrftoken');
-                    var headers = {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
-                    };
+        event: '',
+        location: '',
+      },
+      otherText: '',
+      privNotifText: this.notificationText,
+    };
+  },
+  beforeMount() {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    axios.get('/notification/?host_netid=' + this.netID, {'headers': headers})
+        .then((response) => {
+          const data = response.data.filter(function(notif) {
+            return notif.ended == false;
+          });
+          if (data.length === 0) {
+            this.$router.push({name: 'h-welcomes'});
+          } else {
+            axios.get('/notification/' + data[0]['id'] + '/', {'headers': headers}).
+                then((response) => {
+                  console.log(response.data);
+                  this.state = response.data;
+                }).catch((error) => this.showErrorPage(error.response, 'h-update'));
+          }
+        })
+        .catch((error) => this.showErrorPage(error.response, 'h-update'));
+  },
+  methods: {
+    sendUpdate() {
+      if (this.selected == 'noFoodUpdate') {
+        var data = {
+          'text': 'No Food left! The event: ' + this.state.event + ' has ended and is no longer serving food',
+          'parent_notification_id': this.state.id,
+          'ended': true,
+        };
+        var csrftoken = Cookies.get('csrftoken');
+        var headers = {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        };
 
-                    axios.post('/updates/', data, {"headers": headers})
-                        .then(function(response) {
-                            console.log(response);
-                            this.$router.push({ name: 'h-ended' });
-                        }.bind(this))
-                        .catch((error) => this.showErrorPage(error.response, "h-update"))
-                } else {
-                    var data = {
-                        "text": this.otherText,
-                        "parent_notification_id": this.state.id
-                    };
-                    var csrftoken = Cookies.get('csrftoken');
-                    var headers = {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
-                    }
-                    axios.post('/updates/', data, {"headers": headers})
-                        .then(function(response) {
-                            console.log(response)
-                            this.privNotifText = "Your update was sent.";
-                            this.$refs.notifBox.showNotification()
-                        }.bind(this))
-                        .catch((error) => this.showErrorPage(error.response, "h-update"))
-                }
-                this.selected = "noFoodUpdate";
-                this.otherText= "";
-            },
-        },
-    }
+        axios.post('/updates/', data, {'headers': headers})
+            .then(function(response) {
+              console.log(response);
+              this.$router.push({name: 'h-ended'});
+            }.bind(this))
+            .catch((error) => this.showErrorPage(error.response, 'h-update'));
+      } else {
+        var data = {
+          'text': this.otherText,
+          'parent_notification_id': this.state.id,
+        };
+        var csrftoken = Cookies.get('csrftoken');
+        var headers = {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        };
+        axios.post('/updates/', data, {'headers': headers})
+            .then(function(response) {
+              console.log(response);
+              this.privNotifText = 'Your update was sent.';
+              this.$refs.notifBox.showNotification();
+            }.bind(this))
+            .catch((error) => this.showErrorPage(error.response, 'h-update'));
+      }
+      this.selected = 'noFoodUpdate';
+      this.otherText= '';
+    },
+  },
+};
 </script>
 
 <style>

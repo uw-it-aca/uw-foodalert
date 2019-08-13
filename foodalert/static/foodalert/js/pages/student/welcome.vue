@@ -10,16 +10,16 @@
 
 <script type="text/javascript">
 import WelcomePage from '../../components/welcome-page.vue';
-  export default {
-    components: {
-      "welcome-page": WelcomePage,
-    },
+export default {
+  components: {
+    'welcome-page': WelcomePage,
+  },
 
-    data() {
-      return {
-      }
-    }
-  }
+  data() {
+    return {
+    };
+  },
+};
 </script>
 
 <style lang="scss">

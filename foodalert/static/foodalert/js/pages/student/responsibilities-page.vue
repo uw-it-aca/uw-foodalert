@@ -36,26 +36,26 @@
 </template>
 
 <script type="text/javascript">
-    import GenericPage from "../../components/generic-page.vue";
-    import CollapseTextBox from "../../components/collapse-text-box.vue";
+import GenericPage from '../../components/generic-page.vue';
+import CollapseTextBox from '../../components/collapse-text-box.vue';
 
-    export default {
-        components:{
-            "generic-page": GenericPage,
-            "collapse-text-box": CollapseTextBox,
-        },
-        props: {
-            bid: String,
-        },
-        methods: {
-            getNextPage() {
-                this.$router.push({ name: 's-notifications' });
-            },
-        },
-        data() {
-            return {
-                selected: [],
-            }
-        }
-    }
+export default {
+  components: {
+    'generic-page': GenericPage,
+    'collapse-text-box': CollapseTextBox,
+  },
+  props: {
+    bid: String,
+  },
+  methods: {
+    getNextPage() {
+      this.$router.push({name: 's-notifications'});
+    },
+  },
+  data() {
+    return {
+      selected: [],
+    };
+  },
+};
 </script>

@@ -142,135 +142,139 @@
 </template>
 
 <script type="text/javascript">
-    import Cookies from 'js-cookie';
-    import GenericPage from "../../components/generic-page.vue";
-    import PreviewBox from "../../components/custom-preview-box.vue";
-    import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-    import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-    const axios = require('axios');
+import Cookies from 'js-cookie';
+import GenericPage from '../../components/generic-page.vue';
+import PreviewBox from '../../components/custom-preview-box.vue';
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+const axios = require('axios');
 
-    export default {
-        components: {
-            "generic-page": GenericPage,
-            "preview-box": PreviewBox,
-            "ctk-date-time-picker": VueCtkDateTimePicker
-        },
-        data() {
-            return {
-                form: {
-                    location: "",
-                    event: "",
-                    end_time: null,
-                    food_served: "",
-                    amount_of_food_left: "",
-                    bring_container: false,
-                    safe_foods: [],
-                    allergens: [],
-                    host_user_agent: "",
-                    ended: false
-                },
-                allergens: [],
-                show: true,
-                isMobile: false
-            }
-        },
-        methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                this.$bvModal.show("submitconfirmation");
-            },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
-                this.form.location = "",
-                this.form.event = "",
-                this.form.end_time = null,
-                this.form.food_served = "",
-                this.form.amount_of_food_left = "",
-                this.form.bring_container = false,
-                this.form.safe_foods = [],
-                this.form.allergens = [],
-                this.form.host_user_agent = "",
-                this.form.ended = false
-            },
-            formatedTimeToStr() {
-                if (this.isMobile) {
-                    var hours = parseInt(this.form.end_time.substr(0,2));
-                    var mins = parseInt(this.form.end_time.substr(3,2));
-                    var time_ext = "AM"
-                    if (hours == 0) {
-                        hours = 12;
-                    } else if (hours == 12) {
-                        time_ext = "PM"
-                    } else if (hours > 12) {
-                        hours -= 12;
-                        time_ext = "PM"
-                    }
-                    return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + " " + time_ext;
-                }
-                return this.form.end_time;
-            },
-            submitAndNext(){
-                var splitTime = this.form.end_time.split(/\:/);
-                splitTime[0] = parseInt(splitTime[0])
-                // Converting split time to 24 hours format
-                if (splitTime[1].split(" ").length != 1) {
-                    splitTime[0] += (splitTime[1].split(" ")[1] == "PM") ? 12 : 0
-                    splitTime[1] = splitTime[1].split(" ")[0]
-                }
-                splitTime[1] = parseInt(splitTime[0])
-
-                var datetime = new Date();
-                datetime.setHours(splitTime[0], splitTime[1])
-                if (datetime < new Date()) {
-                    datetime.setDate(datetime.getDate() + 1)
-                }
-
-                var data = {
-                    "netID": this.netID,
-                    "location": this.form.location,
-                    "event": this.form.event,
-                    "end_time": datetime.toISOString(),
-                    "food": {
-                        "served": this.form.food_served,
-                        "amount": this.form.amount_of_food_left,
-                        "allergens": this.form.allergens
-                    },
-                    "bring_container": this.form.bring_container,
-                    "host": {
-                        "hostID": this._uid,
-                        "userAgent": navigator.userAgent
-                    }
-                };
-
-                var csrftoken = Cookies.get('csrftoken');
-                var headers = {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                }
-                axios.post('/notification/', data, {"headers": headers})
-                    .then(function(response) {
-                        this.$router.push({ name: 'h-update', params: {notificationText: "Your notification was sent."}});
-                    }.bind(this))
-                    .catch((error) => this.showErrorPage(error.response, "h-form"))
-            }
-        },
-        beforeMount() {
-            axios.get("/notification/?host_netid=" + this.netID).then((result) => {
-                result.data = result.data.filter((d)=>!d.ended)
-                if(result.data.length)
-                    this.$router.push({ name: 'h-update', params: {notificationText: "You already have an event running."}});
-            }).catch((error) => this.showErrorPage(error.response, "h-form"));
-            axios.get("/allergen/").then((result) => {
-                this.allergens = []
-                result.data.forEach((allergen)=>{this.allergens.push(allergen.name)});
-            }).catch((error) => this.showErrorPage(error.response, "h-form"));
-            this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(" ")
-            if (this.form.end_time.length < 8)
-                this.form.end_time = "0" + this.form.end_time
-        },
-        mounted() {
-            this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+export default {
+  components: {
+    'generic-page': GenericPage,
+    'preview-box': PreviewBox,
+    'ctk-date-time-picker': VueCtkDateTimePicker,
+  },
+  data() {
+    return {
+      form: {
+        location: '',
+        event: '',
+        end_time: null,
+        food_served: '',
+        amount_of_food_left: '',
+        bring_container: false,
+        safe_foods: [],
+        allergens: [],
+        host_user_agent: '',
+        ended: false,
+      },
+      allergens: [],
+      show: true,
+      isMobile: false,
+    };
+  },
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault();
+      this.$bvModal.show('submitconfirmation');
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      // Reset our form values
+      this.form.location = '',
+      this.form.event = '',
+      this.form.end_time = null,
+      this.form.food_served = '',
+      this.form.amount_of_food_left = '',
+      this.form.bring_container = false,
+      this.form.safe_foods = [],
+      this.form.allergens = [],
+      this.form.host_user_agent = '',
+      this.form.ended = false;
+    },
+    formatedTimeToStr() {
+      if (this.isMobile) {
+        let hours = parseInt(this.form.end_time.substr(0, 2));
+        const mins = parseInt(this.form.end_time.substr(3, 2));
+        let time_ext = 'AM';
+        if (hours == 0) {
+          hours = 12;
+        } else if (hours == 12) {
+          time_ext = 'PM';
+        } else if (hours > 12) {
+          hours -= 12;
+          time_ext = 'PM';
         }
+        return (hours < 10 ? '0' : '') + hours + ':' + (mins < 10 ? '0' : '') + mins + ' ' + time_ext;
+      }
+      return this.form.end_time;
+    },
+    submitAndNext() {
+      const splitTime = this.form.end_time.split(/\:/);
+      splitTime[0] = parseInt(splitTime[0]);
+      // Converting split time to 24 hours format
+      if (splitTime[1].split(' ').length != 1) {
+        splitTime[0] += (splitTime[1].split(' ')[1] == 'PM') ? 12 : 0;
+        splitTime[1] = splitTime[1].split(' ')[0];
+      }
+      splitTime[1] = parseInt(splitTime[0]);
+
+      const datetime = new Date();
+      datetime.setHours(splitTime[0], splitTime[1]);
+      if (datetime < new Date()) {
+        datetime.setDate(datetime.getDate() + 1);
+      }
+
+      const data = {
+        'netID': this.netID,
+        'location': this.form.location,
+        'event': this.form.event,
+        'end_time': datetime.toISOString(),
+        'food': {
+          'served': this.form.food_served,
+          'amount': this.form.amount_of_food_left,
+          'allergens': this.form.allergens,
+        },
+        'bring_container': this.form.bring_container,
+        'host': {
+          'hostID': this._uid,
+          'userAgent': navigator.userAgent,
+        },
+      };
+
+      const csrftoken = Cookies.get('csrftoken');
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      };
+      axios.post('/notification/', data, {'headers': headers})
+          .then(function(response) {
+            this.$router.push({name: 'h-update', params: {notificationText: 'Your notification was sent.'}});
+          }.bind(this))
+          .catch((error) => this.showErrorPage(error.response, 'h-form'));
+    },
+  },
+  beforeMount() {
+    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+      result.data = result.data.filter((d)=>!d.ended);
+      if (result.data.length) {
+        this.$router.push({name: 'h-update', params: {notificationText: 'You already have an event running.'}});
+      }
+    }).catch((error) => this.showErrorPage(error.response, 'h-form'));
+    axios.get('/allergen/').then((result) => {
+      this.allergens = [];
+      result.data.forEach((allergen)=>{
+        this.allergens.push(allergen.name);
+      });
+    }).catch((error) => this.showErrorPage(error.response, 'h-form'));
+    this.form.end_time = new Date().toLocaleTimeString().split(/\:\d\d /).join(' ');
+    if (this.form.end_time.length < 8) {
+      this.form.end_time = '0' + this.form.end_time;
     }
+  },
+  mounted() {
+    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  },
+};
 </script>
