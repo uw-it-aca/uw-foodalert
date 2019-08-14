@@ -50,12 +50,16 @@
           Now let's get some details about your food and event so
           you can send a notification.
         </p>
+
         <label class="standard-label" for="event-name">Event name</label>
-        <b-form-input id="event-name" aria-describedby="Name of the event"
-          v-model="form.event" required
+        <b-form-input id="event-name" aria-describedby="event-name-feedback"
+          v-model="form.event" required :state="inputValid('event')"
           placeholder="FIUTS weekly club meeting" class="standard-placeholder"
-          size="lg">
+          size="lg" @blur="enableValidation.event=true">
         </b-form-input>
+        <b-form-invalid-feedback id="event-name-feedback">
+          Please enter an event name.
+        </b-form-invalid-feedback>
 
         <label class="standard-label" style="margin-bottom: 0;" for="food-description">
           Describe the food
@@ -210,10 +214,24 @@ export default {
         food_served: '',
         amount_of_food_left: '',
         bring_container: false,
-        safe_foods: [],
         allergens: [],
         host_user_agent: '',
-        ended: false,
+      },
+      formValidate: {
+        location: false,
+        event: false,
+        end_time: false,
+        food_served: false,
+        amount_of_food_left: false,
+        bring_container: false,
+      },
+      enableValidation: {
+        location: false,
+        event: false,
+        end_time: false,
+        food_served: false,
+        amount_of_food_left: false,
+        bring_container: false,
       },
       allergens: [],
       show: true,
@@ -236,8 +254,7 @@ export default {
       this.form.bring_container = false,
       this.form.safe_foods = [],
       this.form.allergens = [],
-      this.form.host_user_agent = '',
-      this.form.ended = false;
+      this.form.host_user_agent = ''
     },
     formatedTimeToStr() {
       if (this.isMobile) {
@@ -258,6 +275,9 @@ export default {
       return this.form.end_time;
     },
     submitAndNext() {
+      // triping all input validators
+      this.form
+
       const splitTime = this.form.end_time.split(/\:/);
       splitTime[0] = parseInt(splitTime[0]);
       // Converting split time to 24 hours format
@@ -303,6 +323,19 @@ export default {
           }.bind(this))
           .catch((error) => this.showErrorPage(error.response, 'h-form'));
     },
+    inputValid(fieldName) {
+      if (this.enableValidation[fieldName])
+        return (this.formValidate.event ? null : false)
+      return null;
+    },
+    updateValidity(newState, fieldName, length) {
+      if (newState[fieldName].length > length) {
+        this.formValidate[fieldName] = true
+        this.enableValidation[fieldName] = true
+      } else {
+        this.formValidate[fieldName] = false
+      }
+    }
   },
   beforeMount() {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
@@ -328,5 +361,16 @@ export default {
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   },
+  watch: {
+    form: {
+      handler(newState) {
+        updateValidity(newState, "location", 0);
+        updateValidity(newState, "event", 0);
+        updateValidity(newState, "food_served", 0);
+        updateValidity(newState, "amount_of_food_left", 0);
+      },
+      deep: true
+    }
+  }
 };
 </script>
