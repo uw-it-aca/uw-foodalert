@@ -7,7 +7,6 @@ module.exports = {
   'extends': [
     'plugin:vue/essential',
     'google',
-    'plugin:vue-a11y/recommended',
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -18,7 +17,6 @@ module.exports = {
   },
   'plugins': [
     'vue',
-    'vue-a11y',
   ],
   'rules': {
   },
