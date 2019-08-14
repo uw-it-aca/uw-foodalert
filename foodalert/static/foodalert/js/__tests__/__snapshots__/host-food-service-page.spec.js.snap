@@ -114,13 +114,16 @@ exports[`Food Categories Page renders correctly 1`] = `
                       <a
                         aria-controls="perm-info"
                         aria-expanded="false"
+                        aria-label="Learn more about UW Temporary Food Service Permit"
                         class=""
                         herf="#"
                         href="#"
                         role="button"
                         target="_self"
                       >
-                         Learn more
+                        
+            Learn more
+          
                       </a>
                     </span>
                   </label>
@@ -136,13 +139,16 @@ exports[`Food Categories Page renders correctly 1`] = `
                   >
                     
         When providing food to the public (anyone beyond the staff or
-        /faculty of your unit), UW offices are required to secure a
-        Temporary Food Permit through 
+        faculty of your unit), UW offices are required to secure a
+        Temporary Food Permit through
+        
                     <a
+                      aria-label="UW Environmental Health & Safety
+        Temporary Food Service Permit page"
                       href="#"
                     >
-                      UW Environmental
-        Health & Safety
+                       UW Environmental Health &
+        Safety 
                     </a>
                      to help ensure that food service providers
         meet safety regulations and the food itself is safe for consumption.
