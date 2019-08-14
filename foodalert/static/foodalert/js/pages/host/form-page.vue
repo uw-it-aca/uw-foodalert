@@ -97,7 +97,7 @@
           </b-form-input>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-        <h5 class="h3 pb-0">Does the food contain allergens?</h5>
+        <h3 class="h3 pb-0">Does the food contain allergens?</h3>
         <p class="mb-3">
           It's ok if you are unsure, just select to the best of your
           knowledge.
