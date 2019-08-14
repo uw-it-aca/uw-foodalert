@@ -70,7 +70,7 @@ exports[`Food Categories Page renders correctly 1`] = `
               class=""
             >
               <div
-                class="custom-control custom-checkbox"
+                class="mt-2 custom-control custom-checkbox"
               >
                 <input
                   autocomplete="off"
@@ -83,11 +83,12 @@ exports[`Food Categories Page renders correctly 1`] = `
                 >
                   <span>
                     
-                    My office is responsible for the safety of this food.
-                    
+              My office is responsible for the safety of this food.
+              
                     <a
                       aria-controls="cond1-info"
                       aria-expanded="false"
+                      aria-label="Learn more about safety responsibilities"
                       class=""
                       herf="#"
                       href="#"
@@ -95,8 +96,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                       target="_self"
                     >
                       
-                      Learn more
-                    
+                Learn more
+              
                     </a>
                   </span>
                 </label>
@@ -111,10 +112,10 @@ exports[`Food Categories Page renders correctly 1`] = `
                   class="custom-text-box"
                 >
                   
-              You are responsible for food safety under the approval of
-              the Temporary Food Permit. This same level of responsibility
-              applies when using the Hungry Husky App.
-            
+            You are responsible for food safety under the approval of
+            the Temporary Food Permit. This same level of responsibility
+            applies when using the Hungry Husky App.
+          
                 </div>
               </div>
                
@@ -132,17 +133,18 @@ exports[`Food Categories Page renders correctly 1`] = `
                 >
                   <span>
                     
-                  Potentially hazardous food must be kept at proper
-                  temperatures and have been sitting at room temperature
-                  for no more than 
+              Potentially hazardous food must be kept at proper
+              temperatures and have been sitting at room temperature
+              for no more than 
                     <strong>
                       four hours
                     </strong>
                     .
-                  
+              
                     <a
                       aria-controls="cond2-info"
                       aria-expanded="false"
+                      aria-label="Learn more about potentially hazardous food"
                       class=""
                       herf="#"
                       href="#"
@@ -150,8 +152,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                       target="_self"
                     >
                       
-                    Learn more
-                  
+                Learn more
+              
                     </a>
                   </span>
                 </label>
@@ -166,8 +168,8 @@ exports[`Food Categories Page renders correctly 1`] = `
                   class="custom-text-box"
                 >
                   
-                Information is missing
-            
+              Information is missing
+          
                 </div>
               </div>
                
@@ -200,7 +202,7 @@ exports[`Food Categories Page renders correctly 1`] = `
                     >
                       
                         Back
-                      
+                    
                     </button>
                   </div>
                 </div>
