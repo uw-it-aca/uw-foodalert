@@ -6,4 +6,10 @@ window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
 ]);
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/a/");
-rootPath.children.find(obj => obj.path === "audit").component = AuditController;
+function activatePage(name, page, title) {
+    let route = rootPath.children.find(obj => obj.path === name)
+    route.component = page
+    route.meta.title = title
+}
+
+activatePage("audit", AuditController, "Audit Page")

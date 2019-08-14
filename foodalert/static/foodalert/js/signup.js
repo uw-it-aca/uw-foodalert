@@ -9,6 +9,12 @@ window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
 ]);
 
 let rootPath = window.vueData.routes.find(obj => obj.path === "/s/");
-rootPath.children.find(obj => obj.path === "welcome").component = StudentWelcome;
-rootPath.children.find(obj => obj.path === "responsibilities").component = ResponsibitiesPage;
-rootPath.children.find(obj => obj.path === "notifications").component = NotificationPage;
+function activatePage(name, page, title) {
+    let route = rootPath.children.find(obj => obj.path === name)
+    route.component = page
+    route.meta.title = title
+}
+
+activatePage("welcome", StudentWelcome, "Find surplus food on campus")
+activatePage("responsibilities", ResponsibitiesPage, "Terms of service")
+activatePage("notifications", NotificationPage, "Choose how you want to be notified")

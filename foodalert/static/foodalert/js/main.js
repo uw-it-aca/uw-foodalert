@@ -24,6 +24,11 @@ var router = new VueRouter({
     },
 })
 
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    next()
+})
+
 if (netid != undefined) {
     var _netID = netid
     Vue.mixin({
