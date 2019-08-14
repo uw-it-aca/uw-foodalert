@@ -53,7 +53,7 @@
 
         <label class="standard-label" for="event-name">Event name</label>
         <b-form-input id="event-name" aria-describedby="event-name-feedback"
-          v-model="form.event" required :state="inputValid('event')"
+          v-model="form.event" :state="inputValid('event')"
           placeholder="FIUTS weekly club meeting" class="standard-placeholder"
           size="lg" @blur="enableValidation.event=true">
         </b-form-input>
@@ -68,14 +68,14 @@
           food you have and approximate quantity.</p>
         <b-form-textarea id="food-description"
                          aria-describedby="Describe the food"
-                         v-model="form.food_served" required
+                         v-model="form.food_served"
                          placeholder="Hot Indian buffet food"
                          class="standard-placeholder" size="lg">
         </b-form-textarea>
 
         <label class="standard-label" for="quantity">Quantity</label>
         <b-form-input id="quantity" aria-describedby="Quantity of food"
-          v-model="form.amount_of_food_left" required
+          v-model="form.amount_of_food_left"
           placeholder="About 8 full meals" class="standard-placeholder"
           size="lg"></b-form-input>
 
@@ -86,7 +86,7 @@
           Set the time when food service will be over.
         </p>
         <b-form-input id="end-time" aria-describedby="End time of the event"
-          v-model="form.end_time" required
+          v-model="form.end_time"
           type="time" class="standard-placeholder" size="lg"
           v-if="isMobile"></b-form-input>
         <ctk-date-time-picker id="end-time" v-model="form.end_time"
@@ -96,7 +96,7 @@
 
         <label class="standard-label" for="location">Location</label>
         <b-form-input id="location" aria-describedby="Location of the event"
-          v-model="form.location" required
+          v-model="form.location"
           placeholder="HUB 130" class="standard-placeholder" size="lg">
           </b-form-input>
 
@@ -241,6 +241,14 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+
+      // triping all input validators
+      this.form.forEach((key, val) => {
+        this.formValidate[key] = true
+      })
+
+      return;
+
       this.$bvModal.show('submitconfirmation');
     },
     onReset(evt) {
@@ -275,9 +283,6 @@ export default {
       return this.form.end_time;
     },
     submitAndNext() {
-      // triping all input validators
-      this.form
-
       const splitTime = this.form.end_time.split(/\:/);
       splitTime[0] = parseInt(splitTime[0]);
       // Converting split time to 24 hours format
@@ -364,10 +369,10 @@ export default {
   watch: {
     form: {
       handler(newState) {
-        updateValidity(newState, "location", 0);
-        updateValidity(newState, "event", 0);
-        updateValidity(newState, "food_served", 0);
-        updateValidity(newState, "amount_of_food_left", 0);
+        this.updateValidity(newState, "location", 0);
+        this.updateValidity(newState, "event", 0);
+        this.updateValidity(newState, "food_served", 0);
+        this.updateValidity(newState, "amount_of_food_left", 0);
       },
       deep: true
     }
