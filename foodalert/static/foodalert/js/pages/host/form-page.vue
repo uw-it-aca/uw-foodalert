@@ -57,9 +57,11 @@
           size="lg">
         </b-form-input>
 
-        <label class="standard-label" for="food-description">
+        <label class="standard-label" style="margin-bottom: 0;" for="food-description">
           Describe the food
         </label>
+        <p class="mb-2" style="font-size: 15px;">Let people know the kind of
+          food you have and approximate quantity.</p>
         <b-form-textarea id="food-description"
                          aria-describedby="Describe the food"
                          v-model="form.food_served" required
@@ -74,8 +76,11 @@
           size="lg"></b-form-input>
 
         <label class="standard-label" for="end-time">
-          End time (when food service will end)
+          End time
         </label>
+        <p class="mb-2" style="font-size: 15px;">
+          Set the time when food service will be over.
+        </p>
         <b-form-input id="end-time" aria-describedby="End time of the event"
           v-model="form.end_time" required
           type="time" class="standard-placeholder" size="lg"
@@ -92,7 +97,7 @@
           </b-form-input>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-        <h5 class="h3 mb-2 pb-0">Does the food contain allergens?</h5>
+        <h5 class="h3 pb-0">Does the food contain allergens?</h5>
         <p class="mb-3">
           It's ok if you are unsure, just select to the best of your
           knowledge.
