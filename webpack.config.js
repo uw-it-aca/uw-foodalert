@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 const { VueLoaderPlugin } = require('vue-loader')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -57,6 +58,7 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
     new BundleTracker({filename: './foodalert/static/webpack-stats.json'}),
     new VueLoaderPlugin()
   ],

@@ -52,6 +52,20 @@ if (netid != undefined) {
   netid = undefined;
 }
 
+const VueAxe = require('vue-axe')
+Vue.use(VueAxe, {
+    config: {
+        rules: [
+            { id: 'heading-order', enabled: true },
+            { id: 'label-title-only', enabled: true },
+            { id: 'link-in-text-block', enabled: true },
+            { id: 'region', enabled: true },
+            { id: 'skip-link', enabled: true },
+            { id: 'help-same-as-label', enabled: true }
+        ]
+    }
+})
+
 export const vm = new Vue({
   delimiters: ['[[', ']]'],
   el: '#app',
