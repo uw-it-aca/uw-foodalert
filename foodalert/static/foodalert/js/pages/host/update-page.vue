@@ -122,7 +122,7 @@ export default {
             return notif.ended == false;
           });
           if (data.length === 0) {
-            this.$router.push({name: 'h-welcomes'});
+            this.$router.push({name: 'h-welcome'});
           } else {
             axios.get('/notification/' + data[0]['id'] + '/',
                 {'headers': headers})

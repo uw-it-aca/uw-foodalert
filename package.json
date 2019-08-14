@@ -50,7 +50,6 @@
     "eslint-plugin-vue-a11y": "0.0.31",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
-    "vue-axe": "^1.0.7",
     "vue-jest": "^2.6.0"
   },
   "scripts": {
