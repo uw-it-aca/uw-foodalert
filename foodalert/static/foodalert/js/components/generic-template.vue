@@ -41,7 +41,7 @@ export default {
     }
     .foodalert .custom-checkbox
     .custom-control-input:checked~.custom-control-label::before {
-        border-color: #0D95FC;
+        border-color: var(--primary);
     }
     .foodalert .custom-checkbox
     .custom-control-input:checked~.custom-control-label::after {
@@ -58,7 +58,7 @@ export default {
     }
 
     .foodalert .custom-checkbox:hover .custom-control-label::before  {
-        border-color: #0D95FC;
+        border-color: var(--primary);
     }
 
     .foodalert .custom-radio .custom-control-label::before,
@@ -76,7 +76,7 @@ export default {
     }
     .foodalert .custom-radio
     .custom-control-input:checked~.custom-control-label::before {
-        border-color: #0D95FC;
+        border-color: var(--primary);
         background-color: initial;
     }
     .foodalert .custom-radio
@@ -94,7 +94,7 @@ export default {
     }
 
     .foodalert .custom-radio:hover .custom-control-label::before  {
-        border-color: #0D95FC;
+        border-color: var(--primary);
     }
 
     .foodalert .custom-switch .custom-control-label::before {
