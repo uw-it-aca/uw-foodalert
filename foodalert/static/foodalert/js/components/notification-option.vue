@@ -151,6 +151,7 @@ export default {
     },
     description: {
       type: String,
+      default: " "
     },
     type: {
       type: String,

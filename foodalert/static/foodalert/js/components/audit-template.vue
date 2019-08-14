@@ -1,13 +1,13 @@
 <template>
      <div class="audit-parent">
          <div>
-            <b-dropdown text="Year" v-on:click.native="setYear($event)">
-              <b-dropdown-item v-for="year in this.years" :key="year">
+             <b-dropdown text="Year" v-on:click.native="setYear($event)">
+                <b-dropdown-item v-for="year in this.years" :key="year">
                 {{ year }}
-              </b-dropdown-item>
-            </b-dropdown>
-            <b-dropdown text="Month" v-on:click.native="setMonth($event)">
-              <b-dropdown-item v-for="month in this.months" :key="month">
+                </b-dropdown-item>
+             </b-dropdown>
+             <b-dropdown text="Month" v-on:click.native="setMonth($event)">
+                <b-dropdown-item v-for="month in this.months" :key="month">
                 {{ month }}
               </b-dropdown-item>
             </b-dropdown>
