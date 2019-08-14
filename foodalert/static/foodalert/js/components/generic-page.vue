@@ -15,7 +15,7 @@
                 </b-container>
             </b-collapse>
         </div>
-        <div class="page-content pb-2">
+        <main class="page-content pb-2">
             <slot name="banner"></slot>
             <b-container>
               <b-row class="justify-content-center">
@@ -28,7 +28,7 @@
                 </b-col>
               </b-row>
             </b-container>
-        </div>
+        </main>
         <footer id="relative-footer" class="text-center">
           <a href="mailto:help@uw.edu?subject=Hungry Husky support">
             Contact support
