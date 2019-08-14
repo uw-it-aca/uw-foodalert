@@ -26,13 +26,17 @@ window.vueData.routes = [
         path: 'welcome',
         component: UnauthzTemplate,
         name: 'h-welcome',
-        meta: {title: 'Unauthorized Page'},
+        meta: {
+          title: 'Unauthorized Page',
+          announcer: 'Welcome page'},
       },
       {
         path: 'food-service',
         component: UnauthzTemplate,
         name: 'h-food-service',
-        meta: {title: 'Unauthorized Page'},
+        meta: {
+          title: 'Unauthorized Page',
+          announcer: 'Food Service page'},
       },
       {
         path: 'categories',

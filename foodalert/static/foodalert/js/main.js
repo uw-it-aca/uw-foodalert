@@ -3,12 +3,14 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue';
+import VueAnnouncer from 'vue-announcer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate);
 Vue.use(VueRouter);
+Vue.use(VueAnnouncer);
 
 require('../css/styles.css');
 
@@ -23,8 +25,11 @@ const router = new VueRouter({
   },
 });
 
+Vue.use(VueAnnouncer, {}, router);
+
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
+  // document.announcer = to.meta.announcer;
   next();
 });
 

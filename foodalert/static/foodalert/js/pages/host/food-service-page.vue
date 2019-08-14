@@ -108,5 +108,8 @@ export default {
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-food-service'));
   },
+  mount() {
+    this.$announcer.set("This is the Food Service page")
+  }
 };
 </script>
