@@ -3,8 +3,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+import '../css/custom.scss';
 
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate);
