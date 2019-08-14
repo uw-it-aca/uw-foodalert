@@ -29,7 +29,7 @@
                   Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
           </b-modal>
-          <h2 class="h2">Don't leave people stranded!</h2>
+          <h2 class="h2 pt-0">Don't leave people stranded!</h2>
           <p class="p pb-3">
             When the food is all gone, please return here to send an update.
             This will prevent people from making unnecessary trips.

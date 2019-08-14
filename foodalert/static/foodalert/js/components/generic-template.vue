@@ -152,13 +152,14 @@ export default {
     }
 
     .foodalert .standard-label {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
         line-height: 1.375;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
-        margin-top: 24px;
+        margin-top: 16px;
     }
+
 
 
 </style>

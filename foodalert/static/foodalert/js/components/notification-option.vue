@@ -310,6 +310,8 @@ export default {
         border: unset;
         border-top: 1px solid #9B9B9B;
         border-bottom: 1px solid #9B9B9B;
+        padding-top: 12px;
+        padding-bottom: 14px;
     }
     .notif-option-card~.notif-option-card{
         border-top: unset;
@@ -342,5 +344,21 @@ export default {
 
     .notif-option-card .spinner-hide {
         display: none;
+    }
+
+    .notif-option-card .notif-option-heading {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.375;
+        -moz-osx-font-smoothing: grayscale;
+        /*margin-top: 12px;*/
+    }
+
+    .notif-option-card .notif-option-heading .btn.opt_link_btn.btn-link.btn-block {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.375;
+        -moz-osx-font-smoothing: grayscale;
+        /*margin-top: 12px;*/
     }
 </style>
