@@ -13,7 +13,7 @@
             ok-title="Send" cancel-variant="outline-secondary"
             @shown="focusMyElement"
             @ok="sendUpdate()">
-              <p tabIndex="-1" ref="focusThis">
+              <p >
                 We will send your update to Hungry Husky Subscribers.
               </p>
               <preview-box>
@@ -140,7 +140,10 @@ export default {
   },
   methods: {
     focusMyElement(e) {
-      this.$refs.focusThis.focus();
+      let el = document.getElementById('submitconfirmation')
+      el.setAttribute("tabIndex", "-1");
+      el.focus();
+      el.removeAttribute("tabIndex")
     },
     sendUpdate() {
       if (this.selected == 'noFoodUpdate') {
