@@ -12,7 +12,7 @@
                 <b-form-checkbox
                     v-model="selected"
                     value="non-perishable"
-                    @click.native="removeInput('none')">
+                    @change="removeInput('none'); validateOn = true">
                     <span>
                         My food is non-perishable.
                         <b-link herf="#" v-b-toggle.non-perishable>
@@ -26,9 +26,10 @@
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
-                    class="mt-3"
+                    class="mt-2"
                     value="pre-packaged"
-                    @click.native="['none', 'at-home'].forEach(removeInput)">
+                    @change="['none', 'at-home'].forEach(removeInput);
+                    validateOn = true">
                     <span>
                         My food was commercially pre-packaged.
                         <b-link herf="#" v-b-toggle.pre-packaged>
@@ -42,7 +43,7 @@
                 </collapse-text-box>
                 <b-form-checkbox
                     v-model="selected"
-                    class="mt-3"
+                    class="mt-2"
                     value="at-home"
                     @click.native="['none', 'pre-packaged', 'non-perishable']
                       .forEach(removeInput)">
@@ -50,14 +51,19 @@
                 </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
-                    class="mt-3"
+                    class="mt-2"
                     value="none"
-                    @click.native="['non-perishable', 'pre-packaged',
-                      'at-home'].forEach(removeInput)">
+                    @change="['non-perishable', 'pre-packaged',
+                      'at-home'].forEach(removeInput); validateOn = true">
                     <span>
                         None of the above.
                     </span>
                 </b-form-checkbox>
+                <div class="invalid-feedback pt-2"
+                     :class="{'super-show': selected.length == 0 && validateOn}"
+                     id="food-service-feedback">
+                  Please select at least one option to move on.
+                </div>
             </b-form-group>
         </template>
         <template #navigation>
@@ -69,8 +75,7 @@
                     type="submit"
                     block size="lg"
                     variant="primary"
-                    @click="getNextPage()"
-                    :disabled="selected.length == 0">
+                    @click="getNextPage()">
                       Continue
                    </b-button>
                  </b-col>
@@ -104,12 +109,18 @@ export default {
   },
   methods: {
     getNextPage() {
+      if (this.selected.length == 0) {
+        this.validateOn = true
+        return
+      }
+
       if (this.selected.includes('non-perishable') ||
           this.selected.includes('pre-packaged')) {
-        this.$router.push({name: 'h-need-permit'});
-      } else if (this.selected.includes('none') ||
-                 this.selected.includes('atHome')) {
+        this.$router.push({name: 'h-responsibilities'});
+      } else if (this.selected.includes('at-home')) {
         this.$router.push({name: 'h-close'});
+      } else {
+        this.$router.push({name: 'h-need-permit'});
       }
     },
     getBackPage() {
@@ -124,6 +135,7 @@ export default {
   data() {
     return {
       selected: [],
+      validateOn: false,
     };
   },
   beforeMount() {
