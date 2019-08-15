@@ -53,7 +53,7 @@
 
         <div>
           <label class="standard-label" for="event-name">Event name</label>
-          <b-form-input id="event-name"
+          <b-form-input id="event-name" ref="event"
             aria-describedby="event-name-feedback"
             v-model="form.event" :state="inputValid('event')"
             placeholder="FIUTS weekly club meeting"
@@ -69,9 +69,9 @@
           <label class="standard-label mb-0" for="food-description">
             Describe the food
           </label>
-          <p class="mb-2" style="font-size: 14px;">Tell people about your
+          <p class="mb-2" style="font-size: 15px;">Tell people about your
             food and the approximate quantity.</p>
-          <b-form-textarea id="food-description"
+          <b-form-textarea id="food-description" ref="food_served"
                           aria-describedby="food-description-feedback"
                           v-model="form.food_served"
                           :state="inputValid('food_served')"
@@ -84,24 +84,10 @@
           </b-form-invalid-feedback>
         </div>
 
-        <label class="standard-label mb-0" for="end-time">
-          End time
-        </label>
-        <p class="mb-2" style="font-size: 14px;">
-          Set the time when food service will be over.
-        </p>
-        <b-form-input id="end-time" aria-describedby="End time of the event"
-          v-model="form.end_time"
-          type="time" class="standard-placeholder" size="lg"
-          v-if="isMobile"></b-form-input>
-        <ctk-date-time-picker id="end-time" v-model="form.end_time"
-          class="standard-placeholder" format="hh:mm a"
-          formatted="hh:mm a" :onlyTime="true" :noLabel="true" v-else>
-          </ctk-date-time-picker>
-
         <div>
           <label class="standard-label" for="location">Location</label>
           <b-form-input id="location" aria-describedby="location-feedback"
+            ref="location"
             v-model="form.location" :state="inputValid('location')"
             placeholder="HUB 130" class="standard-placeholder" size="lg"
             @blur="enableValidation.location=true">
@@ -110,6 +96,24 @@
             Please enter the location of your event.
           </b-form-invalid-feedback>
         </div>
+
+        <label class="standard-label mb-0" for="end-time">
+          End time
+        </label>
+        <p class="mb-2" style="font-size: 14px;">
+          Set the time when food service will be over.
+        </p>
+        <b-row>
+          <b-col sm=12 md=8>
+            <b-form-input id="end-time" aria-describedby="End time of the event"
+              v-model="form.end_time"
+              type="time" class="standard-placeholder" size="lg"
+              v-if="isMobile"></b-form-input>
+            <time-picker timeID="end-time" v-model="form.end_time"
+                      startWithCurrent v-else>
+            </time-picker>
+          </b-col>
+        </b-row>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
         <h3 class="standard-label mb-0">Does the food contain allergens?</h3>
@@ -206,15 +210,14 @@
 import Cookies from 'js-cookie';
 import GenericPage from '../../components/generic-page.vue';
 import PreviewBox from '../../components/custom-preview-box.vue';
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+import TimePicker from '../../components/time-picker.vue';
 const axios = require('axios');
 
 export default {
   components: {
     'generic-page': GenericPage,
     'preview-box': PreviewBox,
-    'ctk-date-time-picker': VueCtkDateTimePicker,
+    'time-picker': TimePicker,
   },
   data() {
     return {
@@ -228,10 +231,10 @@ export default {
         host_user_agent: '',
       },
       formValidate: {
-        location: false,
         event: false,
-        //end_time: false,
         food_served: false,
+        location: false,
+        //end_time: false,
         //bring_container: false,
       },
       enableValidation: {
@@ -257,8 +260,11 @@ export default {
 
       var flag = false
       Object.keys(this.formValidate).forEach(function (key) {
-        if (this.formValidate[key] == false)
+        if (this.formValidate[key] == false && flag != true) {
           flag = true
+          console.log(key)
+          this.$refs[key].$el.focus()
+        }
       }.bind(this));
 
       if (flag) return;

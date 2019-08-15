@@ -191,10 +191,4 @@ export default {
     #other-message {
         margin-top: 10px;
     }
-
-    .standard-placeholder::placeholder {
-      font-size: 16px !important;
-      font-weight: 400 !important;
-      color: #aaaaaa !important;
-    }
 </style>
