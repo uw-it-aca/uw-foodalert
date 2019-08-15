@@ -8,11 +8,15 @@
               To ensure the safety of the food being shared, we ask that you
               to agree to all of the following requirements.
             </p>
-            <b-form @submit="getNextPage()" ref="resForm">
+            <b-form-group ref="resForm">
               <b-form-checkbox
                 v-model="selected"
+                id="cond1"
                 class="mt-2"
-                value="cond1">
+                value="cond1"
+                aria-describedby="condition-feedback"
+                :state="inputValid('cond1')"
+                @change="addToValidate('cond1')">
                 <span>
                   My office is responsible for the safety of this food.
                   <b-link herf="#" v-b-toggle.cond1-info
@@ -28,8 +32,12 @@
               </collapse-text-box>
               <b-form-checkbox
                 v-model="selected"
+                id="cond2"
                 class="mt-2"
-                value="cond2">
+                value="cond2"
+                aria-describedby="condition-feedback"
+                :state="inputValid('cond2')"
+                @change="addToValidate('cond2')">
                 <span>
                   Potentially hazardous food must be kept at proper
                   temperatures and have been sitting at room temperature
@@ -43,6 +51,13 @@
               <collapse-text-box bid="cond2-info">
                   Information is missing
               </collapse-text-box>
+              <div class="invalid-feedback pt-2"
+                   :class="{'super-show': (inputValid('cond1') == false) 
+                      || (inputValid('cond2') == false)}"
+                   id="condition-feedback">
+                In order to use the service please agree to above
+                responsibilities.
+              </div>
               <div class="mt-5">
                   <b-row align-h="between">
                       <b-col md="4" lg="3" order-md="2">
@@ -51,7 +66,7 @@
                           size="lg"
                           type="submit"
                           block variant="primary"
-                          :disabled="selected.length != 2">
+                          @click="getNextPage()">
                             Agree
                         </b-button>
                       </b-col>
@@ -66,7 +81,7 @@
                       </b-col>
                   </b-row>
               </div>
-            </b-form>
+            </b-form-group>
         </template>
     </generic-page>
 </template>
@@ -83,15 +98,30 @@ export default {
   },
   methods: {
     getNextPage() {
+      this.enableValidation = ['cond1', 'cond2']
+      if (this.selected.length != 2) {
+        return
+      }
+      
       this.$router.push({name: 'h-form'});
     },
     getBackPage() {
       this.$router.push({name: 'h-food-service'});
     },
+    inputValid(fieldValue) {
+      if (this.enableValidation.indexOf(fieldValue) != -1)
+        return (this.selected.indexOf(fieldValue) != -1 ? null : false)
+      return null;
+    },
+    addToValidate(fieldValue) {
+      if (this.enableValidation.indexOf(fieldValue) == -1)
+        this.enableValidation.push(fieldValue)
+    },
   },
   data() {
     return {
       selected: [],
+      enableValidation: []
     };
   },
   beforeMount() {

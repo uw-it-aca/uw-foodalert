@@ -51,33 +51,38 @@
           you can send a notification.
         </p>
 
-        <label class="standard-label" for="event-name">Event name</label>
-        <b-form-input id="event-name" aria-describedby="event-name-feedback"
-          v-model="form.event" :state="inputValid('event')"
-          placeholder="FIUTS weekly club meeting" class="standard-placeholder"
-          size="lg" @blur="enableValidation.event=true">
-        </b-form-input>
-        <b-form-invalid-feedback id="event-name-feedback">
-          Please enter an event name.
-        </b-form-invalid-feedback>
+        <div>
+          <label class="standard-label" for="event-name">Event name</label>
+          <b-form-input id="event-name"
+            aria-describedby="event-name-feedback"
+            v-model="form.event" :state="inputValid('event')"
+            placeholder="FIUTS weekly club meeting"
+            class="standard-placeholder"
+            size="lg" @blur="enableValidation.event=true">
+          </b-form-input>
+          <b-form-invalid-feedback id="event-name-feedback">
+            Please enter an event name.
+          </b-form-invalid-feedback>
+        </div>
 
-        <label class="standard-label" style="margin-bottom: 0;" for="food-description">
-          Describe the food
-        </label>
-        <p class="mb-2" style="font-size: 15px;">Let people know the kind of
-          food you have and approximate quantity.</p>
-        <b-form-textarea id="food-description"
-                         aria-describedby="Describe the food"
-                         v-model="form.food_served"
-                         placeholder="Hot Indian buffet food"
-                         class="standard-placeholder" size="lg">
-        </b-form-textarea>
-
-        <label class="standard-label" for="quantity">Quantity</label>
-        <b-form-input id="quantity" aria-describedby="Quantity of food"
-          v-model="form.amount_of_food_left"
-          placeholder="About 8 full meals" class="standard-placeholder"
-          size="lg"></b-form-input>
+        <div>
+          <label class="standard-label mb-0" for="food-description">
+            Describe the food
+          </label>
+          <p class="mb-2" style="font-size: 15px;">Let people know the kind of
+            food you have and approximate quantity.</p>
+          <b-form-textarea id="food-description"
+                          aria-describedby="food-description-feedback"
+                          v-model="form.food_served"
+                          :state="inputValid('food_served')"
+                          placeholder="Hot Indian buffet food"
+                          class="standard-placeholder" size="lg"
+                          @blur="enableValidation.food_served=true">
+          </b-form-textarea>
+          <b-form-invalid-feedback id="food-description-feedback">
+            Please enter a description of your food.
+          </b-form-invalid-feedback>
+        </div>
 
         <label class="standard-label" for="end-time">
           End time
@@ -94,11 +99,17 @@
           formatted="hh:mm a" :onlyTime="true" :noLabel="true" v-else>
           </ctk-date-time-picker>
 
-        <label class="standard-label" for="location">Location</label>
-        <b-form-input id="location" aria-describedby="Location of the event"
-          v-model="form.location"
-          placeholder="HUB 130" class="standard-placeholder" size="lg">
+        <div>
+          <label class="standard-label" for="location">Location</label>
+          <b-form-input id="location" aria-describedby="location-feedback"
+            v-model="form.location" :state="inputValid('location')"
+            placeholder="HUB 130" class="standard-placeholder" size="lg"
+            @blur="enableValidation.location=true">
           </b-form-input>
+          <b-form-invalid-feedback id="location-feedback">
+            Please enter the location of your event.
+          </b-form-invalid-feedback>
+        </div>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
         <h3 class="h3 pb-0">Does the food contain allergens?</h3>
@@ -212,7 +223,6 @@ export default {
         event: '',
         end_time: null,
         food_served: '',
-        amount_of_food_left: '',
         bring_container: false,
         allergens: [],
         host_user_agent: '',
@@ -222,7 +232,6 @@ export default {
         event: false,
         end_time: false,
         food_served: false,
-        amount_of_food_left: false,
         bring_container: false,
       },
       enableValidation: {
@@ -230,7 +239,6 @@ export default {
         event: false,
         end_time: false,
         food_served: false,
-        amount_of_food_left: false,
         bring_container: false,
       },
       allergens: [],
@@ -243,11 +251,17 @@ export default {
       evt.preventDefault();
 
       // triping all input validators
-      this.form.forEach((key, val) => {
-        this.formValidate[key] = true
-      })
+      Object.keys(this.enableValidation).forEach(function (key) {
+        this.enableValidation[key] = true
+      }.bind(this));
 
-      return;
+      var flag = false
+      Object.keys(this.formValidate).forEach(function (key) {
+        if (this.formValidate[key] == false)
+          flag = true
+      }.bind(this));
+
+      if (flag) return;
 
       this.$bvModal.show('submitconfirmation');
     },
@@ -330,11 +344,11 @@ export default {
     },
     inputValid(fieldName) {
       if (this.enableValidation[fieldName])
-        return (this.formValidate.event ? null : false)
+        return (this.formValidate[fieldName] ? null : false)
       return null;
     },
     updateValidity(newState, fieldName, length) {
-      if (newState[fieldName].length > length) {
+      if (newState[fieldName] != undefined && newState[fieldName].length > length) {
         this.formValidate[fieldName] = true
         this.enableValidation[fieldName] = true
       } else {
