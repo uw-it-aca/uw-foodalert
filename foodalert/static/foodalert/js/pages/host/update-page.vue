@@ -37,7 +37,7 @@
           </p>
           <b-form>
             <b-form-radio-group stacked v-model="selected">
-              <b-form-radio value="noFoodUpdate">
+              <b-form-radio value="noFoodUpdate" @change="validationOn = false">
                   <span>No food left</span>
               </b-form-radio>
               <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1"
@@ -46,11 +46,17 @@
                       Other message
                       <b-form-textarea
                         id="other-message"
-                        aria-describedby="Other message for the subs"
+                        ref="otherMessage"
+                        aria-describedby="other-message-feedback"
                         required placeholder="We've moved to HUB 120"
-                        class="mb-3 standard-placeholder" v-model="otherText"
-                        size="lg" @focus="selected='otherUpdate'">
+                        class="mb-2 standard-placeholder" v-model="otherText"
+                        size="lg" @focus="selected='otherUpdate'"
+                        :state="inputValid()"
+                        @blur="validationOn = true">
                       </b-form-textarea>
+                      <b-form-invalid-feedback id="other-message-feedback">
+                        Please describe the update you want to send.
+                      </b-form-invalid-feedback>
                   </span>
               </b-form-radio>
             </b-form-radio-group>
@@ -75,9 +81,7 @@
                     <b-button class="mb-3" type="submit"
                       block variant="primary" style="white-space: nowrap;"
                       size="lg"
-                      @click="$bvModal.show('submitconfirmation')"
-                      :disabled="(otherText == '') &&
-                      (selected != 'noFoodUpdate')">
+                      @click="preSendUpdate()">
                         Send Update
                     </b-button>
                   </b-col>
@@ -113,6 +117,7 @@ export default {
       },
       otherText: '',
       privNotifText: this.notificationText,
+      validationOn: false,
     };
   },
   beforeMount() {
@@ -144,6 +149,15 @@ export default {
       el.setAttribute("tabIndex", "-1");
       el.focus();
       el.removeAttribute("tabIndex")
+    },
+    preSendUpdate() {
+      if ((this.otherText == '') && (this.selected != 'noFoodUpdate')) {
+        this.validationOn = true
+        this.$refs.otherMessage.$el.focus()
+        return
+      }
+
+      $bvModal.show('submitconfirmation')
     },
     sendUpdate() {
       if (this.selected == 'noFoodUpdate') {
@@ -185,6 +199,11 @@ export default {
       }
       this.selected = 'noFoodUpdate';
       this.otherText= '';
+    },
+    inputValid() {
+      if (this.validationOn)
+        return (((this.otherText=='') && (this.selected=='otherUpdate')) ? false : null)
+      return null;
     },
   },
 };
