@@ -160,6 +160,26 @@ export default {
         margin-top: 16px;
     }
 
+    .foodalert .form-control.is-invalid {
+        background: unset;
+    }
 
+    .foodalert .invalid-feedback {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.375em;
+    }
+
+    .foodalert .custom-control-input.is-invalid~.custom-control-label {
+        color: initial;
+    }
+
+    .foodalert .super-show {
+        display: block !important;
+    }
+
+    .foodalert .super-hide {
+        display: none !important;
+    }
 
 </style>

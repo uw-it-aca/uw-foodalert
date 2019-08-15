@@ -10,14 +10,16 @@
       </p>
       <b-form-group>
         <b-form-checkbox v-model="selected" value="preparedByAuth"
-                         @click.native="removeInput('none')">
+                         aria-describedby="food-service-feedback"
+                         @change="removeInput('none'); validateOn = true">
           <span>
             My food was prepared by UW Housing &amp;
             Food Services or Bay Laurel Catering.
           </span>
         </b-form-checkbox>
         <b-form-checkbox v-model="selected" class="mt-2" value="hasPermit"
-                         @click.native="removeInput('none')">
+                         aria-describedby="food-service-feedback"
+                         @change="removeInput('none'); validateOn = true">
           <span>
             I have a UW Temporary Food Service Permit.
             <b-link herf="#" v-b-toggle.perm-info
@@ -36,11 +38,18 @@
           meet safety regulations and the food itself is safe for consumption.
         </collapse-text-box>
         <b-form-checkbox v-model="selected" value="none" class="mt-2"
-        @click.native="['preparedByAuth', 'hasPermit'].forEach(removeInput)">
+        aria-describedby="food-service-feedback"
+        @change="['preparedByAuth', 'hasPermit'].forEach(removeInput);
+                  validateOn = true">
           <span>
             None of these apply.
           </span>
         </b-form-checkbox>
+        <div class="invalid-feedback pt-2"
+             :class="{'super-show': selected.length == 0 && validateOn}"
+              id="food-service-feedback">
+          Please select at least one option to move on.
+        </div>
       </b-form-group>
     </template>
     <template #navigation>
@@ -48,8 +57,9 @@
         <b-row align-h="between">
           <b-col md="4" lg="3" order-md="2">
             <b-button class="mb-3" type="submit" block size="lg"
-              variant="primary" @click="getNextPage()"
-              :disabled="selected.length == 0">Continue</b-button>
+              variant="primary" @click="getNextPage()">
+              Continue
+            </b-button>
           </b-col>
           <b-col md="4" lg="3" order-md="1">
             <b-button class="hh-back-button" type="submit" block
@@ -77,6 +87,10 @@ export default {
   },
   methods: {
     getNextPage() {
+      if (this.selected.length == 0) {
+        this.validateOn = true
+        return
+      }
       if (this.selected.includes('hasPermit') ||
         this.selected.includes('preparedByAuth')) {
         this.$router.push({name: 'h-responsibilities'});
@@ -96,6 +110,7 @@ export default {
   data() {
     return {
       selected: [],
+      validateOn: false,
     };
   },
   beforeMount() {
