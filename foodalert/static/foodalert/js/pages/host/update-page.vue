@@ -39,15 +39,17 @@
               <b-form-radio value="noFoodUpdate">
                   <span>No food left</span>
               </b-form-radio>
-              <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1">
-                  <span>
+              <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1"
+                ref="otherUpdate">
+                  <span class="mt-2 w-100">
                       Other message
-                      <b-form-input
+                      <b-form-textarea
                         id="other-message"
                         aria-describedby="Other message for the subs"
                         required placeholder="We've moved to HUB 120"
-                        class="mb-3 standard-placeholder" v-model="otherText">
-                      </b-form-input>
+                        class="mb-3 standard-placeholder" v-model="otherText"
+                        size="lg" @focus="selected='otherUpdate'">
+                      </b-form-textarea>
                   </span>
               </b-form-radio>
             </b-form-radio-group>
@@ -67,7 +69,7 @@
       </template>
       <template #navigation>
           <div class="mt-5">
-              <b-row align-h="between">
+              <b-row align-h="end">
                   <b-col md="5" lg="4" order-md="2">
                     <b-button class="mb-3" type="submit"
                       block variant="primary" style="white-space: nowrap;"

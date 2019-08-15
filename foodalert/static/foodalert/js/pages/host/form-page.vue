@@ -230,16 +230,16 @@ export default {
       formValidate: {
         location: false,
         event: false,
-        end_time: false,
+        //end_time: false,
         food_served: false,
-        bring_container: false,
+        //bring_container: false,
       },
       enableValidation: {
         location: false,
         event: false,
-        end_time: false,
+        //end_time: false,
         food_served: false,
-        bring_container: false,
+        //bring_container: false,
       },
       allergens: [],
       show: true,
@@ -319,7 +319,7 @@ export default {
         'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
-          'amount': this.form.amount_of_food_left,
+          'amount': "test amount",
           'allergens': this.form.allergens,
         },
         'bring_container': this.form.bring_container,
@@ -386,7 +386,6 @@ export default {
         this.updateValidity(newState, "location", 0);
         this.updateValidity(newState, "event", 0);
         this.updateValidity(newState, "food_served", 0);
-        this.updateValidity(newState, "amount_of_food_left", 0);
       },
       deep: true
     }
