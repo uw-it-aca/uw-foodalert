@@ -6,6 +6,7 @@
     <template #body>
       <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send"
         cancel-variant="outline-secondary"
+        @shown="focusMyElement"
         @ok="submitAndNext()">
         <p>
           We will send your notification to Hungry Husky Subscribers.
@@ -250,6 +251,12 @@ export default {
     };
   },
   methods: {
+    focusMyElement(e) {
+      let el = document.getElementById('submitconfirmation')
+      el.setAttribute("tabIndex", "-1");
+      el.focus();
+      el.removeAttribute("tabIndex")
+    },
     onSubmit(evt) {
       evt.preventDefault();
 
