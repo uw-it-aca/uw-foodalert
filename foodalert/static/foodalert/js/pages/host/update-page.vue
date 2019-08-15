@@ -31,18 +31,22 @@
               </preview-box>
           </b-modal>
           <h2 class="h2 pt-0">Don't leave people stranded!</h2>
-          <p class="p pb-3">
+          <p id="update-label" class="p pb-3">
             When the food is all gone, please return here to send an update.
             This will prevent people from making unnecessary trips.
           </p>
           <b-form>
-            <b-form-radio-group stacked v-model="selected">
-              <b-form-radio value="noFoodUpdate" @change="validationOn = false">
-                  <span>No food left</span>
+            <b-form-radio-group id="update-food"
+              v-model="selected" stacked>
+              <b-form-radio value="noFoodUpdate"
+                aria-labelledby="update-label nofood-label"
+                @change="validationOn = false">
+                  <span id="nofood-label">No food left</span>
               </b-form-radio>
-              <b-form-radio id="otherRadio" value="otherUpdate" class="mt-1"
-                ref="otherUpdate">
-                  <span class="mt-2 w-100">
+              <b-form-radio id="otherRadio"
+                aria-labelledby="update-label otherup-label" 
+                value="otherUpdate" class="mt-1" ref="otherUpdate">
+                  <span class="mt-2 w-100" id="otherup-label">
                       Other message
                       <b-form-textarea
                         id="other-message"
@@ -157,7 +161,7 @@ export default {
         return
       }
 
-      $bvModal.show('submitconfirmation')
+      this.$bvModal.show('submitconfirmation')
     },
     sendUpdate() {
       if (this.selected == 'noFoodUpdate') {

@@ -1,8 +1,8 @@
 <template>
     <b-input-group :id="timeID">
-        <b-form-select v-model="hourSelected" :options="hourOptions" size="lg" @change="updateTime()"></b-form-select>
-        <b-form-select v-model="minuteSelected" :options="minuteOptions" size="lg" @change="updateTime()"></b-form-select>
-        <b-form-select v-model="periodSelected" :options="periodOptions" size="lg" @change="updateTime()"></b-form-select>
+        <b-form-select v-model="hourSelected" :options="hourOptions" size="lg" @change="updateTime()" :aria-labelledby="labelbyID"></b-form-select>
+        <b-form-select v-model="minuteSelected" :options="minuteOptions" size="lg" @change="updateTime()" :aria-labelledby="labelbyID"></b-form-select>
+        <b-form-select v-model="periodSelected" :options="periodOptions" size="lg" @change="updateTime()" :aria-labelledby="labelbyID"></b-form-select>
     </b-input-group>
 </template>
 
@@ -11,7 +11,8 @@ export default {
     props: {
         value: String,
         timeID: String,
-        startWithCurrent: Boolean
+        startWithCurrent: Boolean,
+        labelbyID: String,
     },
     data() {
         var _hourOptions = Array(12)

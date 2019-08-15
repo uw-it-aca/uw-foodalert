@@ -28,7 +28,7 @@
         <template #navigation>
             <div class="mt-5">
             <b-row align-h="between">
-              <b-col md="4" lg="3" order-md="2">
+              <b-col md="5" lg="4" order-md="2">
                 <b-button
                   href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
                   class="mb-3"

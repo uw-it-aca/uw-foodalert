@@ -98,7 +98,7 @@
           </b-form-invalid-feedback>
         </div>
 
-        <label class="standard-label mb-0" for="end-time">
+        <label class="standard-label mb-0" id="end-time-label" for="end-time">
           End time
         </label>
         <p class="mb-2" style="font-size: 14px;">
@@ -111,13 +111,13 @@
               type="time" class="standard-placeholder" size="lg"
               v-if="isMobile"></b-form-input>
             <time-picker timeID="end-time" v-model="form.end_time"
-                      startWithCurrent v-else>
+                      startWithCurrent labelbyID="end-time-label" v-else>
             </time-picker>
           </b-col>
         </b-row>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-        <h3 class="standard-label mb-0">Does the food contain allergens?</h3>
+        <h3 id="allergen-label" class="standard-label mb-0">Does the food contain allergens?</h3>
         <p class="mb-2" style="font-size: 14px;">
           It's ok if you are unsure, just select to the best of your
           knowledge.
@@ -125,7 +125,7 @@
 
         <b-container class="px-0">
           <b-form-checkbox-group id="allergens-checkbox"
-            v-model="form.allergens">
+            v-model="form.allergens" aria-labelledby="allergen-label">
             <b-row>
               <b-col v-for="allergen in allergens" :key="allergen" cols="6">
                 <b-form-checkbox :value="allergen" class="mb-2">
@@ -138,9 +138,9 @@
           </b-form-checkbox-group>
         </b-container>
 
-        <h3 class="standard-label mb-2">Do people need to bring food storage containers? </h3>
+        <h3 class="standard-label mb-2" id="bring-label">Do people need to bring food storage containers? </h3>
         <b-container class="px-0">
-          <b-form-radio-group id="bring-radio"
+          <b-form-radio-group id="bring-radio" aria-labelledby="bring-label"
             v-model="form.bring_container" stacked>
             <b-form-radio :value="true">
               <span>Yes</span>
