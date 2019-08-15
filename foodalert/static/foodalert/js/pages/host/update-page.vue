@@ -12,10 +12,8 @@
           <b-modal id="submitconfirmation" title="Confirmation"
             ok-title="Send" cancel-variant="outline-secondary"
             @shown="focusMyElement"
-            tabIndex="-1"
-            ref="focusThis"
             @ok="sendUpdate()">
-              <p>
+              <p tabIndex="-1" ref="focusThis">
                 We will send your update to Hungry Husky Subscribers.
               </p>
               <preview-box>
