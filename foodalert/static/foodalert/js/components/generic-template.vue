@@ -168,7 +168,6 @@ export default {
         font-size: 14px;
         font-weight: 400;
         line-height: 1.375em;
-        color: #d93900;
     }
 
     .foodalert .custom-control-input.is-invalid~.custom-control-label {
