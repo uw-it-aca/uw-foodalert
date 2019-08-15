@@ -17,17 +17,13 @@
         </div>
         <main class="page-content pb-2">
             <slot name="banner"></slot>
-            <b-container>
-              <b-row class="justify-content-center">
-                <b-col lg=8 md=12 class="page-content-padding">
-                  <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2">
-                    <slot name="heading"></slot>
-                  </h1>
-                  <div id="standard-body"><slot name="body"></slot></div>
-                  <slot name="navigation"></slot>
-                </b-col>
-              </b-row>
-            </b-container>
+            <div id="standard-container">
+              <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2">
+                <slot name="heading"></slot>
+              </h1>
+              <div id="standard-body"><slot name="body"></slot></div>
+              <slot name="navigation"></slot>
+            </div>
         </main>
         <footer id="relative-footer" class="text-center">
           <a href="mailto:help@uw.edu?subject=Hungry Husky support">
@@ -96,7 +92,7 @@ export default {
     }
     #standard-body {
         font-size:16px;
-        line-height: 1.375;
+        line-height: 1.5;
         font-weight: 400;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
@@ -120,5 +116,14 @@ export default {
         font-size: 12px;
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    #standard-container {
+      max-width: 680px;
+      padding-left: 14px;
+      padding-right: 14px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
     }
 </style>

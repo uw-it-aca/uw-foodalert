@@ -166,7 +166,7 @@ export default {
 
     .foodalert .invalid-feedback {
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 600;
         line-height: 1.375;
         -moz-osx-font-smoothing: grayscale;
     }

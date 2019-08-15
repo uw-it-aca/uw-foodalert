@@ -20,7 +20,7 @@
       <template #navigation>
         <div class="mt-5">
           <b-row align-h="between">
-            <b-col md="6" lg="5"  order-md="2">
+            <b-col md="4" lg="4"  order-md="2">
               <b-button class="mb-3" type="submit" block variant="primary"
                         size="lg" style="white-space: nowrap;"
                         @click="getNextPage()">
