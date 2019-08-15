@@ -27,7 +27,6 @@
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.0",
     "vue": "^2.6.10",
-    "vue-ctk-date-time-picker": "^2.1.1",
     "vue-loader": "^15.3.0",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.6.10",
