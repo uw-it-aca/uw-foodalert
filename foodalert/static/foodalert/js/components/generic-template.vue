@@ -1,6 +1,6 @@
 <template>
     <div class="foodalert">
-        <router-view>
+        <router-view ref="foodalertAppRouter">
         </router-view>
         <!-- To load the images before they need to be displayed
             without this we can still use the default bootstrap checkmark and

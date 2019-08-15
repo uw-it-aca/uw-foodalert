@@ -61,6 +61,22 @@ export const vm = new Vue({
       scrollY: window.scrollY,
     };
   },
+  watch: {
+    $route: function() {
+      this.$nextTick(function() {
+        setTimeout(() => {
+          let focusTarget = 
+            (this.$refs.appRouterView.$refs.foodalertAppRouter.$el !== undefined)
+              ? this.$refs.appRouterView.$refs.foodalertAppRouter.$el
+              : this.$refs.appRouterView.$el;
+          let h1 = focusTarget.querySelector('h1');
+          h1.setAttribute('tabindex', '-1');
+          h1.focus();
+          h1.removeAttribute('tabindex');
+        }, 0);
+      });
+    }
+  },
   components,
 });
 
