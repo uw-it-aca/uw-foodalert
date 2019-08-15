@@ -152,12 +152,12 @@ export default {
     }
 
     .foodalert .standard-label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1.375;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
-        margin-top: 16px;
+        margin-top: 24px;
     }
 
     .foodalert .form-control.is-invalid {
@@ -167,7 +167,8 @@ export default {
     .foodalert .invalid-feedback {
         font-size: 14px;
         font-weight: 400;
-        line-height: 1.375em;
+        line-height: 1.375;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .foodalert .custom-control-input.is-invalid~.custom-control-label {

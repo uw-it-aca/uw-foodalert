@@ -89,14 +89,14 @@ export default {
     }
     #standard-heading {
         font-size: 32px;
-        line-height: 1.125em;
-        font-weight: 600;
+        line-height: 1.2;
+        font-weight: 800;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
     #standard-body {
         font-size:16px;
-        line-height: 1.375em;
+        line-height: 1.375;
         font-weight: 400;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;

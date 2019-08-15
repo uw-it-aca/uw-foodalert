@@ -46,7 +46,7 @@
       </b-modal>
 
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <p class="mb-0 pb-0">
+        <p class="mb-0 pb-1">
           Now let's get some details about your food and event so
           you can send a notification.
         </p>
@@ -69,8 +69,8 @@
           <label class="standard-label mb-0" for="food-description">
             Describe the food
           </label>
-          <p class="mb-2" style="font-size: 15px;">Let people know the kind of
-            food you have and approximate quantity.</p>
+          <p class="mb-2" style="font-size: 14px;">Tell people about your
+            food and the approximate quantity.</p>
           <b-form-textarea id="food-description"
                           aria-describedby="food-description-feedback"
                           v-model="form.food_served"
@@ -84,10 +84,10 @@
           </b-form-invalid-feedback>
         </div>
 
-        <label class="standard-label" for="end-time">
+        <label class="standard-label mb-0" for="end-time">
           End time
         </label>
-        <p class="mb-2" style="font-size: 15px;">
+        <p class="mb-2" style="font-size: 14px;">
           Set the time when food service will be over.
         </p>
         <b-form-input id="end-time" aria-describedby="End time of the event"
@@ -112,8 +112,8 @@
         </div>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-        <h3 class="h3 pb-0">Does the food contain allergens?</h3>
-        <p class="mb-3">
+        <h3 class="standard-label mb-0">Does the food contain allergens?</h3>
+        <p class="mb-2" style="font-size: 14px;">
           It's ok if you are unsure, just select to the best of your
           knowledge.
         </p>
@@ -133,7 +133,7 @@
           </b-form-checkbox-group>
         </b-container>
 
-        <h3 class="h3">Do people need to bring food storage containers? </h3>
+        <h3 class="standard-label mb-2">Do people need to bring food storage containers? </h3>
         <b-container class="px-0">
           <b-form-radio-group id="bring-radio"
             v-model="form.bring_container" stacked>
