@@ -14,6 +14,7 @@ exports[`Notification Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -34,133 +35,204 @@ exports[`Notification Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
     Notification preferences
   
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          
       Select how you will like to receive notifications.
       Please choose at least one.
     
-            </p>
-             
+        </p>
+         
+        <div
+          class="notification"
+        >
+          <div
+            class="collapse"
+            id="enable-notification"
+            style="display: none;"
+          >
             <div
-              class="notification"
+              class="container"
             >
               <div
-                class="collapse"
-                id="enable-notification"
-                style="display: none;"
+                class="row"
               >
                 <div
-                  class="container"
+                  class="col-sm-9 col-9"
                 >
+                  <strong>
+                    Enable notifications
+                  </strong>
+                   
+                  <p>
+                    Turn on to receive notifications.
+                Please choose at least one.
+                  </p>
+                   
                   <div
-                    class="row"
+                    id="notif-status"
                   >
                     <div
-                      class="col-sm-9 col-9"
+                      class="paused"
                     >
-                      <strong>
-                        Enable notifications
-                      </strong>
-                       
-                      <p>
-                        Turn on to receive notifications.
-                Please choose at least one.
-                      </p>
-                       
-                      <div
-                        id="notif-status"
-                      >
-                        <div
-                          class="paused"
-                        >
-                           Notifications are paused 
-                        </div>
-                      </div>
+                       Notifications are paused 
                     </div>
-                     
-                    <div
-                      class="col-sm-3 col-3 align-self-center"
-                    >
-                      <div
-                        class="float-right custom-control custom-switch"
-                      >
-                        <input
-                          autocomplete="off"
-                          class="custom-control-input"
-                          name="enable-switch"
-                          type="checkbox"
-                          value="true"
-                        />
-                        <label
-                          class="custom-control-label"
-                        />
-                      </div>
-                    </div>
+                  </div>
+                </div>
+                 
+                <div
+                  class="col-sm-3 col-3 align-self-center"
+                >
+                  <div
+                    class="float-right custom-control custom-switch"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="custom-control-input"
+                      name="enable-switch"
+                      type="checkbox"
+                      value="true"
+                    />
+                    <label
+                      class="custom-control-label"
+                    />
                   </div>
                 </div>
               </div>
             </div>
-             
+          </div>
+        </div>
+         
+        <div
+          class="card notif-option-card"
+        >
+          <!---->
+          <div
+            class="card-header"
+          >
             <div
-              class="card notif-option-card"
+              class="p-0 container"
             >
-              <!---->
               <div
-                class="card-header"
+                class="row"
               >
                 <div
-                  class="p-0 container"
+                  class="col-8"
                 >
-                  <div
-                    class="row"
-                  >
-                    <div
-                      class="col-8"
-                    >
-                      
+                  
         Text
        
-                      <!---->
-                       
-                      <!---->
-                    </div>
-                     
-                    <div
-                      class="col-4"
+                  <!---->
+                   
+                  <!---->
+                </div>
+                 
+                <div
+                  class="col-4"
+                >
+                  <div>
+                    <a
+                      aria-controls="text"
+                      aria-expanded="false"
+                      class="btn opt_link_btn p-0 btn-link btn-block"
+                      href="#"
+                      role="button"
+                      target="_self"
                     >
-                      <div>
-                        <a
-                          aria-controls="text"
-                          aria-expanded="false"
-                          class="btn opt_link_btn p-0 btn-link btn-block"
-                          href="#"
-                          role="button"
-                          target="_self"
+                      <span
+                        aria-hidden="true"
+                        class="mr-2 spinner-padding spinner-border spinner-border-sm spinner-hide"
+                      >
+                        <!---->
+                      </span>
+                       Cancel
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="collapse show"
+            id="text"
+            role="tabpanel"
+          >
+            <div
+              class="card-body"
+            >
+              <!---->
+              <!---->
+              <div
+                class="p-0 container"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-12"
+                  >
+                    <p
+                      class="card-text"
+                    >
+                      <form
+                        class=""
+                      >
+                        <small
+                          class="form-text text-muted pt-0"
+                        >
+                          Enter a new phone number
+                        </small>
+                         
+                        <fieldset
+                          class="form-group"
+                        >
+                          <!---->
+                          <div
+                            role="group"
+                            tabindex="-1"
+                          >
+                            <input
+                              aria-required="true"
+                              class="form-control"
+                              required="required"
+                              type="text"
+                              width="300px"
+                            />
+                            <!---->
+                            <!---->
+                            <small
+                              class="form-text text-muted"
+                              tabindex="-1"
+                            >
+                              Carrier rates may apply
+                            </small>
+                          </div>
+                        </fieldset>
+                         
+                        <!---->
+                         
+                        <button
+                          class="btn float-right mt-2 px-3 btn-primary"
+                          type="submit"
                         >
                           <span
                             aria-hidden="true"
@@ -168,229 +240,155 @@ exports[`Notification Page renders correctly 1`] = `
                           >
                             <!---->
                           </span>
-                           Cancel
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               
-              <div
-                class="collapse show"
-                id="text"
-                role="tabpanel"
-              >
-                <div
-                  class="card-body"
-                >
-                  <!---->
-                  <!---->
-                  <div
-                    class="p-0 container"
-                  >
-                    <div
-                      class="row"
-                    >
-                      <div
-                        class="col-12"
-                      >
-                        <p
-                          class="card-text"
-                        >
-                          <form
-                            class=""
-                          >
-                            <small
-                              class="form-text text-muted pt-0"
-                            >
-                              Enter a new phone number
-                            </small>
-                             
-                            <fieldset
-                              class="form-group"
-                            >
-                              <!---->
-                              <div
-                                role="group"
-                                tabindex="-1"
-                              >
-                                <input
-                                  aria-required="true"
-                                  class="form-control"
-                                  required="required"
-                                  type="text"
-                                  width="300px"
-                                />
-                                <!---->
-                                <!---->
-                                <small
-                                  class="form-text text-muted"
-                                  tabindex="-1"
-                                >
-                                  Carrier rates may apply
-                                </small>
-                              </div>
-                            </fieldset>
-                             
-                            <!---->
-                             
-                            <button
-                              class="btn float-right mt-2 px-3 btn-primary"
-                              type="submit"
-                            >
-                              <span
-                                aria-hidden="true"
-                                class="mr-2 spinner-padding spinner-border spinner-border-sm spinner-hide"
-                              >
-                                <!---->
-                              </span>
-                              
+                          
                   Verify
                 
-                            </button>
-                          </form>
-                        </p>
-                      </div>
-                    </div>
+                        </button>
+                      </form>
+                    </p>
                   </div>
                 </div>
               </div>
-              <!---->
-              <!---->
             </div>
-             
+          </div>
+          <!---->
+          <!---->
+        </div>
+         
+        <div
+          class="card notif-option-card"
+        >
+          <!---->
+          <div
+            class="card-header"
+          >
             <div
-              class="card notif-option-card"
+              class="p-0 container"
             >
-              <!---->
               <div
-                class="card-header"
+                class="row"
               >
                 <div
-                  class="p-0 container"
+                  class="col-8"
                 >
-                  <div
-                    class="row"
-                  >
-                    <div
-                      class="col-8"
-                    >
-                      
+                  
         Email
        
-                      <!---->
-                       
-                      <!---->
-                    </div>
-                     
-                    <div
-                      class="col-4"
+                  <!---->
+                   
+                  <!---->
+                </div>
+                 
+                <div
+                  class="col-4"
+                >
+                  <div>
+                    <a
+                      aria-controls="email"
+                      aria-expanded="false"
+                      class="btn opt_link_btn p-0 btn-link btn-block"
+                      href="#"
+                      role="button"
+                      target="_self"
                     >
-                      <div>
-                        <a
-                          aria-controls="email"
-                          aria-expanded="false"
-                          class="btn opt_link_btn p-0 btn-link btn-block"
-                          href="#"
-                          role="button"
-                          target="_self"
-                        >
-                          
+                      
             Add
           
-                        </a>
-                      </div>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
-               
-              <div
-                class="collapse"
-                id="email"
-                role="tabpanel"
-                style="display: none;"
-              >
-                <div
-                  class="card-body"
-                >
-                  <!---->
-                  <!---->
-                  <div
-                    class="p-0 container"
-                  >
-                    <div
-                      class="row"
-                    >
-                      <div
-                        class="col-12"
-                      >
-                        <p
-                          class="card-text"
-                        >
-                          <form
-                            class=""
-                          >
-                            <small
-                              class="form-text text-muted pt-0"
-                            >
-                              Enter an email
-                            </small>
-                             
-                            <fieldset
-                              class="form-group"
-                            >
-                              <!---->
-                              <div
-                                role="group"
-                                tabindex="-1"
-                              >
-                                <input
-                                  aria-required="true"
-                                  class="form-control"
-                                  required="required"
-                                  type="email"
-                                  width="300px"
-                                />
-                                <!---->
-                                <!---->
-                                <!---->
-                              </div>
-                            </fieldset>
-                             
-                            <!---->
-                             
-                            <button
-                              class="btn float-right mt-2 px-3 btn-primary"
-                              type="submit"
-                            >
-                              <span
-                                aria-hidden="true"
-                                class="mr-2 spinner-padding spinner-border spinner-border-sm spinner-hide"
-                              >
-                                <!---->
-                              </span>
-                              
-                  Verify
-                
-                            </button>
-                          </form>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!---->
-              <!---->
             </div>
           </div>
            
+          <div
+            class="collapse"
+            id="email"
+            role="tabpanel"
+            style="display: none;"
+          >
+            <div
+              class="card-body"
+            >
+              <!---->
+              <!---->
+              <div
+                class="p-0 container"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-12"
+                  >
+                    <p
+                      class="card-text"
+                    >
+                      <form
+                        class=""
+                      >
+                        <small
+                          class="form-text text-muted pt-0"
+                        >
+                          Enter an email
+                        </small>
+                         
+                        <fieldset
+                          class="form-group"
+                        >
+                          <!---->
+                          <div
+                            role="group"
+                            tabindex="-1"
+                          >
+                            <input
+                              aria-required="true"
+                              class="form-control"
+                              required="required"
+                              type="email"
+                              width="300px"
+                            />
+                            <!---->
+                            <!---->
+                            <small
+                              class="form-text text-muted"
+                              tabindex="-1"
+                            >
+                               
+                            </small>
+                          </div>
+                        </fieldset>
+                         
+                        <!---->
+                         
+                        <button
+                          class="btn float-right mt-2 px-3 btn-primary"
+                          type="submit"
+                        >
+                          <span
+                            aria-hidden="true"
+                            class="mr-2 spinner-padding spinner-border spinner-border-sm spinner-hide"
+                          >
+                            <!---->
+                          </span>
+                          
+                  Verify
+                
+                        </button>
+                      </form>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---->
+          <!---->
         </div>
       </div>
+       
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"

@@ -15,6 +15,7 @@ exports[`Welcome Page renders correctly 1`] = `
       >
         <div
           class="text-center py-3 container-fluid"
+          style="background-color: rgb(0, 112, 201);"
         >
           <div
             class="container"
@@ -35,86 +36,77 @@ exports[`Welcome Page renders correctly 1`] = `
       </div>
     </div>
      
-    <div
+    <main
       class="page-content pb-2"
     >
       <div
-        class="py-2 container-fluid"
-        style="background-color: rgb(75, 46, 131);"
+        class="pt-4 pl-4 pb-4 d-flex container-fluid"
       >
+        <img
+          alt="UW Block Logo"
+          class="pr-2"
+          height="24"
+          src="test-file-stub"
+        />
+         
+        <img
+          alt="Food Alert text logo"
+          class=""
+          height="20"
+          src="test-file-stub"
+          style="align-self: center;"
+        />
+      </div>
+       
+      <div
+        id="standard-container"
+      >
+        <h1
+          class="pt-md-5 pt-3 pb-2"
+          id="standard-heading"
+        >
+          
+    Welcome
+  
+        </h1>
+         
         <div
-          class="row justify-content-center"
+          id="standard-body"
+        >
+          <p>
+            When you sign up with Hungry Husky, you’ll receive notifications
+        through email, text, or both whenever events on campus
+        have available food.
+          </p>
+        </div>
+         
+        <div
+          class="mt-5"
         >
           <div
-            class="col-md-8"
+            class="row justify-content-between"
           >
-            <img
-              alt="UW Block Logo"
-              class=""
-              src="test-file-stub"
-              width="40"
+            <div
+              class="col-md-4 col-lg-4 order-md-2"
+            >
+              <button
+                class="btn mb-3 btn-primary btn-lg btn-block"
+                style="white-space: nowrap;"
+                type="submit"
+              >
+                
+                      Let's get started
+          
+              </button>
+            </div>
+             
+            <div
+              class="col-md-6 col-lg-5 order-md-1"
             />
           </div>
         </div>
       </div>
-       
-      <div
-        class="container"
-      >
-        <div
-          class="row justify-content-center"
-        >
-          <div
-            class="page-content-padding col-md-12 col-lg-8"
-          >
-            <h1
-              class="pt-md-5 pt-3 pb-2"
-              id="standard-heading"
-            >
-              
-    Welcome
-  
-            </h1>
-             
-            <div
-              id="standard-body"
-            >
-              <p>
-                When you sign up with Hungry Husky, you’ll receive notifications
-        through email, text, or both whenever events on campus
-        have available food.
-              </p>
-            </div>
-             
-            <div
-              class="mt-5"
-            >
-              <div
-                class="row justify-content-between"
-              >
-                <div
-                  class="col-md-6 col-lg-5 order-md-2"
-                >
-                  <button
-                    class="btn mb-3 btn-primary btn-lg btn-block"
-                    style="white-space: nowrap;"
-                    type="submit"
-                  >
-                    
-                      Let's get started
-          
-                  </button>
-                </div>
-                 
-                <div
-                  class="col-md-6 col-lg-5 order-md-1"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
      
     <footer
       class="text-center"

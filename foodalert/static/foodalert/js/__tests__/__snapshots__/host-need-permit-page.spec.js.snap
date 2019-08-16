@@ -14,6 +14,7 @@ exports[`Need Permit Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -34,106 +35,98 @@ exports[`Need Permit Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
         You need a Temporary Food Service Permit
     
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          
         Based on what you’ve told us about your food, you’ll need to
         obtain a Temporary Food Service Permit to share via Hungry Husky.
       
-            </p>
-             
-            <p>
-              The only food that can be shared without a permit is:
-            </p>
-             
-            <ul
-              class="ml-4"
-            >
-              <li>
-                Non-perishable, or
-              </li>
-               
-              <li>
-                Commercially pre-packaged, or
-              </li>
-               
-              <li>
-                
+        </p>
+         
+        <p>
+          The only food that can be shared without a permit is:
+        </p>
+         
+        <ul
+          class="ml-4"
+        >
+          <li>
+            Non-perishable, or
+          </li>
+           
+          <li>
+            Commercially pre-packaged, or
+          </li>
+           
+          <li>
+            
           Prepared by UW Housing and Food Services or Bay Laurel Catering
         
-              </li>
-            </ul>
-             
-            <p>
-              
+          </li>
+        </ul>
+         
+        <p>
+          
         Keep in mind for future events, it takes two weeks to get a permit
         and a new permit is required for every event. If you have
         questions about how to share food with Hungry Husky, please email
         
-              <a
-                href="mailto:hungryhusky@uw.edu"
-              >
-                hungryhusky@uw.edu
-              </a>
-              .
+          <a
+            href="mailto:hungryhusky@uw.edu"
+          >
+            hungryhusky@uw.edu
+          </a>
+          .
         And thanks for thinking of Hungry Husky!
       
-            </p>
+        </p>
+      </div>
+       
+      <div
+        class="mt-5"
+      >
+        <div
+          class="row justify-content-between"
+        >
+          <div
+            class="col-md-5 col-lg-4 order-md-2"
+          >
+            <a
+              class="btn mb-3 btn-primary btn-lg btn-block"
+              href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
+              target="_self"
+            >
+              
+                Get a permit
+            
+            </a>
           </div>
            
           <div
-            class="mt-5"
-          >
-            <div
-              class="row justify-content-between"
-            >
-              <div
-                class="col-md-4 col-lg-3 order-md-2"
-              >
-                <a
-                  class="btn mb-3 btn-primary btn-lg btn-block"
-                  href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
-                  target="_self"
-                >
-                  
-                Get a permit
-            
-                </a>
-              </div>
-               
-              <div
-                class="col-md-4 col-lg-3 order-md-1"
-              />
-            </div>
-          </div>
+            class="col-md-4 col-lg-3 order-md-1"
+          />
         </div>
       </div>
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"

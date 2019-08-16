@@ -105,7 +105,7 @@ export default {
         this.selected.includes('preparedByAuth')) {
         this.$router.push({
           name: 'h-responsibilities',
-          params: {backPage: 'h-food-service'}
+          params: {backPage: 'h-food-service'},
         });
       } else { // if (this.selected.includes('none'))
         this.$router.push({name: 'h-categories'});
@@ -116,7 +116,7 @@ export default {
     },
     uncheckCheckbox(pos) {
       setTimeout(function() {
-        document.querySelectorAll('input')[pos].checked = false
+        document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
           return val != document.querySelectorAll('input')[pos]._value
         })

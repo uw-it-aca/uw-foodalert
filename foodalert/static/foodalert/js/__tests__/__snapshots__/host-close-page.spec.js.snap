@@ -14,6 +14,7 @@ exports[`Host Close Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -34,55 +35,47 @@ exports[`Host Close Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
         Your food cannot be shared with Hungry Husky
     
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              You indicated that your food is homemade, which makes it
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          You indicated that your food is homemade, which makes it
         ineligible to be shared with the public via Hungry Husky.
-            </p>
-             
-            <p>
-              You are still able to share it with your colleagues in your
+        </p>
+         
+        <p>
+          You are still able to share it with your colleagues in your
         office. If you have questions about how to share food with Hungry
         Husky, please email
         
-              <a
-                href="mailto:hungryhusky@uw.edu"
-              >
-                hungryhusky@uw.edu
-              </a>
-              .
+          <a
+            href="mailto:hungryhusky@uw.edu"
+          >
+            hungryhusky@uw.edu
+          </a>
+          .
         And thanks for thinking of Hungry Husky!
-            </p>
-          </div>
-           
-        </div>
+        </p>
       </div>
+       
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"

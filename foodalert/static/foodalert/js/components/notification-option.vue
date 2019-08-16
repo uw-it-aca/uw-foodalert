@@ -151,7 +151,7 @@ export default {
     },
     description: {
       type: String,
-      default: " "
+      default: ' ',
     },
     type: {
       type: String,
@@ -354,7 +354,8 @@ export default {
         /*margin-top: 12px;*/
     }
 
-    .notif-option-card .notif-option-heading .btn.opt_link_btn.btn-link.btn-block {
+    .notif-option-card .notif-option-heading
+    .btn.opt_link_btn.btn-link.btn-block {
         font-size: 18px;
         font-weight: 600;
         line-height: 1.375;

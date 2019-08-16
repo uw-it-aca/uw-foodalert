@@ -69,7 +69,7 @@
                   Information is missing
               </collapse-text-box>
               <div class="invalid-feedback pt-2"
-                   :class="{'super-show': (inputValid('cond1') == false) 
+                   :class="{'super-show': (inputValid('cond1') == false)
                       || (inputValid('cond2') == false)}"
                    id="condition-feedback">
                 In order to use the service please agree to above
@@ -121,24 +121,26 @@ export default {
   },
   methods: {
     getNextPage() {
-      this.enableValidation = ['cond1', 'cond2']
+      this.enableValidation = ['cond1', 'cond2'];
       if (this.selected.length != 2) {
-        return
+        return;
       }
-      
+
       this.$router.push({name: 'h-form'});
     },
     getBackPage() {
       this.$router.push({name: this.backPage});
     },
     inputValid(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) != -1)
-        return (this.selected.indexOf(fieldValue) != -1 ? null : false)
+      if (this.enableValidation.indexOf(fieldValue) != -1) {
+        return (this.selected.indexOf(fieldValue) != -1 ? null : false);
+      }
       return null;
     },
     addToValidate(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) == -1)
-        this.enableValidation.push(fieldValue)
+      if (this.enableValidation.indexOf(fieldValue) == -1) {
+        this.enableValidation.push(fieldValue);
+      }
     },
   },
   data() {
