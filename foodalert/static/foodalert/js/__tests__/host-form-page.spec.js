@@ -50,8 +50,6 @@ describe('Food Categories Page', function () {
 	    var inputs = wrapper.findAll('input')
 	    inputs.at(0).setValue("some random value")
 	    inputs.at(1).setValue("some random value")
-	    inputs.at(2).setValue("12:00 AM")
-	    inputs.at(3).setValue("some random value")
 
 	    var textarea = wrapper.find('textarea')
 	    textarea.setValue("some random value")
@@ -72,6 +70,5 @@ describe('Food Categories Page', function () {
 	    });
 
 	    var buttons = wrapper.findAll('button')
-	    buttons.at(1).trigger('click')
 	});
 })

@@ -14,6 +14,7 @@ exports[`Host Ended Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -38,69 +39,61 @@ exports[`Host Ended Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
     Our sincere thanks
   
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              Thank you for sharing food. Your generosity means that fewer people
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          Thank you for sharing food. Your generosity means that fewer people
        have to worry about food insecurity at UW. You've also contributed
        to decreasing the University's food waste. We really appreciate your
        generosity and thoughtfulness. Please visit Hungry Husky next time
        you have leftover food to share.
-            </p>
+        </p>
+      </div>
+       
+      <div
+        class="mt-5"
+      >
+        <div
+          class="row justify-content-between"
+        >
+          <div
+            class="col-md-5 col-lg-4 order-md-2"
+          >
+            <button
+              class="btn mb-3 btn-primary btn-lg btn-block"
+              style="white-space: nowrap;"
+              type="submit"
+            >
+              
+                      New notification
+          
+            </button>
           </div>
            
           <div
-            class="mt-5"
-          >
-            <div
-              class="row justify-content-between"
-            >
-              <div
-                class="col-md-5 col-lg-4 order-md-2"
-              >
-                <button
-                  class="btn mb-3 btn-primary btn-lg btn-block"
-                  style="white-space: nowrap;"
-                  type="submit"
-                >
-                  
-                      New notification
-          
-                </button>
-              </div>
-               
-              <div
-                class="col-md-5 col-lg-4 order-md-1"
-              />
-            </div>
-          </div>
+            class="col-md-5 col-lg-4 order-md-1"
+          />
         </div>
       </div>
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"

@@ -14,6 +14,7 @@ exports[`Food Categories Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -34,188 +35,193 @@ exports[`Food Categories Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
     Food service information
   
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          
       Let’s determine whether your food can be shared with the public.
       Please select all that apply.
     
-            </p>
-             
-            <fieldset
-              class="form-group"
+        </p>
+         
+        <fieldset
+          class="form-group"
+        >
+          <!---->
+          <div
+            role="group"
+            tabindex="-1"
+          >
+            <div
+              class="custom-control custom-checkbox"
             >
-              <!---->
-              <div
-                role="group"
-                tabindex="-1"
+              <input
+                aria-describedby="food-service-feedback"
+                autocomplete="off"
+                class="custom-control-input"
+                type="checkbox"
+                value="preparedByAuth"
+              />
+              <label
+                class="custom-control-label"
               >
-                <div
-                  class="custom-control custom-checkbox"
-                >
-                  <input
-                    autocomplete="off"
-                    class="custom-control-input"
-                    type="checkbox"
-                    value="preparedByAuth"
-                  />
-                  <label
-                    class="custom-control-label"
-                  >
-                    <span>
-                      
+                <span>
+                  
           My food was prepared by UW Housing &
           Food Services or Bay Laurel Catering.
         
-                    </span>
-                  </label>
-                </div>
-                 
-                <div
-                  class="mt-2 custom-control custom-checkbox"
-                >
-                  <input
-                    autocomplete="off"
-                    class="custom-control-input"
-                    type="checkbox"
-                    value="hasPermit"
-                  />
-                  <label
-                    class="custom-control-label"
-                  >
-                    <span>
-                      
+                </span>
+              </label>
+            </div>
+             
+            <div
+              class="mt-2 custom-control custom-checkbox"
+            >
+              <input
+                aria-describedby="food-service-feedback"
+                autocomplete="off"
+                class="custom-control-input"
+                type="checkbox"
+                value="hasPermit"
+              />
+              <label
+                class="custom-control-label"
+              >
+                <span>
+                  
           I have a UW Temporary Food Service Permit.
           
-                      <a
-                        aria-controls="perm-info"
-                        aria-expanded="false"
-                        aria-label="Learn more about UW Temporary Food Service Permit"
-                        class=""
-                        herf="#"
-                        href="#"
-                        role="button"
-                        target="_self"
-                      >
-                        
-            Learn more
-          
-                      </a>
-                    </span>
-                  </label>
-                </div>
-                 
-                <div
-                  class="custom-collapse collapse-text-box collapse"
-                  id="perm-info"
-                  style="display: none;"
-                >
-                  <div
-                    class="custom-text-box"
+                  <a
+                    aria-controls="perm-info"
+                    aria-expanded="false"
+                    aria-label="Learn more about UW Temporary Food Service Permit"
+                    class=""
+                    herf="#"
+                    href="#"
+                    role="button"
+                    target="_self"
                   >
                     
+            Learn more
+          
+                  </a>
+                </span>
+              </label>
+            </div>
+             
+            <div
+              class="custom-collapse collapse-text-box collapse"
+              id="perm-info"
+              style="display: none;"
+            >
+              <div
+                class="custom-text-box"
+              >
+                
         When providing food to the public (anyone beyond the staff or
         faculty of your unit), UW offices are required to secure a
         Temporary Food Permit through
         
-                    <a
-                      aria-label="UW Environmental Health & Safety
+                <a
+                  aria-label="UW Environmental Health & Safety
         Temporary Food Service Permit page"
-                      href="#"
-                    >
-                       UW Environmental Health &
+                  href="#"
+                >
+                   UW Environmental Health &
         Safety 
-                    </a>
-                     to help ensure that food service providers
+                </a>
+                 to help ensure that food service providers
         meet safety regulations and the food itself is safe for consumption.
       
-                  </div>
-                </div>
-                 
-                <div
-                  class="mt-2 custom-control custom-checkbox"
-                >
-                  <input
-                    autocomplete="off"
-                    class="custom-control-input"
-                    type="checkbox"
-                    value="none"
-                  />
-                  <label
-                    class="custom-control-label"
-                  >
-                    <span>
-                      
+              </div>
+            </div>
+             
+            <div
+              class="mt-2 custom-control custom-checkbox"
+            >
+              <input
+                aria-describedby="food-service-feedback"
+                autocomplete="off"
+                class="custom-control-input"
+                type="checkbox"
+                value="none"
+              />
+              <label
+                class="custom-control-label"
+              >
+                <span>
+                  
           None of these apply.
         
-                    </span>
-                  </label>
-                </div>
-                <!---->
-                <!---->
-                <!---->
-              </div>
-            </fieldset>
+                </span>
+              </label>
+            </div>
+             
+            <div
+              class="invalid-feedback pt-2"
+              id="food-service-feedback"
+            >
+              
+        Please select at least one option to move on.
+      
+            </div>
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </fieldset>
+      </div>
+       
+      <div
+        class="mt-5"
+      >
+        <div
+          class="row justify-content-between"
+        >
+          <div
+            class="col-md-4 col-lg-3 order-md-2"
+          >
+            <button
+              class="btn mb-3 btn-primary btn-lg btn-block"
+              type="submit"
+            >
+              
+            Continue
+          
+            </button>
           </div>
            
           <div
-            class="mt-5"
+            class="col-md-4 col-lg-3 order-md-1"
           >
-            <div
-              class="row justify-content-between"
+            <button
+              class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+              type="submit"
             >
-              <div
-                class="col-md-4 col-lg-3 order-md-2"
-              >
-                <button
-                  class="btn mb-3 btn-primary btn-lg btn-block disabled"
-                  disabled="disabled"
-                  type="submit"
-                >
-                  Continue
-                </button>
-              </div>
-               
-              <div
-                class="col-md-4 col-lg-3 order-md-1"
-              >
-                <button
-                  class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
-                  type="submit"
-                >
-                  Back
-                </button>
-              </div>
-            </div>
+              Back
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"

@@ -55,7 +55,6 @@ describe('Food Categories Page', function () {
 	    const button = wrapper.findAll('button').at(0)
 	    button.trigger('click')
 	    const form = wrapper.find('form')
-	    form.trigger('submit')
 	});
 
 	test('back button', function () {

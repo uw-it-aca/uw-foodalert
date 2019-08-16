@@ -14,6 +14,7 @@ exports[`Food Categories Page renders correctly 1`] = `
     >
       <div
         class="text-center py-3 container-fluid"
+        style="background-color: rgb(0, 112, 201);"
       >
         <div
           class="container"
@@ -34,186 +35,209 @@ exports[`Food Categories Page renders correctly 1`] = `
     </div>
   </div>
    
-  <div
+  <main
     class="page-content pb-2"
   >
      
     <div
-      class="container"
+      id="standard-container"
     >
-      <div
-        class="row justify-content-center"
+      <h1
+        class="pt-md-5 pt-3 pb-2"
+        id="standard-heading"
       >
-        <div
-          class="page-content-padding col-md-12 col-lg-8"
-        >
-          <h1
-            class="pt-md-5 pt-3 pb-2"
-            id="standard-heading"
-          >
-            
+        
         Responsibilities
     
-          </h1>
-           
-          <div
-            id="standard-body"
-          >
-            <p>
-              
+      </h1>
+       
+      <div
+        id="standard-body"
+      >
+        <p>
+          
           To ensure the safety of the food being shared, we ask that you
           to agree to all of the following requirements.
         
-            </p>
-             
-            <form
-              class=""
+        </p>
+         
+        <fieldset
+          class="form-group"
+        >
+          <!---->
+          <div
+            role="group"
+            tabindex="-1"
+          >
+            <div
+              class="mt-2 custom-control custom-checkbox"
             >
-              <div
-                class="mt-2 custom-control custom-checkbox"
+              <input
+                aria-describedby="condition-feedback"
+                autocomplete="off"
+                class="custom-control-input"
+                id="cond1"
+                type="checkbox"
+                value="cond1"
+              />
+              <label
+                class="custom-control-label"
+                for="cond1"
               >
-                <input
-                  autocomplete="off"
-                  class="custom-control-input"
-                  type="checkbox"
-                  value="cond1"
-                />
-                <label
-                  class="custom-control-label"
-                >
+                <span>
                   <span>
                     
-              My office is responsible for the safety of this food.
+                My office is responsible for the safety of the food I am
+                sharing.
               
-                    <a
-                      aria-controls="cond1-info"
-                      aria-expanded="false"
-                      aria-label="Learn more about safety responsibilities"
-                      class=""
-                      herf="#"
-                      href="#"
-                      role="button"
-                      target="_self"
-                    >
-                      
+                  </span>
+                   
+                  <a
+                    aria-controls="cond1-info"
+                    aria-expanded="false"
+                    aria-label="Learn more about safety responsibilities"
+                    class=""
+                    herf="#"
+                    href="#"
+                    role="button"
+                    target="_self"
+                  >
+                    
                 Learn more
               
-                    </a>
-                  </span>
-                </label>
-              </div>
-               
+                  </a>
+                </span>
+              </label>
+            </div>
+             
+            <div
+              class="custom-collapse collapse-text-box collapse"
+              id="cond1-info"
+              style="display: none;"
+            >
               <div
-                class="custom-collapse collapse-text-box collapse"
-                id="cond1-info"
-                style="display: none;"
+                class="custom-text-box"
               >
-                <div
-                  class="custom-text-box"
-                >
-                  
+                
             You are responsible for food safety under the approval of
             the Temporary Food Permit. This same level of responsibility
             applies when using the Hungry Husky App.
           
-                </div>
               </div>
-               
-              <div
-                class="mt-2 custom-control custom-checkbox"
+            </div>
+             
+            <div
+              class="mt-2 custom-control custom-checkbox"
+            >
+              <input
+                aria-describedby="condition-feedback"
+                autocomplete="off"
+                class="custom-control-input"
+                id="cond2"
+                type="checkbox"
+                value="cond2"
+              />
+              <label
+                class="custom-control-label"
+                for="cond2"
               >
-                <input
-                  autocomplete="off"
-                  class="custom-control-input"
-                  type="checkbox"
-                  value="cond2"
-                />
-                <label
-                  class="custom-control-label"
-                >
+                <span>
                   <span>
                     
-              Potentially hazardous food must be kept at proper
-              temperatures and have been sitting at room temperature
-              for no more than 
+                Potentially hazardous food must be kept at appropriate
+                temperatures and have been sitting out at room temperature
+                for no more than 
                     <strong>
                       four hours
                     </strong>
                     .
               
-                    <a
-                      aria-controls="cond2-info"
-                      aria-expanded="false"
-                      aria-label="Learn more about potentially hazardous food"
-                      class=""
-                      herf="#"
-                      href="#"
-                      role="button"
-                      target="_self"
-                    >
-                      
+                  </span>
+                   
+                  <a
+                    aria-controls="cond2-info"
+                    aria-expanded="false"
+                    aria-label="Learn more about potentially hazardous food"
+                    class=""
+                    herf="#"
+                    href="#"
+                    role="button"
+                    target="_self"
+                  >
+                    
                 Learn more
               
-                    </a>
-                  </span>
-                </label>
-              </div>
-               
+                  </a>
+                </span>
+              </label>
+            </div>
+             
+            <div
+              class="custom-collapse collapse-text-box collapse"
+              id="cond2-info"
+              style="display: none;"
+            >
               <div
-                class="custom-collapse collapse-text-box collapse"
-                id="cond2-info"
-                style="display: none;"
+                class="custom-text-box"
               >
-                <div
-                  class="custom-text-box"
-                >
-                  
+                
               Information is missing
           
-                </div>
               </div>
-               
+            </div>
+             
+            <div
+              class="invalid-feedback pt-2"
+              id="condition-feedback"
+            >
+              
+            In order to use the service please agree to above
+            responsibilities.
+          
+            </div>
+             
+            <div
+              class="mt-5"
+            >
               <div
-                class="mt-5"
+                class="row justify-content-between"
               >
                 <div
-                  class="row justify-content-between"
+                  class="col-md-4 col-lg-3 order-md-2"
                 >
-                  <div
-                    class="col-md-4 col-lg-3 order-md-2"
+                  <button
+                    class="btn mb-3 btn-primary btn-lg btn-block"
+                    type="submit"
                   >
-                    <button
-                      class="btn mb-3 btn-primary btn-lg btn-block disabled"
-                      disabled="disabled"
-                      type="submit"
-                    >
-                      
+                    
                         Agree
                     
-                    </button>
-                  </div>
-                   
-                  <div
-                    class="col-md-4 col-lg-3 order-md-1"
+                  </button>
+                </div>
+                 
+                <div
+                  class="col-md-4 col-lg-3 order-md-1"
+                >
+                  <button
+                    class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+                    type="submit"
                   >
-                    <button
-                      class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
-                      type="submit"
-                    >
-                      
+                    
                         Back
                     
-                    </button>
-                  </div>
+                  </button>
                 </div>
               </div>
-            </form>
+            </div>
+            <!---->
+            <!---->
+            <!---->
           </div>
-           
-        </div>
+        </fieldset>
       </div>
+       
     </div>
-  </div>
+  </main>
    
   <footer
     class="text-center"
