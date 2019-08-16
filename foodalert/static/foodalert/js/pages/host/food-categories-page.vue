@@ -41,7 +41,7 @@
                             Examples
                           </b-link>
                         </div>
-                        <b-link herf="#" v-b-toggle.pre-packaged>
+                        <b-link herf="#" v-b-toggle.pre-packaged v-else>
                           Examples
                         </b-link>
                     </span>

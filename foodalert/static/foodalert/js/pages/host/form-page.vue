@@ -46,7 +46,7 @@
         </preview-box>
       </b-modal>
 
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form @submit="onSubmit" v-if="show">
         <p class="mb-0 pb-1">
           Now let's get some details about your food and event so
           you can send a notification.
@@ -239,14 +239,14 @@ export default {
         event: false,
         food_served: false,
         location: false,
-        // end_time: false,
+        end_time: true,
         // bring_container: false,
       },
       enableValidation: {
         location: false,
         event: false,
-        // end_time: false,
         food_served: false,
+        end_time: true,
         // bring_container: false,
       },
       allergens: [],
@@ -281,19 +281,6 @@ export default {
       if (flag) return;
 
       this.$bvModal.show('submitconfirmation');
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.location = '',
-      this.form.event = '',
-      this.form.end_time = null,
-      this.form.food_served = '',
-      this.form.amount_of_food_left = '',
-      this.form.bring_container = false,
-      this.form.safe_foods = [],
-      this.form.allergens = [],
-      this.form.host_user_agent = '';
     },
     formatedTimeToStr() {
       if (this.isMobile) {
@@ -365,9 +352,9 @@ export default {
       }
       return null;
     },
-    updateValidity(newState, fieldName, length) {
+    updateValidity(newState, fieldName, checkFunction) {
       if (newState[fieldName] != undefined &&
-          newState[fieldName].length > length) {
+          checkFunction(newState[fieldName])) {
         this.formValidate[fieldName] = true;
         this.enableValidation[fieldName] = true;
       } else {
@@ -393,13 +380,19 @@ export default {
   },
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.formValidate.end_time = !this.isMobile
   },
   watch: {
     form: {
       handler(newState) {
-        this.updateValidity(newState, 'location', 0);
-        this.updateValidity(newState, 'event', 0);
-        this.updateValidity(newState, 'food_served', 0);
+        const checkFunction = (text)=>{
+          return text.length > 0
+        }
+        this.updateValidity(newState, 'location', checkFunction);
+        this.updateValidity(newState, 'event', checkFunction);
+        this.updateValidity(newState, 'food_served', checkFunction);
+        this.updateValidity(newState, 'end_time',
+          (t)=>/^\d{1,2}:\d{2} (AM|PM)$/.test(t));
       },
       deep: true,
     },
