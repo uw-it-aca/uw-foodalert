@@ -53,9 +53,9 @@
         </p>
 
         <div>
-          <label class="standard-label" for="event-name">Event name</label>
+          <label id="event-label" class="standard-label" for="event-name">Event name</label>
           <b-form-input id="event-name" ref="event"
-            aria-describedby="event-name-feedback"
+            aria-labelledby="event-label"
             v-model="form.event" :state="inputValid('event')"
             placeholder="FIUTS weekly club meeting"
             class="standard-placeholder"
@@ -67,13 +67,14 @@
         </div>
 
         <div>
-          <label class="standard-label mb-0" for="food-description">
+          <label id="food-label" class="standard-label mb-0" for="food-description">
             Describe the food
           </label>
-          <p class="mb-2" style="font-size: 15px;">Tell people about your
+          <p id="food-clarification" class="mb-2" style="font-size: 15px;">Tell people about your
             food and the approximate quantity.</p>
           <b-form-textarea id="food-description" ref="food_served"
-                          aria-describedby="food-description-feedback"
+                          aria-labelledby="food-label"
+                          aria-describedby="food-clarification"
                           v-model="form.food_served"
                           :state="inputValid('food_served')"
                           placeholder="Hot Indian buffet food"
@@ -86,8 +87,8 @@
         </div>
 
         <div>
-          <label class="standard-label" for="location">Location</label>
-          <b-form-input id="location" aria-describedby="location-feedback"
+          <label id="location-label" class="standard-label" for="location">Location</label>
+          <b-form-input id="location" aria-labelledby="location-label"
             ref="location"
             v-model="form.location" :state="inputValid('location')"
             placeholder="HUB 130" class="standard-placeholder" size="lg"
@@ -101,12 +102,13 @@
         <label class="standard-label mb-0" id="end-time-label" for="end-time">
           End time
         </label>
-        <p class="mb-2" style="font-size: 14px;">
+        <p id="time-clarification" class="mb-2" style="font-size: 14px;">
           Set the time when food service will be over.
         </p>
         <b-row>
           <b-col sm=12 md=8>
-            <b-form-input id="end-time" aria-describedby="End time of the event"
+            <b-form-input id="end-time" aria-describedby="time-clarification"
+              aria-labelledby="end-time-label"
               v-model="form.end_time"
               type="time" class="standard-placeholder" size="lg"
               v-if="isMobile"></b-form-input>
@@ -120,14 +122,15 @@
         <h3 id="allergen-label" class="standard-label mb-0">
           Does the food contain allergens?
         </h3>
-        <p class="mb-2" style="font-size: 14px;">
+        <p id="allergen-clarification" class="mb-2" style="font-size: 14px;">
           It's ok if you are unsure, just select to the best of your
           knowledge.
         </p>
 
         <b-container class="px-0">
           <b-form-checkbox-group id="allergens-checkbox"
-            v-model="form.allergens" aria-labelledby="allergen-label">
+            v-model="form.allergens" aria-labelledby="allergen-label"
+            aria-describedby="allergen-clarification">
             <b-row>
               <b-col v-for="allergen in allergens" :key="allergen" cols="6">
                 <b-form-checkbox :value="allergen" class="mb-2">
