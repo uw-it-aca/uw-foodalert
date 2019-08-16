@@ -18,8 +18,17 @@
                 :state="inputValid('cond1')"
                 @change="addToValidate('cond1')">
                 <span>
-                  My office is responsible for the safety of this food.
-                  <b-link herf="#" v-b-toggle.cond1-info
+                  <span>
+                    My office is responsible for the safety of the food I am
+                    sharing.
+                  </span>
+                  <div v-if="isIOSDevice">
+                    <b-link herf="#" v-b-toggle.cond1-info
+                      aria-label="Learn more about safety responsibilities">
+                      Learn more
+                    </b-link>
+                  </div>
+                  <b-link herf="#" v-b-toggle.cond1-info v-else
                     aria-label="Learn more about safety responsibilities">
                     Learn more
                   </b-link>
@@ -39,10 +48,18 @@
                 :state="inputValid('cond2')"
                 @change="addToValidate('cond2')">
                 <span>
-                  Potentially hazardous food must be kept at proper
-                  temperatures and have been sitting at room temperature
-                  for no more than <strong>four hours</strong>.
-                  <b-link herf="#" v-b-toggle.cond2-info
+                  <span>
+                    Potentially hazardous food must be kept at appropriate
+                    temperatures and have been sitting out at room temperature
+                    for no more than <strong>four hours</strong>.
+                  </span>
+                  <div v-if="isIOSDevice">
+                    <b-link herf="#" v-b-toggle.cond2-info
+                      aria-label="Learn more about potentially hazardous food">
+                      Learn more
+                    </b-link>
+                  </div>
+                  <b-link herf="#" v-b-toggle.cond2-info v-else
                     aria-label="Learn more about potentially hazardous food">
                     Learn more
                   </b-link>
@@ -121,7 +138,8 @@ export default {
   data() {
     return {
       selected: [],
-      enableValidation: []
+      enableValidation: [],
+      isIOSDevice: false,
     };
   },
   beforeMount() {
@@ -134,6 +152,7 @@ export default {
       }
     }).catch((error) =>
       this.showErrorPage(error.response, 'h-responsibilities'));
+    this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
   },
 };
 </script>

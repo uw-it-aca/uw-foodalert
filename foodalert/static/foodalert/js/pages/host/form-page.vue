@@ -384,11 +384,6 @@ export default {
         this.allergens.push(allergen.name);
       });
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-    this.form.end_time =
-      new Date().toLocaleTimeString().split(/\:\d\d /).join(' ');
-    if (this.form.end_time.length < 8) {
-      this.form.end_time = '0' + this.form.end_time;
-    }
   },
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

@@ -15,7 +15,12 @@
                     @change="removeInput('none'); validateOn = true">
                     <span>
                         My food is non-perishable.
-                        <b-link herf="#" v-b-toggle.non-perishable>
+                        <div v-if="isIOSDevice">
+                          <b-link herf="#" v-b-toggle.non-perishable>
+                            Examples
+                          </b-link>
+                        </div>
+                        <b-link herf="#" v-b-toggle.non-perishable v-else>
                           Examples
                         </b-link>
                     </span>
@@ -32,6 +37,11 @@
                     validateOn = true">
                     <span>
                         My food was commercially pre-packaged.
+                        <div v-if="isIOSDevice">
+                          <b-link herf="#" v-b-toggle.pre-packaged>
+                            Examples
+                          </b-link>
+                        </div>
                         <b-link herf="#" v-b-toggle.pre-packaged>
                           Examples
                         </b-link>
@@ -136,6 +146,7 @@ export default {
     return {
       selected: [],
       validateOn: false,
+      isIOSDevice: false,
     };
   },
   beforeMount() {
@@ -147,6 +158,7 @@ export default {
           params: {notificationText: 'You already have an event running.'}});
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-categories'));
+    this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
   },
 };
 </script>

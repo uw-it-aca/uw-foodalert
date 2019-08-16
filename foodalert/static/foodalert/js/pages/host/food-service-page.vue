@@ -22,7 +22,13 @@
                          @change="removeInput('none'); validateOn = true">
           <span>
             I have a UW Temporary Food Service Permit.
-            <b-link herf="#" v-b-toggle.perm-info
+            <div v-if="isIOSDevice">
+              <b-link herf="#" v-b-toggle.perm-info
+              aria-label="Learn more about UW Temporary Food Service Permit">
+                Learn more
+              </b-link>
+            </div>
+            <b-link herf="#" v-b-toggle.perm-info v-else
               aria-label="Learn more about UW Temporary Food Service Permit">
               Learn more
             </b-link>
@@ -111,6 +117,7 @@ export default {
     return {
       selected: [],
       validateOn: false,
+      isIOSDevice: false,
     };
   },
   beforeMount() {
@@ -122,6 +129,7 @@ export default {
         }});
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-food-service'));
+    this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
   },
 };
 </script>
