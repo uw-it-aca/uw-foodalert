@@ -45,6 +45,7 @@ window.vueData.routes = [
         component: UnauthzTemplate,
         name: 'h-responsibilities',
         meta: {title: 'Unauthorized Page'},
+        props: true,
       },
       {
         path: 'need-permit',

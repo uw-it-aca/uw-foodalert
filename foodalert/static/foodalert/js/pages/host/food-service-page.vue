@@ -98,7 +98,10 @@ export default {
       }
       if (this.selected.includes('hasPermit') ||
         this.selected.includes('preparedByAuth')) {
-        this.$router.push({name: 'h-responsibilities'});
+        this.$router.push({
+          name: 'h-responsibilities',
+          params: {backPage: 'h-food-service'}
+        });
       } else { // if (this.selected.includes('none'))
         this.$router.push({name: 'h-categories'});
       }

@@ -113,6 +113,12 @@ export default {
     'generic-page': GenericPage,
     'collapse-text-box': CollapseTextBox,
   },
+  props: {
+    backPage: {
+      type: String,
+      default: 'h-food-service',
+    },
+  },
   methods: {
     getNextPage() {
       this.enableValidation = ['cond1', 'cond2']
@@ -123,7 +129,7 @@ export default {
       this.$router.push({name: 'h-form'});
     },
     getBackPage() {
-      this.$router.push({name: 'h-food-service'});
+      this.$router.push({name: this.backPage});
     },
     inputValid(fieldValue) {
       if (this.enableValidation.indexOf(fieldValue) != -1)

@@ -87,7 +87,7 @@ export default {
     #standard-heading {
         font-size: 32px;
         line-height: 1.2;
-        font-weight: 800;
+        font-weight: 700;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }

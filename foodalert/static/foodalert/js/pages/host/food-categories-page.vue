@@ -125,7 +125,10 @@ export default {
 
       if (this.selected.includes('non-perishable') ||
           this.selected.includes('pre-packaged')) {
-        this.$router.push({name: 'h-responsibilities'});
+        this.$router.push({
+          name: 'h-responsibilities',
+          params: {backPage: 'h-categories'}
+        });
       } else if (this.selected.includes('at-home')) {
         this.$router.push({name: 'h-close'});
       } else {
