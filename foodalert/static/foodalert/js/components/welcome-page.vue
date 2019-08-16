@@ -8,10 +8,9 @@
           </b-img>
 
               <b-img :src="require('../../img/logo-text.svg')"
-                     alt="Food Alert text logo" height="20" style="align-self: center;">
+                     alt="Food Alert text logo"
+                     height="20" style="align-self: center;">
               </b-img>
-
-              <!-- <h1 class="h2 pt-0 pl-3" style="font-weight: 800; font-size:32px;">Food Alert</h1> -->
 
         </b-container>
       </template>

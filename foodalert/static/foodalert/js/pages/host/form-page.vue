@@ -117,7 +117,9 @@
         </b-row>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
-        <h3 id="allergen-label" class="standard-label mb-0">Does the food contain allergens?</h3>
+        <h3 id="allergen-label" class="standard-label mb-0">
+          Does the food contain allergens?
+        </h3>
         <p class="mb-2" style="font-size: 14px;">
           It's ok if you are unsure, just select to the best of your
           knowledge.
@@ -138,7 +140,9 @@
           </b-form-checkbox-group>
         </b-container>
 
-        <h3 class="standard-label mb-2" id="bring-label">Do people need to bring food storage containers? </h3>
+        <h3 class="standard-label mb-2" id="bring-label">
+          Do people need to bring food storage containers?
+        </h3>
         <b-container class="px-0">
           <b-form-radio-group id="bring-radio" aria-labelledby="bring-label"
             v-model="form.bring_container" stacked>
@@ -235,15 +239,15 @@ export default {
         event: false,
         food_served: false,
         location: false,
-        //end_time: false,
-        //bring_container: false,
+        // end_time: false,
+        // bring_container: false,
       },
       enableValidation: {
         location: false,
         event: false,
-        //end_time: false,
+        // end_time: false,
         food_served: false,
-        //bring_container: false,
+        // bring_container: false,
       },
       allergens: [],
       show: true,
@@ -252,25 +256,25 @@ export default {
   },
   methods: {
     focusMyElement(e) {
-      let el = document.getElementById('submitconfirmation')
-      el.setAttribute("tabIndex", "-1");
+      const el = document.getElementById('submitconfirmation');
+      el.setAttribute('tabIndex', '-1');
       el.focus();
-      el.removeAttribute("tabIndex")
+      el.removeAttribute('tabIndex');
     },
     onSubmit(evt) {
       evt.preventDefault();
 
       // triping all input validators
-      Object.keys(this.enableValidation).forEach(function (key) {
-        this.enableValidation[key] = true
+      Object.keys(this.enableValidation).forEach(function(key) {
+        this.enableValidation[key] = true;
       }.bind(this));
 
-      var flag = false
-      Object.keys(this.formValidate).forEach(function (key) {
+      let flag = false;
+      Object.keys(this.formValidate).forEach(function(key) {
         if (this.formValidate[key] == false && flag != true) {
-          flag = true
-          console.log(key)
-          this.$refs[key].$el.focus()
+          flag = true;
+          console.log(key);
+          this.$refs[key].$el.focus();
         }
       }.bind(this));
 
@@ -289,7 +293,7 @@ export default {
       this.form.bring_container = false,
       this.form.safe_foods = [],
       this.form.allergens = [],
-      this.form.host_user_agent = ''
+      this.form.host_user_agent = '';
     },
     formatedTimeToStr() {
       if (this.isMobile) {
@@ -332,7 +336,7 @@ export default {
         'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
-          'amount': "test amount",
+          'amount': 'test amount',
           'allergens': this.form.allergens,
         },
         'bring_container': this.form.bring_container,
@@ -356,18 +360,20 @@ export default {
           .catch((error) => this.showErrorPage(error.response, 'h-form'));
     },
     inputValid(fieldName) {
-      if (this.enableValidation[fieldName])
-        return (this.formValidate[fieldName] ? null : false)
+      if (this.enableValidation[fieldName]) {
+        return (this.formValidate[fieldName] ? null : false);
+      }
       return null;
     },
     updateValidity(newState, fieldName, length) {
-      if (newState[fieldName] != undefined && newState[fieldName].length > length) {
-        this.formValidate[fieldName] = true
-        this.enableValidation[fieldName] = true
+      if (newState[fieldName] != undefined &&
+          newState[fieldName].length > length) {
+        this.formValidate[fieldName] = true;
+        this.enableValidation[fieldName] = true;
       } else {
-        this.formValidate[fieldName] = false
+        this.formValidate[fieldName] = false;
       }
-    }
+    },
   },
   beforeMount() {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
@@ -391,12 +397,12 @@ export default {
   watch: {
     form: {
       handler(newState) {
-        this.updateValidity(newState, "location", 0);
-        this.updateValidity(newState, "event", 0);
-        this.updateValidity(newState, "food_served", 0);
+        this.updateValidity(newState, 'location', 0);
+        this.updateValidity(newState, 'event', 0);
+        this.updateValidity(newState, 'food_served', 0);
       },
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 };
 </script>

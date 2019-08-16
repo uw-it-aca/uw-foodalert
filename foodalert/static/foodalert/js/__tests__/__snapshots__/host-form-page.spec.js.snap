@@ -590,7 +590,9 @@ exports[`Food Categories Page renders correctly 1`] = `
             class="standard-label mb-0"
             id="allergen-label"
           >
-            Does the food contain allergens?
+            
+        Does the food contain allergens?
+      
           </h3>
            
           <p
@@ -623,7 +625,9 @@ exports[`Food Categories Page renders correctly 1`] = `
             class="standard-label mb-2"
             id="bring-label"
           >
-            Do people need to bring food storage containers? 
+            
+        Do people need to bring food storage containers?
+      
           </h3>
            
           <div

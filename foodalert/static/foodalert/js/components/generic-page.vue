@@ -71,7 +71,7 @@ export default {
       this.showNotification();
     }
     this.notifStyle = 'background-color: ' + this.notificationColor + ';';
-    document.activeElement.blur()
+    document.activeElement.blur();
   },
 };
 </script>

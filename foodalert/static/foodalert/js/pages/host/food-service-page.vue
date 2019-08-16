@@ -93,14 +93,14 @@ export default {
   methods: {
     getNextPage() {
       if (this.selected.length == 0) {
-        this.validateOn = true
-        return
+        this.validateOn = true;
+        return;
       }
       if (this.selected.includes('hasPermit') ||
         this.selected.includes('preparedByAuth')) {
         this.$router.push({
           name: 'h-responsibilities',
-          params: {backPage: 'h-food-service'}
+          params: {backPage: 'h-food-service'},
         });
       } else { // if (this.selected.includes('none'))
         this.$router.push({name: 'h-categories'});
@@ -111,13 +111,13 @@ export default {
     },
     uncheckCheckbox(pos) {
       setTimeout(function() {
-        document.querySelectorAll('input')[pos].checked = false
+        document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
-          return val != document.querySelectorAll('input')[pos]._value
-        })
-        if (!this.validateOn) this.validateOn = true
-      }.bind(this), 100)
-    }
+          return val != document.querySelectorAll('input')[pos]._value;
+        });
+        if (!this.validateOn) this.validateOn = true;
+      }.bind(this), 100);
+    },
   },
   data() {
     return {

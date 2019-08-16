@@ -44,7 +44,7 @@
                   <span id="nofood-label">No food left</span>
               </b-form-radio>
               <b-form-radio id="otherRadio"
-                aria-labelledby="update-label otherup-label" 
+                aria-labelledby="update-label otherup-label"
                 value="otherUpdate" class="mt-1" ref="otherUpdate">
                   <span class="mt-2 w-100" id="otherup-label">
                       Other message
@@ -149,19 +149,19 @@ export default {
   },
   methods: {
     focusMyElement(e) {
-      let el = document.getElementById('submitconfirmation')
-      el.setAttribute("tabIndex", "-1");
+      const el = document.getElementById('submitconfirmation');
+      el.setAttribute('tabIndex', '-1');
       el.focus();
-      el.removeAttribute("tabIndex")
+      el.removeAttribute('tabIndex');
     },
     preSendUpdate() {
       if ((this.otherText == '') && (this.selected != 'noFoodUpdate')) {
-        this.validationOn = true
-        this.$refs.otherMessage.$el.focus()
-        return
+        this.validationOn = true;
+        this.$refs.otherMessage.$el.focus();
+        return;
       }
 
-      this.$bvModal.show('submitconfirmation')
+      this.$bvModal.show('submitconfirmation');
     },
     sendUpdate() {
       if (this.selected == 'noFoodUpdate') {
@@ -205,8 +205,10 @@ export default {
       this.otherText= '';
     },
     inputValid() {
-      if (this.validationOn)
-        return (((this.otherText=='') && (this.selected=='otherUpdate')) ? false : null)
+      if (this.validationOn) {
+        return (((this.otherText=='') &&
+          (this.selected=='otherUpdate')) ? false : null);
+      }
       return null;
     },
   },
