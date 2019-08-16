@@ -119,9 +119,9 @@ export default {
     }
 
     #standard-container {
-      max-width: 680px;
-      padding-left: 14px;
-      padding-right: 14px;
+      max-width: 700px;
+      padding-left: 24px;
+      padding-right: 24px;
       position: relative;
       margin-left: auto;
       margin-right: auto;

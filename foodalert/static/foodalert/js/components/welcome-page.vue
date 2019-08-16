@@ -1,14 +1,18 @@
 <template>
     <generic-page>
       <template #banner>
-        <b-container fluid class="py-2" style="background-color: #4b2e83">
-          <b-row class="justify-content-center">
-            <b-col md="8">
-              <b-img :src="require('../../img/uw-logo.png')"
-                     alt="UW Block Logo" width="40">
+        <b-container fluid class="pt-4 pl-4 pb-4 d-flex" >
+
+          <b-img class="pr-2" :src="require('../../img/uw-logo-p.png')"
+                 alt="UW Block Logo" height="24">
+          </b-img>
+
+              <b-img :src="require('../../img/logo-text.svg')"
+                     alt="Food Alert text logo" height="20" style="align-self: center;">
               </b-img>
-            </b-col>
-          </b-row>
+
+              <!-- <h1 class="h2 pt-0 pl-3" style="font-weight: 800; font-size:32px;">Food Alert</h1> -->
+
         </b-container>
       </template>
       <template #heading>
