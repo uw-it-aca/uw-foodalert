@@ -11,7 +11,7 @@
       <b-form-group>
         <b-form-checkbox v-model="selected" value="preparedByAuth"
                          aria-describedby="food-service-feedback"
-                         @change="removeInput('none'); validateOn = true">
+                         @change="uncheckCheckbox(2)">
           <span>
             My food was prepared by UW Housing &amp;
             Food Services or Bay Laurel Catering.
@@ -19,7 +19,7 @@
         </b-form-checkbox>
         <b-form-checkbox v-model="selected" class="mt-2" value="hasPermit"
                          aria-describedby="food-service-feedback"
-                         @change="removeInput('none'); validateOn = true">
+                         @change="uncheckCheckbox(2)">
           <span>
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">
@@ -44,9 +44,8 @@
           meet safety regulations and the food itself is safe for consumption.
         </collapse-text-box>
         <b-form-checkbox v-model="selected" value="none" class="mt-2"
-        aria-describedby="food-service-feedback"
-        @change="['preparedByAuth', 'hasPermit'].forEach(removeInput);
-                  validateOn = true">
+          aria-describedby="food-service-feedback"
+          @change="uncheckCheckbox(0); uncheckCheckbox(1)">
           <span>
             None of these apply.
           </span>
@@ -107,11 +106,15 @@ export default {
     getBackPage() {
       this.$router.push({name: 'h-welcome'});
     },
-    removeInput(str) {
-      if (this.selected.includes(str)) {
-        this.selected.splice(this.selected.indexOf(str), 1);
-      }
-    },
+    uncheckCheckbox(pos) {
+      setTimeout(function() {
+        document.querySelectorAll('input')[pos].checked = false
+        this.selected = this.selected.filter((val) => {
+          return val != document.querySelectorAll('input')[pos]._value
+        })
+        if (!this.validateOn) this.validateOn = true
+      }.bind(this), 100)
+    }
   },
   data() {
     return {

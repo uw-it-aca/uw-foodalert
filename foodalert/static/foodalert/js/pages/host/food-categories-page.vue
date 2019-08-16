@@ -12,7 +12,7 @@
                 <b-form-checkbox
                     v-model="selected"
                     value="non-perishable"
-                    @change="removeInput('none'); validateOn = true">
+                    @change="uncheckCheckbox(3); uncheckCheckbox(2)">
                     <span>
                         My food is non-perishable.
                         <div v-if="isIOSDevice">
@@ -33,8 +33,7 @@
                     v-model="selected"
                     class="mt-2"
                     value="pre-packaged"
-                    @change="['none', 'at-home'].forEach(removeInput);
-                    validateOn = true">
+                    @change="uncheckCheckbox(3); uncheckCheckbox(2)">
                     <span>
                         My food was commercially pre-packaged.
                         <div v-if="isIOSDevice">
@@ -55,16 +54,16 @@
                     v-model="selected"
                     class="mt-2"
                     value="at-home"
-                    @click.native="['none', 'pre-packaged', 'non-perishable']
-                      .forEach(removeInput)">
+                    @change="uncheckCheckbox(0); uncheckCheckbox(1);
+                      uncheckCheckbox(3)">
                     My food was prepared at home.
                 </b-form-checkbox>
                 <b-form-checkbox
                     v-model="selected"
                     class="mt-2"
                     value="none"
-                    @change="['non-perishable', 'pre-packaged',
-                      'at-home'].forEach(removeInput); validateOn = true">
+                    @change="uncheckCheckbox(0); uncheckCheckbox(1);
+                      uncheckCheckbox(2)">
                     <span>
                         None of the above.
                     </span>
@@ -136,10 +135,14 @@ export default {
     getBackPage() {
       this.$router.push({name: 'h-food-service'});
     },
-    removeInput(str) {
-      if (this.selected.includes(str)) {
-        this.selected.splice(this.selected.indexOf(str), 1);
-      }
+    uncheckCheckbox(pos) {
+      setTimeout(function() {
+        document.querySelectorAll('input')[pos].checked = false
+        this.selected = this.selected.filter((val) => {
+          return val != document.querySelectorAll('input')[pos]._value
+        })
+        if (!this.validateOn) this.validateOn = true
+      }.bind(this), 100)
     },
   },
   data() {
