@@ -71,7 +71,14 @@ export default {
       this.showNotification();
     }
     this.notifStyle = 'background-color: ' + this.notificationColor + ';';
+  },
+  mounted() {
     document.activeElement.blur();
+    let newFocus = document.querySelector('h1');
+    newFocus.setAttribute("tabindex", "-1");
+    newFocus.style.outline = "none";
+    newFocus.focus();
+    newFocus.removeAttribute("tabindex")
   },
 };
 </script>
