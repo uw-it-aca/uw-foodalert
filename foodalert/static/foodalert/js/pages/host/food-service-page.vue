@@ -52,8 +52,10 @@
         </b-form-checkbox>
         <div class="invalid-feedback pt-2"
              :class="{'super-show': selected.length == 0 && validateOn}"
-              id="food-service-feedback">
-          Please select at least one option to move on.
+              id="food-service-feedback"
+              role="alert">
+          <span aria-hidden="true">Please select at least one option to move on.</span>
+          <span class="sr-only" role="presentation" unSelectable="on">Please select at least one option to move on. Please navigate back up to the checkboxes</span>
         </div>
       </b-form-group>
     </template>
@@ -93,7 +95,10 @@ export default {
   methods: {
     getNextPage() {
       if (this.selected.length == 0) {
-        this.validateOn = true
+        this.validateOn = false
+        setTimeout(function() {
+          this.validateOn = true
+        }.bind(this), 1);
         return
       }
       if (this.selected.includes('hasPermit') ||
@@ -116,7 +121,7 @@ export default {
           return val != document.querySelectorAll('input')[pos]._value
         })
         if (!this.validateOn) this.validateOn = true
-      }.bind(this), 100)
+      }.bind(this), 1)
     }
   },
   data() {
