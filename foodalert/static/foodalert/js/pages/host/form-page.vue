@@ -117,7 +117,7 @@
                 Please enter the at which this food service will be over.
               </b-form-invalid-feedback>
             </div>
-            
+
             <time-picker timeID="end-time" v-model="form.end_time"
                       startWithCurrent labelbyID="end-time-label" v-else>
             </time-picker>
@@ -152,7 +152,7 @@
         <h3 class="standard-label mb-2" id="bring-label">
           Do people need to bring food storage containers?
         </h3>
-        <b-container class="px-0">
+        <b-container class="px-0 mx-0">
           <b-form-radio-group id="bring-radio" aria-labelledby="bring-label"
             v-model="form.bring_container" stacked>
             <b-form-radio :value="true">
