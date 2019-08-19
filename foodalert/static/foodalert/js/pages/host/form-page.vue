@@ -12,10 +12,7 @@
           We will send your notification to Hungry Husky Subscribers.
         </p>
         <preview-box>
-          <span v-if="form.food_served">{{form.food_served}}</span>
-          <span v-else>Hot Indian buffet food</span> from
-          <span v-if="form.event">{{form.event}}</span>
-          <span v-else>FIUTS weekly club meeting</span>.
+          <span>{{concatinateMessage()}}</span>
           <br />
           <br />
           Quantity:
@@ -61,7 +58,7 @@
             class="standard-placeholder"
             size="lg" @blur="enableValidation.event=true">
           </b-form-input>
-          <b-form-invalid-feedback id="event-name-feedback">
+          <b-form-invalid-feedback id="event-name-feedback" role="alert">
             Please enter an event name.
           </b-form-invalid-feedback>
         </div>
@@ -81,7 +78,7 @@
                           class="standard-placeholder" size="lg"
                           @blur="enableValidation.food_served=true">
           </b-form-textarea>
-          <b-form-invalid-feedback id="food-description-feedback">
+          <b-form-invalid-feedback id="food-description-feedback" role="alert">
             Please enter a description of your food.
           </b-form-invalid-feedback>
         </div>
@@ -94,7 +91,7 @@
             placeholder="HUB 130" class="standard-placeholder" size="lg"
             @blur="enableValidation.location=true">
           </b-form-input>
-          <b-form-invalid-feedback id="location-feedback">
+          <b-form-invalid-feedback id="location-feedback" role="alert">
             Please enter the location of your event.
           </b-form-invalid-feedback>
         </div>
@@ -113,7 +110,7 @@
                 :state="inputValid('end_time')"
                 type="time" class="standard-placeholder" size="lg">
               </b-form-input>
-              <b-form-invalid-feedback id="end-time-feedback">
+              <b-form-invalid-feedback id="end-time-feedback" role="alert">
                 Please enter the at which this food service will be over.
               </b-form-invalid-feedback>
             </div>
@@ -167,10 +164,7 @@
 
         <h2 class="h2">Preview</h2>
         <preview-box>
-          <span v-if="form.food_served">{{form.food_served}}</span>
-          <span v-else>Hot Indian buffet food</span> from
-          <span v-if="form.event">{{form.event}}</span>
-          <span v-else>FIUTS weekly club meeting</span>.
+          <span>{{concatinateMessage()}}</span>
           <br />
           <br />
           Quantity:
@@ -269,6 +263,23 @@ export default {
       el.setAttribute('tabIndex', '-1');
       el.focus();
       el.removeAttribute('tabIndex');
+    },
+    concatinateMessage() {
+      let msg = "";
+      if(this.form.food_served){
+        msg += this.form.food_served;
+      } else {
+        msg += "Hot Indian buffet food"
+      }
+      msg += " from ";
+      if(this.form.event){
+        msg += this.form.event;
+      } else {
+        msg += "FIUTS weekly club meeting"
+      }
+      msg += "."
+
+      return msg
     },
     onSubmit(evt) {
       evt.preventDefault();
