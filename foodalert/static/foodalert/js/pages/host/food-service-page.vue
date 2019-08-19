@@ -10,17 +10,17 @@
       </p>
       <b-form-group>
         <b-form-checkbox v-model="selected" value="preparedByAuth"
-                         aria-describedby="food-service-feedback"
+                         aria-labelledby="catering-option"
                          @change="uncheckCheckbox(2)">
-          <span>
+          <span id="catering-option">
             My food was prepared by UW Housing &amp;
             Food Services or Bay Laurel Catering.
           </span>
         </b-form-checkbox>
         <b-form-checkbox v-model="selected" class="mt-2" value="hasPermit"
-                         aria-describedby="food-service-feedback"
+                         aria-labelledby="permit-option"
                          @change="uncheckCheckbox(2)">
-          <span>
+          <span id="permit-option">
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">
               <b-link herf="#" v-b-toggle.perm-info
@@ -44,9 +44,9 @@
           meet safety regulations and the food itself is safe for consumption.
         </collapse-text-box>
         <b-form-checkbox v-model="selected" value="none" class="mt-2"
-          aria-describedby="food-service-feedback"
+          aria-describedby="none-apply"
           @change="uncheckCheckbox(0); uncheckCheckbox(1)">
-          <span>
+          <span id="none-apply">
             None of these apply.
           </span>
         </b-form-checkbox>
@@ -107,7 +107,7 @@ export default {
           name: 'h-responsibilities',
           params: {backPage: 'h-food-service'},
         });
-      } else { // if (this.selected.includes('none'))
+      } else {
         this.$router.push({name: 'h-categories'});
       }
     },
