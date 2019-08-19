@@ -39,7 +39,7 @@
             </span>
           </span>
           <br />
-          <p v-if="form.bring_container">
+          <p class="mb-0" v-if="form.bring_container">
             <br />
             You must bring a food storage container.
           </p>
@@ -47,7 +47,7 @@
       </b-modal>
 
       <b-form @submit="onSubmit" v-if="show">
-        <p class="mb-0 pb-1">
+        <p class="mb-0">
           Now let's get some details about your food and event so
           you can send a notification.
         </p>
@@ -188,7 +188,7 @@
             </span>
           </span>
           <br />
-          <p v-if="form.bring_container">
+          <p v-if="form.bring_container" class="mb-0">
             <br />
             You must bring a food storage container.
           </p>
