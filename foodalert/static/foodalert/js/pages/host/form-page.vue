@@ -106,10 +106,17 @@
         </p>
         <b-row>
           <b-col sm=12 md=8>
-            <b-form-input id="end-time" aria-describedby="End time of the event"
-              v-model="form.end_time"
-              type="time" class="standard-placeholder" size="lg"
-              v-if="isMobile"></b-form-input>
+            <div v-if="isMobile">
+              <b-form-input id="end-time" aria-describedby="end-time-feedback"
+                v-model="form.end_time"
+                :state="inputValid('end_time')"
+                type="time" class="standard-placeholder" size="lg">
+              </b-form-input>
+              <b-form-invalid-feedback id="end-time-feedback">
+                Please enter the at which this food service will be over.
+              </b-form-invalid-feedback>
+            </div>
+            
             <time-picker timeID="end-time" v-model="form.end_time"
                       startWithCurrent labelbyID="end-time-label" v-else>
             </time-picker>
@@ -283,33 +290,19 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      if (this.isMobile) {
-        let hours = parseInt(this.form.end_time.substr(0, 2));
-        const mins = parseInt(this.form.end_time.substr(3, 2));
-        let timeExt = 'AM';
-        if (hours == 0) {
-          hours = 12;
-        } else if (hours == 12) {
-          timeExt = 'PM';
-        } else if (hours > 12) {
-          hours -= 12;
-          timeExt = 'PM';
-        }
-        return (hours < 10 ? '0' : '') + hours + ':' +
-          (mins < 10 ? '0' : '') + mins + ' ' + timeExt;
+      let hours = parseInt(this.form.end_time.substr(0, 2));
+      const mins = this.form.end_time.substr(3, 2);
+      let timeExt = 'AM';
+      if (hours == 0) {
+        hours = 12;
+      } else if (hours > 12) {
+        hours -= 12;
+        timeExt = 'PM';
       }
-      return this.form.end_time;
+      return hours + ':' + mins + ' ' + timeExt;
     },
     submitAndNext() {
       const splitTime = this.form.end_time.split(/\:/);
-      splitTime[0] = parseInt(splitTime[0]);
-      // Converting split time to 24 hours format
-      if (splitTime[1].split(' ').length != 1) {
-        splitTime[0] += (splitTime[1].split(' ')[1] == 'PM') ? 12 : 0;
-        splitTime[1] = splitTime[1].split(' ')[0];
-      }
-      splitTime[1] = parseInt(splitTime[0]);
-
       const datetime = new Date();
       datetime.setHours(splitTime[0], splitTime[1]);
       if (datetime < new Date()) {
@@ -392,7 +385,7 @@ export default {
         this.updateValidity(newState, 'event', checkFunction);
         this.updateValidity(newState, 'food_served', checkFunction);
         this.updateValidity(newState, 'end_time',
-          (t)=>/^\d{1,2}:\d{2} (AM|PM)$/.test(t));
+          (t)=>/^\d{1,2}:\d{2}$/.test(t));
       },
       deep: true,
     },
