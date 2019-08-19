@@ -54,7 +54,7 @@
                         aria-describedby="other-message-feedback"
                         required placeholder="We've moved to HUB 120"
                         class="mb-2 standard-placeholder" v-model="otherText"
-                        size="lg" @focus="selected='otherUpdate'"
+                        size="lg" @click="selected='otherUpdate'"
                         :state="inputValid()"
                         @blur="validationOn = true">
                       </b-form-textarea>
