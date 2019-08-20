@@ -1,20 +1,20 @@
 <template>
-    <b-input-group :id="timeID">
+    <b-input-group :id="timeID" :aria-labelledby="labelbyID">
         <b-form-select v-model="hourSelected"
+            aria-label="Enter hours"
             :options="hourOptions" size="lg"
-            @change="updateTime()"
-            :aria-labelledby="labelbyID">
+            @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="minuteSelected"
+            aria-label="Enter minutes"
             :options="minuteOptions" size="lg"
-            @change="updateTime()"
-            :aria-labelledby="labelbyID">
+            @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="periodSelected"
+            aria-label="Enter AM/PM"
             :options="periodOptions"
             size="lg"
-            @change="updateTime()"
-            :aria-labelledby="labelbyID">
+            @change="updateTime()">
         </b-form-select>
     </b-input-group>
 </template>

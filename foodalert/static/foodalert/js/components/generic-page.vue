@@ -1,30 +1,20 @@
 <template>
     <div class="page">
-        <div id="standard-notification">
-            <b-collapse id="notif-container" v-model="notificationState">
-                <b-container fluid class="text-center py-3" :style="notifStyle">
-                    <b-container>
-                        <b-row class="justify-content-center">
-                            <b-col md="8">
-                                <div class="h5 text-white pt-2">
-                                  <slot name="notification"></slot>
-                                </div>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-container>
-            </b-collapse>
-        </div>
-        <main class="page-content pb-2">
+        <div class="page-content pb-2">
             <slot name="banner"></slot>
             <div id="standard-container">
-              <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2">
-                <slot name="heading"></slot>
-              </h1>
-              <div id="standard-body"><slot name="body"></slot></div>
+              <header class="mt-md-5 mt-4 mb-2">
+                <alert-box v-if="notificationState">
+                  <slot name="notification"></slot>
+                </alert-box>
+                <h1 id="standard-heading" class="mt-4">
+                  <slot name="heading"></slot>
+                </h1>
+              </header>
+              <main id="standard-body"><slot name="body"></slot></main>
               <slot name="navigation"></slot>
             </div>
-        </main>
+        </div>
         <footer id="relative-footer" class="text-center">
           <a href="mailto:help@uw.edu?subject=Hungry Husky support">
             Contact support
@@ -35,42 +25,26 @@
 </template>
 
 <script>
+import AlertBox from '../components/alert-box.vue';
 export default {
+  components: {
+    'alert-box': AlertBox,
+  },
   props: {
     startWithNotification: {
       type: Boolean,
       default: false,
     },
-    timeoutOfNotification: {
-      type: Number,
-      default: 3000,
-    },
-    notificationColor: {
-      type: String,
-      default: '#0070C9',
-    },
   },
   data() {
     return {
       notificationState: false,
-      notifStyle: '',
     };
-  },
-  methods: {
-    showNotification: function() {
-      setTimeout(() => {
-        this.notificationState = true;
-      }, 250);
-      setTimeout(() => {
-        this.notificationState = false;
-      }, this.timeoutOfNotification);
-    },
   },
   beforeMount() {
     if (this.startWithNotification) {
-      this.showNotification();
+      this.notificationState = true;
     }
-    this.notifStyle = 'background-color: ' + this.notificationColor + ';';
   },
   mounted() {
     document.activeElement.blur();
@@ -133,5 +107,25 @@ export default {
       position: relative;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .foodalert .alert {
+      font-weight: 600;
+      font-size: 20px;
+      background-color: #3d9970;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 70px;
+      border-radius: 10px;
+    }
+
+    .foodalert .alert-dismissible .close{
+      height: 100%;
+      opacity: 1;
+    }
+
+    .foodalert .alert-dismissible .close:hover{
+      color: white;
     }
 </style>
