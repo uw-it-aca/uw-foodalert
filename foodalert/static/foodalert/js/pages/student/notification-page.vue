@@ -15,8 +15,7 @@
             <b-row>
               <b-col sm="9" cols="9">
                 <strong id="enable-label">Enable notifications</strong>
-                <p>Turn on to receive notifications.
-                  Please choose at least one.</p>
+                <p>Turn on to receive notifications.</p>
                 <div id="notif-status">
                   <div v-if=checked class="enabled">
                     Notifications are enabled</div>
