@@ -14,7 +14,7 @@
           <b-container @click="checked=(!checked && !disableNotif)">
             <b-row>
               <b-col sm="9" cols="9">
-                <strong>Enable notifications</strong>
+                <strong id="enable-label">Enable notifications</strong>
                 <p>Turn on to receive notifications.
                   Please choose at least one.</p>
                 <div id="notif-status">
@@ -28,6 +28,8 @@
                 <b-form-checkbox v-model="checked"
                   name="enable-switch" @click.native.prevent
                   class="float-right"
+                  aria-labelledby="enable-label"
+                  aria-describedby="notif-status"
                   :disabled="disableNotif" switch>
                 </b-form-checkbox>
               </b-col>
