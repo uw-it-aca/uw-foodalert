@@ -4,7 +4,8 @@
       Compose notification
     </template>
     <template #body>
-      <b-modal id="submitconfirmation" title="Confirmation" ok-title="Send"
+      <b-modal id="submitconfirmation" title="Confirmation" title-tag="h3"
+        ok-title="Send"
         cancel-variant="outline-secondary"
         @shown="focusMyElement"
         @ok="submitAndNext()">
