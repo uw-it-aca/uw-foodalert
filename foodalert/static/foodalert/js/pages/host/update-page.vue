@@ -58,7 +58,7 @@
                         :state="inputValid()"
                         @blur="validationOn = true">
                       </b-form-textarea>
-                      <b-form-invalid-feedback id="other-message-feedback">
+                      <b-form-invalid-feedback id="other-message-feedback" role="alert">
                         Please describe the update you want to send.
                       </b-form-invalid-feedback>
                   </span>

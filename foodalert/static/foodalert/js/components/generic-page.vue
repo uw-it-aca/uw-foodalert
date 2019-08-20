@@ -4,7 +4,7 @@
       <header class="md-5 mb-2">
         <slot name="banner"></slot>
         <div class="standard-container mt-4">
-          <alert-box v-if="notificationState">
+          <alert-box v-if="notificationState" aria-live="polite" role="alert">
             <slot name="notification"></slot>
           </alert-box>
           <h1 id="standard-heading" class="mt-4">

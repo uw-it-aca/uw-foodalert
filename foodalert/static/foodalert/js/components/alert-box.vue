@@ -1,7 +1,7 @@
 <template>
     <div class="alert-container">
         <div class="alert-image my-auto">
-            <img src="../../img/check 2.svg">
+            <img src="../../img/check 2.svg" alt="checkmark">
         </div>
         <div class="alert-text">
             <slot>
