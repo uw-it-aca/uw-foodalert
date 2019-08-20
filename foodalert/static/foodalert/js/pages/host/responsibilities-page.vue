@@ -83,6 +83,7 @@
                           size="lg"
                           type="submit"
                           block variant="primary"
+                          aria-label="Agree to the selected checkboxes"
                           @click="getNextPage()">
                             Agree
                         </b-button>
