@@ -1,26 +1,28 @@
 <template>
     <div class="page">
-        <div class="page-content pb-2">
-            <slot name="banner"></slot>
-            <div id="standard-container">
-              <header class="mt-md-5 mt-4 mb-2">
-                <alert-box v-if="notificationState">
-                  <slot name="notification"></slot>
-                </alert-box>
-                <h1 id="standard-heading" class="mt-4">
-                  <slot name="heading"></slot>
-                </h1>
-              </header>
-              <main id="standard-body"><slot name="body"></slot></main>
-              <slot name="navigation"></slot>
-            </div>
-        </div>
-        <footer id="relative-footer" class="text-center">
-          <a href="mailto:help@uw.edu?subject=Hungry Husky support">
-            Contact support
-          </a>
-          <p>© 2019 University of Washington</p>
-        </footer>
+      <div class="page-content pb-2">
+        <header class="md-5 mb-2">
+          <slot name="banner"></slot>
+          <div class="standard-container">
+            <alert-box v-if="notificationState">
+              <slot name="notification"></slot>
+            </alert-box>
+            <h1 id="standard-heading" class="mt-4">
+              <slot name="heading"></slot>
+            </h1>
+          </div>
+        </header>
+        <main id="standard-body" class="standard-container">
+          <slot name="body"></slot>
+          <slot name="navigation"></slot>
+        </main>
+      </div>
+      <footer id="relative-footer" class="text-center">
+        <a href="mailto:help@uw.edu?subject=Hungry Husky support">
+          Contact support
+        </a>
+        <p>© 2019 University of Washington</p>
+      </footer>
     </div>
 </template>
 
@@ -100,7 +102,7 @@ export default {
         -moz-osx-font-smoothing: grayscale;
     }
 
-    #standard-container {
+    .standard-container {
       max-width: 700px;
       padding-left: 24px;
       padding-right: 24px;
