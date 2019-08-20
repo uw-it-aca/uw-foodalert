@@ -98,6 +98,7 @@
 <script type="text/javascript">
 import GenericPage from '../../components/generic-page.vue';
 import PreviewBox from '../../components/custom-preview-box.vue';
+
 import Cookies from 'js-cookie';
 const axios = require('axios');
 
