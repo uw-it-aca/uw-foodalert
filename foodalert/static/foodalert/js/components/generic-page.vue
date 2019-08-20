@@ -3,7 +3,7 @@
     <div class="page-content pb-2">
       <header class="md-5 mb-2">
         <slot name="banner"></slot>
-        <div class="standard-container">
+        <div class="standard-container mt-4">
           <alert-box v-if="notificationState">
             <slot name="notification"></slot>
           </alert-box>

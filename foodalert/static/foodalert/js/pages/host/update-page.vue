@@ -52,7 +52,6 @@
                       <b-form-textarea
                         id="other-message"
                         ref="otherMessage"
-                        aria-describedby="other-message-feedback"
                         required placeholder="We've moved to HUB 120"
                         class="mb-2 standard-placeholder" v-model="otherText"
                         size="lg" @click="selected='otherUpdate'"
