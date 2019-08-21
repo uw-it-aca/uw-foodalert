@@ -64,7 +64,8 @@
         <b-row align-h="between">
           <b-col md="4" lg="3" order-md="2">
             <b-button class="mb-3" type="submit" block size="lg"
-              variant="primary" @click="getNextPage()">
+              variant="primary" @click="getNextPage()"
+              aria-label="Continue and submit selected checkboxes">
               Continue
             </b-button>
           </b-col>

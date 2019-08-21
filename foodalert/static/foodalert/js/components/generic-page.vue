@@ -1,76 +1,52 @@
 <template>
-    <div class="page">
-        <div id="standard-notification">
-            <b-collapse id="notif-container" v-model="notificationState">
-                <b-container fluid class="text-center py-3" :style="notifStyle">
-                    <b-container>
-                        <b-row class="justify-content-center">
-                            <b-col md="8">
-                                <div class="h5 text-white pt-2">
-                                  <slot name="notification"></slot>
-                                </div>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-container>
-            </b-collapse>
+  <div class="page">
+    <div class="page-content pb-2">
+      <header class="md-5 mb-2">
+        <slot name="banner"></slot>
+        <div class="standard-container mt-4">
+          <alert-box v-if="notificationState" aria-live="polite" role="alert">
+            <slot name="notification"></slot>
+          </alert-box>
+          <h1 id="standard-heading" class="mt-4">
+            <slot name="heading"></slot>
+          </h1>
         </div>
-        <main class="page-content pb-2">
-            <slot name="banner"></slot>
-            <div id="standard-container">
-              <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2">
-                <slot name="heading"></slot>
-              </h1>
-              <div id="standard-body"><slot name="body"></slot></div>
-              <slot name="navigation"></slot>
-            </div>
-        </main>
-        <footer id="relative-footer" class="text-center">
-          <a href="mailto:help@uw.edu?subject=Hungry Husky support">
-            Contact support
-          </a>
-          <p>© 2019 University of Washington</p>
-        </footer>
+      </header>
+      <main id="standard-body" class="standard-container">
+        <slot name="body"></slot>
+        <slot name="navigation"></slot>
+      </main>
     </div>
+    <footer id="relative-footer" class="text-center">
+      <a href="mailto:help@uw.edu?subject=Hungry Husky support">
+        Contact support
+      </a>
+      <p>© 2019 University of Washington</p>
+    </footer>
+  </div>
 </template>
 
 <script>
+import AlertBox from '../components/alert-box.vue';
 export default {
+  components: {
+    'alert-box': AlertBox,
+  },
   props: {
     startWithNotification: {
       type: Boolean,
       default: false,
     },
-    timeoutOfNotification: {
-      type: Number,
-      default: 3000,
-    },
-    notificationColor: {
-      type: String,
-      default: '#0070C9',
-    },
   },
   data() {
     return {
       notificationState: false,
-      notifStyle: '',
     };
-  },
-  methods: {
-    showNotification: function() {
-      setTimeout(() => {
-        this.notificationState = true;
-      }, 250);
-      setTimeout(() => {
-        this.notificationState = false;
-      }, this.timeoutOfNotification);
-    },
   },
   beforeMount() {
     if (this.startWithNotification) {
-      this.showNotification();
+      this.notificationState = true;
     }
-    this.notifStyle = 'background-color: ' + this.notificationColor + ';';
   },
   mounted() {
     document.activeElement.blur();
@@ -126,12 +102,32 @@ export default {
         -moz-osx-font-smoothing: grayscale;
     }
 
-    #standard-container {
+    .standard-container {
       max-width: 700px;
       padding-left: 24px;
       padding-right: 24px;
       position: relative;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .foodalert .alert {
+      font-weight: 600;
+      font-size: 20px;
+      background-color: #3d9970;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 70px;
+      border-radius: 10px;
+    }
+
+    .foodalert .alert-dismissible .close{
+      height: 100%;
+      opacity: 1;
+    }
+
+    .foodalert .alert-dismissible .close:hover{
+      color: white;
     }
 </style>

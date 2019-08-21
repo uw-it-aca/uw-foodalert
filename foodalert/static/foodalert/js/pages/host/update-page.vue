@@ -10,6 +10,7 @@
       </template>
       <template #body>
           <b-modal id="submitconfirmation" title="Confirmation"
+            title-tag="h3"
             ok-title="Send" cancel-variant="outline-secondary"
             @shown="focusMyElement"
             @ok="sendUpdate()">
@@ -50,14 +51,13 @@
                       <b-form-textarea
                         id="other-message"
                         ref="otherMessage"
-                        aria-describedby="other-message-feedback"
                         required placeholder="We've moved to HUB 120"
                         class="mb-2 standard-placeholder" v-model="otherText"
-                        size="lg" @focus="selected='otherUpdate'"
+                        size="lg" @click="selected='otherUpdate'"
                         :state="inputValid()"
                         @blur="validationOn = true">
                       </b-form-textarea>
-                      <b-form-invalid-feedback id="other-message-feedback">
+                      <b-form-invalid-feedback id="other-message-feedback" role="alert">
                         Please describe the update you want to send.
                       </b-form-invalid-feedback>
                   </span>
@@ -97,6 +97,7 @@
 <script type="text/javascript">
 import GenericPage from '../../components/generic-page.vue';
 import PreviewBox from '../../components/custom-preview-box.vue';
+
 import Cookies from 'js-cookie';
 const axios = require('axios');
 

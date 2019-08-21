@@ -12,14 +12,22 @@
 
 <script type="text/javascript">
 import WelcomePage from '../../components/welcome-page.vue';
+const axios = require('axios');
 export default {
   components: {
     'welcome-page': WelcomePage,
   },
-
   data() {
     return {
     };
+  },
+  beforeMount() {
+    axios.get('/subscription/?netID=' + this.netID)
+      .then((result) => {
+        if (result.data.length) {
+          this.$router.push({name: 's-notifications'});
+        }
+    }).catch((error) => this.showErrorPage(error.response, 's-welcome'));
   },
 };
 </script>

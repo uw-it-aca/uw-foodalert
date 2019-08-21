@@ -20,36 +20,38 @@
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                    class="opt_link_btn p-0" v-if="serverData.text == ''">
+                    class="opt_link_btn p-0" v-if="serverData.text == ''"
+                    :aria-label="'Add ' + type">
               Add
             </b-button>
             <b-button block href="#" v-b-toggle="accord_id" variant="link"
               class="opt_link_btn p-0" @click="updateMode=localData.verified"
-              v-else>
+              v-else :aria-label="'Edit ' + type">
               Edit
             </b-button>
           </div>
-            <div v-else>
-              <b-button block href="#" variant="link"
-                        class="opt_link_btn p-0"
-                        v-b-toggle="accord_id"
-                        @click="localData.text = ''; updateMode=false"
-                        v-if="serverData.text == '' || updateMode">
-                <b-spinner small class="mr-2 spinner-padding"
-                           :class="{'spinner-hide': !spinners.cancel.state}" >
-                </b-spinner>
-                <slot name="opt_cancel">Cancel</slot>
-              </b-button>
-              <b-button block href="#" variant="link"
-                        class="opt_link_btn p-0"
-                        @click="cancelUpdate($event, spinners.cancel)"
-                        v-else>
-                <b-spinner small class="mr-2 spinner-padding"
-                           :class="{'spinner-hide': !spinners.cancel.state}">
-                </b-spinner>
-                <slot name="opt_cancel">Cancel</slot>
-              </b-button>
-            </div>
+          <div v-else>
+            <b-button block href="#" variant="link"
+                      class="opt_link_btn p-0"
+                      v-b-toggle="accord_id"
+                      @click="localData.text = ''; updateMode=false"
+                      v-if="serverData.text == '' || updateMode"
+                      :aria-label="'Cancel ' + type">
+              <b-spinner small class="mr-2 spinner-padding"
+                          :class="{'spinner-hide': !spinners.cancel.state}" >
+              </b-spinner>
+              <slot name="opt_cancel">Cancel</slot>
+            </b-button>
+            <b-button block href="#" variant="link"
+                      class="opt_link_btn p-0"
+                      @click="cancelUpdate($event, spinners.cancel)"
+                      v-else :aria-label="'Cancel ' + type">
+              <b-spinner small class="mr-2 spinner-padding"
+                          :class="{'spinner-hide': !spinners.cancel.state}">
+              </b-spinner>
+              <slot name="opt_cancel">Cancel</slot>
+            </b-button>
+          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -62,10 +64,12 @@
               <b-card-text>
                 <b-form @submit.prevent="getNewState(spinners.verify)"
                         v-if="serverData.text == ''">
-                  <small class="form-text text-muted pt-0">{{label}}</small>
+                  <small :id="type+'-add-label'"
+                         class="form-text text-muted pt-0">{{label}}</small>
                   <b-form-group :description="description">
                     <b-form-input required :type="type" :formatter="formatter"
-                                  v-model="localData.text" width="300px">
+                                  v-model="localData.text" width="300px"
+                                  :aria-labelledby="type+'-add-label'">
                     </b-form-input>
                   </b-form-group>
                   <small class="form-text pt-2 pb-0 error-desp"
@@ -73,7 +77,8 @@
                           {{errorDesc}}
                   </small>
                   <b-button type="submit" variant="primary"
-                            class="float-right mt-2 px-3">
+                            class="float-right mt-2 px-3"
+                            :aria-label="'Verify ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                             :class="{'spinner-hide': !spinners.verify.state}">
                     </b-spinner>
@@ -102,11 +107,12 @@
                   <b-form @submit.prevent="getNewState(spinners.update)"
                           @reset.prevent="deleteData(spinners.delete)"
                           v-else>
-                    <small class="form-text text-muted">{{label}}</small>
+                    <small :id="type+'-update-label'" class="form-text text-muted">{{label}}</small>
                     <b-form-group :description="description">
                       <b-form-input required :type="type"
                                     :formatter="formatter"
                                     v-model="localData.text"
+                                    :aria-labelledby="type+'-update-label'"
                                     width="300px">
                       </b-form-input>
                     </b-form-group>
@@ -115,14 +121,16 @@
                             {{errorDesc}}
                     </small>
                     <b-button type="submit" variant="primary"
-                              class="float-right mt-2 ml-2 px-3">
+                              class="float-right mt-2 ml-2 px-3"
+                              :aria-label="'Update ' + type">
                       <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.update.state}">
                       </b-spinner>
                       Update
                     </b-button>
                     <b-button type="reset" variant="danger"
-                              class="float-right mt-2 ml-2 px-3">
+                              class="float-right mt-2 ml-2 px-3"
+                              :aria-label="'Delete ' + type">
                       <b-spinner small class="mr-2 spinner-padding"
                         :class="{'spinner-hide': !spinners.delete.state}">
                       </b-spinner>
