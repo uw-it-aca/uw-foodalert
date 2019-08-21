@@ -20,7 +20,8 @@
           <b-row align-h="between">
             <b-col md="4" lg="3" order-md="2">
               <b-button size="lg" class="mb-3" type="submit" block
-                variant="primary" :disabled="selected.length != 2">
+                variant="primary" :disabled="selected.length != 2"
+                aria-label="Agree to the selected checkboxes">
                   Agree
               </b-button>
             </b-col>

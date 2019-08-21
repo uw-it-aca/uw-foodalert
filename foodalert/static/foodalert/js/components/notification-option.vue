@@ -20,12 +20,13 @@
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                    class="opt_link_btn p-0" v-if="serverData.text == ''">
+                    class="opt_link_btn p-0" v-if="serverData.text == ''"
+                    :aria-label="'Add ' + type">
               Add
             </b-button>
             <b-button block href="#" v-b-toggle="accord_id" variant="link"
               class="opt_link_btn p-0" @click="updateMode=localData.verified"
-              v-else>
+              v-else :aria-label="'Edit ' + type">
               Edit
             </b-button>
           </div>
@@ -34,7 +35,8 @@
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
                       @click="localData.text = ''; updateMode=false"
-                      v-if="serverData.text == '' || updateMode">
+                      v-if="serverData.text == '' || updateMode"
+                      :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}" >
               </b-spinner>
@@ -43,7 +45,7 @@
             <b-button block href="#" variant="link"
                       class="opt_link_btn p-0"
                       @click="cancelUpdate($event, spinners.cancel)"
-                      v-else>
+                      v-else :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}">
               </b-spinner>
@@ -75,7 +77,8 @@
                           {{errorDesc}}
                   </small>
                   <b-button type="submit" variant="primary"
-                            class="float-right mt-2 px-3">
+                            class="float-right mt-2 px-3"
+                            :aria-label="'Verify ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                             :class="{'spinner-hide': !spinners.verify.state}">
                     </b-spinner>
@@ -118,14 +121,16 @@
                             {{errorDesc}}
                     </small>
                     <b-button type="submit" variant="primary"
-                              class="float-right mt-2 ml-2 px-3">
+                              class="float-right mt-2 ml-2 px-3"
+                              :aria-label="'Update ' + type">
                       <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.update.state}">
                       </b-spinner>
                       Update
                     </b-button>
                     <b-button type="reset" variant="danger"
-                              class="float-right mt-2 ml-2 px-3">
+                              class="float-right mt-2 ml-2 px-3"
+                              :aria-label="'Delete ' + type">
                       <b-spinner small class="mr-2 spinner-padding"
                         :class="{'spinner-hide': !spinners.delete.state}">
                       </b-spinner>
