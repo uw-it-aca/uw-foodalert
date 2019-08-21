@@ -2,12 +2,12 @@
   <div class="page">
     <div class="page-content pb-2">
       <header class="md-5 mb-2">
+        <alert-box v-if="notificationState" aria-live="polite" role="alert">
+          <slot name="notification"></slot>
+        </alert-box>
         <slot name="banner"></slot>
-        <div class="standard-container mt-4">
-          <alert-box v-if="notificationState" aria-live="polite" role="alert">
-            <slot name="notification"></slot>
-          </alert-box>
-          <h1 id="standard-heading" class="mt-4">
+        <div class="standard-container">
+          <h1 id="standard-heading" class="mt-3 pt-3">
             <slot name="heading"></slot>
           </h1>
         </div>
