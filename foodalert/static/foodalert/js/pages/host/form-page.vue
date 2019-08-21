@@ -133,7 +133,7 @@
           knowledge.
         </p>
 
-        <b-container class="px-0">
+        <b-container class="px-0 mx-0">
           <b-form-checkbox-group id="allergens-checkbox"
             v-model="form.allergens" aria-labelledby="allergen-label"
             aria-describedby="allergen-clarification">
