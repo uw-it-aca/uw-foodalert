@@ -1,8 +1,5 @@
 <template>
     <div class="alert-container">
-        <div class="alert-image my-auto">
-            <img src="../../img/check 2.svg" alt="checkmark">
-        </div>
         <div class="alert-text">
             <slot>
             </slot>
@@ -13,15 +10,17 @@
 <style scoped>
     .alert-container {
         width: 100%;
-        border: 2px solid #AAAAAA;
-        /*border-radius: 0 10px 10px 0;*/
+        /*border: 2px solid #AAAAAA;
+        border-radius: 0 10px 10px 0;*/
         padding: 16px;
         display: flex;
         align-items: center;
         /*border-left: 10px solid #0070c9;
-        background: #f1f1f1;*/
-        border-radius: 10px;
-        font-size: 16px;
+        background: #f1f1f1;
+        border-radius: 10px;*/
+        background-color: #0070c9;
+        color: white;
+        font-size: 18px;
         font-weight: 400;
     }
 
@@ -39,6 +38,6 @@
     }
 
     .alert-container .alert-text {
-
+        margin: 0 auto;
     }
 </style>
