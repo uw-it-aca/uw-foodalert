@@ -3,15 +3,9 @@
       <template #banner>
         <b-container fluid class="pt-4 pl-4 pb-4 d-flex" >
 
-          <b-img class="pr-2" :src="require('../../img/uw-logo-p.png')"
-                 alt="UW Block Logo" height="24">
+          <b-img class="pr-2" :src="require('../../img/food-alert-logo.svg')"
+                 alt="UW Food Alert Logo" height="24">
           </b-img>
-
-              <b-img :src="require('../../img/logo-text.svg')"
-                     alt="Food Alert text logo"
-                     height="20" style="align-self: center;">
-              </b-img>
-
         </b-container>
       </template>
       <template #heading>
