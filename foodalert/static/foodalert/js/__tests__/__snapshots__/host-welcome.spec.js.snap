@@ -6,85 +6,41 @@ exports[`Welcome Page renders correctly 1`] = `
     class="page"
   >
     <div
-      id="standard-notification"
-    >
-      <div
-        class="collapse"
-        id="notif-container"
-        style="display: none;"
-      >
-        <div
-          class="text-center py-3 container-fluid"
-          style="background-color: rgb(0, 112, 201);"
-        >
-          <div
-            class="container"
-          >
-            <div
-              class="row justify-content-center"
-            >
-              <div
-                class="col-md-8"
-              >
-                <div
-                  class="h5 text-white pt-2"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-     
-    <main
       class="page-content pb-2"
     >
-      <div
-        class="pt-4 pl-4 pb-4 d-flex container-fluid"
+      <header
+        class="md-5 mb-2"
       >
-        <img
-          alt="UW Block Logo"
-          class="pr-2"
-          height="24"
-          src="test-file-stub"
-        />
-         
-        <img
-          alt="Food Alert text logo"
-          class=""
-          height="20"
-          src="test-file-stub"
-          style="align-self: center;"
-        />
-      </div>
-       
-      <div
-        id="standard-container"
-      >
-        <h1
-          class="pt-md-5 pt-3 pb-2"
-          id="standard-heading"
-        >
-          
-    Welcome
-  
-        </h1>
+        <!---->
          
         <div
-          id="standard-body"
+          class="standard-container mt-md-5 mt-4"
         >
-          <p>
-            Hungry Husky lets you share your leftover event food with those who
+          <h1
+            id="standard-heading"
+          >
+            
+    Welcome
+  
+          </h1>
+        </div>
+      </header>
+       
+      <main
+        class="standard-container mt-3"
+        id="standard-body"
+      >
+        <p>
+          UW Food Alert lets you share your leftover event food with those who
         need it most in the UW community. With your help, we can help reduce
         food insecurity among students and others—and reduce food waste at
         the same time.
-          </p>
-           
-          <p>
-            We’ll guide you through all the steps needed to share your food
+        </p>
+         
+        <p>
+          We’ll guide you through all the steps needed to share your food
         safely and responsibly.
-          </p>
-        </div>
+        </p>
          
         <div
           class="mt-5"
@@ -93,15 +49,15 @@ exports[`Welcome Page renders correctly 1`] = `
             class="row justify-content-between"
           >
             <div
-              class="col-md-4 col-lg-4 order-md-2"
+              class="col-md-3 col-lg-3 order-md-2"
             >
               <button
-                class="btn mb-3 btn-primary btn-lg btn-block"
+                class="btn mb-3 button-text btn-primary btn-lg btn-block"
                 style="white-space: nowrap;"
                 type="submit"
               >
                 
-                      Let's get started
+                      Let's go
           
               </button>
             </div>
@@ -111,8 +67,8 @@ exports[`Welcome Page renders correctly 1`] = `
             />
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
      
     <footer
       class="text-center"
@@ -122,8 +78,8 @@ exports[`Welcome Page renders correctly 1`] = `
         href="mailto:help@uw.edu?subject=Hungry Husky support"
       >
         
-        Contact support
-      
+      Contact support
+    
       </a>
        
       <p>

@@ -5,220 +5,192 @@ exports[`Food Categories Page renders correctly 1`] = `
   class="page"
 >
   <div
-    id="standard-notification"
-  >
-    <div
-      class="collapse"
-      id="notif-container"
-      style="display: none;"
-    >
-      <div
-        class="text-center py-3 container-fluid"
-        style="background-color: rgb(0, 112, 201);"
-      >
-        <div
-          class="container"
-        >
-          <div
-            class="row justify-content-center"
-          >
-            <div
-              class="col-md-8"
-            >
-              <div
-                class="h5 text-white pt-2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <main
     class="page-content pb-2"
   >
-     
-    <div
-      id="standard-container"
+    <header
+      class="md-5 mb-2"
     >
-      <h1
-        class="pt-md-5 pt-3 pb-2"
-        id="standard-heading"
-      >
-        
-        Tell us more about your food
-    
-      </h1>
+      <!---->
        
       <div
-        id="standard-body"
+        class="standard-container mt-md-5 mt-4"
       >
-        <p>
+        <h1
+          id="standard-heading"
+        >
           
+        Tell us more about your food
+    
+        </h1>
+      </div>
+    </header>
+     
+    <main
+      class="standard-container mt-3"
+      id="standard-body"
+    >
+      <p>
+        
           The following will help determine whether your food can be
           shared with the public.
         
-        </p>
-         
-        <fieldset
-          class="form-group"
+      </p>
+       
+      <fieldset
+        class="form-group"
+      >
+        <!---->
+        <div
+          role="group"
+          tabindex="-1"
         >
-          <!---->
           <div
-            role="group"
-            tabindex="-1"
+            class="custom-control custom-checkbox"
           >
-            <div
-              class="custom-control custom-checkbox"
+            <input
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="non-perishable"
+            />
+            <label
+              class="custom-control-label"
             >
-              <input
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="non-perishable"
-              />
-              <label
-                class="custom-control-label"
-              >
-                <span>
-                  
+              <span>
+                
                     My food is non-perishable.
                     
-                  <a
-                    aria-controls="non-perishable"
-                    aria-expanded="false"
-                    class=""
-                    herf="#"
-                    href="#"
-                    role="button"
-                    target="_self"
-                  >
-                    
+                <a
+                  aria-controls="non-perishable"
+                  aria-expanded="false"
+                  class=""
+                  herf="#"
+                  href="#"
+                  role="button"
+                  target="_self"
+                >
+                  
                       Examples
                     
-                  </a>
-                </span>
-              </label>
-            </div>
-             
+                </a>
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="custom-collapse collapse-text-box collapse"
+            id="non-perishable"
+            style="display: none;"
+          >
             <div
-              class="custom-collapse collapse-text-box collapse"
-              id="non-perishable"
-              style="display: none;"
+              class="custom-text-box"
             >
-              <div
-                class="custom-text-box"
-              >
-                
+              
               Candy, beverages (pasteurized, canned, or bottled),
               chips, dips.
             
-              </div>
             </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="pre-packaged"
+            />
+            <label
+              class="custom-control-label"
             >
-              <input
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="pre-packaged"
-              />
-              <label
-                class="custom-control-label"
-              >
-                <span>
-                  
+              <span>
+                
                     My food was commercially pre-packaged.
                     
-                  <!---->
-                   
-                  <a
-                    aria-controls="pre-packaged"
-                    aria-expanded="false"
-                    class=""
-                    herf="#"
-                    href="#"
-                    role="button"
-                    target="_self"
-                  >
-                    
+                <a
+                  aria-controls="pre-packaged"
+                  aria-expanded="false"
+                  class=""
+                  herf="#"
+                  href="#"
+                  role="button"
+                  target="_self"
+                >
+                  
                       Examples
                     
-                  </a>
-                </span>
-              </label>
-            </div>
-             
+                </a>
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="custom-collapse collapse-text-box collapse"
+            id="pre-packaged"
+            style="display: none;"
+          >
             <div
-              class="custom-collapse collapse-text-box collapse"
-              id="pre-packaged"
-              style="display: none;"
+              class="custom-text-box"
             >
-              <div
-                class="custom-text-box"
-              >
-                
+              
                 Wrapped or boxed baked goods (cakes, pies),
                 chips, store-bought ice cream.
             
-              </div>
             </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
-            >
-              <input
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="at-home"
-              />
-              <label
-                class="custom-control-label"
-              >
-                
-                My food was prepared at home.
-            
-              </label>
-            </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
-            >
-              <input
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="none"
-              />
-              <label
-                class="custom-control-label"
-              >
-                <span>
-                  
-                    None of the above.
-                
-                </span>
-              </label>
-            </div>
-             
-            <div
-              class="invalid-feedback pt-2"
-              id="food-service-feedback"
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="at-home"
+            />
+            <label
+              class="custom-control-label"
             >
               
+                My food was prepared at home.
+            
+            </label>
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="none"
+            />
+            <label
+              class="custom-control-label"
+            >
+              <span>
+                
+                    None of the above.
+                
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="invalid-feedback pt-2"
+            id="food-service-feedback"
+          >
+            
               Please select at least one option to move on.
             
-            </div>
-            <!---->
-            <!---->
-            <!---->
           </div>
-        </fieldset>
-      </div>
+          <!---->
+          <!---->
+          <!---->
+        </div>
+      </fieldset>
        
       <div
         class="mt-5"
@@ -230,7 +202,7 @@ exports[`Food Categories Page renders correctly 1`] = `
             class="col-md-4 col-lg-3 order-md-2"
           >
             <button
-              class="btn mb-3 btn-primary btn-lg btn-block"
+              class="btn mb-3 button-text btn-primary btn-lg btn-block"
               type="submit"
             >
               
@@ -243,7 +215,7 @@ exports[`Food Categories Page renders correctly 1`] = `
             class="col-md-4 col-lg-3 order-md-1"
           >
             <button
-              class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+              class="btn hh-back-button button-text btn-outline-secondary btn-lg btn-block"
               type="submit"
             >
               
@@ -253,8 +225,8 @@ exports[`Food Categories Page renders correctly 1`] = `
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
    
   <footer
     class="text-center"
@@ -264,8 +236,8 @@ exports[`Food Categories Page renders correctly 1`] = `
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
       
-        Contact support
-      
+      Contact support
+    
     </a>
      
     <p>
