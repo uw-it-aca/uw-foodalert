@@ -5,14 +5,13 @@
         <alert-box v-if="notificationState" aria-live="polite" role="alert">
           <slot name="notification"></slot>
         </alert-box>
-        <slot name="banner"></slot>
-        <div class="standard-container">
-          <h1 id="standard-heading" class="mt-3 pt-3">
+        <div class="standard-container mt-md-5 mt-4">
+          <h1 id="standard-heading">
             <slot name="heading"></slot>
           </h1>
         </div>
       </header>
-      <main id="standard-body" class="standard-container">
+      <main id="standard-body" class="standard-container mt-3">
         <slot name="body"></slot>
         <slot name="navigation"></slot>
       </main>

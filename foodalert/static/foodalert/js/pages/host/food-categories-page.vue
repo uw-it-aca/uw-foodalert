@@ -80,7 +80,7 @@
                <b-row align-h="between">
                  <b-col md="4" lg="3" order-md="2">
                    <b-button
-                    class="mb-3"
+                    class="mb-3 button-text"
                     type="submit"
                     block size="lg"
                     variant="primary"
@@ -90,7 +90,7 @@
                  </b-col>
                  <b-col md="4" lg="3" order-md="1">
                     <b-button
-                      class="hh-back-button"
+                      class="hh-back-button button-text"
                       type="submit" block size="lg"
                       variant="outline-secondary"
                       @click="getBackPage()">

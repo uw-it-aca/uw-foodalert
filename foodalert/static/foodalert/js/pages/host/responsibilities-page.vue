@@ -37,7 +37,7 @@
               <collapse-text-box bid="cond1-info">
                 You are responsible for food safety under the approval of
                 the Temporary Food Permit. This same level of responsibility
-                applies when using the Hungry Husky App.
+                applies when using the UW Food Alert App.
               </collapse-text-box>
               <b-form-checkbox
                 v-model="selected"
@@ -77,9 +77,9 @@
               </div>
               <div class="mt-5">
                   <b-row align-h="between">
-                      <b-col md="4" lg="3" order-md="2">
+                      <b-col md="3" lg="3" order-md="2">
                         <b-button
-                          class="mb-3"
+                          class="mb-3 button-text"
                           size="lg"
                           type="submit"
                           block variant="primary"
@@ -88,9 +88,9 @@
                             Agree
                         </b-button>
                       </b-col>
-                      <b-col md="4" lg="3" order-md="1">
+                      <b-col md="3" lg="3" order-md="1">
                         <b-button
-                          class="hh-back-button"
+                          class="hh-back-button button-text"
                           size="lg" type="submit"
                           block variant="outline-secondary"
                           @click="getBackPage()">

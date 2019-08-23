@@ -10,7 +10,7 @@
         @shown="focusMyElement"
         @ok="submitAndNext()">
         <p>
-          We will send your notification to Hungry Husky Subscribers.
+          We will send your notification to UW Food Alert Subscribers.
         </p>
         <preview-box>
           <span>{{concatinateMessage()}}</span>
@@ -199,11 +199,9 @@
                 </b-card!-->
 
         <div class="mt-5">
-          <b-row align-h="between">
-            <b-col md="5" lg="4" order-md="2">
-            </b-col>
-            <b-col md="5" lg="4" order-md="2">
-              <b-button class="mb-3" type="submit" block variant="primary"
+          <b-row align-h="end">
+            <b-col md="3" lg="3">
+              <b-button class="mb-3 button-text" type="submit" block variant="primary"
                 size="lg" style="white-space: nowrap;">
                 Submit
               </b-button>

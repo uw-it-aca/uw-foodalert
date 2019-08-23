@@ -15,7 +15,7 @@
             @shown="focusMyElement"
             @ok="sendUpdate()">
               <p >
-                We will send your update to Hungry Husky Subscribers.
+                We will send your update to UW Food Alert Subscribers.
               </p>
               <preview-box>
                   Update:
@@ -80,8 +80,8 @@
       <template #navigation>
           <div class="mt-5">
               <b-row align-h="end">
-                  <b-col md="5" lg="4" order-md="2">
-                    <b-button class="mb-3" type="submit"
+                  <b-col md="3" lg="3">
+                    <b-button class="mb-3 button-text" type="submit"
                       block variant="primary" style="white-space: nowrap;"
                       size="lg"
                       @click="preSendUpdate()">

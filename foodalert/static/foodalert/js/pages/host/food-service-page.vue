@@ -62,15 +62,15 @@
     <template #navigation>
       <div class="mt-5">
         <b-row align-h="between">
-          <b-col md="4" lg="3" order-md="2">
-            <b-button class="mb-3" type="submit" block size="lg"
+          <b-col md="3" lg="3" order-md="2">
+            <b-button class="mb-3 button-text" type="submit" block size="lg"
               variant="primary" @click="getNextPage()"
               aria-label="Continue and submit selected checkboxes">
               Continue
             </b-button>
           </b-col>
-          <b-col md="4" lg="3" order-md="1">
-            <b-button class="hh-back-button" type="submit" block
+          <b-col md="3" lg="3" order-md="1">
+            <b-button class="hh-back-button button-text" type="submit" block
               size="lg" variant="outline-secondary"
               @click="getBackPage()">Back</b-button>
           </b-col>

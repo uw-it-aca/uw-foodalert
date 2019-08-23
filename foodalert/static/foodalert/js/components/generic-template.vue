@@ -1,5 +1,16 @@
 <template>
     <div class="foodalert">
+      <div style="border-bottom: 1px solid #ebebeb;">
+        <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
+          <b-navbar-brand class="pl-2" href="#">
+            <img :src="require('../../img/food-alert-logo.svg')"
+                   alt="UW Food Alert Logo" height="24">
+          </b-navbar-brand>
+          <b-navbar-nav class="ml-auto">
+            <b-button variant="link" style="font-size: 14px; font-weight: 300;" type="submit">Sign out</b-button>
+          </b-navbar-nav>
+        </b-navbar>
+      </div>
         <router-view>
         </router-view>
         <!-- To load the images before they need to be displayed
@@ -181,6 +192,14 @@ export default {
 
     .foodalert .super-hide {
         display: none !important;
+    }
+
+    .foodalert .button-text {
+      font-size: 16px;
+      font-weight: 700;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
 </style>
