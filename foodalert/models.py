@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.crypto import get_random_string
 # Create your models here.
 
 
@@ -26,10 +27,25 @@ class Subscription(models.Model):
     sms_number = PhoneNumberField(blank=True)
     number_verified = models.BooleanField(default=False)
     notif_on = models.BooleanField(default=False)
+    # make sure it is not writable
+    email_code = models.CharField(max_length=20, blank=True)
+
+    __original_email = None
 
     @property
     def netid(self):
         return self.user.username
+
+    def __init__(self, *args, **kwargs):
+        super(Subscription, self).__init__(*args, **kwargs)
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        if self.email != self.__original_email and self.email != "":
+            #create random email code
+            unique_code = get_random_string(length=20)
+            self.email_code = unique_code
+        super(Subscription, self).save()
+        self.__original_email = self.email
 
 
 class Update(models.Model):

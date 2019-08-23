@@ -112,6 +112,42 @@ class SubscriptionTest(TestCase):
         self.assertEqual(self.user.username, model.netid)
         self.assertEqual(email, model.email)
         self.assertEqual(sms, model.sms_number)
+        if(email != ""):
+            self.assertNotEqual("", model.email_code)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_post_and_update_email(self, email=None, sms=None):
+        """
+        Tests that unique email code is created upon post request 
+        with valid email value and changed if the email field is
+        updated with a new value
+        """
+        valid_payload = {
+            "email": email,
+            "sms_number": sms,
+        }
+        response = self.client.post('/subscription/', valid_payload)
+        self.assertEqual(201, response.status_code)
+        model = Subscription.objects.get(user=self.user)
+        if(email != ""):
+            self.assertNotEqual("", model.email_code)
+        else:
+            self.assertEqual("", model.email_code)
+        
+        # update email with a patch request
+        patch_payload = {
+            "email": "updatedEmail@gmail.com",
+        }
+        p_id = model.id
+        p_response = self.client.patch('/subscription/{}/'.format(p_id),
+                                        data=json.dumps(patch_payload),
+                                        content_type='application/json')
+        p_model = Subscription.objects.get(user=self.user)
+        # after update, email_code should be different
+        self.assertNotEqual("", p_model.email_code)
+        self.assertNotEqual(model.email_code, p_model.email_code)
+
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
