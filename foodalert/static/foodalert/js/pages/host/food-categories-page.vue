@@ -16,13 +16,13 @@
                     <span>
                         My food is non-perishable.
                         <div v-if="isIOSDevice">
-                          <b-link herf="#" v-b-toggle.non-perishable>
+                          <button class="btn btn-link p-0" role="link" v-b-toggle.non-perishable>
                             Examples
-                          </b-link>
+                          </button>
                         </div>
-                        <b-link herf="#" v-b-toggle.non-perishable v-else>
+                        <button class="btn btn-link p-0" role="link" v-b-toggle.non-perishable v-else>
                           Examples
-                        </b-link>
+                        </button>
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="non-perishable">
@@ -37,13 +37,13 @@
                     <span>
                         My food was commercially pre-packaged.
                         <div v-if="isIOSDevice">
-                          <b-link herf="#" v-b-toggle.pre-packaged>
+                          <button class="btn btn-link p-0" role="link" v-b-toggle.pre-packaged>
                             Examples
-                          </b-link>
+                          </button>
                         </div>
-                        <b-link herf="#" v-b-toggle.pre-packaged v-else>
+                        <button class="btn btn-link p-0" role="link" v-b-toggle.pre-packaged v-else>
                           Examples
-                        </b-link>
+                        </button>
                     </span>
                 </b-form-checkbox>
                 <collapse-text-box bid="pre-packaged">
