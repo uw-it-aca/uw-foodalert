@@ -48,12 +48,24 @@ export default {
     }
   },
   mounted() {
-    document.activeElement.blur();
-    let newFocus = document.querySelector('h1');
-    newFocus.setAttribute("tabindex", "-1");
-    newFocus.style.outline = "none";
-    newFocus.focus();
-    newFocus.removeAttribute("tabindex")
+    this.$nextTick(
+      function() {
+        document.activeElement.blur();
+        let newFocus = document.querySelector('h1');
+        newFocus.setAttribute("tabindex", "-1");
+        newFocus.style.outline = "none";
+        newFocus.focus();
+        newFocus.removeAttribute("tabindex")
+
+        window.addEventListener("resize", this.updateHeightOfPage)
+        this.updateHeightOfPage()
+      }
+    )
+  },
+  methods: {
+    updateHeightOfPage() {
+      document.querySelector(".page").style.minHeight = (window.innerHeight - 65) + "px";
+    }
   },
 };
 </script>
@@ -89,7 +101,7 @@ export default {
 
     .page {
         display: flex;
-        min-height: 100vh;
+        min-height: calc(100vh - 65px);
         flex-direction: column;
         align-content: space-between;
     }
