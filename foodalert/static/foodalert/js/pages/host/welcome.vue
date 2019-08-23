@@ -2,7 +2,7 @@
 <div>
   <welcome-page nextPageName="h-food-service">
     <template #paragraph>
-      <p>Hungry Husky lets you share your leftover event food with those who
+      <p>UW Food Alert lets you share your leftover event food with those who
         need it most in the UW community. With your help, we can help reduce
         food insecurity among students and others—and reduce food waste at
         the same time.</p>

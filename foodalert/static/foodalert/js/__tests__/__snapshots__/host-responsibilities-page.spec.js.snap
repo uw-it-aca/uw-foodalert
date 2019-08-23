@@ -5,239 +5,214 @@ exports[`Food Categories Page renders correctly 1`] = `
   class="page"
 >
   <div
-    id="standard-notification"
-  >
-    <div
-      class="collapse"
-      id="notif-container"
-      style="display: none;"
-    >
-      <div
-        class="text-center py-3 container-fluid"
-        style="background-color: rgb(0, 112, 201);"
-      >
-        <div
-          class="container"
-        >
-          <div
-            class="row justify-content-center"
-          >
-            <div
-              class="col-md-8"
-            >
-              <div
-                class="h5 text-white pt-2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <main
     class="page-content pb-2"
   >
-     
-    <div
-      id="standard-container"
+    <header
+      class="md-5 mb-2"
     >
-      <h1
-        class="pt-md-5 pt-3 pb-2"
-        id="standard-heading"
-      >
-        
-        Responsibilities
-    
-      </h1>
+      <!---->
        
       <div
-        id="standard-body"
+        class="standard-container mt-md-5 mt-4"
       >
-        <p>
+        <h1
+          id="standard-heading"
+        >
           
+        Responsibilities
+    
+        </h1>
+      </div>
+    </header>
+     
+    <main
+      class="standard-container mt-3"
+      id="standard-body"
+    >
+      <p>
+        
           To ensure the safety of the food being shared, we ask that you
           to agree to all of the following requirements.
         
-        </p>
-         
-        <fieldset
-          class="form-group"
+      </p>
+       
+      <fieldset
+        class="form-group"
+      >
+        <!---->
+        <div
+          role="group"
+          tabindex="-1"
         >
-          <!---->
           <div
-            role="group"
-            tabindex="-1"
+            class="mt-2 custom-control custom-checkbox"
           >
-            <div
-              class="mt-2 custom-control custom-checkbox"
+            <input
+              aria-describedby="condition-feedback"
+              autocomplete="off"
+              class="custom-control-input"
+              id="cond1"
+              type="checkbox"
+              value="cond1"
+            />
+            <label
+              class="custom-control-label"
+              for="cond1"
             >
-              <input
-                aria-describedby="condition-feedback"
-                autocomplete="off"
-                class="custom-control-input"
-                id="cond1"
-                type="checkbox"
-                value="cond1"
-              />
-              <label
-                class="custom-control-label"
-                for="cond1"
-              >
+              <span>
                 <span>
-                  <span>
-                    
+                  
                 My office is responsible for the safety of the food I am
                 sharing.
               
-                  </span>
-                   
-                  <a
-                    aria-controls="cond1-info"
-                    aria-expanded="false"
-                    aria-label="Learn more about safety responsibilities"
-                    class=""
-                    herf="#"
-                    href="#"
-                    role="button"
-                    target="_self"
-                  >
-                    
+                </span>
+                 
+                <a
+                  aria-controls="cond1-info"
+                  aria-expanded="false"
+                  aria-label="Learn more about safety responsibilities"
+                  class=""
+                  herf="#"
+                  href="#"
+                  role="button"
+                  target="_self"
+                >
+                  
                 Learn more
               
-                  </a>
-                </span>
-              </label>
-            </div>
-             
+                </a>
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="custom-collapse collapse-text-box collapse"
+            id="cond1-info"
+            style="display: none;"
+          >
             <div
-              class="custom-collapse collapse-text-box collapse"
-              id="cond1-info"
-              style="display: none;"
+              class="custom-text-box"
             >
-              <div
-                class="custom-text-box"
-              >
-                
+              
             You are responsible for food safety under the approval of
             the Temporary Food Permit. This same level of responsibility
-            applies when using the Hungry Husky App.
+            applies when using the UW Food Alert App.
           
-              </div>
             </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              aria-describedby="condition-feedback"
+              autocomplete="off"
+              class="custom-control-input"
+              id="cond2"
+              type="checkbox"
+              value="cond2"
+            />
+            <label
+              class="custom-control-label"
+              for="cond2"
             >
-              <input
-                aria-describedby="condition-feedback"
-                autocomplete="off"
-                class="custom-control-input"
-                id="cond2"
-                type="checkbox"
-                value="cond2"
-              />
-              <label
-                class="custom-control-label"
-                for="cond2"
-              >
+              <span>
                 <span>
-                  <span>
-                    
+                  
                 Potentially hazardous food must be kept at appropriate
                 temperatures and have been sitting out at room temperature
                 for no more than 
-                    <strong>
-                      four hours
-                    </strong>
-                    .
+                  <strong>
+                    four hours
+                  </strong>
+                  .
               
-                  </span>
-                   
-                  <a
-                    aria-controls="cond2-info"
-                    aria-expanded="false"
-                    aria-label="Learn more about potentially hazardous food"
-                    class=""
-                    herf="#"
-                    href="#"
-                    role="button"
-                    target="_self"
-                  >
-                    
+                </span>
+                 
+                <a
+                  aria-controls="cond2-info"
+                  aria-expanded="false"
+                  aria-label="Learn more about potentially hazardous food"
+                  class=""
+                  herf="#"
+                  href="#"
+                  role="button"
+                  target="_self"
+                >
+                  
                 Learn more
               
-                  </a>
-                </span>
-              </label>
-            </div>
-             
+                </a>
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="custom-collapse collapse-text-box collapse"
+            id="cond2-info"
+            style="display: none;"
+          >
             <div
-              class="custom-collapse collapse-text-box collapse"
-              id="cond2-info"
-              style="display: none;"
-            >
-              <div
-                class="custom-text-box"
-              >
-                
-              Information is missing
-          
-              </div>
-            </div>
-             
-            <div
-              class="invalid-feedback pt-2"
-              id="condition-feedback"
+              class="custom-text-box"
             >
               
+              Information is missing
+          
+            </div>
+          </div>
+           
+          <div
+            class="invalid-feedback pt-2"
+            id="condition-feedback"
+          >
+            
             In order to use the service please agree to above
             responsibilities.
           
-            </div>
-             
+          </div>
+           
+          <div
+            class="mt-5"
+          >
             <div
-              class="mt-5"
+              class="row justify-content-between"
             >
               <div
-                class="row justify-content-between"
+                class="col-md-3 col-lg-3 order-md-2"
               >
-                <div
-                  class="col-md-4 col-lg-3 order-md-2"
+                <button
+                  aria-label="Agree to the selected checkboxes"
+                  class="btn mb-3 button-text btn-primary btn-lg btn-block"
+                  type="submit"
                 >
-                  <button
-                    class="btn mb-3 btn-primary btn-lg btn-block"
-                    type="submit"
-                  >
-                    
+                  
                         Agree
                     
-                  </button>
-                </div>
-                 
-                <div
-                  class="col-md-4 col-lg-3 order-md-1"
+                </button>
+              </div>
+               
+              <div
+                class="col-md-3 col-lg-3 order-md-1"
+              >
+                <button
+                  class="btn hh-back-button button-text btn-outline-secondary btn-lg btn-block"
+                  type="submit"
                 >
-                  <button
-                    class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
-                    type="submit"
-                  >
-                    
+                  
                         Back
                     
-                  </button>
-                </div>
+                </button>
               </div>
             </div>
-            <!---->
-            <!---->
-            <!---->
           </div>
-        </fieldset>
-      </div>
+          <!---->
+          <!---->
+          <!---->
+        </div>
+      </fieldset>
        
-    </div>
-  </main>
+    </main>
+  </div>
    
   <footer
     class="text-center"
@@ -247,8 +222,8 @@ exports[`Food Categories Page renders correctly 1`] = `
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
       
-        Contact support
-      
+      Contact support
+    
     </a>
      
     <p>

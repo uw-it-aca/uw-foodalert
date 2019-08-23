@@ -6,7 +6,7 @@
           {{privNotifText}}
       </template>
       <template #heading>
-          Compose update
+          Don't leave people stranded!
       </template>
       <template #body>
           <b-modal id="submitconfirmation" title="Confirmation"
@@ -15,7 +15,7 @@
             @shown="focusMyElement"
             @ok="sendUpdate()">
               <p >
-                We will send your update to Hungry Husky Subscribers.
+                We will send your update to UW Food Alert Subscribers.
               </p>
               <preview-box>
                   Update:
@@ -31,7 +31,6 @@
                   Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
           </b-modal>
-          <h2 class="h2 pt-0">Don't leave people stranded!</h2>
           <p id="update-label" class="p pb-3">
             When the food is all gone, please return here to send an update.
             This will prevent people from making unnecessary trips.
@@ -81,8 +80,8 @@
       <template #navigation>
           <div class="mt-5">
               <b-row align-h="end">
-                  <b-col md="5" lg="4" order-md="2">
-                    <b-button class="mb-3" type="submit"
+                  <b-col md="3" lg="3">
+                    <b-button class="mb-3 button-text" type="submit"
                       block variant="primary" style="white-space: nowrap;"
                       size="lg"
                       @click="preSendUpdate()">

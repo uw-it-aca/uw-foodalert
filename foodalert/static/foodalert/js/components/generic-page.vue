@@ -2,17 +2,16 @@
   <div class="page">
     <div class="page-content pb-2">
       <header class="md-5 mb-2">
-        <slot name="banner"></slot>
-        <div class="standard-container mt-4">
-          <alert-box v-if="notificationState" aria-live="polite" role="alert">
-            <slot name="notification"></slot>
-          </alert-box>
-          <h1 id="standard-heading" class="mt-4">
+        <alert-box v-if="notificationState" aria-live="polite" role="alert">
+          <slot name="notification"></slot>
+        </alert-box>
+        <div class="standard-container mt-md-5 mt-4">
+          <h1 id="standard-heading">
             <slot name="heading"></slot>
           </h1>
         </div>
       </header>
-      <main id="standard-body" class="standard-container">
+      <main id="standard-body" class="standard-container mt-3">
         <slot name="body"></slot>
         <slot name="navigation"></slot>
       </main>
@@ -49,12 +48,24 @@ export default {
     }
   },
   mounted() {
-    document.activeElement.blur();
-    let newFocus = document.querySelector('h1');
-    newFocus.setAttribute("tabindex", "-1");
-    newFocus.style.outline = "none";
-    newFocus.focus();
-    newFocus.removeAttribute("tabindex")
+    this.$nextTick(
+      function() {
+        document.activeElement.blur();
+        let newFocus = document.querySelector('h1');
+        newFocus.setAttribute("tabindex", "-1");
+        newFocus.style.outline = "none";
+        newFocus.focus();
+        newFocus.removeAttribute("tabindex")
+
+        window.addEventListener("resize", this.updateHeightOfPage)
+        this.updateHeightOfPage()
+      }
+    )
+  },
+  methods: {
+    updateHeightOfPage() {
+      document.querySelector(".page").style.minHeight = (window.innerHeight - 65) + "px";
+    }
   },
 };
 </script>
@@ -90,7 +101,7 @@ export default {
 
     .page {
         display: flex;
-        min-height: 100vh;
+        min-height: calc(100vh - 65px);
         flex-direction: column;
         align-content: space-between;
     }

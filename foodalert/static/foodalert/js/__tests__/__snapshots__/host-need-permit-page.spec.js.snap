@@ -5,112 +5,86 @@ exports[`Need Permit Page renders correctly 1`] = `
   class="page"
 >
   <div
-    id="standard-notification"
-  >
-    <div
-      class="collapse"
-      id="notif-container"
-      style="display: none;"
-    >
-      <div
-        class="text-center py-3 container-fluid"
-        style="background-color: rgb(0, 112, 201);"
-      >
-        <div
-          class="container"
-        >
-          <div
-            class="row justify-content-center"
-          >
-            <div
-              class="col-md-8"
-            >
-              <div
-                class="h5 text-white pt-2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <main
     class="page-content pb-2"
   >
-     
-    <div
-      id="standard-container"
+    <header
+      class="md-5 mb-2"
     >
-      <h1
-        class="pt-md-5 pt-3 pb-2"
-        id="standard-heading"
-      >
-        
-        You need a Temporary Food Service Permit
-    
-      </h1>
+      <!---->
        
       <div
-        id="standard-body"
+        class="standard-container mt-md-5 mt-4"
       >
-        <p>
-          
-        Based on what you’ve told us about your food, you’ll need to
-        obtain a Temporary Food Service Permit to share via Hungry Husky.
-      
-        </p>
-         
-        <p>
-          The only food that can be shared without a permit is:
-        </p>
-         
-        <ul
-          class="ml-4"
+        <h1
+          id="standard-heading"
         >
-          <li>
-            Non-perishable, or
-          </li>
-           
-          <li>
-            Commercially pre-packaged, or
-          </li>
-           
-          <li>
-            
+          
+        You need a Temporary Food Service Permit
+    
+        </h1>
+      </div>
+    </header>
+     
+    <main
+      class="standard-container mt-3"
+      id="standard-body"
+    >
+      <p>
+        
+        Based on what you’ve told us about your food, you’ll need to
+        obtain a Temporary Food Service Permit to share via UW Food Alert.
+      
+      </p>
+       
+      <p>
+        The only food that can be shared without a permit is:
+      </p>
+       
+      <ul
+        class="ml-4"
+      >
+        <li>
+          Non-perishable, or
+        </li>
+         
+        <li>
+          Commercially pre-packaged, or
+        </li>
+         
+        <li>
+          
           Prepared by UW Housing and Food Services or Bay Laurel Catering
         
-          </li>
-        </ul>
-         
-        <p>
-          
+        </li>
+      </ul>
+       
+      <p>
+        
         Keep in mind for future events, it takes two weeks to get a permit
         and a new permit is required for every event. If you have
-        questions about how to share food with Hungry Husky, please email
+        questions about how to share food with UW Food Alert, please email
         
-          <a
-            href="mailto:hungryhusky@uw.edu"
-          >
-            hungryhusky@uw.edu
-          </a>
-          .
-        And thanks for thinking of Hungry Husky!
+        <a
+          href="mailto:uwfoodalert@uw.edu"
+        >
+          uwfoodalert@uw.edu
+        </a>
+        .
+        And thanks for thinking of UW Food Alert!
       
-        </p>
-      </div>
+      </p>
        
       <div
         class="mt-5"
       >
         <div
-          class="row justify-content-between"
+          class="row justify-content-end"
         >
           <div
-            class="col-md-5 col-lg-4 order-md-2"
+            class="col-md-3 col-lg-3"
           >
             <a
-              class="btn mb-3 btn-primary btn-lg btn-block"
+              class="btn mb-3 button-text btn-primary btn-lg btn-block"
               href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
               target="_self"
             >
@@ -119,14 +93,10 @@ exports[`Need Permit Page renders correctly 1`] = `
             
             </a>
           </div>
-           
-          <div
-            class="col-md-4 col-lg-3 order-md-1"
-          />
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
    
   <footer
     class="text-center"
@@ -136,8 +106,8 @@ exports[`Need Permit Page renders correctly 1`] = `
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
       
-        Contact support
-      
+      Contact support
+    
     </a>
      
     <p>

@@ -5,189 +5,180 @@ exports[`Food Categories Page renders correctly 1`] = `
   class="page"
 >
   <div
-    id="standard-notification"
-  >
-    <div
-      class="collapse"
-      id="notif-container"
-      style="display: none;"
-    >
-      <div
-        class="text-center py-3 container-fluid"
-        style="background-color: rgb(0, 112, 201);"
-      >
-        <div
-          class="container"
-        >
-          <div
-            class="row justify-content-center"
-          >
-            <div
-              class="col-md-8"
-            >
-              <div
-                class="h5 text-white pt-2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <main
     class="page-content pb-2"
   >
-     
-    <div
-      id="standard-container"
+    <header
+      class="md-5 mb-2"
     >
-      <h1
-        class="pt-md-5 pt-3 pb-2"
-        id="standard-heading"
-      >
-        
-    Food service information
-  
-      </h1>
+      <!---->
        
       <div
-        id="standard-body"
+        class="standard-container mt-md-5 mt-4"
       >
-        <p>
+        <h1
+          id="standard-heading"
+        >
           
+    Food service information
+  
+        </h1>
+      </div>
+    </header>
+     
+    <main
+      class="standard-container mt-3"
+      id="standard-body"
+    >
+      <p>
+        
       Let’s determine whether your food can be shared with the public.
       Please select all that apply.
     
-        </p>
-         
-        <fieldset
-          class="form-group"
+      </p>
+       
+      <fieldset
+        class="form-group"
+      >
+        <!---->
+        <div
+          role="group"
+          tabindex="-1"
         >
-          <!---->
           <div
-            role="group"
-            tabindex="-1"
+            class="custom-control custom-checkbox"
           >
-            <div
-              class="custom-control custom-checkbox"
+            <input
+              aria-labelledby="catering-option"
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="preparedByAuth"
+            />
+            <label
+              class="custom-control-label"
             >
-              <input
-                aria-describedby="food-service-feedback"
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="preparedByAuth"
-              />
-              <label
-                class="custom-control-label"
+              <span
+                id="catering-option"
               >
-                <span>
-                  
+                
           My food was prepared by UW Housing &
           Food Services or Bay Laurel Catering.
         
-                </span>
-              </label>
-            </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              aria-labelledby="permit-option"
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="hasPermit"
+            />
+            <label
+              class="custom-control-label"
             >
-              <input
-                aria-describedby="food-service-feedback"
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="hasPermit"
-              />
-              <label
-                class="custom-control-label"
-              >
-                <span>
-                  
-          I have a UW Temporary Food Service Permit.
-          
-                  <a
-                    aria-controls="perm-info"
-                    aria-expanded="false"
-                    aria-label="Learn more about UW Temporary Food Service Permit"
-                    class=""
-                    herf="#"
-                    href="#"
-                    role="button"
-                    target="_self"
-                  >
-                    
-            Learn more
-          
-                  </a>
-                </span>
-              </label>
-            </div>
-             
-            <div
-              class="custom-collapse collapse-text-box collapse"
-              id="perm-info"
-              style="display: none;"
-            >
-              <div
-                class="custom-text-box"
+              <span
+                id="permit-option"
               >
                 
+          I have a UW Temporary Food Service Permit.
+          
+                <a
+                  aria-controls="perm-info"
+                  aria-expanded="false"
+                  aria-label="Learn more about UW Temporary Food Service Permit"
+                  class=""
+                  herf="#"
+                  href="#"
+                  role="button"
+                  target="_self"
+                >
+                  
+            Learn more
+          
+                </a>
+              </span>
+            </label>
+          </div>
+           
+          <div
+            class="custom-collapse collapse-text-box collapse"
+            id="perm-info"
+            style="display: none;"
+          >
+            <div
+              class="custom-text-box"
+            >
+              
         When providing food to the public (anyone beyond the staff or
         faculty of your unit), UW offices are required to secure a
         Temporary Food Permit through
         
-                <a
-                  aria-label="UW Environmental Health & Safety
+              <a
+                aria-label="UW Environmental Health & Safety
         Temporary Food Service Permit page"
-                  href="#"
-                >
-                   UW Environmental Health &
+                href="#"
+              >
+                 UW Environmental Health &
         Safety 
-                </a>
-                 to help ensure that food service providers
+              </a>
+               to help ensure that food service providers
         meet safety regulations and the food itself is safe for consumption.
       
-              </div>
             </div>
-             
-            <div
-              class="mt-2 custom-control custom-checkbox"
+          </div>
+           
+          <div
+            class="mt-2 custom-control custom-checkbox"
+          >
+            <input
+              aria-describedby="none-apply"
+              autocomplete="off"
+              class="custom-control-input"
+              type="checkbox"
+              value="none"
+            />
+            <label
+              class="custom-control-label"
             >
-              <input
-                aria-describedby="food-service-feedback"
-                autocomplete="off"
-                class="custom-control-input"
-                type="checkbox"
-                value="none"
-              />
-              <label
-                class="custom-control-label"
+              <span
+                id="none-apply"
               >
-                <span>
-                  
+                
           None of these apply.
         
-                </span>
-              </label>
-            </div>
-             
-            <div
-              class="invalid-feedback pt-2"
-              id="food-service-feedback"
-            >
-              
-        Please select at least one option to move on.
-      
-            </div>
-            <!---->
-            <!---->
-            <!---->
+              </span>
+            </label>
           </div>
-        </fieldset>
-      </div>
+           
+          <div
+            class="invalid-feedback pt-2"
+            id="food-service-feedback"
+            role="alert"
+          >
+            <span
+              aria-hidden="true"
+            >
+              Please select at least one option to move on.
+            </span>
+             
+            <span
+              class="sr-only"
+              role="presentation"
+              unselectable="on"
+            >
+              Please select at least one option to move on. Please navigate back up to the checkboxes
+            </span>
+          </div>
+          <!---->
+          <!---->
+          <!---->
+        </div>
+      </fieldset>
        
       <div
         class="mt-5"
@@ -196,10 +187,11 @@ exports[`Food Categories Page renders correctly 1`] = `
           class="row justify-content-between"
         >
           <div
-            class="col-md-4 col-lg-3 order-md-2"
+            class="col-md-3 col-lg-3 order-md-2"
           >
             <button
-              class="btn mb-3 btn-primary btn-lg btn-block"
+              aria-label="Continue and submit selected checkboxes"
+              class="btn mb-3 button-text btn-primary btn-lg btn-block"
               type="submit"
             >
               
@@ -209,10 +201,10 @@ exports[`Food Categories Page renders correctly 1`] = `
           </div>
            
           <div
-            class="col-md-4 col-lg-3 order-md-1"
+            class="col-md-3 col-lg-3 order-md-1"
           >
             <button
-              class="btn hh-back-button btn-outline-secondary btn-lg btn-block"
+              class="btn hh-back-button button-text btn-outline-secondary btn-lg btn-block"
               type="submit"
             >
               Back
@@ -220,8 +212,8 @@ exports[`Food Categories Page renders correctly 1`] = `
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
    
   <footer
     class="text-center"
@@ -231,8 +223,8 @@ exports[`Food Categories Page renders correctly 1`] = `
       href="mailto:help@uw.edu?subject=Hungry Husky support"
     >
       
-        Contact support
-      
+      Contact support
+    
     </a>
      
     <p>
