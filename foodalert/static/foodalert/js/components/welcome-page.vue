@@ -11,7 +11,7 @@
               </b-navbar-brand>
               <b-navbar-nav class="ml-auto">
                 <p class="my-auto" style="font-size: 14px; font-weight: 400; color: #484848; -moz-osx-font-smoothing: grayscale;
-    ">wwwwwwww</p>
+    ">UW NetID</p>
                 <b-button variant="link" style="font-size: 14px; font-weight: 300;" type="submit">Sign out</b-button>
               </b-navbar-nav>
             </b-navbar>
@@ -25,7 +25,7 @@
       </template>
       <template #navigation>
         <div class="mt-5">
-          <b-row align-h="right">
+          <b-row align-h="end">
             <b-col md="3" lg="3">
               <b-button class="mb-3 button-text" type="submit" block variant="primary"
                         size="lg" style="white-space: nowrap;"

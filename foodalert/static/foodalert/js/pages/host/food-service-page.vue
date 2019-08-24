@@ -38,7 +38,7 @@
           When providing food to the public (anyone beyond the staff or
           faculty of your unit), UW offices are required to secure a
           Temporary Food Permit through
-          <a href="#" aria-label="UW Environmental Health &amp; Safety
+          <a href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" target="_blank" aria-label="UW Environmental Health &amp; Safety
           Temporary Food Service Permit page"> UW Environmental Health &amp;
           Safety </a> to help ensure that food service providers
           meet safety regulations and the food itself is safe for consumption.
