@@ -72,7 +72,9 @@
                           :state="inputValid('food_served')"
                           placeholder="3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
                           class="standard-placeholder" size="lg"
-                          @blur="enableValidation.food_served=true">
+                          @blur="enableValidation.food_served=true"
+                          rows="3"
+                          max-rows="8">
           </b-form-textarea>
           <b-form-invalid-feedback id="food-description-feedback" role="alert">
             Please enter a description of your food.
