@@ -23,15 +23,15 @@
           <span id="permit-option">
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">
-              <b-link herf="#" v-b-toggle.perm-info
+              <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info
               aria-label="Learn more about UW Temporary Food Service Permit">
                 Learn more
-              </b-link>
+              </button>
             </div>
-            <b-link herf="#" v-b-toggle.perm-info v-else
+            <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info v-else
               aria-label="Learn more about UW Temporary Food Service Permit">
               Learn more
-            </b-link>
+            </button>
           </span>
         </b-form-checkbox>
         <collapse-text-box bid="perm-info">
