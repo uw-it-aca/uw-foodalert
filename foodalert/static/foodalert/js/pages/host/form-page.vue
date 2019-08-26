@@ -22,7 +22,7 @@
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB Ballroom</span>
+          <span v-else>{{placeholderForm.location}}</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -50,7 +50,7 @@
             Event name
             <b-form-input id="event-name" ref="event"
               v-model="form.event" :state="inputValid('event')"
-              placeholder="Graduate student social"
+              :placeholder="placeholderForm.event"
               class="standard-placeholder"
               size="lg" @blur="enableValidation.event=true">
             </b-form-input>
@@ -72,7 +72,7 @@
                             aria-describedby="food-clarification"
                             v-model="form.food_served"
                             :state="inputValid('food_served')"
-                            placeholder="3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
+                            :placeholder="placeholderForm.food_served"
                             class="standard-placeholder" size="lg"
                             @blur="enableValidation.food_served=true"
                             rows="3"
@@ -91,7 +91,8 @@
             <b-form-input id="location" aria-labelledby="location-label"
               ref="location"
               v-model="form.location" :state="inputValid('location')"
-              placeholder="HUB Ballroom" class="standard-placeholder" size="lg"
+              :placeholder="placeholderForm.location"
+              class="standard-placeholder" size="lg"
               @blur="enableValidation.location=true">
             </b-form-input>
             <b-form-invalid-feedback id="location-feedback" role="alert">
@@ -100,7 +101,8 @@
             </label>
         </div>
 
-        <label class="standard-label mb-0 w-100" id="end-time-label" for="end-time">
+        <label class="standard-label mb-0 w-100"
+          id="end-time-label" for="end-time">
           End time
           <p id="time-clarification" class="mb-2" style="font-size: 14px;">
             Set the time when food service will be over.
@@ -176,7 +178,7 @@
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB Ballroom</span>
+          <span v-else>{{placeholderForm.location}}</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -235,6 +237,13 @@ export default {
         allergens: [],
         host_user_agent: '',
       },
+      placeholderForm: {
+        location: 'HUB Ballroom',
+        event: 'Graduate student social',
+        food_served: '3 platters of Mediterranean appetizers:' +
+         ' marinated mushrooms, grilled asparagus, caprese salad,' +
+         ' cured meats',
+      },
       formValidate: {
         event: false,
         food_served: false,
@@ -268,8 +277,7 @@ export default {
       if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
-        msg += '3 platters of Mediterranean appetizers: marinated mushrooms,'
-            + ' grilled asparagus, caprese salad, cured meats';
+        msg += this.placeholderForm.food_served;
       }
 
       msg += ' from ';
@@ -277,7 +285,7 @@ export default {
       if (this.form.event) {
         msg += this.form.event;
       } else {
-        msg += 'Graduate student social';
+        msg += this.placeholderForm.event;
       }
 
       msg += '.';
