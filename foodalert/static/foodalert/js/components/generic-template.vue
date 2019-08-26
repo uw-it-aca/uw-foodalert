@@ -1,6 +1,6 @@
 <template>
     <div class="foodalert">
-      <div style="border-bottom: 1px solid #ebebeb;">
+      <!--div style="border-bottom: 1px solid #ebebeb;">
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
           <b-navbar-brand class="pl-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
@@ -17,7 +17,7 @@
                 type="submit">Sign out</b-button>
           </b-navbar-nav>
         </b-navbar>
-      </div>
+      </div!-->
         <router-view>
         </router-view>
         <!-- To load the images before they need to be displayed
