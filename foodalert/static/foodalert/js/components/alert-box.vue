@@ -10,14 +10,9 @@
 <style scoped>
     .alert-container {
         width: 100%;
-        /*border: 2px solid #AAAAAA;
-        border-radius: 0 10px 10px 0;*/
         padding: 16px;
         display: flex;
         align-items: center;
-        /*border-left: 10px solid #0070c9;
-        background: #f1f1f1;
-        border-radius: 10px;*/
         background-color: #0070c9;
         color: white;
         font-size: 18px;
@@ -26,8 +21,6 @@
 
     .alert-container .alert-image {
         margin-right: 16px;
-        /*background-color: #0070c9;
-        border-radius: 50%;*/
     }
 
     .alert-container .alert-image > img {
