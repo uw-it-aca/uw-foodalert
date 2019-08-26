@@ -59,5 +59,25 @@
         "sms_number": "+16282462222",
         "number_verified": true,
         "notif_on": true
-    }
+    },
+    "users": [
+        {
+            "username": "testuser_one",
+            "email": "testuser_one@test.com",
+            "password": "test_pass_one",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_two",
+            "email": "testuser_two@test.com",
+            "password": "test_pass_two",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_three",
+            "email": "testuser_three@test.com",
+            "password": "test_pass_three",
+            "isMemberOf": []
+        }
+    ]
 }

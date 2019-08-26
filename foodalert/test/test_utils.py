@@ -1,6 +1,9 @@
 from datetime import datetime
 from unittest.mock import patch, Mock, PropertyMock
 
+from django.contrib.auth.models import User
+from django.test import Client
+
 from foodalert.models import Notification, Allergen, Update
 from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
 
@@ -34,6 +37,19 @@ def create_update_from_data(data, notifs):
     )
     data["id"] = update_data.id
     data["created_time"] = update_data.created_time
+
+
+def create_user_and_client_from_data(data, member_of):
+    data["isMemberOf"] = member_of
+    user = User.objects.create_user(username=data["username"],
+                                    email=data["email"],
+                                    password=data["password"])
+    
+    client = Client()
+    client.force_login(user)
+    client.session['samlUserdata'] = data["isMemberOf"]
+    
+    return (user, client)
 
 
 def generate_twilio_mock():
