@@ -11,8 +11,8 @@ ingress:
       paths: 
         - "/"
 database:
-  secretName: foodalert-rds
-  hostname: foodalert-rds.default.svc.cluster.local
+  secretName: foodalert-eval-rds
+  hostname: foodalert-eval-rds.default.svc.cluster.local
   name: foodalert
 repo: foodalert-map
 branch: develop
