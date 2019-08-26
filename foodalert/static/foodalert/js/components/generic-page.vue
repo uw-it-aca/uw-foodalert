@@ -49,23 +49,24 @@ export default {
   },
   mounted() {
     this.$nextTick(
-      function() {
-        document.activeElement.blur();
-        let newFocus = document.querySelector('h1');
-        newFocus.setAttribute("tabindex", "-1");
-        newFocus.style.outline = "none";
-        newFocus.focus();
-        newFocus.removeAttribute("tabindex")
+        function() {
+          document.activeElement.blur();
+          const newFocus = document.querySelector('h1');
+          newFocus.setAttribute('tabindex', '-1');
+          newFocus.style.outline = 'none';
+          newFocus.focus();
+          newFocus.removeAttribute('tabindex');
 
-        window.addEventListener("resize", this.updateHeightOfPage)
-        this.updateHeightOfPage()
-      }
-    )
+          window.addEventListener('resize', this.updateHeightOfPage);
+          this.updateHeightOfPage();
+        }.bind(this)
+    );
   },
   methods: {
     updateHeightOfPage() {
-      document.querySelector(".page").style.minHeight = (window.innerHeight - 65) + "px";
-    }
+      document.querySelector('.page').style.minHeight =
+        (window.innerHeight - 65) + 'px';
+    },
   },
 };
 </script>

@@ -107,7 +107,10 @@
                   <b-form @submit.prevent="getNewState(spinners.update)"
                           @reset.prevent="deleteData(spinners.delete)"
                           v-else>
-                    <small :id="type+'-update-label'" class="form-text text-muted">{{label}}</small>
+                    <small :id="type+'-update-label'"
+                      class="form-text text-muted">
+                        {{label}}
+                    </small>
                     <b-form-group :description="description">
                       <b-form-input required :type="type"
                                     :formatter="formatter"

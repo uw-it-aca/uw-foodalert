@@ -49,7 +49,7 @@ export default {
   methods: {
     updateTime() {
       this.$emit('input',
-        (this.hourSelected + (this.periodSelected == 'AM' ? 0 : 12)) + ':' +
+          (this.hourSelected + (this.periodSelected == 'AM' ? 0 : 12)) + ':' +
           this.minuteSelected);
     },
   },

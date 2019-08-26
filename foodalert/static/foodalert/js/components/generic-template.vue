@@ -4,14 +4,17 @@
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
           <b-navbar-brand class="pl-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
-                   alt="UW Food Alert Logo" height="24" class="d-none d-sm-none d-md-block">
+                   alt="UW Food Alert Logo" height="24"
+                   class="d-none d-sm-none d-md-block">
             <img :src="require('../../img/uw-logo.svg')"
-                          alt="UW Logo" height="24" class="d-block d-sm-block d-md-none">
+                          alt="UW Logo" height="24"
+                          class="d-block d-sm-block d-md-none">
           </b-navbar-brand>
           <b-navbar-nav class="ml-auto">
-                <p class="my-auto" style="font-size: 14px; font-weight: 400; color: #484848; -moz-osx-font-smoothing: grayscale;
-    ">UW NetID</p>
-              <b-button variant="link" style="font-size: 14px; font-weight: 400;" type="submit">Sign out</b-button>
+                <p class="my-auto standard-neid">UW NetID</p>
+              <b-button variant="link"
+                style="font-size: 14px; font-weight: 400;"
+                type="submit">Sign out</b-button>
           </b-navbar-nav>
         </b-navbar>
       </div>
@@ -206,4 +209,10 @@ export default {
       padding-bottom: 10px;
     }
 
+    .foodalert .standard-neid {
+        font-size: 14px;
+        font-weight: 400;
+        color: #484848;
+        -moz-osx-font-smoothing: grayscale;
+    }
 </style>
