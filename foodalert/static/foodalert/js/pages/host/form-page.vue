@@ -303,8 +303,9 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      let hours = parseInt(this.form.end_time.substr(0, 2));
-      const mins = this.form.end_time.substr(3, 2);
+      const splitTime = this.form.end_time.split(/\:| /);
+      let hours = parseInt(splitTime[0]);
+      const mins = splitTime[1];
       let timeExt = 'AM';
       if (hours == 0) {
         hours = 12;
