@@ -95,6 +95,7 @@
                  <b-col md="4" lg="3" order-md="1">
                     <b-button
                       class="hh-back-button button-text"
+                      href="#"
                       type="submit" block size="lg"
                       variant="outline-secondary"
                       @click="getBackPage()">

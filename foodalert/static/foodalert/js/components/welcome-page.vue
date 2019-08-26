@@ -11,6 +11,7 @@
           <b-row align-h="end">
             <b-col md="3" lg="3">
               <b-button class="mb-3 button-text" type="submit"
+                        href="#"
                         block variant="primary"
                         size="lg" style="white-space: nowrap;"
                         @click="getNextPage()">
