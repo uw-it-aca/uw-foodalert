@@ -4,7 +4,7 @@
       <alert-box v-if="notificationState" aria-live="polite" role="alert">
           <slot name="notification"></slot>
       </alert-box>
-      <header class="md-5 mb-2" style="border-bottom: 1px solid #ebebeb;" role="banner">
+      <header class="md-5 mb-2" role="banner">
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
           <b-navbar-brand class="pl-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
@@ -86,6 +86,9 @@ export default {
 </script>
 
 <style>
+    header {
+      border-bottom: 1px solid #ebebeb;
+    }
     #standard-notification {
         height: 0;
         overflow: visible;
