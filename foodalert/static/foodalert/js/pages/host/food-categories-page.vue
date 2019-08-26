@@ -16,11 +16,13 @@
                     <span>
                         My food is non-perishable.
                         <div v-if="isIOSDevice">
-                          <button class="btn btn-link p-0" role="link" v-b-toggle.non-perishable>
+                          <button class="btn btn-link p-0" role="link"
+                            v-b-toggle.non-perishable>
                             Examples
                           </button>
                         </div>
-                        <button class="btn btn-link p-0" role="link" v-b-toggle.non-perishable v-else>
+                        <button class="btn btn-link p-0" role="link"
+                          v-b-toggle.non-perishable v-else>
                           Examples
                         </button>
                     </span>
@@ -37,11 +39,13 @@
                     <span>
                         My food was commercially pre-packaged.
                         <div v-if="isIOSDevice">
-                          <button class="btn btn-link p-0" role="link" v-b-toggle.pre-packaged>
+                          <button class="btn btn-link p-0" role="link"
+                            v-b-toggle.pre-packaged>
                             Examples
                           </button>
                         </div>
-                        <button class="btn btn-link p-0" role="link" v-b-toggle.pre-packaged v-else>
+                        <button class="btn btn-link p-0" role="link"
+                          v-b-toggle.pre-packaged v-else>
                           Examples
                         </button>
                     </span>
@@ -69,7 +73,7 @@
                     </span>
                 </b-form-checkbox>
                 <div class="invalid-feedback pt-2"
-                     :class="{'super-show': selected.length == 0 && validateOn}"
+                     :class="{'super-show': selected.length==0 && validateOn}"
                      id="food-service-feedback">
                   Please select at least one option to move on.
                 </div>

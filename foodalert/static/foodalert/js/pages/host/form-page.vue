@@ -46,7 +46,9 @@
         </p>
 
         <div>
-          <label id="event-label" class="standard-label" for="event-name">Event name</label>
+          <label id="event-label" class="standard-label" for="event-name">
+            Event name
+          </label>
           <b-form-input id="event-name" ref="event"
             aria-labelledby="event-label"
             v-model="form.event" :state="inputValid('event')"
@@ -60,29 +62,35 @@
         </div>
 
         <div>
-          <label id="food-label" class="standard-label mb-0" for="food-description">
+          <label id="food-label" class="standard-label mb-0"
+            for="food-description">
             Describe the food
           </label>
-          <p id="food-clarification" class="mb-2" style="font-size: 15px;">Tell people about your
+          <p id="food-clarification" class="mb-2" style="font-size: 15px;">
+            Tell people about your
             food and the approximate quantity.</p>
           <b-form-textarea id="food-description" ref="food_served"
                           aria-labelledby="food-label"
                           aria-describedby="food-clarification"
                           v-model="form.food_served"
                           :state="inputValid('food_served')"
-                          placeholder="3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
+                          placeholder="3 platters of Mediterranean appetizers:
+                           marinated mushrooms, grilled asparagus,
+                           caprese salad, cured meats"
                           class="standard-placeholder" size="lg"
                           @blur="enableValidation.food_served=true"
                           rows="3"
                           max-rows="8">
           </b-form-textarea>
-          <b-form-invalid-feedback id="food-description-feedback" role="alert">
+          <b-form-invalid-feedback id="food-description-feedback"
+            role="alert">
             Please enter a description of your food.
           </b-form-invalid-feedback>
         </div>
 
         <div>
-          <label id="location-label" class="standard-label" for="location">Location</label>
+          <label id="location-label" class="standard-label"
+            for="location">Location</label>
           <b-form-input id="location" aria-labelledby="location-label"
             ref="location"
             v-model="form.location" :state="inputValid('location')"
@@ -192,7 +200,8 @@
         <div class="mt-5">
           <b-row align-h="end">
             <b-col md="3" lg="3">
-              <b-button class="mb-3 button-text" type="submit" block variant="primary"
+              <b-button class="mb-3 button-text" type="submit"
+                block variant="primary"
                 size="lg" style="white-space: nowrap;">
                 Submit
               </b-button>
@@ -255,21 +264,22 @@ export default {
       el.removeAttribute('tabIndex');
     },
     concatinateMessage() {
-      let msg = "";
-      if(this.form.food_served){
+      let msg = '';
+      if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
-        msg += "3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
+        msg += '3 platters of Mediterranean appetizers: marinated mushrooms,'
+            + ' grilled asparagus, caprese salad, cured meats';
       }
-      msg += " from ";
-      if(this.form.event){
+      msg += ' from ';
+      if (this.form.event) {
         msg += this.form.event;
       } else {
-        msg += "Graduate student social"
+        msg += 'Graduate student social';
       }
-      msg += "."
+      msg += '.';
 
-      return msg
+      return msg;
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -376,19 +386,19 @@ export default {
   },
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    this.formValidate.end_time = !this.isMobile
+    this.formValidate.end_time = !this.isMobile;
   },
   watch: {
     form: {
       handler(newState) {
         const checkFunction = (text)=>{
-          return text.length > 0
-        }
+          return text.length > 0;
+        };
         this.updateValidity(newState, 'location', checkFunction);
         this.updateValidity(newState, 'event', checkFunction);
         this.updateValidity(newState, 'food_served', checkFunction);
         this.updateValidity(newState, 'end_time',
-          (t)=>/^\d{1,2}:\d{2}$/.test(t));
+            (t)=>/^\d{1,2}:\d{2}$/.test(t));
       },
       deep: true,
     },

@@ -23,11 +23,11 @@ export default {
   },
   beforeMount() {
     axios.get('/subscription/?netID=' + this.netID)
-      .then((result) => {
-        if (result.data.length) {
-          this.$router.push({name: 's-notifications'});
-        }
-    }).catch((error) => this.showErrorPage(error.response, 's-welcome'));
+        .then((result) => {
+          if (result.data.length) {
+            this.$router.push({name: 's-notifications'});
+          }
+        }).catch((error) => this.showErrorPage(error.response, 's-welcome'));
   },
 };
 </script>

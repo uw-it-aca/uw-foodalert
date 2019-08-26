@@ -7,7 +7,8 @@
           <p>You indicated that your food is homemade, which makes it
             ineligible to be shared with the public via UW Food Alert.</p>
           <p>You are still able to share it with your colleagues in your
-            office. If you have questions about how to share food with UW Food Alert, please email
+            office. If you have questions about how to share food with UW
+            Food Alert, please email
             <a href="mailto:uwfoodalert@uw.edu">uwfoodalert@uw.edu</a>.
             And thanks for thinking of UW Food Alert!</p>
         </template>

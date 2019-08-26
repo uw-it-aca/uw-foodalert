@@ -23,12 +23,14 @@
           <span id="permit-option">
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">
-              <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info
+              <button class="btn btn-link p-0" role="link"
+                v-b-toggle.perm-info
               aria-label="Learn more about UW Temporary Food Service Permit">
                 Learn more
               </button>
             </div>
-            <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info v-else
+            <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info
+              v-else
               aria-label="Learn more about UW Temporary Food Service Permit">
               Learn more
             </button>
@@ -38,7 +40,8 @@
           When providing food to the public (anyone beyond the staff or
           faculty of your unit), UW offices are required to secure a
           Temporary Food Permit through
-          <a href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" target="_blank" aria-label="UW Environmental Health &amp; Safety
+          <a href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit"
+          target="_blank" aria-label="UW Environmental Health &amp; Safety
           Temporary Food Service Permit page"> UW Environmental Health &amp;
           Safety </a> to help ensure that food service providers
           meet safety regulations and the food itself is safe for consumption.
@@ -54,8 +57,13 @@
              :class="{'super-show': selected.length == 0 && validateOn}"
               id="food-service-feedback"
               role="alert">
-          <span aria-hidden="true">Please select at least one option to move on.</span>
-          <span class="sr-only" role="presentation" unSelectable="on">Please select at least one option to move on. Please navigate back up to the checkboxes</span>
+          <span aria-hidden="true">
+            Please select at least one option to move on.
+          </span>
+          <span class="sr-only" role="presentation" unSelectable="on">
+            Please select at least one option to move on.
+            Please navigate back up to the checkboxes
+          </span>
         </div>
       </b-form-group>
     </template>
@@ -96,11 +104,11 @@ export default {
   methods: {
     getNextPage() {
       if (this.selected.length == 0) {
-        this.validateOn = false
+        this.validateOn = false;
         setTimeout(function() {
-          this.validateOn = true
+          this.validateOn = true;
         }.bind(this), 1);
-        return
+        return;
       }
       if (this.selected.includes('hasPermit') ||
         this.selected.includes('preparedByAuth')) {
@@ -119,11 +127,11 @@ export default {
       setTimeout(function() {
         document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
-          return val != document.querySelectorAll('input')[pos]._value
-        })
-        if (!this.validateOn) this.validateOn = true
-      }.bind(this), 1)
-    }
+          return val != document.querySelectorAll('input')[pos]._value;
+        });
+        if (!this.validateOn) this.validateOn = true;
+      }.bind(this), 1);
+    },
   },
   data() {
     return {

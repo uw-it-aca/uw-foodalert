@@ -17,7 +17,8 @@
       <div class="mt-5">
         <b-row align-h="end">
           <b-col md="4">
-            <b-button class="mb-3 button-text" type="submit" block variant="primary"
+            <b-button class="mb-3 button-text" type="submit"
+                      block variant="primary"
                       size="lg" style="white-space: nowrap;"
                       @click="$router.push({'name': 'h-welcome'})">
                         New notification
