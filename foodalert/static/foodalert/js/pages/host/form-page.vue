@@ -46,86 +46,84 @@
         </p>
 
         <div>
-          <label id="event-label" class="standard-label" for="event-name">
+          <label class="standard-label w-100" for="event-name">
             Event name
+            <b-form-input id="event-name" ref="event"
+              v-model="form.event" :state="inputValid('event')"
+              placeholder="Graduate student social"
+              class="standard-placeholder"
+              size="lg" @blur="enableValidation.event=true">
+            </b-form-input>
+            <b-form-invalid-feedback id="event-name-feedback" role="alert">
+              Please enter an event name.
+            </b-form-invalid-feedback>
           </label>
-          <b-form-input id="event-name" ref="event"
-            aria-labelledby="event-label"
-            v-model="form.event" :state="inputValid('event')"
-            placeholder="Graduate student social"
-            class="standard-placeholder"
-            size="lg" @blur="enableValidation.event=true">
-          </b-form-input>
-          <b-form-invalid-feedback id="event-name-feedback" role="alert">
-            Please enter an event name.
-          </b-form-invalid-feedback>
         </div>
 
         <div>
-          <label id="food-label" class="standard-label mb-0"
+          <label id="food-label" class="standard-label mb-0 w-100"
             for="food-description">
             Describe the food
+            <p id="food-clarification" class="mb-2" style="font-size: 15px;">
+              Tell people about your
+              food and the approximate quantity.</p>
+            <b-form-textarea id="food-description" ref="food_served"
+                            aria-labelledby="food-label"
+                            aria-describedby="food-clarification"
+                            v-model="form.food_served"
+                            :state="inputValid('food_served')"
+                            placeholder="3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
+                            class="standard-placeholder" size="lg"
+                            @blur="enableValidation.food_served=true"
+                            rows="3"
+                            max-rows="8">
+            </b-form-textarea>
+            <b-form-invalid-feedback id="food-description-feedback"
+              role="alert">
+              Please enter a description of your food.
+            </b-form-invalid-feedback>
           </label>
-          <p id="food-clarification" class="mb-2" style="font-size: 15px;">
-            Tell people about your
-            food and the approximate quantity.</p>
-          <b-form-textarea id="food-description" ref="food_served"
-                          aria-labelledby="food-label"
-                          aria-describedby="food-clarification"
-                          v-model="form.food_served"
-                          :state="inputValid('food_served')"
-                          placeholder="3 platters of Mediterranean appetizers:
-                           marinated mushrooms, grilled asparagus,
-                           caprese salad, cured meats"
-                          class="standard-placeholder" size="lg"
-                          @blur="enableValidation.food_served=true"
-                          rows="3"
-                          max-rows="8">
-          </b-form-textarea>
-          <b-form-invalid-feedback id="food-description-feedback"
-            role="alert">
-            Please enter a description of your food.
-          </b-form-invalid-feedback>
         </div>
 
         <div>
-          <label id="location-label" class="standard-label"
-            for="location">Location</label>
-          <b-form-input id="location" aria-labelledby="location-label"
-            ref="location"
-            v-model="form.location" :state="inputValid('location')"
-            placeholder="HUB Ballroom" class="standard-placeholder" size="lg"
-            @blur="enableValidation.location=true">
-          </b-form-input>
-          <b-form-invalid-feedback id="location-feedback" role="alert">
-            Please enter the location of your event.
-          </b-form-invalid-feedback>
+          <label id="location-label" class="standard-label w-100"
+            for="location">Location
+            <b-form-input id="location" aria-labelledby="location-label"
+              ref="location"
+              v-model="form.location" :state="inputValid('location')"
+              placeholder="HUB Ballroom" class="standard-placeholder" size="lg"
+              @blur="enableValidation.location=true">
+            </b-form-input>
+            <b-form-invalid-feedback id="location-feedback" role="alert">
+              Please enter the location of your event.
+            </b-form-invalid-feedback>
+            </label>
         </div>
 
-        <label class="standard-label mb-0" id="end-time-label" for="end-time">
+        <label class="standard-label mb-0 w-100" id="end-time-label" for="end-time">
           End time
-        </label>
-        <p id="time-clarification" class="mb-2" style="font-size: 14px;">
-          Set the time when food service will be over.
-        </p>
-        <b-row>
-          <b-col sm=12 md=8>
-            <div v-if="isMobile">
-              <b-form-input id="end-time" aria-describedby="end-time-feedback"
-                v-model="form.end_time"
-                :state="inputValid('end_time')"
-                type="time" class="standard-placeholder" size="lg">
-              </b-form-input>
-              <b-form-invalid-feedback id="end-time-feedback" role="alert">
-                Please enter the at which this food service will be over.
-              </b-form-invalid-feedback>
-            </div>
+          <p id="time-clarification" class="mb-2" style="font-size: 14px;">
+            Set the time when food service will be over.
+          </p>
+          <b-row>
+            <b-col sm=12 md=8>
+              <div v-if="isMobile">
+                <b-form-input id="end-time" aria-describedby="end-time-feedback"
+                  v-model="form.end_time"
+                  :state="inputValid('end_time')"
+                  type="time" class="standard-placeholder" size="lg">
+                </b-form-input>
+                <b-form-invalid-feedback id="end-time-feedback" role="alert">
+                  Please enter the at which this food service will be over.
+                </b-form-invalid-feedback>
+              </div>
 
-            <time-picker timeID="end-time" v-model="form.end_time"
-                      startWithCurrent labelbyID="end-time-label" v-else>
-            </time-picker>
-          </b-col>
-        </b-row>
+              <time-picker timeID="end-time" v-model="form.end_time"
+                        startWithCurrent labelbyID="end-time-label" v-else>
+              </time-picker>
+            </b-col>
+          </b-row>
+        </label>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
         <h3 id="allergen-label" class="standard-label mb-0">
@@ -259,24 +257,29 @@ export default {
   methods: {
     focusMyElement(e) {
       const el = document.getElementById('submitconfirmation');
+
       el.setAttribute('tabIndex', '-1');
       el.focus();
       el.removeAttribute('tabIndex');
     },
     concatinateMessage() {
       let msg = '';
+
       if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
         msg += '3 platters of Mediterranean appetizers: marinated mushrooms,'
             + ' grilled asparagus, caprese salad, cured meats';
       }
+
       msg += ' from ';
+
       if (this.form.event) {
         msg += this.form.event;
       } else {
         msg += 'Graduate student social';
       }
+
       msg += '.';
 
       return msg;
@@ -290,10 +293,10 @@ export default {
       }.bind(this));
 
       let flag = false;
+
       Object.keys(this.formValidate).forEach(function(key) {
-        if (this.formValidate[key] == false && flag != true) {
+        if (this.formValidate[key] === false && flag !== true) {
           flag = true;
-          console.log(key);
           this.$refs[key].$el.focus();
         }
       }.bind(this));
@@ -303,22 +306,26 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      const splitTime = this.form.end_time.split(/\:| /);
+      const splitTime = this.form.end_time.split(/:| /);
       let hours = parseInt(splitTime[0]);
       const mins = splitTime[1];
       let timeExt = 'AM';
-      if (hours == 0) {
+
+      if (hours === 0) {
         hours = 12;
       } else if (hours > 12) {
         hours -= 12;
         timeExt = 'PM';
       }
+
       return hours + ':' + mins + ' ' + timeExt;
     },
     submitAndNext() {
-      const splitTime = this.form.end_time.split(/\:/);
+      const splitTime = this.form.end_time.split(/:/);
       const datetime = new Date();
+
       datetime.setHours(splitTime[0], splitTime[1]);
+
       if (datetime < new Date()) {
         datetime.setDate(datetime.getDate() + 1);
       }
@@ -345,7 +352,8 @@ export default {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
-      axios.post('/notification/', data, {'headers': headers})
+
+      axios.post('/notification/', data, {headers})
           .then(function(response) {
             this.$router.push({name: 'h-update', params: {
               notificationText: 'Your notification was sent.',
@@ -357,10 +365,11 @@ export default {
       if (this.enableValidation[fieldName]) {
         return (this.formValidate[fieldName] ? null : false);
       }
+
       return null;
     },
     updateValidity(newState, fieldName, checkFunction) {
-      if (newState[fieldName] != undefined &&
+      if (newState[fieldName] !== undefined &&
           checkFunction(newState[fieldName])) {
         this.formValidate[fieldName] = true;
         this.enableValidation[fieldName] = true;
@@ -372,6 +381,7 @@ export default {
   beforeMount() {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',
@@ -395,6 +405,7 @@ export default {
         const checkFunction = (text)=>{
           return text.length > 0;
         };
+
         this.updateValidity(newState, 'location', checkFunction);
         this.updateValidity(newState, 'event', checkFunction);
         this.updateValidity(newState, 'food_served', checkFunction);

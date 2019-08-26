@@ -6,8 +6,8 @@
             without this we can still use the default bootstrap checkmark and
             but they look worse and dont match the color that we need.
         !-->
-        <img src="../../img/check.svg" style="display: none">
-        <img src="../../img/dot.svg" style="display: none">
+        <img src="../../img/check.svg" style="display: none" alt="check">
+        <img src="../../img/dot.svg" style="display: none" alt="dot">
     </div>
 </template>
 

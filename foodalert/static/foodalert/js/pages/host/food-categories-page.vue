@@ -123,8 +123,9 @@ export default {
   },
   methods: {
     getNextPage() {
-      if (this.selected.length == 0) {
+      if (this.selected.length === 0) {
         this.validateOn = true;
+
         return;
       }
 
@@ -147,8 +148,9 @@ export default {
       setTimeout(function() {
         document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
-          return val != document.querySelectorAll('input')[pos]._value;
+          return val !== document.querySelectorAll('input')[pos]._value;
         });
+
         if (!this.validateOn) this.validateOn = true;
       }.bind(this), 100);
     },
@@ -163,6 +165,7 @@ export default {
   beforeMount() {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({
           name: 'h-update',

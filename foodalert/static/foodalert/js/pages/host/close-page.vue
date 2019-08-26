@@ -26,6 +26,7 @@ export default {
   beforeMount() {
     axios.get('/notification/?host_netid=' + this.netID).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({
           name: 'h-update',

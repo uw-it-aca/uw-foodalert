@@ -13,6 +13,7 @@
 <script type="text/javascript">
 import WelcomePage from '../../components/welcome-page.vue';
 const axios = require('axios');
+
 export default {
   components: {
     'welcome-page': WelcomePage,

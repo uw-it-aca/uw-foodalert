@@ -107,15 +107,18 @@ export default {
       if (response.data[0]) {
         this.subid = response.data[0].id;
       }
+
       return this.subid;
     },
     formatSms(data) {
       // strips sms of the +1
       if (data['sms_number']) {
         let num = data['sms_number'];
+
         num = num.replace('+1', '');
         data['sms_number'] = num;
       }
+
       return data;
     },
     requestUpdate() {
@@ -124,15 +127,17 @@ export default {
           .then((data) => {
             if (this.subid) {
               const url = '/subscription/' + this.subid + '/';
+
               axios.get(url)
                   .then((response) => {
                     response.data = this.formatSms(response.data);
                     this.notif_info = response.data;
 
                     // Control the b-collapse
-                    if (this.notif_info.sms_number != '' ||
-                      this.notif_info.email != '') {
+                    if (this.notif_info.sms_number !== '' ||
+                      this.notif_info.email !== '') {
                       this.collapse_notif = true;
+
                       if (this.notif_info.email_verified ||
                         this.notif_info.number_verified) {
                         this.disableNotif = false;
