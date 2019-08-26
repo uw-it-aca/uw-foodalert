@@ -4,15 +4,15 @@
       <alert-box v-if="notificationState" aria-live="polite" role="alert">
           <slot name="notification"></slot>
       </alert-box>
-      <header class="md-5 mb-2" style="border-bottom: 1px solid #ebebeb;">
+      <header class="md-5 mb-2" style="border-bottom: 1px solid #ebebeb;" role="banner">
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
           <b-navbar-brand class="pl-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
                   alt="UW Food Alert Logo" height="24"
                   class="d-none d-sm-none d-md-block">
             <img :src="require('../../img/uw-logo.svg')"
-                          alt="UW Logo" height="24"
-                          class="d-block d-sm-block d-md-none">
+                   alt="UW Logo" height="24"
+                   class="d-block d-sm-block d-md-none">
           </b-navbar-brand>
           <b-navbar-nav class="ml-auto">
                 <p class="my-auto standard-neid">UW NetID</p>
@@ -22,15 +22,15 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5">
-        <h1 id="standard-heading" >
+      <main id="standard-body" class="standard-container mt-md-5" role="main">
+        <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>
         <slot name="body"></slot>
         <slot name="navigation"></slot>
       </main>
     </div>
-    <footer id="relative-footer" class="text-center">
+    <footer id="relative-footer" class="text-center" role="contentinfo">
       <a href="mailto:help@uw.edu?subject=Hungry Husky support">
         Contact support
       </a>
