@@ -16,11 +16,6 @@ database:
   name: foodalert
 repo: foodalert-map
 branch: develop
-certs:
-  mounted: true
-  certPath: /certs/foodalert.aca-aws.s.uw.edu-uwca.pem
-  keyPath: /certs/foodalert.aca-aws.s.uw.edu-uwca.key
-  secretName: foodalert-uwca
 environmentVariables:
   - name: SWS_ENV
     value: PROD
