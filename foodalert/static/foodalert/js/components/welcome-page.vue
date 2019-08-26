@@ -10,8 +10,7 @@
                               alt="UW Logo" height="24" class="d-block d-sm-block d-md-none">
               </b-navbar-brand>
               <b-navbar-nav class="ml-auto">
-                <p class="my-auto" style="font-size: 14px; font-weight: 400; color: #484848; -moz-osx-font-smoothing: grayscale;
-    ">UW NetID</p>
+                <p class="my-auto" style="font-size: 14px; font-weight: 400; color: #484848; -moz-osx-font-smoothing: grayscale;">UW NetID</p>
                 <b-button variant="link" style="font-size: 14px; font-weight: 300;" type="submit">Sign out</b-button>
               </b-navbar-nav>
             </b-navbar>
