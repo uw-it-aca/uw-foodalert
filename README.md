@@ -45,8 +45,6 @@ This app has two test suites. One for the python backend and one for the JS fron
 
 To run the python tests: `docker-compose run --rm app python manage.py test foodalert --settings=sampleproj.settings.base`.
 
-To run the Javascript tests: `npx jest`.
-
 Both commands must be run from repository root
 
 ### Running the app
