@@ -1,0 +1,26 @@
+ingress:
+  enabled: true
+  tls:
+    foodalert:
+      secretName: foodalert.aca-aws.s.uw.edu
+      hosts:
+        - foodalert.aca-aws.s.uw.edu
+  hosts:
+    foodalert:
+      host: foodalert.aca-aws.s.uw.edu
+      paths: 
+        - "/"
+database:
+  secretName: foodalert-rds
+  hostname: foodalert-rds.default.svc.cluster.local
+  name: foodalert
+repo: foodalert-map
+branch: develop
+certs:
+  mounted: true
+  certPath: /certs/foodalert.aca-aws.s.uw.edu-uwca.pem
+  keyPath: /certs/foodalert.aca-aws.s.uw.edu-uwca.key
+  secretName: foodalert-uwca
+environmentVariables:
+  - name: SWS_ENV
+    value: PROD
