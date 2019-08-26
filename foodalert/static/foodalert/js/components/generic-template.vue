@@ -1,10 +1,28 @@
 <template>
     <div class="foodalert">
+      <div style="border-bottom: 1px solid #ebebeb;">
+        <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
+          <b-navbar-brand class="pl-2" href="#">
+            <img :src="require('../../img/food-alert-logo.svg')"
+                   alt="UW Food Alert Logo" height="24"
+                   class="d-none d-sm-none d-md-block">
+            <img :src="require('../../img/uw-logo.svg')"
+                          alt="UW Logo" height="24"
+                          class="d-block d-sm-block d-md-none">
+          </b-navbar-brand>
+          <b-navbar-nav class="ml-auto">
+                <p class="my-auto standard-neid">UW NetID</p>
+              <b-button variant="link"
+                style="font-size: 14px; font-weight: 400;"
+                type="submit">Sign out</b-button>
+          </b-navbar-nav>
+        </b-navbar>
+      </div>
         <router-view>
         </router-view>
         <!-- To load the images before they need to be displayed
-            without this we can still use the default bootstrap checkmark and but they
-            look worse and dont match the color that we need.
+            without this we can still use the default bootstrap checkmark and
+            but they look worse and dont match the color that we need.
         !-->
         <img src="../../img/check.svg" style="display: none">
         <img src="../../img/dot.svg" style="display: none">
@@ -14,7 +32,7 @@
 <script>
 export default {
 
-}
+};
 </script>
 
 <style>
@@ -25,7 +43,8 @@ export default {
         --switch-height: 32px;
         --switch-circle: 26px;
     }
-    .foodalert .custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
+    .foodalert .custom-checkbox .custom-control-label::before,
+    .custom-checkbox .custom-control-label::after {
         height: var(--checkbox-size);
         width: var(--checkbox-size);
     }
@@ -33,14 +52,17 @@ export default {
         border: 1.5px solid #AAAAAA;
         border-radius: 6.25%;
     }
-    .foodalert .custom-checkbox .custom-control-input:disabled~.custom-control-label::before {
+    .foodalert .custom-checkbox
+    .custom-control-input:disabled~.custom-control-label::before {
         border: 1.5px solid #EAEAEA;
         background: initial;
     }
-    .foodalert .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-        border-color: #0D95FC;
+    .foodalert .custom-checkbox
+    .custom-control-input:checked~.custom-control-label::before {
+        border-color: var(--primary);
     }
-    .foodalert .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    .foodalert .custom-checkbox
+    .custom-control-input:checked~.custom-control-label::after {
         background: url("../../img/check.svg") no-repeat 50%/75%;
     }
     .foodalert .custom-checkbox .custom-control-label{
@@ -54,25 +76,29 @@ export default {
     }
 
     .foodalert .custom-checkbox:hover .custom-control-label::before  {
-        border-color: #0D95FC;
+        border-color: var(--primary);
     }
 
-    .foodalert .custom-radio .custom-control-label::before, .custom-radio .custom-control-label::after {
+    .foodalert .custom-radio .custom-control-label::before,
+    .custom-radio .custom-control-label::after {
         height: var(--radio-size);
         width: var(--radio-size);
     }
     .foodalert .custom-radio .custom-control-label::before {
         border: 1.5px solid #AAAAAA;
     }
-    .foodalert .custom-radio .custom-control-input:disabled~.custom-control-label::before {
+    .foodalert .custom-radio
+    .custom-control-input:disabled~.custom-control-label::before {
         border: 1.5px solid #EAEAEA;
         background: initial;
     }
-    .foodalert .custom-radio .custom-control-input:checked~.custom-control-label::before {
-        border-color: #0D95FC;
+    .foodalert .custom-radio
+    .custom-control-input:checked~.custom-control-label::before {
+        border-color: var(--primary);
         background-color: initial;
     }
-    .foodalert .custom-radio .custom-control-input:checked~.custom-control-label::after {
+    .foodalert .custom-radio
+    .custom-control-input:checked~.custom-control-label::after {
         background: url("../../img/dot.svg") no-repeat center center/69%;
     }
     .foodalert .custom-radio .custom-control-label{
@@ -86,7 +112,7 @@ export default {
     }
 
     .foodalert .custom-radio:hover .custom-control-label::before  {
-        border-color: #0D95FC;
+        border-color: var(--primary);
     }
 
     .foodalert .custom-switch .custom-control-label::before {
@@ -104,8 +130,10 @@ export default {
         top: calc((var(--switch-height) - var(--switch-circle)) / 2);
     }
 
-    .foodalert .custom-switch .custom-control-input:checked~.custom-control-label::after {
-        transform: translateX(calc(var(--switch-width) - var(--switch-circle) - 5.5px));
+    .foodalert .custom-switch
+    .custom-control-input:checked~.custom-control-label::after {
+        transform: translateX(calc(var(--switch-width) -
+            var(--switch-circle) - 5.5px));
     }
 
     .foodalert .custom-control.custom-switch {
@@ -150,5 +178,41 @@ export default {
         margin-top: 24px;
     }
 
+    .foodalert .form-control.is-invalid {
+        background: unset;
+    }
 
+    .foodalert .invalid-feedback {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.375;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .foodalert .custom-control-input.is-invalid~.custom-control-label {
+        color: initial;
+    }
+
+    .foodalert .super-show {
+        display: block !important;
+    }
+
+    .foodalert .super-hide {
+        display: none !important;
+    }
+
+    .foodalert .button-text {
+      font-size: 16px;
+      font-weight: 700;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .foodalert .standard-neid {
+        font-size: 14px;
+        font-weight: 400;
+        color: #484848;
+        -moz-osx-font-smoothing: grayscale;
+    }
 </style>

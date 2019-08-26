@@ -21,7 +21,9 @@ before_script:
 script:
   - npx webpack
   - pycodestyle foodalert/ --exclude=migrations
-  - npx jest --coverage && coveralls-lcov -v -n ./coverage/lcov.info > js-coverage.json
+  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/components/
+  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/pages/
+  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/*.js
   - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
 after_script:
-  - coveralls --merge=js-coverage.json
+  - coveralls

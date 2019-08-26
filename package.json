@@ -10,8 +10,8 @@
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
-    "bootstrap": "^4.1.3",
-    "bootstrap-vue": "^2.0.0-rc.19",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.28",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "flat": "^4.1.0",
@@ -27,7 +27,6 @@
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.0",
     "vue": "^2.6.10",
-    "vue-ctk-date-time-picker": "^2.1.1",
     "vue-loader": "^15.3.0",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.6.10",
@@ -41,11 +40,12 @@
     "@babel/core": "^7.4.4",
     "@vue/test-utils": "^1.0.0-beta.24",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
     "babel-preset-vue": "^2.0.2",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.8.0",
-    "vue-jest": "^2.6.0"
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "eslint-plugin-vue-a11y": "0.0.31"
   },
   "scripts": {
     "test": "docker-compose run app python manage.py test foodalert"
@@ -59,31 +59,5 @@
   "bugs": {
     "url": "https://github.com/uw-it-aca/uw-foodalert/issues"
   },
-  "homepage": "https://github.com/uw-it-aca/uw-foodalert#readme",
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.{js,vue}",
-      "!**/node_modules/**",
-      "!**/coverage/**",
-      "!**/webpack.config.js",
-      "!**/bundles/**"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "moduleNameMapper": {
-      "^vue$": "vue/dist/vue.common.js",
-      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-      ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/foodalert/static/foodalert/js/__mocks__/fileMock.js"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "vue-jest"
-    }
-  }
+  "homepage": "https://github.com/uw-it-aca/uw-foodalert#readme"
 }

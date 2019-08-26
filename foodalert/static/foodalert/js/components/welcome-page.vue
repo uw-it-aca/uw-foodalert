@@ -1,14 +1,5 @@
 <template>
     <generic-page>
-      <template #banner>
-        <b-container fluid class="py-2" style="background-color: #4b2e83">
-          <b-row class="justify-content-center">
-            <b-col md="8">
-              <b-img :src="require('../../img/uw-logo.png')" alt="UW Block Logo" width="40"></b-img>
-            </b-col>
-          </b-row>
-        </b-container>
-      </template>
       <template #heading>
         Welcome
       </template>
@@ -17,10 +8,15 @@
       </template>
       <template #navigation>
         <div class="mt-5">
-          <b-row align-h="between">
-            <b-col md="6" lg="5"  order-md="2"><b-button class="mb-3" type="submit" block variant="primary" size="lg" style="white-space: nowrap;" @click="getNextPage()">Let's get started</b-button>
+          <b-row align-h="end">
+            <b-col md="3" lg="3">
+              <b-button class="mb-3 button-text" type="submit"
+                        block variant="primary"
+                        size="lg" style="white-space: nowrap;"
+                        @click="getNextPage()">
+                          Let's go
+              </b-button>
             </b-col>
-            <b-col md="6" lg="5" order-md="1"></b-col>
           </b-row>
         </div>
       </template>
@@ -28,21 +24,21 @@
 </template>
 
 <script>
-import GenericPage from "./generic-page.vue";
+import GenericPage from './generic-page.vue';
 export default {
-	components: {
-		"generic-page": GenericPage,
-	},
-	props: {
-		nextPageName: String,
-	},
-	methods: {
-		getNextPage() {
-			this.$router.push({name: this.nextPageName});
-		},
-	},
-	data() {
-		return {}
-	},
-}
+  components: {
+    'generic-page': GenericPage,
+  },
+  props: {
+    nextPageName: String,
+  },
+  methods: {
+    getNextPage() {
+      this.$router.push({name: this.nextPageName});
+    },
+  },
+  data() {
+    return {};
+  },
+};
 </script>

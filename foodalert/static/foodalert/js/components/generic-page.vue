@@ -1,74 +1,74 @@
 <template>
-    <div class="page">
-        <div id="standard-notification">
-            <b-collapse id="notif-container" v-model="notificationState">
-                <b-container fluid class="text-center py-3" :style="notifStyle">
-                    <b-container>
-                        <b-row class="justify-content-center">
-                            <b-col md="8">
-                                <div class="h5 text-white pt-2">
-                                  <slot name="notification"></slot>
-                                </div>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-container>
-            </b-collapse>
+  <div class="page">
+    <div class="page-content pb-2">
+      <header class="md-5 mb-2">
+        <alert-box v-if="notificationState" aria-live="polite" role="alert">
+          <slot name="notification"></slot>
+        </alert-box>
+        <div class="standard-container mt-md-5 mt-4">
+          <h1 id="standard-heading">
+            <slot name="heading"></slot>
+          </h1>
         </div>
-        <div class="page-content pb-2">
-            <slot name="banner"></slot>
-            <b-container>
-              <b-row class="justify-content-center">
-                <b-col lg=8 md=12 class="page-content-padding">
-                  <h1 id="standard-heading" class="pt-md-5 pt-3 pb-2"><slot name="heading"></slot></h1>
-                  <div id="standard-body"><slot name="body"></slot></div>
-                  <slot name="navigation"></slot>
-                </b-col>
-              </b-row>
-            </b-container>
-        </div>
-        <footer id="relative-footer" class="text-center">
-          <a href="mailto:help@uw.edu?subject=Hungry Husky support">Contact support</a>
-          <p>© 2019 University of Washington</p>
-        </footer>
+      </header>
+      <main id="standard-body" class="standard-container mt-3">
+        <slot name="body"></slot>
+        <slot name="navigation"></slot>
+      </main>
     </div>
+    <footer id="relative-footer" class="text-center">
+      <a href="mailto:help@uw.edu?subject=Hungry Husky support">
+        Contact support
+      </a>
+      <p>© 2019 University of Washington</p>
+    </footer>
+  </div>
 </template>
 
 <script>
+import AlertBox from '../components/alert-box.vue';
 export default {
-    props: {
-        startWithNotification: {
-            type: Boolean,
-            default: false
-        },
-        timeoutOfNotification: {
-            type: Number,
-            default: 3000
-        },
-        notificationColor: {
-            type: String,
-            default: "#0070C9"
-        }
+  components: {
+    'alert-box': AlertBox,
+  },
+  props: {
+    startWithNotification: {
+      type: Boolean,
+      default: false,
     },
-    data() {
-        return {
-            notificationState: false,
-            notifStyle: "",
-        }
+  },
+  data() {
+    return {
+      notificationState: false,
+    };
+  },
+  beforeMount() {
+    if (this.startWithNotification) {
+      this.notificationState = true;
+    }
+  },
+  mounted() {
+    this.$nextTick(
+        function() {
+          document.activeElement.blur();
+          const newFocus = document.querySelector('h1');
+          newFocus.setAttribute('tabindex', '-1');
+          newFocus.style.outline = 'none';
+          newFocus.focus();
+          newFocus.removeAttribute('tabindex');
+
+          window.addEventListener('resize', this.updateHeightOfPage);
+          this.updateHeightOfPage();
+        }.bind(this)
+    );
+  },
+  methods: {
+    updateHeightOfPage() {
+      document.querySelector('.page').style.minHeight =
+        (window.innerHeight - 65) + 'px';
     },
-    methods: {
-        showNotification: function() {
-            setTimeout(() => {this.notificationState = true;}, 250);
-            setTimeout(() => {this.notificationState = false;}, this.timeoutOfNotification);
-        }
-    },
-    beforeMount() {
-        if(this.startWithNotification) {
-            this.showNotification();
-        }
-        this.notifStyle = "background-color: " + this.notificationColor + ";";
-    },
-}
+  },
+};
 </script>
 
 <style>
@@ -81,14 +81,14 @@ export default {
     }
     #standard-heading {
         font-size: 32px;
-        line-height: 1.375em;
-        font-weight: 600;
+        line-height: 1.2;
+        font-weight: 700;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
     #standard-body {
         font-size:16px;
-        line-height: 1.375em;
+        line-height: 1.5;
         font-weight: 400;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
@@ -102,7 +102,7 @@ export default {
 
     .page {
         display: flex;
-        min-height: 100vh;
+        min-height: calc(100vh - 65px);
         flex-direction: column;
         align-content: space-between;
     }
@@ -112,5 +112,34 @@ export default {
         font-size: 12px;
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    .standard-container {
+      max-width: 700px;
+      padding-left: 24px;
+      padding-right: 24px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .foodalert .alert {
+      font-weight: 600;
+      font-size: 20px;
+      background-color: #3d9970;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 70px;
+      border-radius: 10px;
+    }
+
+    .foodalert .alert-dismissible .close{
+      height: 100%;
+      opacity: 1;
+    }
+
+    .foodalert .alert-dismissible .close:hover{
+      color: white;
     }
 </style>
