@@ -15,19 +15,14 @@
         <preview-box>
           <span>{{concatinateMessage()}}</span>
           <br />
-          <br />
-          Quantity:
-          <span v-if="form.amount_of_food_left">
-            {{form.amount_of_food_left}}
-          </span>
-          <span v-else>About 8 full meals</span>
+
           <br />
           End time:
           <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB 130</span>
+          <span v-else>HUB Ballroom</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -55,7 +50,7 @@
           <b-form-input id="event-name" ref="event"
             aria-labelledby="event-label"
             v-model="form.event" :state="inputValid('event')"
-            placeholder="FIUTS weekly club meeting"
+            placeholder="Graduate student social"
             class="standard-placeholder"
             size="lg" @blur="enableValidation.event=true">
           </b-form-input>
@@ -75,9 +70,11 @@
                           aria-describedby="food-clarification"
                           v-model="form.food_served"
                           :state="inputValid('food_served')"
-                          placeholder="Hot Indian buffet food"
+                          placeholder="3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
                           class="standard-placeholder" size="lg"
-                          @blur="enableValidation.food_served=true">
+                          @blur="enableValidation.food_served=true"
+                          rows="3"
+                          max-rows="8">
           </b-form-textarea>
           <b-form-invalid-feedback id="food-description-feedback" role="alert">
             Please enter a description of your food.
@@ -89,7 +86,7 @@
           <b-form-input id="location" aria-labelledby="location-label"
             ref="location"
             v-model="form.location" :state="inputValid('location')"
-            placeholder="HUB 130" class="standard-placeholder" size="lg"
+            placeholder="HUB Ballroom" class="standard-placeholder" size="lg"
             @blur="enableValidation.location=true">
           </b-form-input>
           <b-form-invalid-feedback id="location-feedback" role="alert">
@@ -124,7 +121,7 @@
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
         <h3 id="allergen-label" class="standard-label mb-0">
-          Does the food contain allergens?
+          Does the food contain the following allergens?
         </h3>
         <p id="allergen-clarification" class="mb-2" style="font-size: 14px;">
           It's ok if you are unsure, just select to the best of your
@@ -168,18 +165,12 @@
           <span>{{concatinateMessage()}}</span>
           <br />
           <br />
-          Quantity:
-          <span v-if="form.amount_of_food_left">
-            {{form.amount_of_food_left}}
-          </span>
-          <span v-else>About 8 full meals</span>
-          <br />
           End time:
           <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB 130</span>
+          <span v-else>HUB Ballroom</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -268,13 +259,13 @@ export default {
       if(this.form.food_served){
         msg += this.form.food_served;
       } else {
-        msg += "Hot Indian buffet food"
+        msg += "3 platters of Mediterranean appetizers: marinated mushrooms, grilled asparagus, caprese salad, cured meats"
       }
       msg += " from ";
       if(this.form.event){
         msg += this.form.event;
       } else {
-        msg += "FIUTS weekly club meeting"
+        msg += "Graduate student social"
       }
       msg += "."
 

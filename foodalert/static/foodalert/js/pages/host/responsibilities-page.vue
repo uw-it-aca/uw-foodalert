@@ -23,15 +23,15 @@
                     sharing.
                   </span>
                   <div v-if="isIOSDevice">
-                    <b-link herf="#" v-b-toggle.cond1-info
+                    <button class="btn btn-link p-0" role="link" v-b-toggle.cond1-info
                       aria-label="Learn more about safety responsibilities">
                       Learn more
-                    </b-link>
+                    </button>
                   </div>
-                  <b-link herf="#" v-b-toggle.cond1-info v-else
+                  <button class="btn btn-link p-0" role="link" v-b-toggle.cond1-info v-else
                     aria-label="Learn more about safety responsibilities">
                     Learn more
-                  </b-link>
+                  </button>
                 </span>
               </b-form-checkbox>
               <collapse-text-box bid="cond1-info">
@@ -54,15 +54,15 @@
                     for no more than <strong>four hours</strong>.
                   </span>
                   <div v-if="isIOSDevice">
-                    <b-link herf="#" v-b-toggle.cond2-info
+                    <button class="btn btn-link p-0" role="link" v-b-toggle.cond2-info
                       aria-label="Learn more about potentially hazardous food">
                       Learn more
-                    </b-link>
+                    </button>
                   </div>
-                  <b-link herf="#" v-b-toggle.cond2-info v-else
+                  <button class="btn btn-link p-0" role="link" v-b-toggle.cond2-info v-else
                     aria-label="Learn more about potentially hazardous food">
                     Learn more
-                  </b-link>
+                  </button>
                 </span>
               </b-form-checkbox>
               <collapse-text-box bid="cond2-info">

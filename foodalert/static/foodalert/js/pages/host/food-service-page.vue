@@ -23,22 +23,22 @@
           <span id="permit-option">
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">
-              <b-link herf="#" v-b-toggle.perm-info
+              <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info
               aria-label="Learn more about UW Temporary Food Service Permit">
                 Learn more
-              </b-link>
+              </button>
             </div>
-            <b-link herf="#" v-b-toggle.perm-info v-else
+            <button class="btn btn-link p-0" role="link" v-b-toggle.perm-info v-else
               aria-label="Learn more about UW Temporary Food Service Permit">
               Learn more
-            </b-link>
+            </button>
           </span>
         </b-form-checkbox>
         <collapse-text-box bid="perm-info">
           When providing food to the public (anyone beyond the staff or
           faculty of your unit), UW offices are required to secure a
           Temporary Food Permit through
-          <a href="#" aria-label="UW Environmental Health &amp; Safety
+          <a href="https://www.ehs.washington.edu/workplace/food-safety-program/temporary-food-service-permit" target="_blank" aria-label="UW Environmental Health &amp; Safety
           Temporary Food Service Permit page"> UW Environmental Health &amp;
           Safety </a> to help ensure that food service providers
           meet safety regulations and the food itself is safe for consumption.
