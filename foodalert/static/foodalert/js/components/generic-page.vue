@@ -80,7 +80,7 @@ export default {
   methods: {
     updateHeightOfPage() {
       document.querySelector('.page').style.minHeight =
-        (window.innerHeight - 65) + 'px';
+        window.innerHeight + 'px';
     },
   },
 };
@@ -159,5 +159,9 @@ export default {
 
     .foodalert .alert-dismissible .close:hover{
       color: white;
+    }
+
+    .foodalert .btn.btn-link[role='link'] {
+      vertical-align: initial;
     }
 </style>

@@ -117,7 +117,7 @@ export default {
         this.selected.includes('preparedByAuth')) {
         this.$router.push({
           name: 'h-responsibilities',
-          params: {backPage: 'h-food-service'},
+          params: {backPage: 'h-food-service', food_qualification: this.selected},
         });
       } else {
         this.$router.push({name: 'h-categories'});

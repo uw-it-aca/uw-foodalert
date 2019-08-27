@@ -225,6 +225,9 @@ export default {
     'preview-box': PreviewBox,
     'time-picker': TimePicker,
   },
+  props: {
+    food_qualification: String
+  },
   data() {
     return {
       form: {
@@ -344,6 +347,7 @@ export default {
         'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
+          'qualification': this.food_qualification,
           'amount': 'test amount',
           'allergens': this.form.allergens,
         },
@@ -386,6 +390,10 @@ export default {
     },
   },
   beforeMount() {
+    if (typeof this.food_qualification === 'undefined') {
+      this.$router.push({name: 'h-welcome'});
+    }
+
     const headers = {
       'Content-Type': 'application/json',
     };
