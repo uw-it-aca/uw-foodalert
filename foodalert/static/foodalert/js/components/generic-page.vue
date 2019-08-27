@@ -22,7 +22,7 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5" role="main">
+      <main id="standard-body" class="standard-container mt-md-5">
         <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>
@@ -66,6 +66,7 @@ export default {
         function() {
           document.activeElement.blur();
           const newFocus = document.querySelector('h1');
+
           newFocus.setAttribute('tabindex', '-1');
           newFocus.style.outline = 'none';
           newFocus.focus();

@@ -38,10 +38,11 @@ export default {
       const headers = {
         'Content-Type': 'application/json',
       };
-      axios.get('/notification/', {'headers': headers})
+
+      axios.get('/notification/', {headers})
           .then((response) => {
-            console.log(response);
             const data = response.data;
+
             for (let i = 0; i < data.length; i++) {
             // Iterate over our logs row by row
               const log = data[i];
@@ -55,9 +56,11 @@ export default {
               // Add the year and month to respective arrays for sorting
               const year = log.time.created.substring(11, 15);
               const month = log.time.created.substring(4, 7);
+
               if (!this.years.includes(year)) {
                 this.years.push(year);
               }
+
               if (!this.months.includes(month)) {
                 this.months.push(month);
               }
@@ -70,36 +73,35 @@ export default {
 
               // Gather all updates to this corresponding item
               const itemUpdates = this.updates.filter(function(update) {
-                return (update.parent_notification == log.id);
+                return (update.parent_notification === log.id);
               });
+
               // Add each update of this item to the log
               for (let j = 0; j < itemUpdates.length; j++) {
                 this.items.push(this.updateToLog(itemUpdates[j]));
               }
             }
+
             this.$emit('requestComplete');
           })
-          .catch(function(error) {
-            console.log('There was an error processing the request');
-            console.log(error);
-          });
+          .catch((error) => this.showErrorPage(error.response,
+              'a-audit'));
     },
     requestUpdates() {
       const headers = {
         'Content-Type': 'application/json',
       };
-      axios.get('/updates/', {'headers': headers})
+
+      axios.get('/updates/', {headers})
           .then((response) => {
-            console.log(response);
             const data = response.data;
+
             for (let i = 0; i < data.length; i++) {
               this.updates.push(data[i]);
             }
           })
-          .catch(function(error) {
-            console.log('There was an error processing the request');
-            console.log(error);
-          });
+          .catch((error) => this.showErrorPage(error.response,
+              'a-audit'));
     },
     updateToLog(update) {
       const ret = {
@@ -117,12 +119,14 @@ export default {
         'ended': '',
         '_rowVariant': 'update',
       };
+
       return ret;
     },
     exportTable() {
       // Write the column names as the first line in the result
       const keys = Object.keys(this.items[0]);
       let result = '';
+
       result += keys.join(',');
       result += '\n';
 
@@ -134,6 +138,7 @@ export default {
           } else {
             result += item[key];
           }
+
           result += ',';
         });
         result = result.slice(0, -1);
@@ -146,6 +151,7 @@ export default {
 
       // Programmatically make a link to download the csv and click it
       const link = document.createElement('a');
+
       link.setAttribute('href', data);
       link.setAttribute('download', 'auditlog.csv');
       document.body.appendChild(link);
@@ -160,20 +166,23 @@ export default {
     },
   },
   computed: {
-    filteredItems: function() {
+    filteredItems() {
       let logs = this.items;
       const year = this.selectedYear;
       const month = this.selectedMonth;
-      if (year != 'All') {
+
+      if (year !== 'All') {
         logs = logs.filter(function(log) {
           return log['time.created'].includes(year);
         });
       }
-      if (month != 'All') {
+
+      if (month !== 'All') {
         logs = logs.filter(function(log) {
           return log['time.created'].includes(month);
         });
       }
+
       return logs;
     },
   },

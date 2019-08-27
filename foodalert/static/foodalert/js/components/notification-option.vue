@@ -152,6 +152,7 @@
 
 <script>
 const axios = require('axios');
+
 import Cookies from 'js-cookie';
 
 export default {
@@ -193,9 +194,9 @@ export default {
   },
   methods: {
     formatter(value, event) {
-      if (this.type == 'text') {
+      if (this.type === 'text') {
         return this.numberFormatter(value, event);
-      } else if (this.type == 'email') {
+      } else if (this.type === 'email') {
         return value;
       }
     },
@@ -203,43 +204,54 @@ export default {
       if (value.length > 14) {
         return value.substr(0, 14);
       }
+
       const cleaned = ('' + value).replace(/\D/g, '');
       const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
       if (match) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3];
       }
+
       return cleaned;
     },
     getNewState(spinnerOpt) {
       let inputType = this.type;
       let notifValue = this.localData.text;
+
       if (inputType === 'text') {
         inputType = 'sms_number';
-        if (notifValue != '') {
+
+        if (notifValue !== '') {
           notifValue = ('' + notifValue).replace(/\D/g, '');
           notifValue = '+1' + notifValue;
         }
       }
+
       const data = new FormData();
+
       data.set(inputType, notifValue);
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
+
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
       if (this.subid) {
         const url = '/subscription/' + this.subid + '/';
-        axios.patch(url, data, {'headers': headers})
+
+        axios.patch(url, data, {headers})
             .then((response) => {
               this.requestUpdate();
 
               spinnerOpt.state = false;
+
               if (this.newData) {
                 this.newData = false;
               }
+
               this.updateMode = false;
             })
             .catch((error) => this.showErrorPage(error.response,
@@ -249,15 +261,18 @@ export default {
           'email': '',
           'sms_number': '',
         };
+
         postData[inputType] = notifValue;
-        axios.post('/subscription/', postData, {'headers': headers})
+        axios.post('/subscription/', postData, {headers})
             .then((response) => {
               this.requestUpdate();
 
               spinnerOpt.state = false;
+
               if (this.newData) {
                 this.newData = false;
               }
+
               this.updateMode = false;
             })
             .catch((error) => this.showErrorPage(error.response,
@@ -270,7 +285,8 @@ export default {
     },
     cancelUpdate(event, spinnerOpt) {
       spinnerOpt.state = true;
-      if (this.serverData.text == '') {
+
+      if (this.serverData.text === '') {
         this.isOpen = false;
       } else if (this.updateMode) {
         this.updateMode = false;

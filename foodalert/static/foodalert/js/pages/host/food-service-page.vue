@@ -104,13 +104,15 @@ export default {
   },
   methods: {
     getNextPage() {
-      if (this.selected.length == 0) {
+      if (this.selected.length === 0) {
         this.validateOn = false;
         setTimeout(function() {
           this.validateOn = true;
         }.bind(this), 1);
+
         return;
       }
+
       if (this.selected.includes('hasPermit') ||
         this.selected.includes('preparedByAuth')) {
         this.$router.push({
@@ -128,8 +130,9 @@ export default {
       setTimeout(function() {
         document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
-          return val != document.querySelectorAll('input')[pos]._value;
+          return val !== document.querySelectorAll('input')[pos]._value;
         });
+
         if (!this.validateOn) this.validateOn = true;
       }.bind(this), 1);
     },
@@ -142,8 +145,16 @@ export default {
     };
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',

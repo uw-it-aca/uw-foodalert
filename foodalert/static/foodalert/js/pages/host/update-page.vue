@@ -129,18 +129,19 @@ export default {
     const headers = {
       'Content-Type': 'application/json',
     };
-    axios.get('/notification/?host_netid=' + this.netID, {'headers': headers})
+
+    axios.get('/notification/?host_netid=' + this.netID, {headers})
         .then((response) => {
           const data = response.data.filter(function(notif) {
-            return notif.ended == false;
+            return notif.ended === false;
           });
+
           if (data.length === 0) {
             this.$router.push({name: 'h-welcome'});
           } else {
             axios.get('/notification/' + data[0]['id'] + '/',
-                {'headers': headers})
+                {headers})
                 .then((response) => {
-                  console.log(response.data);
                   this.state = response.data;
                 }).catch((error) =>
                   this.showErrorPage(error.response, 'h-update'));
@@ -151,21 +152,23 @@ export default {
   methods: {
     focusMyElement(e) {
       const el = document.getElementById('submitconfirmation');
+
       el.setAttribute('tabIndex', '-1');
       el.focus();
       el.removeAttribute('tabIndex');
     },
     preSendUpdate() {
-      if ((this.otherText == '') && (this.selected != 'noFoodUpdate')) {
+      if ((this.otherText === '') && (this.selected !== 'noFoodUpdate')) {
         this.validationOn = true;
         this.$refs.otherMessage.$el.focus();
+
         return;
       }
 
       this.$bvModal.show('submitconfirmation');
     },
     sendUpdate() {
-      if (this.selected == 'noFoodUpdate') {
+      if (this.selected === 'noFoodUpdate') {
         const data = {
           'text': 'No Food left! The event: ' + this.state.event +
                   ' has ended and is no longer serving food',
@@ -178,9 +181,8 @@ export default {
           'X-CSRFToken': csrftoken,
         };
 
-        axios.post('/updates/', data, {'headers': headers})
+        axios.post('/updates/', data, {headers})
             .then(function(response) {
-              console.log(response);
               this.$router.push({name: 'h-ended'});
             }.bind(this))
             .catch((error) => this.showErrorPage(error.response, 'h-update'));
@@ -194,22 +196,24 @@ export default {
           'Content-Type': 'application/json',
           'X-CSRFToken': csrftoken,
         };
-        axios.post('/updates/', data, {'headers': headers})
+
+        axios.post('/updates/', data, {headers})
             .then(function(response) {
-              console.log(response);
               this.privNotifText = 'Your update was sent.';
               this.$refs.notifBox.showNotification();
             }.bind(this))
             .catch((error) => this.showErrorPage(error.response, 'h-update'));
       }
+
       this.selected = 'noFoodUpdate';
       this.otherText= '';
     },
     inputValid() {
       if (this.validationOn) {
-        return (((this.otherText=='') &&
-          (this.selected=='otherUpdate')) ? false : null);
+        return (((this.otherText === '') &&
+          (this.selected === 'otherUpdate')) ? false : null);
       }
+
       return null;
     },
   },
