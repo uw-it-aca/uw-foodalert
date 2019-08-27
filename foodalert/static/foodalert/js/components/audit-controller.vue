@@ -84,8 +84,8 @@ export default {
 
             this.$emit('requestComplete');
           })
-          .catch(function(error) {
-          });
+          .catch((error) => this.showErrorPage(error.response,
+                'a-audit'));
     },
     requestUpdates() {
       const headers = {
@@ -100,8 +100,8 @@ export default {
               this.updates.push(data[i]);
             }
           })
-          .catch(function(error) {
-          });
+          .catch((error) => this.showErrorPage(error.response,
+                'a-audit'));
     },
     updateToLog(update) {
       const ret = {
