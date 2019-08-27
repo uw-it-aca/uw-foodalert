@@ -85,7 +85,7 @@ export default {
             this.$emit('requestComplete');
           })
           .catch((error) => this.showErrorPage(error.response,
-                'a-audit'));
+              'a-audit'));
     },
     requestUpdates() {
       const headers = {
@@ -101,7 +101,7 @@ export default {
             }
           })
           .catch((error) => this.showErrorPage(error.response,
-                'a-audit'));
+              'a-audit'));
     },
     updateToLog(update) {
       const ret = {

@@ -68,7 +68,6 @@
               Tell people about your
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
-                            aria-labelledby="food-label"
                             aria-describedby="food-clarification"
                             v-model="form.food_served"
                             :state="inputValid('food_served')"
@@ -88,7 +87,7 @@
         <div>
           <label id="location-label" class="standard-label w-100"
             for="location">Location
-            <b-form-input id="location" aria-labelledby="location-label"
+            <b-form-input id="location"
               ref="location"
               v-model="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
@@ -138,7 +137,7 @@
 
         <b-container class="px-0 mx-0">
           <b-form-checkbox-group id="allergens-checkbox"
-            v-model="form.allergens" aria-labelledby="allergen-label"
+            v-model="form.allergens"
             aria-describedby="allergen-clarification">
             <b-row>
               <b-col v-for="allergen in allergens" :key="allergen" cols="6">
@@ -156,7 +155,7 @@
           Do people need to bring food storage containers?
         </h3>
         <b-container class="px-0 mx-0">
-          <b-form-radio-group id="bring-radio" aria-labelledby="bring-label"
+          <b-form-radio-group id="bring-radio"
             v-model="form.bring_container" stacked>
             <b-form-radio :value="true">
               <span>Yes</span>
