@@ -10,7 +10,8 @@ addons:
   postgresql: "9.4"
 matrix:
   include:
-    - python: 3.6
+    - language: python
+      python: 3.6
       cache: pip
       before_script:
         - psql -c 'create database travis_ci_test;' -U postgres
@@ -24,7 +25,8 @@ matrix:
         - npx webpack
         - pycodestyle foodalert/ --exclude=migrations
         - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
-    - node_js: 8.15.1
+    - language: node_js
+      node_js: 8.15.1
       cache: npm
       before_script:
         - npm install
