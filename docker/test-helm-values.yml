@@ -19,3 +19,17 @@ branch: develop
 environmentVariables:
   - name: SWS_ENV
     value: PROD
+environmentVariablesSecrets:
+  twilioSID:
+    name: TWILIO_ACCOUNT_SID
+    secretName: foodalert-eval-twillio  
+    secretKey: sid
+  twilioSecret:
+    name: TWILIO_AUTH_TOKEN
+    secretName: foodalert-eval-twillio
+    secretKey: secret
+  twilioNSID:
+    name: TWILIO_NOTIFY_SERVICE_ID
+    secretName: foodalert-eval-twillio
+    secretKey: service_sid
+
