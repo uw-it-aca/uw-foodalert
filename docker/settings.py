@@ -14,8 +14,8 @@ INSTALLED_APPS += [
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'prereq_map/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'prereq_map', 'static', 'webpack-stats.json'),
+        'BUNDLE_DIR_NAME': 'foodalert/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'foodalert', 'static', 'webpack-stats.json'),
     }
 }
 
@@ -23,8 +23,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-DATA_ROOT = os.path.join(BASE_DIR, "prereq_map/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
@@ -39,8 +37,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'prereq_map.context_processors.google_analytics',
-                'prereq_map.context_processors.django_debug',
+                'foodalert.context_processors.google_analytics',
+                'foodalert.context_processors.django_debug',
             ],
         }
     }
@@ -58,3 +56,8 @@ FOODALERT_USE_SMS = 'twilio'
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "NONE")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "NONE")
 TWILIO_NOTIFY_SERVICE_ID = os.getenv("TWILIO_NOTIFY_SERVICE_ID", "NONE")
+
+FOODALERT_AUTHZ_GROUPS = {
+    'create': 'u_test_host',
+    'audit': 'u_test_admin'
+}
