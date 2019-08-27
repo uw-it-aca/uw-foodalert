@@ -41,3 +41,8 @@ environmentVariablesSecrets:
     name: SP_CERT
     secretName: foodalert.aca-aws.s.uw.edu
     secretKey: tls.crt
+  djangoSecret:
+    name: DJANGO_SECRET
+    secretName: foodalert-eval-django-secret
+    secretKey: secret
+
