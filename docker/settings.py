@@ -9,13 +9,28 @@ INSTALLED_APPS += [
     'phonenumber_field',
     'dbmail',
     'premailer',
-    'django.contrib.sites',
+    'django.contrib.sites'
 ]
+
+SITE_ID = 1
+
+if os.getenv("ENV") == "localdev":
+    DEBUG = True
+else:
+    DEBUG = False
+
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'foodalert/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'foodalert', 'static', 'webpack-stats.json'),
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'foodalert/bundles/',  # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR,
+                                   'foodalert',
+                                   'static',
+                                   'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
     }
 }
 
@@ -26,29 +41,6 @@ STATICFILES_FINDERS = (
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'debug':  True,
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'foodalert.context_processors.google_analytics',
-                'foodalert.context_processors.django_debug',
-            ],
-        }
-    }
-]
-
-if os.getenv("ENV") == "localdev":
-    DEBUG = True
-
-if os.getenv("AUTH", "NONE") == "SAML_MOCK":
-    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 # SETTING FOR WHICH SMS TO USE
 FOODALERT_USE_SMS = 'twilio'
@@ -61,3 +53,10 @@ FOODALERT_AUTHZ_GROUPS = {
     'create': 'u_test_host',
     'audit': 'u_test_admin'
 }
+
+
+if os.getenv("AUTH", "NONE") == "SAML_MOCK":
+    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+    from django.urls import reverse_lazy
+    LOGIN_URL = reverse_lazy('saml_login')
+    LOGOUT_URL = reverse_lazy('saml_logout')
