@@ -122,13 +122,17 @@ export default {
       return data;
     },
     requestUpdate() {
-      axios.get('/subscription/?netID=' + this.netID)
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      axios.get('/subscription/?netID=' + this.netID, {headers})
           .then(this.getSubID)
           .then((data) => {
             if (this.subid) {
               const url = '/subscription/' + this.subid + '/';
 
-              axios.get(url)
+              axios.get(url, {headers})
                   .then((response) => {
                     response.data = this.formatSms(response.data);
                     this.notif_info = response.data;

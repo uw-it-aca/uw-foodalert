@@ -386,7 +386,14 @@ export default {
     },
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
 
       if (result.data.length) {
@@ -395,7 +402,7 @@ export default {
         }});
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-    axios.get('/allergen/').then((result) => {
+    axios.get('/allergen/', {headers}).then((result) => {
       this.allergens = [];
       result.data.forEach((allergen)=>{
         this.allergens.push(allergen.name);
