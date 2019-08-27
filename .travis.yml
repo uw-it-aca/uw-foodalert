@@ -22,7 +22,6 @@ matrix:
         - cp travis/manage.py manage.py
         - python manage.py migrate --noinput
       script:
-        - npx webpack
         - pycodestyle foodalert/ --exclude=migrations
         - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
     - language: node_js
@@ -34,5 +33,7 @@ matrix:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/components/
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/pages/
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/*.js
+script:
+  - npx webpack
 after_script:
   - coveralls
