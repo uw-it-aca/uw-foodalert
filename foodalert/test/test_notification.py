@@ -50,7 +50,15 @@ class NotificationTest(TestCase):
         )
         (cls.user3, cls.client_3) = create_user_and_client_from_data(
             cls.test_data["users"][2],
-            [create_group, audit_group]
+            [create_group]
+        )
+        (cls.user4, cls.client_4) = create_user_and_client_from_data(
+            cls.test_data["users"][3],
+            [audit_group]
+        )
+        (cls.user5, cls.client_5) = create_user_and_client_from_data(
+            cls.test_data["users"][4],
+            []
         )
 
         Subscription.objects.create(
@@ -385,6 +393,9 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 405)
 
+    """
+    Helper functions
+    """
     def data_to_list_represent(self, data):
         return {
                 "id": data["id"],

@@ -78,6 +78,18 @@
             "email": "testuser_three@test.com",
             "password": "test_pass_three",
             "isMemberOf": []
+        },
+        {
+            "username": "testuser_four",
+            "email": "testuser_four@test.com",
+            "password": "test_pass_four",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_five",
+            "email": "testuser_five@test.com",
+            "password": "test_pass_five",
+            "isMemberOf": []
         }
     ]
 }
