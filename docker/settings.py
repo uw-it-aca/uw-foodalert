@@ -49,7 +49,7 @@ TEMPLATES = [
 if os.getenv("ENV") == "localdev":
     DEBUG = True
 
-if os.getenv("AUTH", "SAML_MOCK") == "SAML_MOCK":
+if os.getenv("AUTH", "NONE") == "SAML_MOCK":
     MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
 
 # SETTING FOR WHICH SMS TO USE
