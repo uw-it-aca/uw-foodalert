@@ -8,13 +8,9 @@ addons:
       - libxmlsec1-dev
   chrome: stable
   postgresql: "9.4"
-stages:
-  - Unit Testing
-  - Integration testing
-jobs:
+matrix:
   include:
-    - stage: Unit Testing
-      language: python
+    - language: python
       python: 3.6
       cache: pip
       before_script:
@@ -28,8 +24,7 @@ jobs:
       script:
         - pycodestyle foodalert/ --exclude=migrations
         - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
-    - stage: Unit Testing
-      language: node_js
+    - language: node_js
       node_js: 8.15.1
       cache: npm
       before_script:
@@ -38,9 +33,6 @@ jobs:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/components/
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/pages/
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/*.js
-    - stage: Integration testing
-      node_js: 8.15.1
-      script:
         - npx webpack
-      after_script:
-        - coveralls
+after_script:
+  - coveralls
