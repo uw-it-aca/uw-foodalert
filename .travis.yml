@@ -30,9 +30,7 @@ matrix:
       before_script:
         - npm install
       script:
-        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/components/
-        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/pages/
-        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/*.js
+        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
         - npx webpack
 after_script:
   - coveralls
