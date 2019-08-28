@@ -2,7 +2,7 @@ module.exports = {
   'Host Welcome Page Test': function(browser) {
     browser.pause(5000);
     browser
-        .url('http://food:8000/h/welcome');
+        .url('http://localhost:8000/h/welcome');
 
     browser.waitForElementVisible('body');
 
