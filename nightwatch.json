@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["./static/foodalert/js/tests"],
+  "src_folders" : ["./foodalert/static/foodalert/js/tests"],
 
   "webdriver" : {
     "start_process": true,
