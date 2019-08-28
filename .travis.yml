@@ -32,6 +32,7 @@ matrix:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
         - npx webpack
     - language: node_js
+      node_js: 12.9.1
       services:
         - docker
       addons:
@@ -39,7 +40,7 @@ matrix:
       install: true
       script:
         - docker-compose -f docker-compose.test.yml build
-        - docker-copmose -f docker-compose.test.yml up -d
+        - docker-compose -f docker-compose.test.yml up -d
         - rm package.json package-lock.json
         - npm install nightwatch chromedriver
         - ./node_modules/.bin/nightwatch
