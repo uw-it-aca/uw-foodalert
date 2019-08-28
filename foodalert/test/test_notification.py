@@ -154,7 +154,7 @@ class NotificationTest(TestCase):
         # Assert that the two responses were not equal
         self.assertNotEqual(actual_json1, actual_json2)
     
-    def test_perm_list_get(self):
+    """def test_perm_list_get(self):
         response = self.client_4.get('/notification/')
         self.assertEqual(response.status_code, 200)
         
@@ -175,7 +175,7 @@ class NotificationTest(TestCase):
         self.assertEqual(response.status_code, 403)
         
         response = self.client_6.get(url)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 403)"""
 
     """
     POST tests
@@ -350,7 +350,7 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 405)
     
-    def test_perm_list_post(self):
+    """def test_perm_list_post(self):
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
         proper_payload = \
@@ -376,7 +376,7 @@ class NotificationTest(TestCase):
                 data=proper_payload,
                 content_type='application/json'
             )
-            self.assertEqual(response.status_code, 403)
+            self.assertEqual(response.status_code, 403)"""
 
     """
     PATCH tests
