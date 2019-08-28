@@ -201,11 +201,15 @@ class SubscriptionList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            data = serializer.data
-            return Response(
-                data, status=status.HTTP_201_CREATED, headers=headers)
+            # catch invalid phone number
+            try:
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                data = serializer.data
+                return Response(
+                    data, status=status.HTTP_201_CREATED, headers=headers)
+            except ValueError as error:
+                return Response(str(error), status=status.HTTP_400_BAD_REQUEST)
         else:
             print("failed to post update")
             return Response(

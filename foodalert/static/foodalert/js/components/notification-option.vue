@@ -71,6 +71,14 @@
                                   v-model="localData.text" width="300px"
                                   :aria-labelledby="type+'-add-label'">
                     </b-form-input>
+                    <div class="invalid-feedback pt-2"
+                        :class="{'super-show':validateOn}"
+                        :id="type+'-verify-feedback'"
+                        role="alert">
+                      <span aria-hidden="true">
+                        {{errorMsg}}
+                      </span>
+                    </div>
                   </b-form-group>
                   <small class="form-text pt-2 pb-0 error-desp"
                          v-if="errorDesc != ''">
@@ -118,6 +126,14 @@
                                     :aria-labelledby="type+'-update-label'"
                                     width="300px">
                       </b-form-input>
+                      <div class="invalid-feedback pt-2"
+                        :class="{'super-show': validateOn}"
+                        :id="type+'-verify-feedback'"
+                        role="alert">
+                        <span aria-hidden="true">
+                          {{errorMsg}}
+                        </span>
+                      </div>
                     </b-form-group>
                     <small class="form-text pt-2 pb-0 error-desp"
                            v-if="errorDesc != ''">
@@ -189,6 +205,11 @@ export default {
       isOpen: false,
       updateMode: false,
       errorDesc: '',
+      validateOn: false,
+      errorMsg: {
+        type: String,
+        default: "invalid input",
+      },
     };
   },
   methods: {
@@ -233,17 +254,19 @@ export default {
       if (this.subid) {
         const url = '/subscription/' + this.subid + '/';
         axios.patch(url, data, {'headers': headers})
-            .then((response) => {
-              this.requestUpdate();
+          .then((response) => {
+            this.requestUpdate();
 
-              spinnerOpt.state = false;
-              if (this.newData) {
-                this.newData = false;
-              }
-              this.updateMode = false;
-            })
-            .catch((error) => this.showErrorPage(error.response,
-                's-notifications'));
+            spinnerOpt.state = false;
+            if (this.newData) {
+              this.newData = false;
+            }
+            this.updateMode = false;
+          })
+          .catch((error) => {
+            spinnerOpt.state = false;
+            this.handleInvalidInput(error)
+          });
       } else {
         const postData = {
           'email': '',
@@ -260,8 +283,25 @@ export default {
               }
               this.updateMode = false;
             })
-            .catch((error) => this.showErrorPage(error.response,
-                's-notifications'));
+            .catch((error) => {
+              spinnerOpt.state = false;
+              this.handleInvalidInput(error)
+            })
+      }
+    },
+    handleInvalidInput(error) {
+      // error should be displayed on page if invalid
+      // phone number is entered
+      if(error.response.status === 400){
+        this.errorMsg = error.response.data
+        this.validateOn = false;
+        setTimeout(function() {
+          this.validateOn = true;
+        }.bind(this), 1);
+        return;
+      }else{
+        this.showErrorPage(error.response,
+          's-notifications');
       }
     },
     deleteData(spinnerOpt) {
