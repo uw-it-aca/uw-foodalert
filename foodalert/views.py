@@ -17,6 +17,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from foodalert.sender import Sender
+from foodalert.utils.permissions import *
 
 # Create your views here.
 
@@ -28,10 +29,12 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationDetailSerializer
+    permission_classes = [(IsSelf&HostRead)|AuditReadOnly]
 
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
+    permission_classes = [HostRead|AuditReadOnly]
     def get_queryset(self):
         qs = Notification.objects.all()
         if 'host_netid' in self.request.query_params:

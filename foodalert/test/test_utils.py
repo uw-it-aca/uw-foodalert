@@ -47,7 +47,9 @@ def create_user_and_client_from_data(data, member_of):
     
     client = Client()
     client.force_login(user)
-    client.session['samlUserdata'] = data["isMemberOf"]
+    session = client.session
+    session['samlUserdata'] = {"isMemberOf": data["isMemberOf"]}
+    session.save()
     
     return (user, client)
 

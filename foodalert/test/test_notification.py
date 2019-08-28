@@ -154,7 +154,7 @@ class NotificationTest(TestCase):
         # Assert that the two responses were not equal
         self.assertNotEqual(actual_json1, actual_json2)
     
-    def test_perm_list(self):
+    def test_perm_list_get(self):
         response = self.client_4.get('/notification/')
         self.assertEqual(response.status_code, 200)
         
@@ -162,9 +162,9 @@ class NotificationTest(TestCase):
         self.assertEqual(response.status_code, 200)
         
         response = self.client_6.get('/notification/')
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 403)
     
-    def test_perm_detail(self):
+    def test_perm_detail_get(self):
         url = '/notification/' + str(self.test_data[0]["id"]) + '/'
         
         response = self.client_4.get(url)
@@ -172,10 +172,10 @@ class NotificationTest(TestCase):
         
         # client 5 has not created this notification
         response = self.client_5.get(url)
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 403)
         
         response = self.client_6.get(url)
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 403)
 
     """
     POST tests
@@ -350,7 +350,7 @@ class NotificationTest(TestCase):
             )
         self.assertEqual(response.status_code, 405)
     
-    def test_perm_list(self):
+    def test_perm_list_post(self):
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
         proper_payload = \
@@ -362,7 +362,7 @@ class NotificationTest(TestCase):
                 data=proper_payload,
                 content_type='application/json'
             )
-            self.assertEqual(response.status_code, 401)
+            self.assertEqual(response.status_code, 403)
             
             response = self.client_5.post(
                 '/notification/',
@@ -376,7 +376,7 @@ class NotificationTest(TestCase):
                 data=proper_payload,
                 content_type='application/json'
             )
-            self.assertEqual(response.status_code, 401)
+            self.assertEqual(response.status_code, 403)
 
     """
     PATCH tests
@@ -436,7 +436,7 @@ class NotificationTest(TestCase):
         """
         Attempts to patch a notification at id expect a 405
         """
-        response = self.client_3.delete(
+        response = self.client_1.delete(
                 "/notification/0/",
                 content_type='application/json'
             )
