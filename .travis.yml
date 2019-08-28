@@ -32,5 +32,7 @@ matrix:
       script:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
         - npx webpack
+    - services:
+        - docker
 after_script:
   - coveralls
