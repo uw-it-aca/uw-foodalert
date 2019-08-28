@@ -169,6 +169,8 @@
 <script>
 const axios = require('axios');
 import Cookies from 'js-cookie';
+import { parsePhoneNumber, ParseError, parsePhoneNumberFromString }
+  from 'libphonenumber-js';
 
 export default {
   props: {
@@ -206,10 +208,7 @@ export default {
       updateMode: false,
       errorDesc: '',
       validateOn: false,
-      errorMsg: {
-        type: String,
-        default: "invalid input",
-      },
+      errorMsg: '',
     };
   },
   methods: {
@@ -232,13 +231,27 @@ export default {
       return cleaned;
     },
     getNewState(spinnerOpt) {
+      this.validateOn = false
+      //initially true
+      let validInput = true;
       let inputType = this.type;
       let notifValue = this.localData.text;
+      
       if (inputType === 'text') {
         inputType = 'sms_number';
         if (notifValue != '') {
-          notifValue = ('' + notifValue).replace(/\D/g, '');
-          notifValue = '+1' + notifValue;
+          try {
+            const phoneNum = parsePhoneNumber(notifValue, 'US')
+            notifValue=phoneNum.number
+            validInput = phoneNum.isValid()
+          } catch (error) {
+            console.log("error" + phoneNum.isValid())
+            if (error instanceof ParseError) {
+              console.log(error.message)
+            } else {
+              throw error
+            }
+          }
         }
       }
       const data = new FormData();
@@ -251,32 +264,12 @@ export default {
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
-      if (this.subid) {
-        const url = '/subscription/' + this.subid + '/';
-        axios.patch(url, data, {'headers': headers})
-          .then((response) => {
-            this.requestUpdate();
-
-            spinnerOpt.state = false;
-            if (this.newData) {
-              this.newData = false;
-            }
-            this.updateMode = false;
-          })
-          .catch((error) => {
-            spinnerOpt.state = false;
-            this.handleInvalidInput(error)
-          });
-      } else {
-        const postData = {
-          'email': '',
-          'sms_number': '',
-        };
-        postData[inputType] = notifValue;
-        axios.post('/subscription/', postData, {'headers': headers})
+      if(validInput){  
+        if (this.subid) {
+          const url = '/subscription/' + this.subid + '/';
+          axios.patch(url, data, {'headers': headers})
             .then((response) => {
               this.requestUpdate();
-
               spinnerOpt.state = false;
               if (this.newData) {
                 this.newData = false;
@@ -286,23 +279,44 @@ export default {
             .catch((error) => {
               spinnerOpt.state = false;
               this.handleInvalidInput(error)
-            })
+            });
+        } else {
+          const postData = {
+            'email': '',
+            'sms_number': '',
+          };
+          postData[inputType] = notifValue;
+          axios.post('/subscription/', postData, {'headers': headers})
+              .then((response) => {
+                this.requestUpdate();
+
+                spinnerOpt.state = false;
+                if (this.newData) {
+                  this.newData = false;
+                }
+                this.updateMode = false;
+              })
+              .catch((error) => {
+                spinnerOpt.state = false;
+                this.showErrorPage(error.response,
+                  's-notifications');
+              })
+        }
+      }else {
+        //show error message
+        this.handleInvalidInput(spinnerOpt)
       }
     },
-    handleInvalidInput(error) {
+    handleInvalidInput(spinnerOpt) {
       // error should be displayed on page if invalid
       // phone number is entered
-      if(error.response.status === 400){
-        this.errorMsg = error.response.data
-        this.validateOn = false;
-        setTimeout(function() {
-          this.validateOn = true;
-        }.bind(this), 1);
-        return;
-      }else{
-        this.showErrorPage(error.response,
-          's-notifications');
+      let input = this.type
+      if(this.type === 'text'){
+        input = "phone number"
       }
+      this.errorMsg = "Invalid " + input + ". Please enter a new one"
+      spinnerOpt.state = false;
+      this.validateOn = true;
     },
     deleteData(spinnerOpt) {
       this.localData.text = '';
