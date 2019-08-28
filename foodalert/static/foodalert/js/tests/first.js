@@ -1,6 +1,6 @@
 module.exports = {
   'Host Welcome Page Test': function(browser) {
-    browser.pause(5000);
+    browser.pause(50000);
     browser
         .url('http://localhost:8000/h/welcome');
 

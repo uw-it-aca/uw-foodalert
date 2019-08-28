@@ -24,6 +24,8 @@ matrix:
       script:
         - pycodestyle foodalert/ --exclude=migrations
         - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
+      after_script:
+        - coveralls
     - language: node_js
       node_js: 8.15.1
       cache: npm
@@ -43,5 +45,3 @@ matrix:
         - rm package.json package-lock.json
         - npm install nightwatch chromedriver
         - ./wait-for.sh localhost:8000 -- ./node_modules/.bin/nightwatch
-after_script:
-  - coveralls
