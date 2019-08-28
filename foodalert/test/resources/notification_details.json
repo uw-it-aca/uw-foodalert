@@ -90,6 +90,12 @@
             "email": "testuser_five@test.com",
             "password": "test_pass_five",
             "isMemberOf": []
+        },
+        {
+            "username": "testuser_six",
+            "email": "testuser_six@test.com",
+            "password": "test_pass_six",
+            "isMemberOf": []
         }
     ]
 }

@@ -50,7 +50,7 @@ class NotificationTest(TestCase):
         )
         (cls.user3, cls.client_3) = create_user_and_client_from_data(
             cls.test_data["users"][2],
-            [create_group]
+            [create_group, audit_group]
         )
         (cls.user4, cls.client_4) = create_user_and_client_from_data(
             cls.test_data["users"][3],
@@ -58,6 +58,10 @@ class NotificationTest(TestCase):
         )
         (cls.user5, cls.client_5) = create_user_and_client_from_data(
             cls.test_data["users"][4],
+            [create_group]
+        )
+        (cls.user6, cls.client_6) = create_user_and_client_from_data(
+            cls.test_data["users"][5],
             []
         )
 
@@ -149,6 +153,29 @@ class NotificationTest(TestCase):
 
         # Assert that the two responses were not equal
         self.assertNotEqual(actual_json1, actual_json2)
+    
+    def test_perm_list(self):
+        response = self.client_4.get('/notification/')
+        self.assertEqual(response.status_code, 200)
+        
+        response = self.client_5.get('/notification/')
+        self.assertEqual(response.status_code, 200)
+        
+        response = self.client_6.get('/notification/')
+        self.assertEqual(response.status_code, 401)
+    
+    def test_perm_detail(self):
+        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        
+        response = self.client_4.get(url)
+        self.assertEqual(response.status_code, 200)
+        
+        # client 5 has not created this notification
+        response = self.client_5.get(url)
+        self.assertEqual(response.status_code, 401)
+        
+        response = self.client_6.get(url)
+        self.assertEqual(response.status_code, 401)
 
     """
     POST tests
@@ -322,6 +349,34 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
+    
+    def test_perm_list(self):
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
+        proper_payload = \
+            json.loads(self.data_to_payload_json(self.test_data[3], end_time))
+
+        with generate_twilio_mock() as mock:
+            response = self.client_4.post(
+                '/notification/',
+                data=proper_payload,
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, 401)
+            
+            response = self.client_5.post(
+                '/notification/',
+                data=proper_payload,
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, 200)
+            
+            response = self.client_6.post(
+                '/notification/',
+                data=proper_payload,
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, 401)
 
     """
     PATCH tests
