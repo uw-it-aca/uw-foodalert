@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -232,13 +233,8 @@ class HomeView(TemplateView):
 class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
+    permission_classes = [HostRead|AuditRead|IsAdminUser]
 
     # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
-
-
-@method_decorator(login_required(), name='dispatch')
-class AllergensDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Allergen.objects.all()
-    serializer_class = AllergenSerializer

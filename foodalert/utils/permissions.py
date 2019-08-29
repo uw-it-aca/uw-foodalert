@@ -26,7 +26,7 @@ class IsSelf(permissions.BasePermission):
                                          "with this class.", code=500)
 
 
-class AuditReadOnly(permissions.BasePermission):
+class AuditRead(permissions.BasePermission):
     """
     Allows users with audit tag to get a resource.
     """

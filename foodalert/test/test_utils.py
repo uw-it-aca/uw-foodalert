@@ -43,7 +43,8 @@ def create_user_and_client_from_data(data, member_of):
     data["isMemberOf"] = member_of
     user = User.objects.create_user(username=data["username"],
                                     email=data["email"],
-                                    password=data["password"])
+                                    password=data["password"],
+                                    is_active=1)
     
     client = Client()
     client.force_login(user)

@@ -3,41 +3,32 @@ from django.test import TestCase, Client
 from rest_framework.test import APIRequestFactory, force_authenticate
 from django.contrib.auth.models import User
 from django.db import connection, transaction
+from django.conf import settings
 
 import foodalert
 from foodalert.models import Allergen
 from foodalert.serializers import AllergenSerializer
 from foodalert.views import AllergensList
+from foodalert.test.test_utils import create_user_and_client_from_data
 
+create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
+audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 class AllergenTest(TestCase):
     @classmethod
     def setUpClass(cls):
-        """
-        Sets up a single mock user that can be used for all tests on
-        notification tests
-        """
-        user = "testuser1"
-        passw = "test"
-        cls.user = User.objects.create_user(username=user,
-                                            email="testuser1@test.com",
-                                            password=passw,
-                                            is_active=1)
+        cls.user = User.objects.create_user(username="testuser1",
+                                        email="testuser1@test.com",
+                                        password="test",
+                                        is_active=1)
         cls.realAllergen = Allergen.objects.create(
-                name="test allergen"
-                )
-
-    def setUp(self):
-        self.client = Client()
-        self.client.force_login(self.user)
+            name="test allergen"
+        )
 
     @classmethod
     def tearDownClass(cls):
-        cls.user.delete()
-        cls.realAllergen.delete()
-
-    def tearDown(self):
-        pass
+        User.objects.all().delete()
+        Allergen.objects.all().delete()
 
     def test_get_allergen_list(self):
         """
@@ -45,21 +36,47 @@ class AllergenTest(TestCase):
         in the db from a get request. Should return a
         200 response upon success
         """
-        response = self.client.get('/allergen/')
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
+        response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
-
-    def test_get_allergen_detail(self):
-        """
-        This tests that you can read allergen detail
-        corresponding to the id
-        """
-        get_id = self.realAllergen.id
-        response = self.client.get('/allergen/{}/'.format(get_id))
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [audit_group]}
+        session.save()
+        
+        response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        self.assertEqual(self.realAllergen.name, data["name"])
+        self.assertEqual(data[0]["name"], self.realAllergen.name)
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group]}
+        session.save()
+        
+        response = client.get('/allergen/')
+        self.assertEqual(200, response.status_code)
+        data = response.json()
+        self.assertEqual(data[0]["name"], self.realAllergen.name)
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": []}
+        session.save()
+        
+        response = client.get('/allergen/')
+        self.assertEqual(403, response.status_code)
 
     def test_post_allergen(self):
         """
@@ -70,17 +87,74 @@ class AllergenTest(TestCase):
         valid_payload = {
             "name": "wheat"
         }
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": []}
+        session.save()
+        
         original_len = len(Allergen.objects.all())
-        response = self.client.post('/allergen/', valid_payload)
+        response = client.post('/allergen/', valid_payload)
+        self.assertEqual(403, response.status_code)
+        new_len = len(Allergen.objects.all())
+        self.assertEqual(new_len, original_len)
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group]}
+        session.save()
+        
+        original_len = len(Allergen.objects.all())
+        response = client.post('/allergen/', valid_payload)
+        self.assertEqual(403, response.status_code)
+        new_len = len(Allergen.objects.all())
+        self.assertEqual(new_len, original_len)
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [audit_group]}
+        session.save()
+        
+        original_len = len(Allergen.objects.all())
+        response = client.post('/allergen/', valid_payload)
+        self.assertEqual(403, response.status_code)
+        new_len = len(Allergen.objects.all())
+        self.assertEqual(new_len, original_len)
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
+        original_len = len(Allergen.objects.all())
+        response = client.post('/allergen/', valid_payload)
+        self.assertEqual(403, response.status_code)
+        new_len = len(Allergen.objects.all())
+        self.assertEqual(new_len, original_len)
+        
+        self.user.is_staff = True
+        self.user.save()
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": []}
+        session.save()
+        
+        original_len = len(Allergen.objects.all())
+        response = client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(1, new_len - original_len)
         posted_allergen = response.json()
         self.assertEqual(posted_allergen["name"], valid_payload["name"])
-        post_id = response.json()["id"]
-        get_res = self.client.get('/allergen/{}/'.format(post_id))
-        res = get_res.json()
-        self.assertEqual(res["name"], valid_payload["name"])
+        
+        self.user.is_staff = False
+        self.user.save()
 
     def test_post_existing_allergen(self):
         """
@@ -88,109 +162,100 @@ class AllergenTest(TestCase):
         anallergen name that already exists in the database. New object
         should not be made
         """
+        self.user.is_staff = True
+        self.user.save()
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
         original_len = len(Allergen.objects.all())
-        data_before = self.client.get("/allergen/")
+        data_before = client.get("/allergen/")
         payload = {
             "name": self.realAllergen.name
         }
-        response = self.client.post('/allergen/', payload)
+        response = client.post('/allergen/', payload)
         self.assertEqual(400, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(original_len, after_len)
-        data_after = self.client.get('/allergen/')
+        data_after = client.get('/allergen/')
         self.assertEqual(data_before.json(), data_after.json())
+        
+        self.user.is_staff = False
+        self.user.save()
 
     def test_invalid_put_allergen(self):
         """
         This tests that allergens should not be alterable after
         they are entered into the db. Put requests to /allergen/
-        endpoint should return a 405 resposnse
+        endpoint should return a 403 resposnse
         """
+        self.user.is_staff = True
+        self.user.save()
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
         invalidRequest = {
             "name": "put update"
         }
-        response = self.client.put('/allergen/', invalidRequest)
+        response = client.put('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
-
-    def test_put_allergen_with_id(self):
-        """
-        This tests that you are able to make changes to an
-        allergen with a put request to the endpoint '/allergen/{id}/'
-        Request should return a 200 success status code
-        """
-        payload = {
-            "name": "put update"
-        }
-        before_len = len(Allergen.objects.all())
-        put_id = self.realAllergen.id
-        response = self.client.put('/allergen/{}/'.format(put_id),
-                                   json.dumps(payload),
-                                   content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        after_len = len(Allergen.objects.all())
-        self.assertEqual(before_len, after_len)
-        put_result = self.client.get('/allergen/{}/'.format(put_id))
-        put_result = put_result.json()
-        self.assertEqual(put_result['name'], payload['name'])
-        self.assertEqual(put_result['id'], put_id)
+        
+        self.user.is_staff = False
+        self.user.save()
 
     def test_invalid_patch_allergen(self):
         """
         This tests that you allergens should not be
         alterable after they are entered into the db.
-        Patch requests should return a 405 resposnse
+        Patch requests should return a 403 resposnse
         """
+        self.user.is_staff = True
+        self.user.save()
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
         invalidRequest = {
             "name": "patch update"
         }
-        response = self.client.patch('/allergen/', invalidRequest)
+        response = client.patch('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
-
-    def test_patch_allergen_with_id(self):
-        """
-        This tests that you should be able to alter an allergen
-        with a patch request to '/allergen/{id}/' endpoint.
-        Should return a 200 success status code
-        """
-        payload = {
-            "name": "patch update"
-        }
-        before_len = len(Allergen.objects.all())
-        patch_id = self.realAllergen.id
-        response = self.client.patch('/allergen/{}/'.format(patch_id),
-                                     json.dumps(payload),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        after_len = len(Allergen.objects.all())
-        self.assertEqual(before_len, after_len)
-        patch_result = self.client.get('/allergen/{}/'.format(patch_id))
-        patch_result = patch_result.json()
-        self.assertEqual(patch_result['name'], payload['name'])
-        self.assertEqual(patch_result['id'], patch_id)
+        
+        self.user.is_staff = False
+        self.user.save()
 
     def test_invalid_delete_allergen(self):
         """
         This tests that you can delete a single
-        allergen from the db. Should return a 200 response
-        after successfully deleting
+        allergen from the db. Should return a 403 response
         """
+        self.user.is_staff = True
+        self.user.save()
+        
+        client  = Client()
+        client.force_login(self.user)
+        session = client.session
+        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
+        session.save()
+        
         original_len = len(Allergen.objects.all())
         invalidRequest = {
             "name": "delete update"
         }
         after_len = len(Allergen.objects.all())
-        response = self.client.delete('/allergen/', invalidRequest)
+        response = client.delete('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
-
-    def test_delete_allergen_with_id(self):
-        """
-        This tests that you should be able to delete an allergen
-        with a delete request to the '/allergen/{id}/' endpoint
-        """
-        original_len = len(Allergen.objects.all())
-        delete_id = self.realAllergen.id
-        response = self.client.delete('/allergen/{}/'.format(delete_id))
-        after_len = len(Allergen.objects.all())
-        self.assertEqual(204, response.status_code)
-        self.assertEqual(1, original_len - after_len)
+        
+        self.user.is_staff = False
+        self.user.save()
