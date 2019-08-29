@@ -55,6 +55,16 @@ def create_user_and_client_from_data(data, member_of):
     return (user, client)
 
 
+def create_client_with_mock_saml(user, member_of):
+    client = Client()
+    client.force_login(user)
+    session = client.session
+    session['samlUserdata'] = {"isMemberOf": member_of}
+    session.save()
+
+    return client
+
+
 def generate_twilio_mock():
     ret = Mock()
     ret.body = ''

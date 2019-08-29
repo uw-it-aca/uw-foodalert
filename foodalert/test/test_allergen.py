@@ -9,7 +9,7 @@ import foodalert
 from foodalert.models import Allergen
 from foodalert.serializers import AllergenSerializer
 from foodalert.views import AllergensList
-from foodalert.test.test_utils import create_user_and_client_from_data
+from foodalert.test.test_utils import create_client_with_mock_saml
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
@@ -39,45 +39,37 @@ class AllergenTest(TestCase):
         in the db from a get request. Should return a
         200 response upon success
         """
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [audit_group]
+        )
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group]
+        )
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": []}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            []
+        )
         response = client.get('/allergen/')
         self.assertEqual(403, response.status_code)
 
@@ -91,48 +83,40 @@ class AllergenTest(TestCase):
             "name": "wheat"
         }
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": []}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            []
+        )
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group]
+        )
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [audit_group]
+        )
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
 
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
@@ -141,13 +125,10 @@ class AllergenTest(TestCase):
 
         self.user.is_staff = True
         self.user.save()
-
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": []}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            []
+        )
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
@@ -167,13 +148,10 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         original_len = len(Allergen.objects.all())
         data_before = client.get("/allergen/")
         payload = {
@@ -197,13 +175,10 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         invalidRequest = {
             "name": "put update"
         }
@@ -221,13 +196,10 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         invalidRequest = {
             "name": "patch update"
         }
@@ -244,13 +216,10 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-
-        client = Client()
-        client.force_login(self.user)
-        session = client.session
-        session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
-        session.save()
-
+        client = create_client_with_mock_saml(
+            self.user,
+            [create_group, audit_group]
+        )
         original_len = len(Allergen.objects.all())
         invalidRequest = {
             "name": "delete update"
