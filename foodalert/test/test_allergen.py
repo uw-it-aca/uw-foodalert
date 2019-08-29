@@ -14,13 +14,16 @@ from foodalert.test.test_utils import create_user_and_client_from_data
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
+
 class AllergenTest(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.user = User.objects.create_user(username="testuser1",
-                                        email="testuser1@test.com",
-                                        password="test",
-                                        is_active=1)
+        cls.user = User.objects.create_user(
+            username="testuser1",
+            email="testuser1@test.com",
+            password="test",
+            is_active=1
+        )
         cls.realAllergen = Allergen.objects.create(
             name="test allergen"
         )
@@ -36,45 +39,45 @@ class AllergenTest(TestCase):
         in the db from a get request. Should return a
         200 response upon success
         """
-        client  = Client()
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [audit_group]}
         session.save()
-        
+
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group]}
         session.save()
-        
+
         response = client.get('/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": []}
         session.save()
-        
+
         response = client.get('/allergen/')
         self.assertEqual(403, response.status_code)
 
@@ -87,64 +90,64 @@ class AllergenTest(TestCase):
         valid_payload = {
             "name": "wheat"
         }
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": []}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group]}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [audit_group]}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
-        
+
         self.user.is_staff = True
         self.user.save()
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": []}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         response = client.post('/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
@@ -152,7 +155,7 @@ class AllergenTest(TestCase):
         self.assertEqual(1, new_len - original_len)
         posted_allergen = response.json()
         self.assertEqual(posted_allergen["name"], valid_payload["name"])
-        
+
         self.user.is_staff = False
         self.user.save()
 
@@ -164,13 +167,13 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         data_before = client.get("/allergen/")
         payload = {
@@ -182,7 +185,7 @@ class AllergenTest(TestCase):
         self.assertEqual(original_len, after_len)
         data_after = client.get('/allergen/')
         self.assertEqual(data_before.json(), data_after.json())
-        
+
         self.user.is_staff = False
         self.user.save()
 
@@ -194,19 +197,19 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         invalidRequest = {
             "name": "put update"
         }
         response = client.put('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
-        
+
         self.user.is_staff = False
         self.user.save()
 
@@ -218,19 +221,19 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         invalidRequest = {
             "name": "patch update"
         }
         response = client.patch('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
-        
+
         self.user.is_staff = False
         self.user.save()
 
@@ -241,13 +244,13 @@ class AllergenTest(TestCase):
         """
         self.user.is_staff = True
         self.user.save()
-        
-        client  = Client()
+
+        client = Client()
         client.force_login(self.user)
         session = client.session
         session['samlUserdata'] = {"isMemberOf": [create_group, audit_group]}
         session.save()
-        
+
         original_len = len(Allergen.objects.all())
         invalidRequest = {
             "name": "delete update"
@@ -256,6 +259,6 @@ class AllergenTest(TestCase):
         response = client.delete('/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
-        
+
         self.user.is_staff = False
         self.user.save()

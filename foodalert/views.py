@@ -30,12 +30,12 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationDetailSerializer
-    #permission_classes = [(IsSelf&HostRead)|AuditReadOnly]
+    # permission_classes = [(IsSelf&HostRead)|AuditReadOnly]
 
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
-    #permission_classes = [HostRead|AuditReadOnly]
+    # permission_classes = [HostRead|AuditReadOnly]
     def get_queryset(self):
         qs = Notification.objects.all()
         if 'host_netid' in self.request.query_params:
@@ -233,7 +233,7 @@ class HomeView(TemplateView):
 class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
-    permission_classes = [HostRead|AuditRead|IsAdminUser]
+    permission_classes = [HostRead | AuditRead | IsAdminUser]
 
     # may not need
     def perform_create(self, serializer, *args, **kwargs):

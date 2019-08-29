@@ -45,13 +45,13 @@ def create_user_and_client_from_data(data, member_of):
                                     email=data["email"],
                                     password=data["password"],
                                     is_active=1)
-    
+
     client = Client()
     client.force_login(user)
     session = client.session
     session['samlUserdata'] = {"isMemberOf": data["isMemberOf"]}
     session.save()
-    
+
     return (user, client)
 
 

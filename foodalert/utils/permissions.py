@@ -33,7 +33,7 @@ class AuditRead(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS) and \
-        is_member_of_group(request, audit_group)
+            is_member_of_group(request, audit_group)
 
 
 class HostRead(permissions.BasePermission):
@@ -43,7 +43,7 @@ class HostRead(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS) and \
-        is_member_of_group(request, create_group)
+            is_member_of_group(request, create_group)
 
 
 class HostCreate(permissions.BasePermission):
@@ -53,4 +53,4 @@ class HostCreate(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (request.method == "POST") and \
-        is_member_of_group(request, create_group)
+            is_member_of_group(request, create_group)

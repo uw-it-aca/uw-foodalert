@@ -25,6 +25,7 @@ RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
+
 class NotificationTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -77,7 +78,7 @@ class NotificationTest(TestCase):
 
         create_notification_from_data(cls.test_data[0], cls.user1)
         create_notification_from_data(cls.test_data[1], cls.user2)
-        
+
         cls.test_data[2]["host"] = cls.user3
 
     @classmethod
@@ -112,7 +113,7 @@ class NotificationTest(TestCase):
         """
         # Get all notifications from the notification endpoint
         response = self.client_3.get('/notification/?host_netid=' +
-                                   self.user1.username)
+                                     self.user1.username)
         # Assert that the response is successful (200 HTTP Response Code)
         self.assertEqual(response.status_code, 200)
 
@@ -153,27 +154,27 @@ class NotificationTest(TestCase):
 
         # Assert that the two responses were not equal
         self.assertNotEqual(actual_json1, actual_json2)
-    
+
     """def test_perm_list_get(self):
         response = self.client_4.get('/notification/')
         self.assertEqual(response.status_code, 200)
-        
+
         response = self.client_5.get('/notification/')
         self.assertEqual(response.status_code, 200)
-        
+
         response = self.client_6.get('/notification/')
         self.assertEqual(response.status_code, 403)
-    
+
     def test_perm_detail_get(self):
         url = '/notification/' + str(self.test_data[0]["id"]) + '/'
-        
+
         response = self.client_4.get(url)
         self.assertEqual(response.status_code, 200)
-        
+
         # client 5 has not created this notification
         response = self.client_5.get(url)
         self.assertEqual(response.status_code, 403)
-        
+
         response = self.client_6.get(url)
         self.assertEqual(response.status_code, 403)"""
 
@@ -349,7 +350,7 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 405)
-    
+
     """def test_perm_list_post(self):
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
@@ -363,14 +364,14 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
             self.assertEqual(response.status_code, 403)
-            
+
             response = self.client_5.post(
                 '/notification/',
                 data=proper_payload,
                 content_type='application/json'
             )
             self.assertEqual(response.status_code, 200)
-            
+
             response = self.client_6.post(
                 '/notification/',
                 data=proper_payload,
