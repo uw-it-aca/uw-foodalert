@@ -12,7 +12,7 @@ module.exports = {
       );
     });
 
-    browser.click('button.btn.mb-3.button-text.btn-primary.btn-lg.btn-block').pause(100);
+    browser.click('a.btn').pause(100);
 
     browser.getTitle(function(title) {
       browser.assert.equal(
