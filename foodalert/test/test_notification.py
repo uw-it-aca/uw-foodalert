@@ -157,6 +157,17 @@ class NotificationTest(TestCase):
         response = client.get('/notification/?host_netid=' +
                               self.user1.username)
         self.assertEqual(response.status_code, 403)
+        
+        # Bad netid
+        Notification.objects.all().delete()
+        client = create_client_with_mock_saml(
+            self.user1,
+            [audit_group]
+        )
+        response = client.get('/notification/?host_netid=neveruse')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.json()), 0)
 
     def test_get_notification_detail_by_id(self):
         """
