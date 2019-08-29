@@ -165,17 +165,21 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubscriptionDetailSerializer
 
     def put(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().put(request, pk)
 
     def patch(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().patch(request, pk)
 
 

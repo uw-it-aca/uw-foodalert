@@ -30,6 +30,8 @@ import Cookies from 'js-cookie';
 export default {
   props: {
     email: String,
+    subid: Number,
+    requestUpdate: Function,
   },
   data() {
     return {
@@ -38,35 +40,58 @@ export default {
       checked: false,
     };
   },
-  methods: {
-    enableNotif() {
-      // turn on and off send_email
+  methods : {
+    createSubscription() {
+      //create Subscription model with uw email
+      axios.get('/subscription/?netID=' + this.netID)
+        .then(response => {
+          if(!response.data[0]) {
+            const csrftoken = Cookies.get('csrftoken');
+            const headers = {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': csrftoken,
+            };
+            const postData = {
+              'email': this.netID + '@uw.edu',
+              'sms_number': '',
+            };
+            axios.post('/subscription/', postData, {'headers': headers})
+              .then((response) => {
+                this.requestUpdate()
+              })
+              .catch((error) => {
+                this.showErrorPage(error.response,
+                  's-notifications');
+              })
+          }
+        })
+        .catch((error) => {
+          this.showErrorPage(error.response, 's-notifications')
+        });
     },
   },
-  beforeMount() {
-    //create Subscription model with uw email
-    const csrftoken = Cookies.get('csrftoken');
-    const headers = {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken,
-    };
-    const postData = {
-      'email': email,
-      'sms_number': '',
-    };
-    axios.post('/subscription/', postData, {'headers': headers})
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        this.showErrorPage(error.response,
-          's-notifications');
-      })
-  },
   watch: {
-    selected(newVal, oldVal) {
+    checked(newVal, oldVal) {
       // change email_notif value
+      const data = {
+        'send_email': newVal
+      }
+      const csrftoken = Cookies.get('csrftoken')
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      };
+      const url = '/subscription/' + this.subid + '/';
+      axios.patch(url, data, {headers})
+        .then(console.log)
+        .catch((error) => {
+          this.showErrorPage(error.response, 's-notifications')
+        })
     }
+  },
+  beforeMount() {
+    this.createSubscription()
+    
   }
 };
 </script>
