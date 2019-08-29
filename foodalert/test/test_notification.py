@@ -117,8 +117,9 @@ class NotificationTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get('/notification/?host_netid=' +
-                              self.user1.username)
+        response = client.get(
+            "/notification/?host_netid={}".format(self.user1.username)
+        )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 1)
         expected_reponse_json = [self.data_to_list_represent(
@@ -131,8 +132,9 @@ class NotificationTest(TestCase):
             self.user1,
             [create_group]
         )
-        response = client.get('/notification/?host_netid=' +
-                              self.user1.username)
+        response = client.get(
+            "/notification/?host_netid={}".format(self.user1.username)
+        )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 1)
         expected_reponse_json = [self.data_to_list_represent(
@@ -145,8 +147,9 @@ class NotificationTest(TestCase):
             self.user2,
             [create_group]
         )
-        response = client.get('/notification/?host_netid=' +
-                              self.user1.username)
+        response = client.get(
+            "/notification/?host_netid={}".format(self.user1.username)
+        )
         self.assertEqual(response.status_code, 403)
 
         # []
@@ -154,8 +157,9 @@ class NotificationTest(TestCase):
             self.user1,
             []
         )
-        response = client.get('/notification/?host_netid=' +
-                              self.user1.username)
+        response = client.get(
+            "/notification/?host_netid={}".format(self.user1.username)
+        )
         self.assertEqual(response.status_code, 403)
 
         # Bad netid
@@ -179,7 +183,7 @@ class NotificationTest(TestCase):
             self.user1,
             [audit_group]
         )
-        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        url = "/notification/{}/".format(str(self.test_data[0]["id"]))
         response = client.get(url)
         self.assertEqual(response.status_code, 200)
         # Assert that the json of the notification is correct
@@ -191,7 +195,7 @@ class NotificationTest(TestCase):
             self.user1,
             [create_group]
         )
-        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        url = "/notification/{}/".format(str(self.test_data[0]["id"]))
         response = client.get(url)
         self.assertEqual(response.status_code, 200)
         # Assert that the json of the notification is correct
@@ -203,7 +207,7 @@ class NotificationTest(TestCase):
             self.user2,
             [create_group]
         )
-        url = '/notification/' + str(self.test_data[1]["id"]) + '/'
+        url = "/notification/{}/".format(str(self.test_data[1]["id"]))
         response = client.get(url)
         self.assertEqual(response.status_code, 200)
         # Assert that the json of the notification is correct
@@ -215,7 +219,7 @@ class NotificationTest(TestCase):
             self.user2,
             [create_group]
         )
-        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        url = "/notification/{}/".format(str(self.test_data[0]["id"]))
         response = client.get(url)
         self.assertEqual(response.status_code, 403)
 
@@ -224,7 +228,7 @@ class NotificationTest(TestCase):
             self.user2,
             [create_group]
         )
-        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        url = "/notification/{}/".format(str(self.test_data[0]["id"]))
         response = client.get(url)
         self.assertEqual(response.status_code, 403)
 
@@ -278,7 +282,7 @@ class NotificationTest(TestCase):
             expected_json = self.data_to_detail_json(self.test_data[2])
             self.assertEqual(expected_json, response1.json())
 
-            url = '/notification/' + str(self.test_data[2]["id"]) + '/'
+            url = "/notification/{}/".format(str(self.test_data[2]["id"]))
             response2 = client.get(url)
             # Assert that the response is successful
             self.assertEqual(response2.status_code, 200)
@@ -443,7 +447,7 @@ class NotificationTest(TestCase):
         )
 
         response = client.post(
-            "/notification/0/",
+            "/notification/1/",
             data=valid_payload,
             content_type='application/json'
         )
@@ -497,7 +501,7 @@ class NotificationTest(TestCase):
             [create_group, audit_group]
         )
         response = client.patch(
-            "/notification/0/",
+            "/notification/1/",
             data=valid_payload,
             content_type='application/json'
         )
@@ -538,7 +542,7 @@ class NotificationTest(TestCase):
             [create_group, audit_group]
         )
         response = client.delete(
-                "/notification/0/",
+                "/notification/1/",
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 403)
