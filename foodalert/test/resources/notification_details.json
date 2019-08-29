@@ -59,5 +59,43 @@
         "sms_number": "+16282462222",
         "number_verified": true,
         "notif_on": true
-    }
+    },
+    "users": [
+        {
+            "username": "testuser_one",
+            "email": "testuser_one@test.com",
+            "password": "test_pass_one",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_two",
+            "email": "testuser_two@test.com",
+            "password": "test_pass_two",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_three",
+            "email": "testuser_three@test.com",
+            "password": "test_pass_three",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_four",
+            "email": "testuser_four@test.com",
+            "password": "test_pass_four",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_five",
+            "email": "testuser_five@test.com",
+            "password": "test_pass_five",
+            "isMemberOf": []
+        },
+        {
+            "username": "testuser_six",
+            "email": "testuser_six@test.com",
+            "password": "test_pass_six",
+            "isMemberOf": []
+        }
+    ]
 }
