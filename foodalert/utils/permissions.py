@@ -16,7 +16,9 @@ class IsSelf(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        if isinstance(obj, Notification) or isinstance(obj, Subscription):
+        if isinstance(obj, Notification):
+            return obj.host == request.user
+        if isinstance(obj, Subscription):
             return obj.user == request.user
         if isinstance(obj, Update):
             return obj.parent_notification.host == request.user
@@ -33,6 +35,9 @@ class AuditRead(permissions.BasePermission):
         return (request.method in permissions.SAFE_METHODS) and \
             is_member_of_group(request, audit_group)
 
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
+
 
 class HostRead(permissions.BasePermission):
     """
@@ -43,6 +48,9 @@ class HostRead(permissions.BasePermission):
         return (request.method in permissions.SAFE_METHODS) and \
             is_member_of_group(request, create_group)
 
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
+
 
 class HostCreate(permissions.BasePermission):
     """
@@ -50,5 +58,9 @@ class HostCreate(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return (request.method == "POST") and \
-            is_member_of_group(request, create_group)
+        if request.method == "POST":
+            return is_member_of_group(request, create_group)
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
