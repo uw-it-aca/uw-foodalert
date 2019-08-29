@@ -16,9 +16,7 @@ class IsSelf(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        if isinstance(obj, Notification):
-            return obj.host == request.user
-        if isinstance(obj, Subscription):
+        if isinstance(obj, Notification) or isinstance(obj, Subscription):
             return obj.user == request.user
         if isinstance(obj, Update):
             return obj.parent_notification.host == request.user

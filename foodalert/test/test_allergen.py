@@ -171,7 +171,7 @@ class AllergenTest(TestCase):
         """
         This tests that allergens should not be alterable after
         they are entered into the db. Put requests to /allergen/
-        endpoint should return a 403 resposnse
+        endpoint should return a 405 resposnse
         """
         self.user.is_staff = True
         self.user.save()
@@ -192,7 +192,7 @@ class AllergenTest(TestCase):
         """
         This tests that you allergens should not be
         alterable after they are entered into the db.
-        Patch requests should return a 403 resposnse
+        Patch requests should return a 405 resposnse
         """
         self.user.is_staff = True
         self.user.save()
@@ -212,7 +212,7 @@ class AllergenTest(TestCase):
     def test_invalid_delete_allergen(self):
         """
         This tests that you can delete a single
-        allergen from the db. Should return a 403 response
+        allergen from the db. Should return a 405 response
         """
         self.user.is_staff = True
         self.user.save()
