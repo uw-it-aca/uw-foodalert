@@ -13,12 +13,13 @@ matrix:
     - language: python
       python: 3.6
       cache: pip
-      before_script:
-        - psql -c 'create database travis_ci_test;' -U postgres
+      install:
         - pip install coverage
         - pip install python-coveralls
         - pip install pycodestyle
-        - pip install .
+        - pip install . 
+      before_script:
+        - psql -c 'create database travis_ci_test;' -U postgres
         - cp travis/manage.py manage.py
         - python manage.py migrate --noinput
       script:
