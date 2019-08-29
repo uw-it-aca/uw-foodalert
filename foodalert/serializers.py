@@ -192,7 +192,7 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
-                  'email_verified', 'notif_on')
+                  'send_sms'. 'email_verified', 'send_email')
         read_only_fields = ("number_verified", 'email_verified')
 
     def to_internal_value(self, data):
@@ -203,16 +203,14 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         }
         if 'email' in data:
             ret['email'] = data['email']
-            if data['email'] != obj.email:
+            if data['email'] != "":
                 ret['email_verified'] = False
+                ret['send_email'] = False
         if 'sms_number' in data:
             ret['sms_number'] = data['sms_number']
             if data['sms_number'] != obj.sms_number:
                 ret['number_verified'] = False
-        if not ret['email_verified'] and not ret['number_verified']:
-            ret['notif_on'] = False
-        elif 'notif_on' in data:
-            ret['notif_on'] = data['notif_on']
+                ret['send_sms'] = False
         return ret
 
 
