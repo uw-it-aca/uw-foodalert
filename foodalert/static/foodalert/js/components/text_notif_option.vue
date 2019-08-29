@@ -34,7 +34,8 @@
               </small>
               <br />
               <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                class="toggle_link_btn p-0" @click="updateMode=localData.verified"
+                @click="updateMode=localData.verified"
+                class="toggle_link_btn p-0"
                 :aria-label="'Edit ' + type">
                 Edit
               </b-button>
@@ -91,7 +92,8 @@
           <b-row>
             <b-col cols="12">
               <b-card-text>
-                <b-form @submit.prevent="getNewState(spinners.verify); updateMode=false"
+                <b-form @submit.prevent="getNewState(spinners.verify);
+                        updateMode=false"
                         v-if="serverData.text == ''">
                   <small :id="type+'-add-label'"
                          class="form-text text-muted pt-0">{{label}}</small>
@@ -178,7 +180,7 @@
 <script>
 const axios = require('axios');
 import Cookies from 'js-cookie';
-import { parsePhoneNumber, ParseError, parsePhoneNumberFromString }
+import {parsePhoneNumber, ParseError}
   from 'libphonenumber-js';
 
 export default {
@@ -218,7 +220,7 @@ export default {
       errorDesc: '',
       validateOn: false,
       errorMsg: '',
-      //variables for swithc
+      // variables for swithc
       disableNotif: false,
       checked: false,
     };
@@ -243,26 +245,26 @@ export default {
       return cleaned;
     },
     getNewState(spinnerOpt) {
-      console.log("get new state called")
-      this.validateOn = false
-      //initially true
+      console.log('get new state called');
+      this.validateOn = false;
+      // initially true
       let validInput = true;
       let inputType = this.type;
       let notifValue = this.localData.text;
-      
+
       if (inputType === 'text') {
         inputType = 'sms_number';
         if (notifValue != '') {
           try {
-            const phoneNum = parsePhoneNumber(notifValue, 'US')
-            notifValue=phoneNum.number
-            validInput = phoneNum.isValid()
+            const phoneNum = parsePhoneNumber(notifValue, 'US');
+            notifValue=phoneNum.number;
+            validInput = phoneNum.isValid();
           } catch (error) {
-            console.log("error" + phoneNum.isValid())
+            console.log('error' + phoneNum.isValid());
             if (error instanceof ParseError) {
-              console.log(error.message)
+              console.log(error.message);
             } else {
-              throw error
+              throw error;
             }
           }
         }
@@ -277,22 +279,22 @@ export default {
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
-      if(validInput){  
+      if (validInput) {
         if (this.subid) {
           const url = '/subscription/' + this.subid + '/';
           axios.patch(url, data, {'headers': headers})
-            .then((response) => {
-              this.requestUpdate();
-              spinnerOpt.state = false;
-              if (this.newData) {
-                this.newData = false;
-              }
-              this.updateMode = false;
-            })
-            .catch((error) => {
-              spinnerOpt.state = false;
-              this.handleInvalidInput(error)
-            });
+              .then((response) => {
+                this.requestUpdate();
+                spinnerOpt.state = false;
+                if (this.newData) {
+                  this.newData = false;
+                }
+                this.updateMode = false;
+              })
+              .catch((error) => {
+                spinnerOpt.state = false;
+                this.handleInvalidInput(error);
+              });
         } else {
           const postData = {
             'email': '',
@@ -312,22 +314,22 @@ export default {
               .catch((error) => {
                 spinnerOpt.state = false;
                 this.showErrorPage(error.response,
-                  's-notifications');
-              })
+                    's-notifications');
+              });
         }
-      }else {
-        //show error message
-        this.handleInvalidInput(spinnerOpt)
+      } else {
+        // show error message
+        this.handleInvalidInput(spinnerOpt);
       }
     },
     handleInvalidInput(spinnerOpt) {
       // error should be displayed on page if invalid
       // phone number is entered
-      let input = this.type
-      if(this.type === 'text'){
-        input = "phone number"
+      let input = this.type;
+      if (this.type === 'text') {
+        input = 'phone number';
       }
-      this.errorMsg = "Invalid " + input + ". Please enter a new one"
+      this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
       spinnerOpt.state = false;
       this.validateOn = true;
     },
@@ -352,24 +354,24 @@ export default {
       this.localData.verified = newVal.verified;
     },
     watch: {
-    checked(newVal, oldVal) {
+      checked(newVal, oldVal) {
       // change email_notif value
-      const data = {
-        'send_email': newVal
-      }
-      const csrftoken = Cookies.get('csrftoken')
-      const headers = {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      };
-      const url = '/subscription/' + this.subid + '/';
-      axios.patch(url, data, {headers})
-        .then(console.log)
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications')
-        })
-    }
-  },
+        const data = {
+          'send_email': newVal,
+        };
+        const csrftoken = Cookies.get('csrftoken');
+        const headers = {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        };
+        const url = '/subscription/' + this.subid + '/';
+        axios.patch(url, data, {headers})
+            .then(console.log)
+            .catch((error) => {
+              this.showErrorPage(error.response, 's-notifications');
+            });
+      },
+    },
   },
   computed: {
   },

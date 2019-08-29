@@ -11,7 +11,7 @@
         </b-col>
         <b-col cols="4">
           <b-form-checkbox v-model="checked"
-            name="enable-switch" 
+            name="enable-switch"
             class="float-right mr-3"
             aria-labelledby="enable-label"
             aria-describedby="notif-status"
@@ -35,64 +35,63 @@ export default {
   },
   data() {
     return {
-      //variables for switch
+      // variables for switch
       disableNotif: false,
       checked: false,
     };
   },
-  methods : {
+  methods: {
     createSubscription() {
-      //create Subscription model with uw email
+      // create Subscription model with uw email
       axios.get('/subscription/?netID=' + this.netID)
-        .then(response => {
-          if(!response.data[0]) {
-            const csrftoken = Cookies.get('csrftoken');
-            const headers = {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': csrftoken,
-            };
-            const postData = {
-              'email': this.netID + '@uw.edu',
-              'sms_number': '',
-            };
-            axios.post('/subscription/', postData, {'headers': headers})
-              .then((response) => {
-                this.requestUpdate()
-              })
-              .catch((error) => {
-                this.showErrorPage(error.response,
-                  's-notifications');
-              })
-          }
-        })
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications')
-        });
+          .then((response) => {
+            if (!response.data[0]) {
+              const csrftoken = Cookies.get('csrftoken');
+              const headers = {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+              };
+              const postData = {
+                'email': this.netID + '@uw.edu',
+                'sms_number': '',
+              };
+              axios.post('/subscription/', postData, {'headers': headers})
+                  .then((response) => {
+                    this.requestUpdate();
+                  })
+                  .catch((error) => {
+                    this.showErrorPage(error.response,
+                        's-notifications');
+                  });
+            }
+          })
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
     },
   },
   watch: {
     checked(newVal, oldVal) {
       // change email_notif value
       const data = {
-        'send_email': newVal
-      }
-      const csrftoken = Cookies.get('csrftoken')
+        'send_email': newVal,
+      };
+      const csrftoken = Cookies.get('csrftoken');
       const headers = {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
+        'X-CSRFToken': csrftoken,
       };
       const url = '/subscription/' + this.subid + '/';
       axios.patch(url, data, {headers})
-        .then(console.log)
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications')
-        })
-    }
+          .then(console.log)
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
+    },
   },
   beforeMount() {
-    this.createSubscription()
-    
-  }
+    this.createSubscription();
+  },
 };
 </script>
 

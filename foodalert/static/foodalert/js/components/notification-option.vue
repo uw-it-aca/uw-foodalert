@@ -169,7 +169,7 @@
 <script>
 const axios = require('axios');
 import Cookies from 'js-cookie';
-import { parsePhoneNumber, ParseError, parsePhoneNumberFromString }
+import {parsePhoneNumber, ParseError}
   from 'libphonenumber-js';
 
 export default {
@@ -231,25 +231,25 @@ export default {
       return cleaned;
     },
     getNewState(spinnerOpt) {
-      this.validateOn = false
-      //initially true
+      this.validateOn = false;
+      // initially true
       let validInput = true;
       let inputType = this.type;
       let notifValue = this.localData.text;
-      
+
       if (inputType === 'text') {
         inputType = 'sms_number';
         if (notifValue != '') {
           try {
-            const phoneNum = parsePhoneNumber(notifValue, 'US')
-            notifValue=phoneNum.number
-            validInput = phoneNum.isValid()
+            const phoneNum = parsePhoneNumber(notifValue, 'US');
+            notifValue=phoneNum.number;
+            validInput = phoneNum.isValid();
           } catch (error) {
-            console.log("error" + phoneNum.isValid())
+            console.log('error' + phoneNum.isValid());
             if (error instanceof ParseError) {
-              console.log(error.message)
+              console.log(error.message);
             } else {
-              throw error
+              throw error;
             }
           }
         }
@@ -264,22 +264,22 @@ export default {
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
-      if(validInput){  
+      if (validInput) {
         if (this.subid) {
           const url = '/subscription/' + this.subid + '/';
           axios.patch(url, data, {'headers': headers})
-            .then((response) => {
-              this.requestUpdate();
-              spinnerOpt.state = false;
-              if (this.newData) {
-                this.newData = false;
-              }
-              this.updateMode = false;
-            })
-            .catch((error) => {
-              spinnerOpt.state = false;
-              this.handleInvalidInput(error)
-            });
+              .then((response) => {
+                this.requestUpdate();
+                spinnerOpt.state = false;
+                if (this.newData) {
+                  this.newData = false;
+                }
+                this.updateMode = false;
+              })
+              .catch((error) => {
+                spinnerOpt.state = false;
+                this.handleInvalidInput(error);
+              });
         } else {
           const postData = {
             'email': '',
@@ -299,22 +299,22 @@ export default {
               .catch((error) => {
                 spinnerOpt.state = false;
                 this.showErrorPage(error.response,
-                  's-notifications');
-              })
+                    's-notifications');
+              });
         }
-      }else {
-        //show error message
-        this.handleInvalidInput(spinnerOpt)
+      } else {
+        // show error message
+        this.handleInvalidInput(spinnerOpt);
       }
     },
     handleInvalidInput(spinnerOpt) {
       // error should be displayed on page if invalid
       // phone number is entered
-      let input = this.type
-      if(this.type === 'text'){
-        input = "phone number"
+      let input = this.type;
+      if (this.type === 'text') {
+        input = 'phone number';
       }
-      this.errorMsg = "Invalid " + input + ". Please enter a new one"
+      this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
       spinnerOpt.state = false;
       this.validateOn = true;
     },

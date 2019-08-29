@@ -322,8 +322,8 @@ class SubscriptionTest(TestCase):
     @transaction.atomic
     def test_unverified_patch_subscription(self, email='', sms=''):
         """
-        If user does not have a verified number, they should not be able to turn
-        on notifications
+        If user does not have a verified number, they should not be able
+        to turn on notifications
         """
         sub = Subscription.objects.create(
             user=self.user,

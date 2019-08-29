@@ -82,25 +82,24 @@
         </template>
       </email-notif>
 
-      
+
     </template>
   </generic-page>
 </template>
 
 <script type="text/javascript">
 import GenericPage from '../../components/generic-page.vue';
-import NotifOption from '../../components/notification-option.vue';
-import text_notif from '../../components/text_notif_option.vue';
-import email_notif from '../../components/email_notif_option.vue';
+// import NotifOption from '../../components/notification-option.vue';
+import TextNotif from '../../components/text_notif_option.vue';
+import EmailNotif from '../../components/email_notif_option.vue';
 const axios = require('axios');
-import Cookies from 'js-cookie';
 
 export default {
   components: {
     'generic-page': GenericPage,
-    'notification-option': NotifOption,
-    'text-notif': text_notif,
-    'email-notif': email_notif,
+    // 'notification-option': NotifOption,
+    'text-notif': TextNotif,
+    'email-notif': EmailNotif,
   },
   props: {
     bid: String,
@@ -138,22 +137,22 @@ export default {
     },
     requestUpdate() {
       axios.get('/subscription/?netID=' + this.netID)
-        .then(this.getSubID)
-        .then((data) => {
-          if (this.subid) {
-            const url = '/subscription/' + this.subid + '/';
-            axios.get(url)
-              .then((response) => {
-                response.data = this.formatSms(response.data);
-                this.notif_info = response.data;
-              })
-              .catch((error) =>
-                this.showErrorPage(error.response, 's-notifications'));
-          }
-        })
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications')
-        });
+          .then(this.getSubID)
+          .then((data) => {
+            if (this.subid) {
+              const url = '/subscription/' + this.subid + '/';
+              axios.get(url)
+                  .then((response) => {
+                    response.data = this.formatSms(response.data);
+                    this.notif_info = response.data;
+                  })
+                  .catch((error) =>
+                    this.showErrorPage(error.response, 's-notifications'));
+            }
+          })
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
     },
   },
   beforeMount() {
