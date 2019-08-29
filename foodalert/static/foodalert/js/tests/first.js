@@ -6,17 +6,26 @@ module.exports = {
     browser.waitForElementVisible('body');
 
     browser.getTitle(function(title) {
-      browser.assert.equal(title, 'Share your leftover event food - Hungry Husky');
+      browser.assert.equal(
+        title,
+        'Share your leftover event food - Hungry Husky'
+      );
     });
 
-    browser.click('button').pause(100);
+    browser.click('button.btn.mb-3.button-text.btn-primary.btn-lg.btn-block').pause(100);
 
     browser.getTitle(function(title) {
-      browser.assert.equal(title, 'Help us determine if your food is shareable');
+      browser.assert.equal(
+        title,
+        'Help us determine if your food is shareable'
+      );
     });
 
     browser.back().pause(200).getTitle(function(title) {
-      browser.assert.equal(title, 'Share your leftover event food - Hungry Husky');
+      browser.assert.equal(
+        title,
+        'Share your leftover event food - Hungry Husky'
+      );
     });
 
     browser.end();
