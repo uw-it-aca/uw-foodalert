@@ -7,8 +7,8 @@ module.exports = {
 
     browser.getTitle(function(title) {
       browser.assert.equal(
-        title,
-        'Share your leftover event food - Hungry Husky'
+          title,
+          'Share your leftover event food - Hungry Husky'
       );
     });
 
@@ -16,15 +16,15 @@ module.exports = {
 
     browser.getTitle(function(title) {
       browser.assert.equal(
-        title,
-        'Help us determine if your food is shareable'
+          title,
+          'Help us determine if your food is shareable'
       );
     });
 
     browser.back().pause(200).getTitle(function(title) {
       browser.assert.equal(
-        title,
-        'Share your leftover event food - Hungry Husky'
+          title,
+          'Share your leftover event food - Hungry Husky'
       );
     });
 
