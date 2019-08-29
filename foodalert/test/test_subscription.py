@@ -236,6 +236,8 @@ class SubscriptionTest(TestCase):
         # all boolean fields should be false except email verified
         self.assertTrue(data["email_verified"])
         self.assertFalse(data["number_verified"])
+        self.assertFalse(data["send_sms"])
+        self.assertFalse(data["send_email"])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -320,19 +322,21 @@ class SubscriptionTest(TestCase):
     @transaction.atomic
     def test_unverified_patch_subscription(self, email='', sms=''):
         """
-        If user does not have a verified email or number, they should not
-        be able to change the value of the corresponding send state
+        If user does not have a verified number, they should not be able to turn
+        on notifications
         """
         sub = Subscription.objects.create(
             user=self.user,
             email=email,
             sms_number=sms,
         )
-        valid_payload = {
+        self.assertFalse(sub.send_sms)
+        self.assertFalse(sub.number_verified)
+        invalid_payload = {
             'send_sms': True
         }
         response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(valid_payload),
+                                     data=json.dumps(invalid_payload),
                                      content_type='application/json')
         self.assertEqual(200, response.status_code)
         data = response.json()
@@ -463,7 +467,10 @@ class SubscriptionTest(TestCase):
         data = response.json()
         self.assertEqual(data['email'], sub.email)
         self.assertEqual(data['sms_number'], sub.sms_number)
+        # email verified state does not change
         self.assertFalse(sub.number_verified)
+        self.assertFalse(sub.send_sms)
+        self.assertFalse(sub.send_email)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

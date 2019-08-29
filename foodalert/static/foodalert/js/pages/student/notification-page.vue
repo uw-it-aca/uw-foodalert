@@ -52,30 +52,8 @@
           </b-button>.
           Please reply YES to finish signup. <br />
         </template>
-      </notification-option>
-
-      <notification-option accord_id="email" type="email"
-        label="Enter an email" :subid="subid"
-        :serverData="{ text: notif_info.email,
-          verified: notif_info.email_verified }"
-        :requestUpdate="requestUpdate"
-        :resendVerif="()=>{return 1}">
-        <template #opt_heading>
-          Email
-        </template>
-        <template #unverifNotifText="{switchToUpdate}">
-          We sent a verification email to
-          <b-button variant="link" @click="switchToUpdate" class="px-0">
-            {{notif_info.email}}
-          </b-button>. <br />
-          Check your spam folder if you don't receive our email. <br />
-        </template>
       </notification-option -->
-
-
-      <h2>Practice new notif design</h2>
-
-      <new-notif accord_id="text" type="text"
+      <text-notif accord_id="text" type="text"
         label="Enter an phone number" :subid="subid"
         :serverData="{ text: notif_info.sms_number,
           verified: notif_info.number_verified }"
@@ -85,13 +63,12 @@
           Text
         </template>
         <template #unverifNotifText="{switchToUpdate}">
-          We sent a verification text to
-          <b-button variant="link" @click="switchToUpdate" class="px-0">
-            {{notif_info.sms_number}}
-          </b-button>. <br />
+          We sent a verification text to {{notif_info.sms_number}}.
+          Please reply YES to finish signup.
+          <br />
           Check your spam folder if you don't receive our email. <br />
         </template>
-      </new-notif>
+      </text-notif>
 
       <email-notif accord_id="email" type="email"
         label="Enter an email" :subid="subid"
@@ -113,7 +90,7 @@
 <script type="text/javascript">
 import GenericPage from '../../components/generic-page.vue';
 import NotifOption from '../../components/notification-option.vue';
-import new_notif from '../../components/new_notif_option.vue';
+import text_notif from '../../components/text_notif_option.vue';
 import email_notif from '../../components/email_notif_option.vue';
 const axios = require('axios');
 import Cookies from 'js-cookie';
@@ -122,7 +99,7 @@ export default {
   components: {
     'generic-page': GenericPage,
     'notification-option': NotifOption,
-    'new-notif': new_notif,
+    'text-notif': text_notif,
     'email-notif': email_notif,
   },
   props: {
