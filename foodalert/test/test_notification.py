@@ -1,5 +1,6 @@
 import os
 import json
+from copy import deepcopy
 from datetime import datetime, timedelta
 from unittest.mock import patch
 
@@ -16,7 +17,7 @@ from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.test.test_utils import create_notification_from_data,\
     generate_amazon_mock, generate_twilio_mock,\
-    create_user_and_client_from_data
+    create_user_from_data, create_client_with_mock_saml
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
                             'test',
@@ -36,50 +37,30 @@ class NotificationTest(TestCase):
         # Load test_data mock resource
         path = os.path.join(RESOURCE_DIR, 'notification_details.json')
         with open(path) as data_file:
-            cls.test_data = json.load(data_file)
+            cls.real_data = json.load(data_file)
 
-        for allergen in cls.test_data["allergens"]:
+        for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
 
-        (cls.user1, cls.client_1) = create_user_and_client_from_data(
-            cls.test_data["users"][0],
-            [create_group, audit_group]
-        )
-        (cls.user2, cls.client_2) = create_user_and_client_from_data(
-            cls.test_data["users"][1],
-            [create_group, audit_group]
-        )
-        (cls.user3, cls.client_3) = create_user_and_client_from_data(
-            cls.test_data["users"][2],
-            [create_group, audit_group]
-        )
-        (cls.user4, cls.client_4) = create_user_and_client_from_data(
-            cls.test_data["users"][3],
-            [audit_group]
-        )
-        (cls.user5, cls.client_5) = create_user_and_client_from_data(
-            cls.test_data["users"][4],
-            [create_group]
-        )
-        (cls.user6, cls.client_6) = create_user_and_client_from_data(
-            cls.test_data["users"][5],
-            []
-        )
+        cls.user1 = create_user_from_data(cls.real_data["users"][0])
+        cls.user2 = create_user_from_data(cls.real_data["users"][1])
 
         Subscription.objects.create(
-            user=cls.user1, email=cls.test_data["subscription"]["email"],
-            email_verified=cls.test_data["subscription"]["email_verified"],
-            sms_number=cls.test_data["subscription"]["sms_number"],
-            number_verified=cls.test_data["subscription"]["number_verified"],
-            notif_on=cls.test_data["subscription"]["notif_on"]
+            user=cls.user1, email=cls.real_data["subscription"]["email"],
+            email_verified=cls.real_data["subscription"]["email_verified"],
+            sms_number=cls.real_data["subscription"]["sms_number"],
+            number_verified=cls.real_data["subscription"]["number_verified"],
+            notif_on=cls.real_data["subscription"]["notif_on"]
         )
 
-        cls.test_data = cls.test_data["notifications"]
+    def setUp(self):
+        self.test_data = deepcopy(self.real_data["notifications"])
+        create_notification_from_data(self.test_data[0], self.user1)
+        create_notification_from_data(self.test_data[1], self.user2)
 
-        create_notification_from_data(cls.test_data[0], cls.user1)
-        create_notification_from_data(cls.test_data[1], cls.user2)
-
-        cls.test_data[2]["host"] = cls.user3
+    def tearDown(self):
+        Notification.objects.all().delete()
+        self.test_data = []
 
     @classmethod
     def tearDownClass(cls):
@@ -93,90 +74,148 @@ class NotificationTest(TestCase):
         """
         Compares the test data to what is actually returned from GET
         """
-        # Get all notifications from the notification endpoint
-        response = self.client_3.get('/notification/')
-        # Assert that the response is successful (200 HTTP Response Code)
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group, audit_group]
+        )
+        response = client.get('/notification/')
         self.assertEqual(response.status_code, 200)
 
-        # Assert that the json of the notification is correct
         self.assertEqual(len(response.json()), 2)
-        actual_json = json.dumps(response.json())
 
-        expected_reponse_json = json.dumps([self.data_to_list_represent(data)
-                                            for data in self.test_data[:2]])
-        self.assertEqual(expected_reponse_json, actual_json)
+        self.assertEqual(
+            response.json(),
+            [self.data_to_list_represent(data) for data in self.test_data[:2]]
+        )
+
+        client = create_client_with_mock_saml(self.user1, [audit_group])
+        response = client.get('/notification/')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.json()), 2)
+
+        self.assertEqual(
+            response.json(),
+            [self.data_to_list_represent(data) for data in self.test_data[:2]]
+        )
+
+        client = create_client_with_mock_saml(self.user1, [create_group])
+        response = client.get('/notification/')
+        self.assertEqual(response.status_code, 403)
+
+        client = create_client_with_mock_saml(self.user1, [])
+        response = client.get('/notification/')
+        self.assertEqual(response.status_code, 403)
 
     def test_get_notification_list_with_host_netid(self):
         """
         Compares the test data to what is actually returned from GET with
         host_netid
         """
-        # Get all notifications from the notification endpoint
-        response = self.client_3.get('/notification/?host_netid=' +
-                                     self.user1.username)
-        # Assert that the response is successful (200 HTTP Response Code)
+        # Audit
+        client = create_client_with_mock_saml(
+            self.user1,
+            [audit_group]
+        )
+        response = client.get('/notification/?host_netid=' +
+                              self.user1.username)
         self.assertEqual(response.status_code, 200)
-
-        # Assert that the json of the notification is correct
         self.assertEqual(len(response.json()), 1)
-        actual_json = response.json()
-
         expected_reponse_json = [self.data_to_list_represent(
             self.test_data[0]
         )]
-        self.assertEqual(expected_reponse_json, actual_json)
+        self.assertEqual(expected_reponse_json, response.json())
+
+        # Host - self
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group]
+        )
+        response = client.get('/notification/?host_netid=' +
+                              self.user1.username)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 1)
+        expected_reponse_json = [self.data_to_list_represent(
+            self.test_data[0]
+        )]
+        self.assertEqual(expected_reponse_json, response.json())
+
+        # Host - other
+        client = create_client_with_mock_saml(
+            self.user2,
+            [create_group]
+        )
+        response = client.get('/notification/?host_netid=' +
+                              self.user1.username)
+        self.assertEqual(response.status_code, 403)
+
+        # []
+        client = create_client_with_mock_saml(
+            self.user1,
+            []
+        )
+        response = client.get('/notification/?host_netid=' +
+                              self.user1.username)
+        self.assertEqual(response.status_code, 403)
 
     def test_get_notification_detail_by_id(self):
         """
         Compares the test data to what is actually returned from GET
         at an id endpoint
         """
-        # Get a single notification by ID
+        # Audit
+        client = create_client_with_mock_saml(
+            self.user1,
+            [audit_group]
+        )
         url = '/notification/' + str(self.test_data[0]["id"]) + '/'
-        response = self.client_3.get(url)
-        # Assert that the response is successful
+        response = client.get(url)
         self.assertEqual(response.status_code, 200)
-        actual_json1 = json.dumps(response.json())
-
         # Assert that the json of the notification is correct
         self.assertEqual(self.data_to_detail_json(self.test_data[0]),
-                         actual_json1)
+                         response.json())
 
-        url = '/notification/' + str(self.test_data[1]["id"]) + '/'
-        response = self.client_3.get(url)
-        # Assert that the response is successful
+        # Host - self - 1
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group]
+        )
+        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        response = client.get(url)
         self.assertEqual(response.status_code, 200)
-        actual_json2 = json.dumps(response.json())
+        # Assert that the json of the notification is correct
+        self.assertEqual(self.data_to_detail_json(self.test_data[0]),
+                         response.json())
 
+        # Host - self - 2
+        client = create_client_with_mock_saml(
+            self.user2,
+            [create_group]
+        )
+        url = '/notification/' + str(self.test_data[1]["id"]) + '/'
+        response = client.get(url)
+        self.assertEqual(response.status_code, 200)
         # Assert that the json of the notification is correct
         self.assertEqual(self.data_to_detail_json(self.test_data[1]),
-                         actual_json2)
+                         response.json())
 
-        # Assert that the two responses were not equal
-        self.assertNotEqual(actual_json1, actual_json2)
-
-    """def test_perm_list_get(self):
-        response = self.client_4.get('/notification/')
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client_5.get('/notification/')
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client_6.get('/notification/')
-        self.assertEqual(response.status_code, 403)
-
-    def test_perm_detail_get(self):
+        # Host - other
+        client = create_client_with_mock_saml(
+            self.user2,
+            [create_group]
+        )
         url = '/notification/' + str(self.test_data[0]["id"]) + '/'
-
-        response = self.client_4.get(url)
-        self.assertEqual(response.status_code, 200)
-
-        # client 5 has not created this notification
-        response = self.client_5.get(url)
+        response = client.get(url)
         self.assertEqual(response.status_code, 403)
 
-        response = self.client_6.get(url)
-        self.assertEqual(response.status_code, 403)"""
+        # []
+        client = create_client_with_mock_saml(
+            self.user2,
+            [create_group]
+        )
+        url = '/notification/' + str(self.test_data[0]["id"]) + '/'
+        response = client.get(url)
+        self.assertEqual(response.status_code, 403)
 
     """
     POST tests
@@ -187,36 +226,59 @@ class NotificationTest(TestCase):
         request is successful and the response json is matches the request
         data
         """
+        self.test_data[2]["host"] = self.user2
+
         with generate_twilio_mock() as mock:
             end_time = datetime.now().astimezone() + timedelta(seconds=3600)
-            response = self.client_3.post(
-                    "/notification/",
-                    data=self.data_to_payload_json(self.test_data[2],
-                                                   end_time.isoformat()),
-                    content_type='application/json'
-                )
 
-            # Assert that the posted notificaiton was sucessfully created
-            self.assertEqual(response.status_code, 201)
-            # Convert the response to JSON as the actual json
-            actual_json = json.dumps(response.json())
-            # Set the created time to match: this field is dynamic
-            self.test_data[2]["id"] = response.data["id"]
+            # Audit
+            client = create_client_with_mock_saml(
+                self.test_data[2]["host"],
+                [audit_group]
+            )
+            response = client.post(
+                "/notification/",
+                data=self.data_to_payload_json(
+                    self.test_data[2],
+                    end_time.isoformat()
+                ),
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, 403)
+
+            # Host
+            client = create_client_with_mock_saml(
+                self.test_data[2]["host"],
+                [create_group]
+            )
+            response1 = client.post(
+                "/notification/",
+                data=self.data_to_payload_json(
+                    self.test_data[2],
+                    end_time.isoformat()
+                ),
+                content_type='application/json'
+            )
+            self.assertEqual(response1.status_code, 201)
+            self.test_data[2]["id"] = response1.data["id"]
             self.test_data[2]["created_time"] = \
-                response.data["time"]["created"]
+                response1.data["time"]["created"]
             self.test_data[2]["end_time"] = end_time
             expected_json = self.data_to_detail_json(self.test_data[2])
-            self.assertEqual(expected_json, actual_json)
+            self.assertEqual(expected_json, response1.json())
 
             url = '/notification/' + str(self.test_data[2]["id"]) + '/'
-            response = self.client_3.get(url)
+            response2 = client.get(url)
             # Assert that the response is successful
-            self.assertEqual(response.status_code, 200)
-            actual_json = json.dumps(response.json())
-            self.assertEqual(expected_json, actual_json)
+            self.assertEqual(response2.status_code, 200)
+            self.assertEqual(response2.json(), response1.json())
 
+            client = create_client_with_mock_saml(
+                self.user1,
+                [audit_group]
+            )
             # Get all notifications from the notification endpoint
-            response = self.client_3.get('/notification/')
+            response = client.get('/notification/')
             # Assert that the response is successful (200 HTTP Response Code)
             self.assertEqual(response.status_code, 200)
             actual_json = response.json()
@@ -229,11 +291,14 @@ class NotificationTest(TestCase):
                 for data in self.test_data[:3]])
             self.assertEqual(expected_reponse_json, json.dumps(actual_json))
 
+        self.test_data[2]["host"] = None
+
     def test_post_malformed_notification(self):
         """
         Attempts to post an malformed notification payload and tests that the
         request is unsuccessful
         """
+        self.test_data[2]["host"] = self.user2
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
         temp_location = self.test_data[2]["location"]
@@ -242,12 +307,17 @@ class NotificationTest(TestCase):
                                                     end_time)
         self.test_data[2]["location"] = temp_location
 
-        response = self.client_3.post(
-                "/notification/",
-                data=invalid_payload,
-                content_type='application/json'
-            )
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group]
+        )
+        response = client.post(
+            "/notification/",
+            data=invalid_payload,
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, 400)
+        self.test_data[2]["host"] = None
 
     def test_post_check_already_exist_notification(self):
         """
@@ -256,45 +326,57 @@ class NotificationTest(TestCase):
         has an notification that has ended. The first one should cause an
         error 409 and the second one should return with a 201
         """
+        self.test_data[2]["host"] = self.user1
+        self.test_data[3]["host"] = self.user2
+
         end_time = datetime.now().astimezone() + timedelta(seconds=3600)
-        invalid_payload = self.data_to_payload_json(
+        payload_data_2 = self.data_to_payload_json(
             self.test_data[2],
+            end_time.isoformat()
+        )
+        payload_data_3 = self.data_to_payload_json(
+            self.test_data[3],
             end_time.isoformat()
         )
 
         with generate_twilio_mock() as mock:
-            response = self.client_1.post(
-                    "/notification/",
-                    data=invalid_payload,
-                    content_type='application/json'
-                )
+            client = create_client_with_mock_saml(
+                self.test_data[2]["host"],
+                [create_group]
+            )
+            response = client.post(
+                "/notification/",
+                data=payload_data_2,
+                content_type='application/json'
+            )
             self.assertEqual(response.status_code, 409)
             self.assertEqual(json.dumps(
                 {"Conflict": "event with this netId is already in progress"}),
                 json.dumps(response.json()))
 
-            self.test_data[3]["host"] = self.user2
-            valid_payload = self.data_to_payload_json(
-                self.test_data[3],
-                end_time.isoformat()
+            client = create_client_with_mock_saml(
+                self.test_data[3]["host"],
+                [create_group]
             )
 
-            response = self.client_2.post(
+            response = client.post(
                     "/notification/",
-                    data=valid_payload,
+                    data=payload_data_3,
                     content_type='application/json'
                 )
             self.assertEqual(response.status_code, 201)
-            # Convert the response to JSON as the actual json
-            actual_json = json.dumps(response.json())
             # Set the created time to match: this field is dynamic
             self.test_data[3]["id"] = response.data["id"]
             self.test_data[3]["created_time"] = \
                 response.data["time"]["created"]
             self.test_data[3]["end_time"] = end_time
+            self.assertEqual(
+                self.data_to_detail_json(self.test_data[3]),
+                response.json()
+            )
 
-            expected_json = self.data_to_detail_json(self.test_data[3])
-            self.assertEqual(expected_json, actual_json)
+        self.test_data[2]["host"] = None
+        self.test_data[3]["host"] = None
 
     def test_post_incomplete_payload(self):
         """
@@ -303,22 +385,27 @@ class NotificationTest(TestCase):
         """
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
+        self.test_data[2]["host"] = self.user2
         proper_payload = \
-            json.loads(self.data_to_payload_json(self.test_data[3], end_time))
+            json.loads(self.data_to_payload_json(self.test_data[2], end_time))
         incomplete_payload = {}
 
-        response = self.client_3.post(
-                "/notification/",
-                data=json.dumps(incomplete_payload),
-                content_type='application/json'
-            )
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group]
+        )
+        response = client.post(
+            "/notification/",
+            data=json.dumps(incomplete_payload),
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, 400)
 
         with patch.multiple(settings, FOODALERT_USE_SMS="amazon"):
             with generate_amazon_mock() as mock:
                 for key in proper_payload:
                     incomplete_payload[key] = proper_payload[key]
-                    response = self.client_3.post(
+                    response = client.post(
                         "/notification/",
                         data=json.dumps(incomplete_payload),
                         content_type='application/json'
@@ -328,126 +415,128 @@ class NotificationTest(TestCase):
                     else:
                         self.assertEqual(response.status_code, 201)
 
+        self.test_data[2]["host"] = None
+
     def test_post_to_id(self):
         """
-        Attempts to post to 1 valid ID and 1 invalid ID and expects 405
+        Attempts to post to 1 valid ID and 1 invalid ID and expects 403
         """
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
-        self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
+        self.test_data[2]["host"] = self.user2
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
 
-        response = self.client_3.post(
-                "/notification/0/",
-                data=valid_payload,
-                content_type='application/json'
-            )
-        self.assertEqual(response.status_code, 405)
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
 
-        response = self.client_3.post(
-                "/notification/5/",
-                data=valid_payload,
-                content_type='application/json'
-            )
-        self.assertEqual(response.status_code, 405)
+        response = client.post(
+            "/notification/0/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
 
-    """def test_perm_list_post(self):
-        end_time = (datetime.now().astimezone() +
-                    timedelta(seconds=3600)).isoformat()
-        proper_payload = \
-            json.loads(self.data_to_payload_json(self.test_data[3], end_time))
+        response = client.post(
+            "/notification/5/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
 
-        with generate_twilio_mock() as mock:
-            response = self.client_4.post(
-                '/notification/',
-                data=proper_payload,
-                content_type='application/json'
-            )
-            self.assertEqual(response.status_code, 403)
-
-            response = self.client_5.post(
-                '/notification/',
-                data=proper_payload,
-                content_type='application/json'
-            )
-            self.assertEqual(response.status_code, 200)
-
-            response = self.client_6.post(
-                '/notification/',
-                data=proper_payload,
-                content_type='application/json'
-            )
-            self.assertEqual(response.status_code, 403)"""
+        self.test_data[2]["host"] = None
 
     """
     PATCH tests
     """
     def test_patch_notification(self):
         """
-        Attempts to patch a notification expect a 405
+        Attempts to patch a notification expect a 403
         """
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
-        self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
-        response = self.client_3.patch(
+        self.test_data[2]["host"] = self.user2
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+        response = client.patch(
                 "/notification/",
                 data=valid_payload,
                 content_type='application/json'
             )
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)
+
+        self.test_data[2]["host"] = None
 
     def test_patch_notification_id(self):
         """
-        Attempts to patch a notification at id expect a 405
+        Attempts to patch a notification at id expect a 403
         """
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
-        self.test_data[3]["host"] = self.user2
-        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
-        response = self.client_3.patch(
-                "/notification/0/",
-                data=valid_payload,
-                content_type='application/json'
-            )
-        self.assertEqual(response.status_code, 405)
+        self.test_data[2]["host"] = self.user2
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
 
-        valid_payload = self.data_to_payload_json(self.test_data[3], end_time)
-        response = self.client_3.patch(
-                "/notification/5/",
-                data=valid_payload,
-                content_type='application/json'
-            )
-        self.assertEqual(response.status_code, 405)
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+        response = client.patch(
+            "/notification/0/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
+
+        response = client.patch(
+            "/notification/5/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
+
+        self.test_data[2]["host"] = None
 
     """
     DELETE tests
     """
     def test_delete_notification(self):
         """
-        Attempts to patch a notification expect a 405
+        Attempts to patch a notification expect a 403
         """
-        response = self.client_3.delete(
-                "/notification/",
-                content_type='application/json'
-            )
-        self.assertEqual(response.status_code, 405)
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group, audit_group]
+        )
+        response = client.delete(
+            "/notification/",
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 403)
 
     def test_delete_notification_id(self):
         """
-        Attempts to patch a notification at id expect a 405
+        Attempts to patch a notification at id expect a 403
         """
-        response = self.client_1.delete(
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group, audit_group]
+        )
+        response = client.delete(
                 "/notification/0/",
                 content_type='application/json'
             )
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)
 
-        response = self.client_3.delete(
+        response = client.delete(
                 "/notification/5/",
                 content_type='application/json'
             )
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)
 
     """
     Helper functions
@@ -461,8 +550,7 @@ class NotificationTest(TestCase):
             }
 
     def data_to_detail_json(self, data):
-        return json.dumps(
-            {
+        return {
                 "id": data["id"],
                 "netID": data["host"].username,
                 "location": data["location"],
@@ -480,8 +568,7 @@ class NotificationTest(TestCase):
                 },
                 "userAgent": data["userAgent"],
                 "ended": data["ended"]
-            },
-        )
+            }
 
     def data_to_payload_json(self, data, end):
         return json.dumps(

@@ -39,20 +39,12 @@ def create_update_from_data(data, notifs):
     data["created_time"] = update_data.created_time
 
 
-def create_user_and_client_from_data(data, member_of):
-    data["isMemberOf"] = member_of
+def create_user_from_data(data):
     user = User.objects.create_user(username=data["username"],
                                     email=data["email"],
                                     password=data["password"],
                                     is_active=1)
-
-    client = Client()
-    client.force_login(user)
-    session = client.session
-    session['samlUserdata'] = {"isMemberOf": data["isMemberOf"]}
-    session.save()
-
-    return (user, client)
+    return user
 
 
 def create_client_with_mock_saml(user, member_of):
