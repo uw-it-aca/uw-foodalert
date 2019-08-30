@@ -105,11 +105,13 @@ class NotificationList(generics.ListCreateAPIView):
 class UpdateDetail(generics.RetrieveAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateDetailSerializer
+    permission_classes = [(IsSelf & HostRead) | AuditRead]
 
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
+    permission_classes = [((IsSelf & HostRead) | AuditRead) | (IsSelf & HostCreate)]
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -118,9 +120,11 @@ class UpdateList(generics.ListCreateAPIView):
                 notif = Notification.objects.get(
                     pk=self.request.query_params['parent_notification']
                 )
-                return qs.filter(parent_notification=notif)
+                qs = qs.filter(parent_notification=notif)
             except Notification.DoesNotExist:
                 return Update.objects.none()
+        for obj in qs:
+            self.check_object_permissions(self.request, obj)
         return qs
 
     def get_serializer_class(self):
@@ -132,6 +136,11 @@ class UpdateList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
+            parent = Notification.objects.get(
+                pk=request.data['parent_notification_id']
+            )
+            self.check_object_permissions(self.request, parent)
+            
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
@@ -146,10 +155,7 @@ class UpdateList(generics.ListCreateAPIView):
                     email_recipients.append(sub.email)
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
-
-            parent = Notification.objects.get(
-                pk=data['parent_notification_id']
-            )
+            
             if not settings.DEBUG:
                 if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
