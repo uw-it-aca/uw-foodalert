@@ -66,6 +66,7 @@ class NotificationTest(TestCase):
     def tearDownClass(cls):
         User.objects.all().delete()
         Notification.objects.all().delete()
+        Allergen.objects.all().delete()
 
     """
     GET tests
