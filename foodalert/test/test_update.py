@@ -29,7 +29,7 @@ GET /updates/?parent_notification_id=<integer>
     - Test the format is right when multiple updates are listed. - X
     - Test that only the relevent updates are listed - X
     - Test that only children of notificatons created by the user are
-      accessible - TODO:: Need to add perm class
+      accessible - X
 GET /updates/<id>/
     - Test that the right json is returned - X
     - Test the case when the element with that id does not exist - X
@@ -41,7 +41,7 @@ POST /updates/
     - Test that no more updates can be created under an ended notificaitons - X
     - Test that ended: true always creates the same message. - TODO:: TBD
     - Test that a user can not create a update under a diffrent users
-      notification. - TODO:: Need to add perm class
+      notification. - X
 
 405 endpoints
 
@@ -73,11 +73,11 @@ class UpdateTest(TestCase):
         path = os.path.join(RESOURCE_DIR, 'update_details.json')
         with open(path) as data_file:
             cls.real_data = json.load(data_file)
-        
+
         cls.user1 = create_user_from_data(cls.real_data["users"][0])
         cls.user2 = create_user_from_data(cls.real_data["users"][1])
         cls.user3 = create_user_from_data(cls.real_data["users"][2])
-        
+
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
 
@@ -131,7 +131,7 @@ class UpdateTest(TestCase):
              self.data_to_list_represent(self.test_data["updates"][1]),
              self.data_to_list_represent(self.test_data["updates"][3])]
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Audit
         client = create_client_with_mock_saml(
             self.user1,
@@ -147,7 +147,7 @@ class UpdateTest(TestCase):
              self.data_to_list_represent(self.test_data["updates"][1]),
              self.data_to_list_represent(self.test_data["updates"][3])]
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Host
         client = create_client_with_mock_saml(
             self.user1,
@@ -155,7 +155,7 @@ class UpdateTest(TestCase):
         )
         response = client.get('/updates/')
         self.assertEqual(response.status_code, 403)
-        
+
         # []
         client = create_client_with_mock_saml(
             self.user1,
@@ -185,7 +185,7 @@ class UpdateTest(TestCase):
             [self.data_to_list_represent(self.test_data["updates"][0]),
              self.data_to_list_represent(self.test_data["updates"][1])]
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Host - self
         client = create_client_with_mock_saml(
             self.user1,
@@ -202,7 +202,7 @@ class UpdateTest(TestCase):
             [self.data_to_list_represent(self.test_data["updates"][0]),
              self.data_to_list_represent(self.test_data["updates"][1])]
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Host - other
         client = create_client_with_mock_saml(
             self.user2,
@@ -212,7 +212,7 @@ class UpdateTest(TestCase):
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 403)
-        
+
         # []
         client = create_client_with_mock_saml(
             self.user1,
@@ -222,7 +222,6 @@ class UpdateTest(TestCase):
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 403)
-
 
     def test_get_update_detail_by_id(self):
         """
@@ -245,7 +244,7 @@ class UpdateTest(TestCase):
             response.json()["created_time"]
         )
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Host - self
         client = create_client_with_mock_saml(
             self.user1,
@@ -262,7 +261,7 @@ class UpdateTest(TestCase):
             response.json()["created_time"]
         )
         self.assertEqual(expected_reponse_json, response.json())
-        
+
         # Host - other
         client = create_client_with_mock_saml(
             self.user2,
@@ -273,7 +272,7 @@ class UpdateTest(TestCase):
         ))
 
         self.assertEqual(response.status_code, 403)
-        
+
         # []
         client = create_client_with_mock_saml(
             self.user1,
@@ -320,7 +319,7 @@ class UpdateTest(TestCase):
                 content_type='application/json'
             )
             self.assertEqual(response.status_code, 403)
-            
+
             # Host - self
             client = create_client_with_mock_saml(
                 self.user1,
@@ -347,7 +346,7 @@ class UpdateTest(TestCase):
 
             self.assertEqual(response2.status_code, 200)
             self.assertEqual(response.json(), response2.json())
-            
+
             # Host - other
             client = create_client_with_mock_saml(
                 self.user2,
@@ -359,7 +358,7 @@ class UpdateTest(TestCase):
                 content_type='application/json'
             )
             self.assertEqual(response.status_code, 403)
-            
+
             # []
             client = create_client_with_mock_saml(
                 self.user1,
@@ -373,6 +372,10 @@ class UpdateTest(TestCase):
             self.assertEqual(response.status_code, 403)
 
     def test_post_malformed_update(self):
+        """
+        Attempts to post a malformed notification payload and tests that the
+        request fails with error code 400
+        """
         # Host - self
         client1 = create_client_with_mock_saml(
             self.user1,
@@ -416,6 +419,10 @@ class UpdateTest(TestCase):
             self.assertEqual(len(response.json()), init_len)
 
     def test_post_ends_notif(self):
+        """
+        Attempts to post a valid notification payload and tests that the
+        request is successful and the rparent notificaiton is ended
+        """
         payload = self.data_to_payload_represent(self.test_data["updates"][6])
 
         self.assertIs(

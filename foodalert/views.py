@@ -111,7 +111,8 @@ class UpdateDetail(generics.RetrieveAPIView):
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
-    permission_classes = [((IsSelf & HostRead) | AuditRead) | (IsSelf & HostCreate)]
+    permission_classes = [((IsSelf & HostRead) | AuditRead) |
+                          (IsSelf & HostCreate)]
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -140,7 +141,7 @@ class UpdateList(generics.ListCreateAPIView):
                 pk=request.data['parent_notification_id']
             )
             self.check_object_permissions(self.request, parent)
-            
+
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
@@ -155,7 +156,7 @@ class UpdateList(generics.ListCreateAPIView):
                     email_recipients.append(sub.email)
                 if sub.sms_number != '':
                     sms_recipients.append(str(sub.sms_number))
-            
+
             if not settings.DEBUG:
                 if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
