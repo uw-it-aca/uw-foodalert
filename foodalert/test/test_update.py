@@ -496,7 +496,7 @@ class UpdateTest(TestCase):
             "created_time": created_time
         }
 
-    def data_to_payload_represent(self, data, ended=None):
+    def data_to_payload_represent(self, data):
         parent_notification_id = \
             self.test_data["notifications"][
                 data["parent_notification_id"]
@@ -508,7 +508,5 @@ class UpdateTest(TestCase):
 
         if "ended" in data:
             payload["ended"] = data["ended"]
-        if ended is not None:
-            payload["ended"] = ended
 
         return payload
