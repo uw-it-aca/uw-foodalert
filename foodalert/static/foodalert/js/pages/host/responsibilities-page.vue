@@ -126,7 +126,8 @@ export default {
   methods: {
     getNextPage() {
       this.enableValidation = ['cond1', 'cond2'];
-      if (this.selected.length != 2) {
+
+      if (this.selected.length !== 2) {
         return;
       }
 
@@ -136,13 +137,14 @@ export default {
       this.$router.push({name: this.backPage});
     },
     inputValid(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) != -1) {
-        return (this.selected.indexOf(fieldValue) != -1 ? null : false);
+      if (this.enableValidation.indexOf(fieldValue) !== -1) {
+        return (this.selected.indexOf(fieldValue) !== -1 ? null : false);
       }
+
       return null;
     },
     addToValidate(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) == -1) {
+      if (this.enableValidation.indexOf(fieldValue) === -1) {
         this.enableValidation.push(fieldValue);
       }
     },
@@ -155,8 +157,16 @@ export default {
     };
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({
           name: 'h-update',

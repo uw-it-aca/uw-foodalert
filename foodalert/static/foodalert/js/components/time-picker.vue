@@ -29,10 +29,13 @@ export default {
   },
   data() {
     const _hourOptions = Array(12);
+
     for (let i = 0; i < 12; i++) {
       _hourOptions[i] = i + 1;
     }
+
     const _minuteOptions = Array(60);
+
     for (let i = 0; i < 60; i++) {
       _minuteOptions[i] = (((i < 10) ? '0' : '') + i);
     }
@@ -49,13 +52,14 @@ export default {
   methods: {
     updateTime() {
       this.$emit('input',
-          (this.hourSelected + (this.periodSelected == 'AM' ? 0 : 12)) + ':' +
-          this.minuteSelected);
+          (this.hourSelected + (this.periodSelected === 'AM' ? 0 : 12)) +
+          ':' + this.minuteSelected);
     },
   },
   beforeMount() {
     if (this.startWithCurrent) {
-      const semiFormattedTime = new Date().toLocaleTimeString().split(/\:| /);
+      const semiFormattedTime = new Date().toLocaleTimeString().split(/:| /);
+
       this.hourSelected = parseInt(semiFormattedTime[0]);
       this.minuteSelected = semiFormattedTime[1];
       this.periodSelected = semiFormattedTime[3];

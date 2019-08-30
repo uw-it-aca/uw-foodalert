@@ -168,6 +168,7 @@
 
 <script>
 const axios = require('axios');
+
 import Cookies from 'js-cookie';
 import {parsePhoneNumber, ParseError}
   from 'libphonenumber-js';
@@ -213,9 +214,9 @@ export default {
   },
   methods: {
     formatter(value, event) {
-      if (this.type == 'text') {
+      if (this.type === 'text') {
         return this.numberFormatter(value, event);
-      } else if (this.type == 'email') {
+      } else if (this.type === 'email') {
         return value;
       }
     },
@@ -223,11 +224,14 @@ export default {
       if (value.length > 14) {
         return value.substr(0, 14);
       }
+
       const cleaned = ('' + value).replace(/\D/g, '');
       const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
       if (match) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3];
       }
+
       return cleaned;
     },
     getNewState(spinnerOpt) {
@@ -254,13 +258,16 @@ export default {
           }
         }
       }
+
       const data = new FormData();
+
       data.set(inputType, notifValue);
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
+
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
@@ -324,7 +331,8 @@ export default {
     },
     cancelUpdate(event, spinnerOpt) {
       spinnerOpt.state = true;
-      if (this.serverData.text == '') {
+
+      if (this.serverData.text === '') {
         this.isOpen = false;
       } else if (this.updateMode) {
         this.updateMode = false;

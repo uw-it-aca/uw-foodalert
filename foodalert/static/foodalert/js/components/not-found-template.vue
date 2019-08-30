@@ -14,10 +14,10 @@
           </b-row>
           <br>
           <b-row align-self="center" align-h="center">
-              <button style="c"
-                      type="button"
-                      class="btn btn-outline-primary"
-                      @click="goHome">
+              <button class="btn btn-outline-primary"
+                      href="#"
+                      @click="goHome()"
+                      @keyDown="goHome()">
                   Go To Homepage
               </button>
           </b-row>
