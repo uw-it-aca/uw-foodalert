@@ -197,4 +197,16 @@ export default {
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
+
+    .foodalert .dropdown-menu.dropdown-menu-right {
+        min-width: 0;
+    }
+
+    .foodalert .nav-link.dropdown-toggle.text-decoration-none {
+        color: black;
+    }
+
+    .foodalert .nav-link.dropdown-toggle.text-decoration-none::after {
+        margin-left: 8px;
+    }
 </style>
