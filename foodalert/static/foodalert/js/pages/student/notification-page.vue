@@ -9,10 +9,11 @@
         Please choose at least one.
       </p>
       <text-notif accord_id="text" type="text"
-        label="Enter an phone number" :subid="subid"
+        label="Enter a phone number" :subid="subid"
         :serverData="{ text: notif_info.sms_number,
           verified: notif_info.number_verified }"
         :requestUpdate="requestUpdate"
+        errorDesc="Carrier rates may apply"
         :resendVerif="()=>{return 1}">
         <template #opt_heading>
           Text

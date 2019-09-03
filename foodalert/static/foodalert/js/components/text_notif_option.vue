@@ -64,7 +64,7 @@
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
-                      @click="localData.text = ''; updateMode=false"
+                      @click="localData.text = ''; updateMode=false; validateOn=false"
                       :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}" >
