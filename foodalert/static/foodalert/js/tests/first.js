@@ -12,6 +12,8 @@ module.exports = {
       );
     });
 
+    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
+
     browser.click('a.btn').pause(100);
 
     browser.getTitle(function(title) {
@@ -21,12 +23,18 @@ module.exports = {
       );
     });
 
+    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
+
     browser.back().pause(200).getTitle(function(title) {
       browser.assert.equal(
           title,
           'Share your leftover event food - Hungry Husky'
       );
     });
+
+    browser.window()
+
+    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
 
     browser.end();
   },
