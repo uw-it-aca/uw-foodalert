@@ -1,13 +1,11 @@
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue';
 
 import '../css/custom.scss';
 
 Vue.use(BootstrapVue);
-Vue.use(Vuelidate);
 Vue.use(VueRouter);
 
 require('../css/styles.css');
