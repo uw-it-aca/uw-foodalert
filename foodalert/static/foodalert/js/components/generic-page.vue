@@ -19,9 +19,9 @@
           </b-navbar-nav>
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
             <b-nav-form>
-              <label id="netID">UW NetID</label>
+              <label for="sign-out">UW NetID</label>
               <b-button variant="link"
-                aria-labelledby="netID"
+                id="sign-out"
                 type="submit">
                 Sign out
               </b-button>
