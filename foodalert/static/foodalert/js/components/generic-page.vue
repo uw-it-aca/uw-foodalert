@@ -18,11 +18,14 @@
             </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
-            <b-nav-item href="#">UW NetID</b-nav-item>
-            <b-button variant="link"
-              type="submit">
-              Sign out
-            </b-button>
+            <b-nav-form>
+              <label id="netID">UW NetID</label>
+              <b-button variant="link"
+                aria-labelledby="netID"
+                type="submit">
+                Sign out
+              </b-button>
+            </b-nav-form>
           </b-navbar-nav>
         </b-navbar>
       </header>
