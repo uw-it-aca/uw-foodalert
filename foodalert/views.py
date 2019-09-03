@@ -74,9 +74,9 @@ class NotificationList(generics.ListCreateAPIView):
                 email_recipients = []
                 sms_recipients = []
                 for sub in Subscription.objects.all():
-                    if sub.email != '' and sub.send_email:
+                    if sub.send_email:
                         email_recipients.append(sub.email)
-                    if sub.sms_number != '' and sub.send_sms:
+                    if sub.send_sms:
                         sms_recipients.append(str(sub.sms_number))
 
                 message = Sender.format_message(data)
@@ -151,9 +151,9 @@ class UpdateList(generics.ListCreateAPIView):
             email_recipients = []
             sms_recipients = []
             for sub in Subscription.objects.all():
-                if sub.email != '':
+                if sub.send_email:
                     email_recipients.append(sub.email)
-                if sub.sms_number != '':
+                if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
 
             if not settings.DEBUG:

@@ -49,7 +49,9 @@ class NotificationTest(TestCase):
             user=cls.user1, email=cls.real_data["subscription"]["email"],
             email_verified=cls.real_data["subscription"]["email_verified"],
             sms_number=cls.real_data["subscription"]["sms_number"],
-            number_verified=cls.real_data["subscription"]["number_verified"]
+            number_verified=cls.real_data["subscription"]["number_verified"],
+            send_email=True,
+            send_sms=True
         )
 
     def setUp(self):
