@@ -19,12 +19,14 @@
           </b-navbar-nav>
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
             <b-nav-form>
-              <label for="sign-out">UW NetID</label>
-              <b-button variant="link"
-                id="sign-out"
-                type="submit">
-                Sign out
-              </b-button>
+              <label for="sign-out">
+                UW NetID
+                <b-button variant="link"
+                  id="sign-out"
+                  type="submit">
+                  Sign out
+                </b-button>
+              </label>
             </b-nav-form>
           </b-navbar-nav>
         </b-navbar>
