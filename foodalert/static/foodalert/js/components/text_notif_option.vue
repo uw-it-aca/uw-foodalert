@@ -320,7 +320,7 @@ export default {
                 if (this.newData) {
                   this.newData = false;
                 }
-                
+
                 this.updateMode = false;
                 this.isOpen=false;
               })
