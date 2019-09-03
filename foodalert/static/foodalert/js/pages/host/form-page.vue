@@ -46,12 +46,12 @@
         </p>
 
         <div>
-          <label class="standard-label w-100" for="event-name">
+          <label class="standard-label w-100 mb-0" for="event-name">
             Event name
             <b-form-input id="event-name" ref="event"
               v-model="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
-              class="standard-placeholder"
+              class="standard-placeholder mt-2"
               size="lg" @blur="enableValidation.event=true">
             </b-form-input>
             <b-form-invalid-feedback id="event-name-feedback" role="alert">
@@ -64,7 +64,8 @@
           <label id="food-label" class="standard-label mb-0 w-100"
             for="food-description">
             Describe the food
-            <p id="food-clarification" class="mb-2" style="font-size: 15px;">
+            <p id="food-clarification" class="mb-2"
+               style="font-size: 14px; font-weight: 400;">
               Tell people about your
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
@@ -85,13 +86,13 @@
         </div>
 
         <div>
-          <label id="location-label" class="standard-label w-100"
+          <label id="location-label" class="standard-label w-100 mb-0"
             for="location">Location
             <b-form-input id="location"
               ref="location"
               v-model="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
-              class="standard-placeholder" size="lg"
+              class="standard-placeholder mt-2" size="lg"
               @blur="enableValidation.location=true">
             </b-form-input>
             <b-form-invalid-feedback id="location-feedback" role="alert">
@@ -103,7 +104,8 @@
         <label class="standard-label mb-0 w-100"
           id="end-time-label" for="end-time">
           End time
-          <p id="time-clarification" class="mb-2" style="font-size: 14px;">
+          <p id="time-clarification" class="mb-2"
+             style="font-size: 14px; font-weight: 400;">
             Set the time when food service will be over.
           </p>
           <b-row>
@@ -131,7 +133,7 @@
           Does the food contain the following allergens?
         </h3>
         <p id="allergen-clarification" class="mb-2" style="font-size: 14px;">
-          It's ok if you are unsure, just select to the best of your
+          It's OK if you are unsure, just select to the best of your
           knowledge.
         </p>
 

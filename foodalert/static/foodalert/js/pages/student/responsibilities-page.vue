@@ -12,14 +12,14 @@
           required>
           <span>We cannot confirm all potential allergy ingredients.</span>
         </b-form-checkbox>
-        <b-form-checkbox v-model="selected" class="mt-3" name="cond2"
+        <b-form-checkbox v-model="selected" class="mt-2" name="cond2"
           value="cond2" required>
           <span>Placeholder for terms and service</span>
         </b-form-checkbox>
         <div style="margin-top: 32px">
           <b-row align-h="between">
             <b-col md="4" lg="3" order-md="2">
-              <b-button size="lg" class="mb-3" type="submit" block
+              <b-button size="lg" class="mb-3 button-text" type="submit" block
                 variant="primary" :disabled="selected.length != 2"
                 aria-label="Agree to the selected checkboxes">
                   Agree

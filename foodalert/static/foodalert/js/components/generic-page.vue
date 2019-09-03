@@ -6,23 +6,32 @@
       </alert-box>
       <header class="md-5 mb-2" role="banner">
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
-          <b-navbar-brand class="pl-2" href="#">
+          <b-navbar-brand class="pl-2 pb-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
-                  alt="UW Food Alert Logo" height="24"
-                  class="d-none d-sm-none d-md-block">
-            <img :src="require('../../img/uw-logo.svg')"
-                   alt="UW Logo" height="24"
-                   class="d-block d-sm-block d-md-none">
+                  alt="UW Food Alert Logo" height="22"
+                  >
           </b-navbar-brand>
-          <b-navbar-nav class="ml-auto">
-                <p class="my-auto standard-neid">UW NetID</p>
-              <b-button variant="link"
-                style="font-size: 14px; font-weight: 400;"
-                type="submit">Sign out</b-button>
+          <b-navbar-nav class="d-flex d-sm-none ml-auto">
+            <b-nav-item-dropdown variant="link" text="UW NetID"
+              right toggle-class="text-decoration-none">
+              <b-dropdown-item href="#">Sign out</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+          <b-navbar-nav class="d-none d-sm-flex ml-auto">
+            <b-nav-form>
+              <label for="sign-out">
+                UW NetID
+                <b-button variant="link"
+                  id="sign-out"
+                  type="submit">
+                  Sign out
+                </b-button>
+              </label>
+            </b-nav-form>
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5">
+      <main id="standard-body" class="standard-container mt-md-5 mt-3">
         <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>
@@ -80,7 +89,7 @@ export default {
   methods: {
     updateHeightOfPage() {
       document.querySelector('.page').style.minHeight =
-        (window.innerHeight - 65) + 'px';
+        window.innerHeight + 'px';
     },
   },
 };
@@ -120,13 +129,14 @@ export default {
 
     .page {
         display: flex;
-        min-height: calc(100vh - 65px);
+        min-height: 100vh;
         flex-direction: column;
         align-content: space-between;
     }
 
     #relative-footer {
         margin-top: auto;
+        padding-top: 16px;
         font-size: 12px;
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
