@@ -243,13 +243,16 @@ export default {
 
       if (inputType === 'text') {
         inputType = 'sms_number';
+
         if (notifValue != '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
+
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
             console.log('error' + phoneNum.isValid());
+
             if (error instanceof ParseError) {
               console.log(error.message);
             } else {
@@ -274,13 +277,16 @@ export default {
       if (validInput) {
         if (this.subid) {
           const url = '/subscription/' + this.subid + '/';
-          axios.patch(url, data, {'headers': headers})
+
+          axios.patch(url, data, {headers})
               .then((response) => {
                 this.requestUpdate();
                 spinnerOpt.state = false;
+
                 if (this.newData) {
                   this.newData = false;
                 }
+
                 this.updateMode = false;
               })
               .catch((error) => {
@@ -292,15 +298,18 @@ export default {
             'email': '',
             'sms_number': '',
           };
+
           postData[inputType] = notifValue;
-          axios.post('/subscription/', postData, {'headers': headers})
+          axios.post('/subscription/', postData, {headers})
               .then((response) => {
                 this.requestUpdate();
 
                 spinnerOpt.state = false;
+
                 if (this.newData) {
                   this.newData = false;
                 }
+
                 this.updateMode = false;
               })
               .catch((error) => {
@@ -318,9 +327,11 @@ export default {
       // error should be displayed on page if invalid
       // phone number is entered
       let input = this.type;
+
       if (this.type === 'text') {
         input = 'phone number';
       }
+
       this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
       spinnerOpt.state = false;
       this.validateOn = true;

@@ -179,8 +179,9 @@
 
 <script>
 const axios = require('axios');
+
 import Cookies from 'js-cookie';
-import {parsePhoneNumber, ParseError}
+import {parsePhoneNumber, ParseError, AsYouTypeFormatter}
   from 'libphonenumber-js';
 
 export default {
@@ -237,11 +238,14 @@ export default {
       if (value.length > 14) {
         return value.substr(0, 14);
       }
+
       const cleaned = ('' + value).replace(/\D/g, '');
       const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
       if (match) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3];
       }
+
       return cleaned;
     },
     getNewState(spinnerOpt) {
@@ -254,13 +258,16 @@ export default {
 
       if (inputType === 'text') {
         inputType = 'sms_number';
+
         if (notifValue != '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
+
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
             console.log('error' + phoneNum.isValid());
+
             if (error instanceof ParseError) {
               console.log(error.message);
             } else {
@@ -269,26 +276,32 @@ export default {
           }
         }
       }
+
       const data = new FormData();
+
       data.set(inputType, notifValue);
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
+
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
       if (validInput) {
         if (this.subid) {
           const url = '/subscription/' + this.subid + '/';
-          axios.patch(url, data, {'headers': headers})
+
+          axios.patch(url, data, {headers})
               .then((response) => {
                 this.requestUpdate();
                 spinnerOpt.state = false;
+
                 if (this.newData) {
                   this.newData = false;
                 }
+
                 this.updateMode = false;
               })
               .catch((error) => {
@@ -300,15 +313,18 @@ export default {
             'email': '',
             'sms_number': '',
           };
+
           postData[inputType] = notifValue;
-          axios.post('/subscription/', postData, {'headers': headers})
+          axios.post('/subscription/', postData, {headers})
               .then((response) => {
                 this.requestUpdate();
 
                 spinnerOpt.state = false;
+
                 if (this.newData) {
                   this.newData = false;
                 }
+
                 this.updateMode = false;
               })
               .catch((error) => {
@@ -326,9 +342,11 @@ export default {
       // error should be displayed on page if invalid
       // phone number is entered
       let input = this.type;
+
       if (this.type === 'text') {
         input = 'phone number';
       }
+
       this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
       spinnerOpt.state = false;
       this.validateOn = true;
@@ -339,6 +357,7 @@ export default {
     },
     cancelUpdate(event, spinnerOpt) {
       spinnerOpt.state = true;
+
       if (this.serverData.text == '') {
         this.isOpen = false;
       } else if (this.updateMode) {
@@ -365,6 +384,7 @@ export default {
           'X-CSRFToken': csrftoken,
         };
         const url = '/subscription/' + this.subid + '/';
+
         axios.patch(url, data, {headers})
             .then(console.log)
             .catch((error) => {

@@ -25,6 +25,7 @@
 
 <script>
 const axios = require('axios');
+
 import Cookies from 'js-cookie';
 
 export default {
@@ -55,7 +56,8 @@ export default {
                 'email': this.netID + '@uw.edu',
                 'sms_number': '',
               };
-              axios.post('/subscription/', postData, {'headers': headers})
+
+              axios.post('/subscription/', postData, {headers})
                   .then((response) => {
                     this.requestUpdate();
                   })
@@ -82,6 +84,7 @@ export default {
         'X-CSRFToken': csrftoken,
       };
       const url = '/subscription/' + this.subid + '/';
+
       axios.patch(url, data, {headers})
           .then(console.log)
           .catch((error) => {

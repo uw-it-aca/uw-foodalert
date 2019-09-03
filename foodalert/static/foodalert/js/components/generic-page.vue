@@ -80,7 +80,7 @@ export default {
   methods: {
     updateHeightOfPage() {
       document.querySelector('.page').style.minHeight =
-        (window.innerHeight - 65) + 'px';
+        window.innerHeight + 'px';
     },
   },
 };
