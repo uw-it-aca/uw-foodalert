@@ -255,6 +255,7 @@ export default {
 
       if (inputType === 'text') {
         inputType = 'sms_number';
+
         if (notifValue !== '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
@@ -295,6 +296,7 @@ export default {
                 if (this.newData) {
                   this.newData = false;
                 }
+
                 this.updateMode = false;
                 this.isOpen=false;
               })
@@ -318,6 +320,7 @@ export default {
                 if (this.newData) {
                   this.newData = false;
                 }
+                
                 this.updateMode = false;
                 this.isOpen=false;
               })

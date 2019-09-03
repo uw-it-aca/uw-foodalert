@@ -17,7 +17,7 @@
         <template #opt_heading>
           Text
         </template>
-        <template #unverifNotifText="{switchToUpdate}">
+        <template #unverifNotifText>
           We sent a verification text to {{notif_info.sms_number}}.
           Please reply YES to finish signup.
           <br />
@@ -73,6 +73,7 @@ export default {
       if (response.data[0]) {
         this.subid = response.data[0].id;
       }
+
       return this.subid;
     },
     formatSms(data) {
