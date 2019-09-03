@@ -17,6 +17,7 @@
             {{serverData.text}}
           </div>
           <div v-if="!isOpen">
+            <br/>
             <div v-if="serverData.text === ''">
               <b-button block href="#" v-b-toggle="accord_id" variant="link"
                 class="toggle_link_btn p-0" v-if="serverData.text == ''"
@@ -25,8 +26,7 @@
               </b-button>
             </div>
             <div v-else>
-              <br/>
-              <slot name="unverifNotifText">
+              <slot v-if="serverData.text !== ''" name="unverifNotifText">
               </slot>
               <small class="form-text pt-2 pb-0 error-desp"
                       v-if="errorDesc != ''">
@@ -53,10 +53,9 @@
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-form-checkbox v-model="checked"
-                  name="enable-switch"
+                  :name="type+'enable-switch'"
                   class="float-right mr-3"
-                  aria-labelledby="enable-label"
-                  aria-describedby="notif-status"
+                  :aria-label="'enable'+type"
                   :disabled="!serverData.verified" switch>
             </b-form-checkbox>
           </div>
@@ -118,7 +117,6 @@
                   </small>
                   <b-button type="submit" variant="primary"
                             class="float-right mt-2 px-3"
-                            @click="isOpen=false"
                             :aria-label="'Verify ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                             :class="{'spinner-hide': !spinners.verify.state}">
@@ -155,7 +153,6 @@
                   </small>
                   <b-button type="submit" variant="primary"
                             class="float-right mt-2 ml-2 px-3"
-                            @click="isOpen=false"
                             :aria-label="'Update ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                       :class="{'spinner-hide': !spinners.update.state}">
@@ -164,7 +161,6 @@
                   </b-button>
                   <b-button type="reset" variant="danger"
                             class="float-right mt-2 ml-2 px-3"
-                            @click="isOpen=false"
                             :aria-label="'Delete ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                       :class="{'spinner-hide': !spinners.delete.state}">
@@ -225,8 +221,6 @@ export default {
       errorDesc: '',
       validateOn: false,
       errorMsg: '',
-      // variables for swithc
-      disableNotif: false,
       checked: false,
     };
   },
@@ -261,7 +255,6 @@ export default {
 
       if (inputType === 'text') {
         inputType = 'sms_number';
-
         if (notifValue !== '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
@@ -302,8 +295,8 @@ export default {
                 if (this.newData) {
                   this.newData = false;
                 }
-
                 this.updateMode = false;
+                this.isOpen=false;
               })
               .catch((error) => {
                 spinnerOpt.state = false;
@@ -325,8 +318,8 @@ export default {
                 if (this.newData) {
                   this.newData = false;
                 }
-
                 this.updateMode = false;
+                this.isOpen=false;
               })
               .catch((error) => {
                 spinnerOpt.state = false;

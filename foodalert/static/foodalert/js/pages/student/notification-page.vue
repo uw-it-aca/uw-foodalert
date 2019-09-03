@@ -8,51 +8,6 @@
         Select how you will like to receive notifications.
         Please choose at least one.
       </p>
-      <div class="notification" :disabled="disableNotif"
-           :class="{ 'notif-disabled' : disableNotif }">
-        <b-collapse id="enable-notification" v-model="collapse_notif">
-          <b-container @click="checked=(!checked && !disableNotif)">
-            <b-row>
-              <b-col sm="9" cols="9">
-                <strong id="enable-label">Enable notifications</strong>
-                <p>Turn on to receive notifications.</p>
-                <div id="notif-status">
-                  <div v-if=checked class="enabled">
-                    Notifications are enabled</div>
-                  <div v-else class="paused"> Notifications are paused </div>
-                </div>
-              </b-col>
-
-              <b-col sm="3" cols="3" align-self="center">
-                <b-form-checkbox v-model="checked"
-                  name="enable-switch" @click.native.prevent
-                  class="float-right"
-                  aria-labelledby="enable-label"
-                  aria-describedby="notif-status"
-                  :disabled="disableNotif" switch>
-                </b-form-checkbox>
-              </b-col>
-            </b-row>
-          </b-container>
-        </b-collapse>
-      </div>
-      <!--notification-option accord_id="text" type="text"
-        label="Enter a new phone number"
-        description="Carrier rates may apply" :subid="subid"
-        :serverData="{ text: notif_info.sms_number,
-          verified: notif_info.number_verified }"
-        :requestUpdate="requestUpdate" :resendVerif="()=>{return 1}" visible>
-        <template #opt_heading>
-          Text
-        </template>
-        <template #unverifNotifText="{switchToUpdate}">
-          We sent a text to
-          <b-button variant="link" @click="switchToUpdate" class="px-0">
-            {{notif_info.sms_number}}
-          </b-button>.
-          Please reply YES to finish signup. <br />
-        </template>
-      </notification-option -->
       <text-notif accord_id="text" type="text"
         label="Enter an phone number" :subid="subid"
         :serverData="{ text: notif_info.sms_number,
@@ -109,10 +64,7 @@ export default {
         email_verified: false,
         sms_number: '',
         number_verified: false,
-        notif_on: '',
       },
-      checked: false,
-      disableNotif: false,
       subid: undefined,
     };
   },
@@ -121,7 +73,6 @@ export default {
       if (response.data[0]) {
         this.subid = response.data[0].id;
       }
-
       return this.subid;
     },
     formatSms(data) {

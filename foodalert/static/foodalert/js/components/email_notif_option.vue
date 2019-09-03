@@ -11,10 +11,9 @@
         </b-col>
         <b-col cols="4">
           <b-form-checkbox v-model="checked"
-            name="enable-switch"
+            name="email-enable-switch"
             class="float-right mr-3"
-            aria-labelledby="enable-label"
-            aria-describedby="notif-status"
+            aria-label="email-switch"
             switch>
           </b-form-checkbox>
         </b-col>
