@@ -25,8 +25,8 @@
               </b-button>
             </div>
             <div v-else>
-              <slot name="unverifNotifText"
-                    :switchToUpdate="()=>{updateMode = true}">
+              <br/>
+              <slot name="unverifNotifText">
               </slot>
               <small class="form-text pt-2 pb-0 error-desp"
                       v-if="errorDesc != ''">
@@ -53,29 +53,30 @@
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-form-checkbox v-model="checked"
-                  name="enable-switch" @click.native.prevent
+                  name="enable-switch"
                   class="float-right mr-3"
                   aria-labelledby="enable-label"
                   aria-describedby="notif-status"
-                  :disabled="disableNotif" switch>
+                  :disabled="!serverData.verified" switch>
             </b-form-checkbox>
           </div>
           <div v-else>
-            <b-button block href="#" variant="link"
+            <b-button v-if="serverData.text !== '' || updateMode"
+                      block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
                       @click="localData.text = ''; updateMode=false"
-                      v-if="serverData.text == '' || updateMode"
                       :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}" >
               </b-spinner>
               <slot name="opt_cancel">Cancel</slot>
             </b-button>
-            <b-button block href="#" variant="link"
+            <b-button v-else
+                      block href="#" variant="link"
                       class="opt_link_btn p-0"
                       @click="cancelUpdate($event, spinners.cancel)"
-                      v-else :aria-label="'Cancel ' + type">
+                      :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}">
               </b-spinner>
@@ -92,9 +93,9 @@
           <b-row>
             <b-col cols="12">
               <b-card-text>
-                <b-form @submit.prevent="getNewState(spinners.verify);
-                        updateMode=false"
-                        v-if="serverData.text == ''">
+                <b-form v-if="serverData.text == ''"
+                        @submit.prevent="getNewState(spinners.verify);
+                        updateMode=false">
                   <small :id="type+'-add-label'"
                          class="form-text text-muted pt-0">{{label}}</small>
                   <b-form-group :description="description">
@@ -117,6 +118,7 @@
                   </small>
                   <b-button type="submit" variant="primary"
                             class="float-right mt-2 px-3"
+                            @click="isOpen=false"
                             :aria-label="'Verify ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                             :class="{'spinner-hide': !spinners.verify.state}">
@@ -124,9 +126,9 @@
                     Verify
                   </b-button>
                 </b-form>
-                <b-form @submit.prevent="getNewState(spinners.update)"
-                        @reset.prevent="deleteData(spinners.delete)"
-                        v-else>
+                <b-form v-else
+                        @submit.prevent="getNewState(spinners.update)"
+                        @reset.prevent="deleteData(spinners.delete)">
                   <small :id="type+'-update-label'"
                     class="form-text text-muted">
                       {{label}}
@@ -153,6 +155,7 @@
                   </small>
                   <b-button type="submit" variant="primary"
                             class="float-right mt-2 ml-2 px-3"
+                            @click="isOpen=false"
                             :aria-label="'Update ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                       :class="{'spinner-hide': !spinners.update.state}">
@@ -161,6 +164,7 @@
                   </b-button>
                   <b-button type="reset" variant="danger"
                             class="float-right mt-2 ml-2 px-3"
+                            @click="isOpen=false"
                             :aria-label="'Delete ' + type">
                     <b-spinner small class="mr-2 spinner-padding"
                       :class="{'spinner-hide': !spinners.delete.state}">
