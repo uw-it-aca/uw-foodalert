@@ -193,7 +193,7 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
                   'send_sms', 'email_verified', 'send_email')
-        read_only_fields = ("number_verified", 'email_verified', 'email')
+        read_only_fields = ("number_verified", 'email_verified')
 
     def to_internal_value(self, data):
         obj = self.context['view'].get_object()
@@ -205,6 +205,8 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
             ret['sms_number'] = data['sms_number']
             if data['sms_number'] != obj.sms_number:
                 ret['number_verified'] = False
+        if 'email' in data:
+            ret['email'] = data['email']
         if 'send_sms' in data:
             ret['send_sms'] = data['send_sms']
             if not ret['number_verified']:
