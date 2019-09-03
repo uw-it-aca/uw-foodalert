@@ -64,7 +64,8 @@
           <label id="food-label" class="standard-label mb-0 w-100"
             for="food-description">
             Describe the food
-            <p id="food-clarification" class="mb-2" style="font-size: 14px; font-weight: 400;">
+            <p id="food-clarification" class="mb-2"
+               style="font-size: 14px; font-weight: 400;">
               Tell people about your
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
@@ -103,7 +104,8 @@
         <label class="standard-label mb-0 w-100"
           id="end-time-label" for="end-time">
           End time
-          <p id="time-clarification" class="mb-2" style="font-size: 14px; font-weight: 400;">
+          <p id="time-clarification" class="mb-2"
+             style="font-size: 14px; font-weight: 400;">
             Set the time when food service will be over.
           </p>
           <b-row>
