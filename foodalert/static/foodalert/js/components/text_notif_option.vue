@@ -181,7 +181,7 @@
 const axios = require('axios');
 
 import Cookies from 'js-cookie';
-import {parsePhoneNumber, ParseError, AsYouTypeFormatter}
+import {parsePhoneNumber, ParseError}
   from 'libphonenumber-js';
 
 export default {
@@ -228,9 +228,9 @@ export default {
   },
   methods: {
     formatter(value, event) {
-      if (this.type == 'text') {
+      if (this.type === 'text') {
         return this.numberFormatter(value, event);
-      } else if (this.type == 'email') {
+      } else if (this.type === 'email') {
         return value;
       }
     },
@@ -249,7 +249,6 @@ export default {
       return cleaned;
     },
     getNewState(spinnerOpt) {
-      console.log('get new state called');
       this.validateOn = false;
       // initially true
       let validInput = true;
@@ -259,17 +258,16 @@ export default {
       if (inputType === 'text') {
         inputType = 'sms_number';
 
-        if (notifValue != '') {
+        if (notifValue !== '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
 
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
-            console.log('error' + phoneNum.isValid());
 
             if (error instanceof ParseError) {
-              console.log(error.message);
+              // console.log(error.message);
             } else {
               throw error;
             }
@@ -358,7 +356,7 @@ export default {
     cancelUpdate(event, spinnerOpt) {
       spinnerOpt.state = true;
 
-      if (this.serverData.text == '') {
+      if (this.serverData.text === '') {
         this.isOpen = false;
       } else if (this.updateMode) {
         this.updateMode = false;
@@ -386,7 +384,6 @@ export default {
         const url = '/subscription/' + this.subid + '/';
 
         axios.patch(url, data, {headers})
-            .then(console.log)
             .catch((error) => {
               this.showErrorPage(error.response, 's-notifications');
             });

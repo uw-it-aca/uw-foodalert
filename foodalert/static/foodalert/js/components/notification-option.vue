@@ -244,17 +244,17 @@ export default {
       if (inputType === 'text') {
         inputType = 'sms_number';
 
-        if (notifValue != '') {
+        if (notifValue !== '') {
           try {
             const phoneNum = parsePhoneNumber(notifValue, 'US');
 
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
-            console.log('error' + phoneNum.isValid());
+            // console.log('error' + phoneNum.isValid());
 
             if (error instanceof ParseError) {
-              console.log(error.message);
+              // console.log(error.message);
             } else {
               throw error;
             }

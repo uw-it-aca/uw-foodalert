@@ -62,12 +62,12 @@
         <template #opt_heading>
           Text
         </template>
-        <template #unverifNotifText="{switchToUpdate}">
+        <!--template #unverifNotifText="{switchToUpdate}">
           We sent a verification text to {{notif_info.sms_number}}.
           Please reply YES to finish signup.
           <br />
           Check your spam folder if you don't receive our email. <br />
-        </template>
+        </template -->
       </text-notif>
 
       <email-notif accord_id="email" type="email"
@@ -82,14 +82,12 @@
         </template>
       </email-notif>
 
-
     </template>
   </generic-page>
 </template>
 
 <script type="text/javascript">
 import GenericPage from '../../components/generic-page.vue';
-// import NotifOption from '../../components/notification-option.vue';
 import TextNotif from '../../components/text_notif_option.vue';
 import EmailNotif from '../../components/email_notif_option.vue';
 const axios = require('axios');
@@ -97,7 +95,6 @@ const axios = require('axios');
 export default {
   components: {
     'generic-page': GenericPage,
-    // 'notification-option': NotifOption,
     'text-notif': TextNotif,
     'email-notif': EmailNotif,
   },

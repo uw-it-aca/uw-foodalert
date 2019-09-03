@@ -86,7 +86,6 @@ export default {
       const url = '/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
-          .then(console.log)
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });
