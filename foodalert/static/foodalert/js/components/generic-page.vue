@@ -6,23 +6,26 @@
       </alert-box>
       <header class="md-5 mb-2" role="banner">
         <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
-          <b-navbar-brand class="pl-2" href="#">
+          <b-navbar-brand class="pl-2 pb-2" href="#">
             <img :src="require('../../img/food-alert-logo.svg')"
-                  alt="UW Food Alert Logo" height="24"
-                  class="d-none d-sm-none d-md-block">
-            <img :src="require('../../img/uw-logo.svg')"
-                   alt="UW Logo" height="24"
-                   class="d-block d-sm-block d-md-none">
+                  alt="UW Food Alert Logo" height="22"
+                  >
           </b-navbar-brand>
           <b-navbar-nav class="ml-auto">
-                <p class="my-auto standard-neid">UW NetID</p>
+            <div class="d-block d-sm-none"><p class="my-auto standard-neid" style="display: inline-block">UW netID</p>
+                <svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style="height: 9px; width: 9px; display: block; fill: currentcolor; display: inline-block"><path d="m16.29 4.3a1 1 0 1 1 1.41 1.42l-8 8a1 1 0 0 1 -1.41 0l-8-8a1 1 0 1 1 1.41-1.42l7.29 7.29z" fill-rule="evenodd"></path>
+                </svg></div>
+              <!-- <b-nav-item-dropdown text="UW netID" no-caret>
+          <b-dropdown-item href="#">Log out</b-dropdown-item>
+        </b-nav-item-dropdown> -->
+        <div class="d-none d-sm-block"><p class="my-auto standard-neid" style="display: inline-block">UW netID</p>
               <b-button variant="link"
                 style="font-size: 14px; font-weight: 400;"
-                type="submit">Sign out</b-button>
+                type="submit">Sign out</b-button></div>
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5">
+      <main id="standard-body" class="standard-container mt-md-5 mt-3">
         <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>
