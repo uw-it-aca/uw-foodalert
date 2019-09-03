@@ -74,11 +74,10 @@ class NotificationList(generics.ListCreateAPIView):
                 email_recipients = []
                 sms_recipients = []
                 for sub in Subscription.objects.all():
-                    if sub.notif_on:
-                        if sub.email != '' and sub.email_verified:
-                            email_recipients.append(sub.email)
-                        if sub.sms_number != '' and sub.number_verified:
-                            sms_recipients.append(str(sub.sms_number))
+                    if sub.send_email:
+                        email_recipients.append(sub.email)
+                    if sub.send_sms:
+                        sms_recipients.append(str(sub.sms_number))
 
                 message = Sender.format_message(data)
 
@@ -152,9 +151,9 @@ class UpdateList(generics.ListCreateAPIView):
             email_recipients = []
             sms_recipients = []
             for sub in Subscription.objects.all():
-                if sub.email != '':
+                if sub.send_email:
                     email_recipients.append(sub.email)
-                if sub.sms_number != '':
+                if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
 
             if not settings.DEBUG:
@@ -179,17 +178,21 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubscriptionDetailSerializer
 
     def put(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().put(request, pk)
 
     def patch(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().patch(request, pk)
 
 
@@ -215,11 +218,15 @@ class SubscriptionList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            data = serializer.data
-            return Response(
-                data, status=status.HTTP_201_CREATED, headers=headers)
+            # catch invalid phone number
+            try:
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                data = serializer.data
+                return Response(
+                    data, status=status.HTTP_201_CREATED, headers=headers)
+            except ValueError as error:
+                return Response(str(error), status=status.HTTP_400_BAD_REQUEST)
         else:
             print("failed to post update")
             return Response(
