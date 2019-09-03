@@ -226,7 +226,7 @@ export default {
     'time-picker': TimePicker,
   },
   props: {
-    food_qualification: String
+    food_qualification: Array,
   },
   data() {
     return {

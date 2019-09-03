@@ -46,8 +46,9 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('location', 'event', 'created_time',
-                  'end_time', 'food_served', 'amount_of_food_left', 'host',
-                  'bring_container', 'allergens', 'host_user_agent', 'ended')
+                  'end_time', 'food_served', 'amount_of_food_left',
+                  'food_qualification', 'host', 'bring_container',
+                  'allergens', 'host_user_agent', 'ended')
         read_only_fields = ['created_time', 'end_time', 'host', 'ended']
 
     def create(self, validated_data):
@@ -99,7 +100,8 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                 "Bad Request": "Post data must have a bring_container field"})
         if not self.check_valid(data, "food") or \
            not self.check_valid(data["food"], "served") or \
-           not self.check_valid(data["food"], "amount"):
+           not self.check_valid(data["food"], "amount") or \
+           not self.check_valid(data["food"], "qualification"):
             raise ValidationError({
                 "Bad Request": "Post data must have a proper food field"})
         if not self.check_valid(data, "host") or \

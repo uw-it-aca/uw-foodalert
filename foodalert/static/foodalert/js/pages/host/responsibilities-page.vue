@@ -122,7 +122,7 @@ export default {
       type: String,
       default: 'h-food-service',
     },
-    food_qualification: String,
+    food_qualification: Array,
   },
   methods: {
     getNextPage() {
@@ -134,7 +134,7 @@ export default {
 
       this.$router.push({
         name: 'h-form',
-        params: {food_qualification: this.food_qualification}
+        params: {food_qualification: this.food_qualification},
       });
     },
     getBackPage() {
