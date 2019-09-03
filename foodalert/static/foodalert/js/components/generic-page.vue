@@ -134,6 +134,7 @@ export default {
 
     #relative-footer {
         margin-top: auto;
+        padding-top: 16px;
         font-size: 12px;
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
