@@ -12,13 +12,13 @@
                   >
           </b-navbar-brand>
           <b-navbar-nav class="ml-auto">
-            <div class="d-block d-sm-none"><p class="my-auto standard-neid" style="display: inline-block">UW netID</p>
+            <div class="d-block d-sm-none"><p class="my-auto standard-neid">UW NetID</p>
                 <svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style="height: 9px; width: 9px; display: block; fill: currentcolor; display: inline-block"><path d="m16.29 4.3a1 1 0 1 1 1.41 1.42l-8 8a1 1 0 0 1 -1.41 0l-8-8a1 1 0 1 1 1.41-1.42l7.29 7.29z" fill-rule="evenodd"></path>
                 </svg></div>
               <!-- <b-nav-item-dropdown text="UW netID" no-caret>
           <b-dropdown-item href="#">Log out</b-dropdown-item>
         </b-nav-item-dropdown> -->
-        <div class="d-none d-sm-block"><p class="my-auto standard-neid" style="display: inline-block">UW netID</p>
+        <div class="d-none d-sm-block"><p class="my-auto standard-neid">UW NetID</p>
               <b-button variant="link"
                 style="font-size: 14px; font-weight: 400;"
                 type="submit">Sign out</b-button></div>
