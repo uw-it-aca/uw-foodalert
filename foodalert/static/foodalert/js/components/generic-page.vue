@@ -11,17 +11,18 @@
                   alt="UW Food Alert Logo" height="22"
                   >
           </b-navbar-brand>
-          <b-navbar-nav class="ml-auto">
-            <div class="d-block d-sm-none"><p class="my-auto standard-neid">UW NetID</p>
-                <svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style="height: 9px; width: 9px; display: block; fill: currentcolor; display: inline-block"><path d="m16.29 4.3a1 1 0 1 1 1.41 1.42l-8 8a1 1 0 0 1 -1.41 0l-8-8a1 1 0 1 1 1.41-1.42l7.29 7.29z" fill-rule="evenodd"></path>
-                </svg></div>
-              <!-- <b-nav-item-dropdown text="UW netID" no-caret>
-          <b-dropdown-item href="#">Log out</b-dropdown-item>
-        </b-nav-item-dropdown> -->
-        <div class="d-none d-sm-block"><p class="my-auto standard-neid">UW NetID</p>
-              <b-button variant="link"
-                style="font-size: 14px; font-weight: 400;"
-                type="submit">Sign out</b-button></div>
+          <b-navbar-nav class="d-flex d-sm-none ml-auto">
+            <b-nav-item-dropdown variant="link" text="UW NetID"
+              right toggle-class="text-decoration-none">
+              <b-dropdown-item href="#">Sign out</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+          <b-navbar-nav class="d-none d-sm-flex ml-auto">
+            <b-nav-item href="#">UW NetID</b-nav-item>
+            <b-button variant="link"
+              type="submit">
+              Sign out
+            </b-button>
           </b-navbar-nav>
         </b-navbar>
       </header>
@@ -83,7 +84,7 @@ export default {
   methods: {
     updateHeightOfPage() {
       document.querySelector('.page').style.minHeight =
-        (window.innerHeight - 65) + 'px';
+        window.innerHeight + 'px';
     },
   },
 };
@@ -123,7 +124,7 @@ export default {
 
     .page {
         display: flex;
-        min-height: calc(100vh - 65px);
+        min-height: 100vh;
         flex-direction: column;
         align-content: space-between;
     }
