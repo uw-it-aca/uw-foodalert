@@ -12,7 +12,7 @@ module.exports = {
       );
     });
 
-    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
+    browser.assert.screenshotIdenticalToBaseline('nav', 'h-welcome')
 
     browser.click('a.btn').pause(100);
 
@@ -23,7 +23,7 @@ module.exports = {
       );
     });
 
-    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
+    browser.assert.screenshotIdenticalToBaseline('nav', 'h-welcome')
 
     browser.back().pause(200).getTitle(function(title) {
       browser.assert.equal(
@@ -34,7 +34,7 @@ module.exports = {
 
     browser.window()
 
-    browser.assert.screenshotIdenticalToBaseline('body', 'h-welcome')
+    browser.assert.screenshotIdenticalToBaseline('nav', 'h-welcome')
 
     browser.end();
   },
