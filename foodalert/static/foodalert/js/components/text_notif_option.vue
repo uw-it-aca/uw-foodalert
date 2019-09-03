@@ -372,9 +372,8 @@ export default {
     },
     watch: {
       checked(newVal, oldVal) {
-      // change email_notif value
         const data = {
-          'send_email': newVal,
+          'send_sms': newVal,
         };
         const csrftoken = Cookies.get('csrftoken');
         const headers = {
