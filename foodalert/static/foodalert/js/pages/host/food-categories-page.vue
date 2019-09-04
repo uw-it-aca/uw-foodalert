@@ -135,7 +135,7 @@ export default {
           name: 'h-responsibilities',
           params: {
             backPage: 'h-categories',
-            food_qualifications: this.selected
+            food_qualifications: this.selected,
           },
         });
       } else if (this.selected.includes('at-home')) {
