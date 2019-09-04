@@ -72,7 +72,8 @@
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
-                      @click="updateMode=false; validateOn=false"
+                      @click="updateMode=false; validateOn=false;
+                      localData.text=''"
                       :aria-label="'Cancel ' + type">
               Cancel
             </b-button>
@@ -364,23 +365,20 @@ export default {
       this.localData.text = newVal.text; // this is inputting sms with +1
       this.localData.verified = newVal.verified;
     },
-    watch: {
-      checked(newVal, oldVal) {
-        const data = {
-          'send_sms': newVal,
-        };
-        const csrftoken = Cookies.get('csrftoken');
-        const headers = {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
-        };
-        const url = '/subscription/' + this.subid + '/';
-
-        axios.patch(url, data, {headers})
-            .catch((error) => {
-              this.showErrorPage(error.response, 's-notifications');
-            });
-      },
+    checked(newVal, oldVal) {
+      const data = {
+        'send_sms': newVal,
+      };
+      const csrftoken = Cookies.get('csrftoken');
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      };
+      const url = '/subscription/' + this.subid + '/';
+      axios.patch(url, data, {headers})
+        .catch((error) => {
+          this.showErrorPage(error.response, 's-notifications');
+        });
     },
   },
   computed: {
