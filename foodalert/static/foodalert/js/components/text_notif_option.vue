@@ -28,8 +28,7 @@
               <br/>
               <div v-if="serverData.text === ''">
                 <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                  class="toggle_link_btn p-0" v-if="serverData.text == ''"
-                  :aria-label="'Add ' + type">
+                  class="toggle_link_btn p-0" v-if="serverData.text == ''">
                   Add number
                 </b-button>
               </div>
@@ -64,7 +63,7 @@
             <b-form-checkbox v-model="checked"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
-                  :aria-label="'enable'+type"
+                  :aria-label="'enable  '+type"
                   :disabled="!serverData.verified" switch>
             </b-form-checkbox>
           </div>
@@ -115,7 +114,7 @@
                     <div class="invalid-feedback pt-2"
                         :class="{'super-show':validateOn}"
                         :id="type+'-verify-feedback'"
-                        role="alert">
+                        role="alert" aria-live="polite">
                       <span aria-hidden="true">
                         {{errorMsg}}
                       </span>

@@ -34,7 +34,7 @@
           Email
         </template>
         <template #disclaimer>
-          <p>Only UW NetIDs are support at this time</p>
+          <p>Only UW NetIDs are supported at this time</p>
         </template>
       </email-notif>
 
