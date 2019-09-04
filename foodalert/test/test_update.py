@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 import foodalert
-from foodalert.models import Update, Notification, Allergen
+from foodalert.models import Update, Notification, Allergen, FoodQualification
 from foodalert.views import UpdateDetail, UpdateList
 from foodalert.sender import TwilioSender
 from foodalert.test.test_utils import create_notification_from_data, \
@@ -80,6 +80,12 @@ class UpdateTest(TestCase):
 
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
+        
+        for food_qualification in cls.real_data["food_qualifications"]:
+            FoodQualification.objects.create(
+                internalName=food_qualification["internalName"],
+                externalName=food_qualification["externalName"]
+            )
 
     @classmethod
     def tearDownClass(cls):
@@ -87,6 +93,7 @@ class UpdateTest(TestCase):
         Notification.objects.all().delete()
         Update.objects.all().delete()
         Allergen.objects.all().delete()
+        FoodQualification.objects.all().delete()
 
     def setUp(self):
         self.test_data = deepcopy(self.real_data)

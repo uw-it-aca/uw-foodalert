@@ -119,7 +119,7 @@ export default {
           name: 'h-responsibilities',
           params: {
             backPage: 'h-food-service',
-            food_qualification: this.selected
+            food_qualifications: this.selected
           },
         });
       } else {

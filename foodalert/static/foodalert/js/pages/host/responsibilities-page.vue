@@ -122,7 +122,7 @@ export default {
       type: String,
       default: 'h-food-service',
     },
-    food_qualification: Array,
+    food_qualifications: Array,
   },
   methods: {
     getNextPage() {
@@ -134,7 +134,7 @@ export default {
 
       this.$router.push({
         name: 'h-form',
-        params: {food_qualification: this.food_qualification},
+        params: {food_qualifications: this.food_qualifications},
       });
     },
     getBackPage() {
@@ -161,7 +161,7 @@ export default {
     };
   },
   beforeMount() {
-    if (typeof this.food_qualification === 'undefined') {
+    if (typeof this.food_qualifications === 'undefined') {
       this.$router.push({name: 'h-welcome'});
     }
 

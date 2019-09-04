@@ -133,7 +133,7 @@ export default {
           this.selected.includes('pre-packaged')) {
         this.$router.push({
           name: 'h-responsibilities',
-          params: {backPage: 'h-categories', food_qualification: this.selected},
+          params: {backPage: 'h-categories', food_qualifications: this.selected},
         });
       } else if (this.selected.includes('at-home')) {
         this.$router.push({name: 'h-close'});

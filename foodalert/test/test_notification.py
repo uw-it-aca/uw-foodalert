@@ -12,7 +12,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
-from foodalert.models import Notification, Allergen, Subscription
+from foodalert.models import Notification, Allergen, Subscription, \
+    FoodQualification
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.test.test_utils import create_notification_from_data,\
@@ -41,6 +42,12 @@ class NotificationTest(TestCase):
 
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
+        
+        for food_qualification in cls.real_data["food_qualifications"]:
+            FoodQualification.objects.create(
+                internalName=food_qualification["internalName"],
+                externalName=food_qualification["externalName"]
+            )
 
         cls.user1 = create_user_from_data(cls.real_data["users"][0])
         cls.user2 = create_user_from_data(cls.real_data["users"][1])
@@ -67,6 +74,7 @@ class NotificationTest(TestCase):
         User.objects.all().delete()
         Notification.objects.all().delete()
         Allergen.objects.all().delete()
+        FoodQualification.objects.all().delete()
 
     """
     GET tests
@@ -580,7 +588,8 @@ class NotificationTest(TestCase):
                 "food": {
                     "served": data["food_served"],
                     "amount": data["amount_of_food_left"],
-                    "allergens": data["allergens"]
+                    "allergens": data["allergens"],
+                    "qualifications": data["food_qualifications"]
                 },
                 "userAgent": data["userAgent"],
                 "ended": data["ended"]
@@ -597,7 +606,8 @@ class NotificationTest(TestCase):
                 "food": {
                     "served": data["food_served"],
                     "amount": data["amount_of_food_left"],
-                    "allergens": data["allergens"]
+                    "allergens": data["allergens"],
+                    "qualifications": data["food_qualifications"]
                 },
                 "host": {
                     "userAgent": data["userAgent"]

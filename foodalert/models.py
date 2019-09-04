@@ -10,7 +10,8 @@ class Notification(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
     food_served = models.CharField(max_length=100, blank=False)
-    food_qualification = models.CharField(max_length=100, blank=False)
+    food_qualifications = models.ManyToManyField(
+        'FoodQualification', blank=False)
     amount_of_food_left = models.CharField(max_length=150, blank=False)
     bring_container = models.BooleanField(default=False)
     allergens = models.ManyToManyField(
@@ -18,6 +19,11 @@ class Notification(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     host_user_agent = models.TextField(blank=False)
     ended = models.BooleanField(default=False)
+
+
+class FoodQualification(models.Model):
+    internalName = models.CharField(max_length=20, blank=False, unique=True)
+    externalName = models.CharField(max_length=50, blank=False, unique=True)
 
 
 class Subscription(models.Model):

@@ -228,7 +228,7 @@ export default {
     'time-picker': TimePicker,
   },
   props: {
-    food_qualification: Array,
+    food_qualifications: Array,
   },
   data() {
     return {
@@ -349,7 +349,7 @@ export default {
         'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
-          'qualification': this.food_qualification,
+          'qualifications': this.food_qualifications,
           'amount': 'test amount',
           'allergens': this.form.allergens,
         },
@@ -392,7 +392,7 @@ export default {
     },
   },
   beforeMount() {
-    if (typeof this.food_qualification === 'undefined') {
+    if (typeof this.food_qualifications === 'undefined') {
       this.$router.push({name: 'h-welcome'});
     }
 
