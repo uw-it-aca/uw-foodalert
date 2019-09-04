@@ -15,8 +15,11 @@
         :requestUpdate="requestUpdate"
         errorDesc="Carrier rates may apply"
         :resendVerif="()=>{return 1}">
-        <template #opt_heading>
-          Text
+        <template #disclaimer>
+          Only US numbers are supported at this time. Carrier rates may apply.
+        </template>
+        <template #update-note>
+          Remove or update your phone number.
         </template>
         <template #unverifNotifText>
           We sent a verification text to {{notif_info.sms_number}}.
@@ -30,9 +33,6 @@
         label="Enter an email" :subid="subid"
         :requestUpdate="requestUpdate"
         :email="netID+'@uw.edu'">
-        <template #opt_heading>
-          Email
-        </template>
         <template #disclaimer>
           <p>Only UW NetIDs are supported at this time</p>
         </template>

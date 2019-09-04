@@ -3,7 +3,7 @@
     <b-container slot="header" class="p-0">
       <b-row>
         <b-col cols="8">
-          <slot name="opt_heading">Placeholder Text</slot>
+          <strong>Text</strong>
           <span v-if="serverData.text != ''">
             &#xb7;
             <span v-if="!serverData.verified" class="text-unverified">
@@ -97,12 +97,15 @@
                 <b-form v-if="serverData.text == ''"
                         @submit.prevent="getNewState(spinners.verify);
                         updateMode=false">
-                  <small :id="type+'-add-label'"
-                         class="form-text text-muted pt-0">{{label}}</small>
+                  <slot name="disclaimer"></slot>
+                  <label :for="type+'-add-input'"
+                         class="form-text text-muted pt-3 pb-0">
+                         <strong>{{label}}</strong>
+                  </label>
                   <b-form-group :description="description">
                     <b-form-input required :type="type" :formatter="formatter"
                                   v-model="localData.text" width="300px"
-                                  :aria-labelledby="type+'-add-label'">
+                                  :id="type+'-add-input'">
                     </b-form-input>
                     <div class="invalid-feedback pt-2"
                         :class="{'super-show':validateOn}"
@@ -129,15 +132,17 @@
                 <b-form v-else
                         @submit.prevent="getNewState(spinners.update)"
                         @reset.prevent="deleteData(spinners.delete)">
-                  <small :id="type+'-update-label'"
-                    class="form-text text-muted">
-                      {{label}}
-                  </small>
+                  <slot name="update-note"></slot>
+                  <slot name="disclaimer"></slot>
+                  <label :for="type+'-update-input'"
+                    class="form-text text-muted pt-3 pb-0">
+                      <strong>{{label}}</strong>
+                  </label>
                   <b-form-group :description="description">
                     <b-form-input required :type="type"
                                   :formatter="formatter"
                                   v-model="localData.text"
-                                  :aria-labelledby="type+'-update-label'"
+                                  :id="type+'-update-input'"
                                   width="300px">
                     </b-form-input>
                     <div class="invalid-feedback pt-2"
