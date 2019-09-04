@@ -191,7 +191,7 @@
 const axios = require('axios');
 
 import Cookies from 'js-cookie';
-import {parsePhoneNumber, ParseError}
+import {parsePhoneNumber, ParseError, AsYouType}
   from 'libphonenumber-js';
 
 export default {
@@ -243,18 +243,12 @@ export default {
       }
     },
     numberFormatter(value, event) {
+      
       if (value.length > 14) {
         return value.substr(0, 14);
       }
-
-      const cleaned = ('' + value).replace(/\D/g, '');
-      const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-      if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-      }
-
-      return cleaned;
+      let n = new AsYouType('US').input(value)
+      return n;
     },
     getNewState(spinnerOpt) {
       this.validateOn = false;
