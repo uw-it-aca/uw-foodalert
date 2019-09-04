@@ -79,8 +79,7 @@
         "email": "testemail@test.com",
         "email_verified": true,
         "sms_number": "+16282462222",
-        "number_verified": true,
-        "notif_on": true
+        "number_verified": true
     },
     "updates": [
         {

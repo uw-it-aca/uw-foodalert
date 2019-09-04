@@ -16,36 +16,67 @@
           <div v-if="serverData.verified" class="pt-1">
             {{serverData.text}}
           </div>
+          <div v-if="!isOpen">
+            <br/>
+            <div v-if="serverData.text === ''">
+              <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                class="toggle_link_btn p-0" v-if="serverData.text == ''"
+                :aria-label="'Add ' + type">
+                Add
+              </b-button>
+            </div>
+            <div v-else>
+              <slot v-if="serverData.text !== ''" name="unverifNotifText">
+              </slot>
+              <small class="form-text pt-2 pb-0 error-desp"
+                      v-if="errorDesc != ''">
+                      {{errorDesc}}
+              </small>
+              <br />
+              <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                @click="updateMode=localData.verified"
+                class="toggle_link_btn p-0"
+                :aria-label="'Edit ' + type">
+                Edit
+              </b-button>
+              <b-button variant="link"
+                        @click="resendVerif(spinners.resend)"
+                        class="px-0">
+                Resend {{type}}
+                <b-spinner small class="mr-2 spinner-padding"
+                      :class="{'spinner-hide': !spinners.resend.state}">
+                </b-spinner>
+              </b-button>
+            </div>
+          </div>
         </b-col>
         <b-col cols="4">
           <div v-if="!isOpen">
-            <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                    class="opt_link_btn p-0" v-if="serverData.text == ''"
-                    :aria-label="'Add ' + type">
-              Add
-            </b-button>
-            <b-button block href="#" v-b-toggle="accord_id" variant="link"
-              class="opt_link_btn p-0" @click="updateMode=localData.verified"
-              v-else :aria-label="'Edit ' + type">
-              Edit
-            </b-button>
+            <b-form-checkbox v-model="checked"
+                  :name="type+'enable-switch'"
+                  class="float-right mr-3"
+                  :aria-label="'enable'+type"
+                  :disabled="!serverData.verified" switch>
+            </b-form-checkbox>
           </div>
           <div v-else>
-            <b-button block href="#" variant="link"
+            <b-button v-if="serverData.text !== '' || updateMode"
+                      block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
-                      @click="localData.text = ''; updateMode=false"
-                      v-if="serverData.text == '' || updateMode"
+                      @click="localData.text = ''; updateMode=false;
+                      validateOn=false"
                       :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}" >
               </b-spinner>
               <slot name="opt_cancel">Cancel</slot>
             </b-button>
-            <b-button block href="#" variant="link"
+            <b-button v-else
+                      block href="#" variant="link"
                       class="opt_link_btn p-0"
                       @click="cancelUpdate($event, spinners.cancel)"
-                      v-else :aria-label="'Cancel ' + type">
+                      :aria-label="'Cancel ' + type">
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}">
               </b-spinner>
@@ -62,8 +93,9 @@
           <b-row>
             <b-col cols="12">
               <b-card-text>
-                <b-form @submit.prevent="getNewState(spinners.verify)"
-                        v-if="serverData.text == ''">
+                <b-form v-if="serverData.text == ''"
+                        @submit.prevent="getNewState(spinners.verify);
+                        updateMode=false">
                   <small :id="type+'-add-label'"
                          class="form-text text-muted pt-0">{{label}}</small>
                   <b-form-group :description="description">
@@ -71,6 +103,14 @@
                                   v-model="localData.text" width="300px"
                                   :aria-labelledby="type+'-add-label'">
                     </b-form-input>
+                    <div class="invalid-feedback pt-2"
+                        :class="{'super-show':validateOn}"
+                        :id="type+'-verify-feedback'"
+                        role="alert">
+                      <span aria-hidden="true">
+                        {{errorMsg}}
+                      </span>
+                    </div>
                   </b-form-group>
                   <small class="form-text pt-2 pb-0 error-desp"
                          v-if="errorDesc != ''">
@@ -85,62 +125,50 @@
                     Verify
                   </b-button>
                 </b-form>
-                <div v-else-if="!serverData.Unverified">
-                  <div v-if="!updateMode">
-                    <slot name="unverifNotifText"
-                          :switchToUpdate="()=>{updateMode = true}">
-                    </slot>
-                    <small class="form-text pt-2 pb-0 error-desp"
-                           v-if="errorDesc != ''">
-                            {{errorDesc}}
-                    </small>
-                    <br />
-                    <b-button variant="link"
-                              @click="resendVerif(spinners.resend)"
-                              class="px-0">
-                      Resend {{type}}
-                      <b-spinner small class="mr-2 spinner-padding"
-                            :class="{'spinner-hide': !spinners.resend.state}">
-                      </b-spinner>
-                    </b-button>
-                  </div>
-                  <b-form @submit.prevent="getNewState(spinners.update)"
-                          @reset.prevent="deleteData(spinners.delete)"
-                          v-else>
-                    <small :id="type+'-update-label'"
-                      class="form-text text-muted">
-                        {{label}}
-                    </small>
-                    <b-form-group :description="description">
-                      <b-form-input required :type="type"
-                                    :formatter="formatter"
-                                    v-model="localData.text"
-                                    :aria-labelledby="type+'-update-label'"
-                                    width="300px">
-                      </b-form-input>
-                    </b-form-group>
-                    <small class="form-text pt-2 pb-0 error-desp"
-                           v-if="errorDesc != ''">
-                            {{errorDesc}}
-                    </small>
-                    <b-button type="submit" variant="primary"
-                              class="float-right mt-2 ml-2 px-3"
-                              :aria-label="'Update ' + type">
-                      <b-spinner small class="mr-2 spinner-padding"
-                          :class="{'spinner-hide': !spinners.update.state}">
-                      </b-spinner>
-                      Update
-                    </b-button>
-                    <b-button type="reset" variant="danger"
-                              class="float-right mt-2 ml-2 px-3"
-                              :aria-label="'Delete ' + type">
-                      <b-spinner small class="mr-2 spinner-padding"
-                        :class="{'spinner-hide': !spinners.delete.state}">
-                      </b-spinner>
-                      Delete
-                    </b-button>
-                  </b-form>
-                </div>
+                <b-form v-else
+                        @submit.prevent="getNewState(spinners.update)"
+                        @reset.prevent="deleteData(spinners.delete)">
+                  <small :id="type+'-update-label'"
+                    class="form-text text-muted">
+                      {{label}}
+                  </small>
+                  <b-form-group :description="description">
+                    <b-form-input required :type="type"
+                                  :formatter="formatter"
+                                  v-model="localData.text"
+                                  :aria-labelledby="type+'-update-label'"
+                                  width="300px">
+                    </b-form-input>
+                    <div class="invalid-feedback pt-2"
+                      :class="{'super-show': validateOn}"
+                      :id="type+'-verify-feedback'"
+                      role="alert">
+                      <span aria-hidden="true">
+                        {{errorMsg}}
+                      </span>
+                    </div>
+                  </b-form-group>
+                  <small class="form-text pt-2 pb-0 error-desp"
+                          v-if="errorDesc != ''">
+                          {{errorDesc}}
+                  </small>
+                  <b-button type="submit" variant="primary"
+                            class="float-right mt-2 ml-2 px-3"
+                            :aria-label="'Update ' + type">
+                    <b-spinner small class="mr-2 spinner-padding"
+                      :class="{'spinner-hide': !spinners.update.state}">
+                    </b-spinner>
+                    Update
+                  </b-button>
+                  <b-button type="reset" variant="danger"
+                            class="float-right mt-2 ml-2 px-3"
+                            :aria-label="'Delete ' + type">
+                    <b-spinner small class="mr-2 spinner-padding"
+                      :class="{'spinner-hide': !spinners.delete.state}">
+                    </b-spinner>
+                    Delete
+                  </b-button>
+                </b-form>
               </b-card-text>
             </b-col>
           </b-row>
@@ -154,6 +182,8 @@
 const axios = require('axios');
 
 import Cookies from 'js-cookie';
+import {parsePhoneNumber, ParseError}
+  from 'libphonenumber-js';
 
 export default {
   props: {
@@ -190,6 +220,9 @@ export default {
       isOpen: false,
       updateMode: false,
       errorDesc: '',
+      validateOn: false,
+      errorMsg: '',
+      checked: false,
     };
   },
   methods: {
@@ -215,6 +248,9 @@ export default {
       return cleaned;
     },
     getNewState(spinnerOpt) {
+      this.validateOn = false;
+      // initially true
+      let validInput = true;
       let inputType = this.type;
       let notifValue = this.localData.text;
 
@@ -222,8 +258,18 @@ export default {
         inputType = 'sms_number';
 
         if (notifValue !== '') {
-          notifValue = ('' + notifValue).replace(/\D/g, '');
-          notifValue = '+1' + notifValue;
+          try {
+            const phoneNum = parsePhoneNumber(notifValue, 'US');
+
+            notifValue=phoneNum.number;
+            validInput = phoneNum.isValid();
+          } catch (error) {
+            if (error instanceof ParseError) {
+              // console.log(error.message);
+            } else {
+              throw error;
+            }
+          }
         }
       }
 
@@ -239,45 +285,69 @@ export default {
       spinnerOpt.state = true;
 
       // make patch request if subid is set; post if not
-      if (this.subid) {
-        const url = '/subscription/' + this.subid + '/';
+      if (validInput) {
+        if (this.subid) {
+          const url = '/subscription/' + this.subid + '/';
 
-        axios.patch(url, data, {headers})
-            .then((response) => {
-              this.requestUpdate();
+          axios.patch(url, data, {headers})
+              .then((response) => {
+                this.requestUpdate();
+                spinnerOpt.state = false;
 
-              spinnerOpt.state = false;
+                if (this.newData) {
+                  this.newData = false;
+                }
 
-              if (this.newData) {
-                this.newData = false;
-              }
+                this.updateMode = false;
+                this.isOpen=false;
+              })
+              .catch((error) => {
+                spinnerOpt.state = false;
+                this.handleInvalidInput(error);
+              });
+        } else {
+          const postData = {
+            'email': '',
+            'sms_number': '',
+          };
 
-              this.updateMode = false;
-            })
-            .catch((error) => this.showErrorPage(error.response,
-                's-notifications'));
+          postData[inputType] = notifValue;
+          axios.post('/subscription/', postData, {headers})
+              .then((response) => {
+                this.requestUpdate();
+
+                spinnerOpt.state = false;
+
+                if (this.newData) {
+                  this.newData = false;
+                }
+
+                this.updateMode = false;
+                this.isOpen=false;
+              })
+              .catch((error) => {
+                spinnerOpt.state = false;
+                this.showErrorPage(error.response,
+                    's-notifications');
+              });
+        }
       } else {
-        const postData = {
-          'email': '',
-          'sms_number': '',
-        };
-
-        postData[inputType] = notifValue;
-        axios.post('/subscription/', postData, {headers})
-            .then((response) => {
-              this.requestUpdate();
-
-              spinnerOpt.state = false;
-
-              if (this.newData) {
-                this.newData = false;
-              }
-
-              this.updateMode = false;
-            })
-            .catch((error) => this.showErrorPage(error.response,
-                's-notifications'));
+        // show error message
+        this.handleInvalidInput(spinnerOpt);
       }
+    },
+    handleInvalidInput(spinnerOpt) {
+      // error should be displayed on page if invalid
+      // phone number is entered
+      let input = this.type;
+
+      if (this.type === 'text') {
+        input = 'phone number';
+      }
+
+      this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
+      spinnerOpt.state = false;
+      this.validateOn = true;
     },
     deleteData(spinnerOpt) {
       this.localData.text = '';
@@ -299,6 +369,24 @@ export default {
     serverData(newVal, oldVal) {
       this.localData.text = newVal.text; // this is inputting sms with +1
       this.localData.verified = newVal.verified;
+    },
+    watch: {
+      checked(newVal, oldVal) {
+        const data = {
+          'send_sms': newVal,
+        };
+        const csrftoken = Cookies.get('csrftoken');
+        const headers = {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        };
+        const url = '/subscription/' + this.subid + '/';
+
+        axios.patch(url, data, {headers})
+            .catch((error) => {
+              this.showErrorPage(error.response, 's-notifications');
+            });
+      },
     },
   },
   computed: {
@@ -331,6 +419,9 @@ export default {
     }
     .notif-option-card .opt_link_btn {
         text-align: right;
+    }
+    .notif-option-card .toggle_link_btn {
+        text-align: left;
     }
     .notif-option-card.notif-option-card {
         border-radius: 0;
