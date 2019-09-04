@@ -42,7 +42,7 @@ class NotificationTest(TestCase):
 
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
-        
+
         for food_qualification in cls.real_data["food_qualifications"]:
             FoodQualification.objects.create(
                 internalName=food_qualification["internalName"],

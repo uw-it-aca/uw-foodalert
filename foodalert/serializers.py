@@ -85,7 +85,9 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                 'served': notif.food_served,
                 'amount': notif.amount_of_food_left,
                 'allergens': [x.name for x in notif.allergens.all()],
-                'qualifications': [x.internalName for x in notif.food_qualifications.all()]
+                'qualifications': [
+                    x.internalName for x in notif.food_qualifications.all()
+                ]
             },
             'userAgent': notif.host_user_agent,
             'ended': notif.ended
@@ -139,7 +141,7 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                     raise ValidationError({
                         "Bad Request": "Allergen does not exist"
                     })
-        
+
         if data["food"]["qualifications"] != []:
             ret["food_qualifications"] = data["food"]["qualifications"]
             for food_qualification in ret["food_qualifications"]:
