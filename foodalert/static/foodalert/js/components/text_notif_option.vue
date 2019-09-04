@@ -246,9 +246,12 @@ export default {
         return value.substr(0, 14);
       }
 
-      const n = new AsYouType('US').input(value);
+      if (value.length > 5) {
+        const n = new AsYouType('US').input(value);
+        return n;
+      }
 
-      return n;
+      return value;
     },
     getNewState(spinnerOpt) {
       this.validateOn = false;
