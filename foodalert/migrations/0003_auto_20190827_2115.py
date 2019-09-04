@@ -28,4 +28,19 @@ class Migration(migrations.Migration):
         migrations.DeleteModel(
             name='SafeFood',
         ),
+        migrations.RenameField(
+            model_name='subscription',
+            old_name='notif_on',
+            new_name='send_email',
+        ),
+        migrations.AddField(
+            model_name='subscription',
+            name='send_sms',
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AlterField(
+            model_name='subscription',
+            name='email_verified',
+            field=models.BooleanField(default=True),
+        ),
     ]
