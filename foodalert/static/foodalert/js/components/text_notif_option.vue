@@ -72,23 +72,16 @@
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
-                      @click="localData.text = ''; updateMode=false;
-                      validateOn=false"
+                      @click="updateMode=false; validateOn=false"
                       :aria-label="'Cancel ' + type">
-              <b-spinner small class="mr-2 spinner-padding"
-                          :class="{'spinner-hide': !spinners.cancel.state}" >
-              </b-spinner>
               Cancel
             </b-button>
             <b-button v-else
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
-                      @click="cancelUpdate($event, spinners.cancel)"
+                      v-b-toggle="accord_id"
                       :aria-label="'Cancel ' + type">
-              <b-spinner small class="mr-2 spinner-padding"
-                          :class="{'spinner-hide': !spinners.cancel.state}">
-              </b-spinner>
-              <slot name="opt_cancel">Cancel</slot>
+              Cancel
             </b-button>
           </div>
         </b-col>
@@ -358,17 +351,6 @@ export default {
     deleteData(spinnerOpt) {
       this.localData.text = '';
       this.getNewState(spinnerOpt);
-    },
-    cancelUpdate(event, spinnerOpt) {
-      spinnerOpt.state = true;
-
-      if (this.serverData.text === '') {
-        this.isOpen = false;
-      } else if (this.updateMode) {
-        this.updateMode = false;
-      } else if (!this.serverData.verified) {
-        this.deleteData(spinnerOpt);
-      }
     },
   },
   watch: {
