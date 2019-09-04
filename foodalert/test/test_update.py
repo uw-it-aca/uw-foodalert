@@ -436,6 +436,24 @@ class UpdateTest(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.json()), init_len)
 
+    def test_post_invalid_notif_id(self):
+        """
+        Attempts to post a valid notification payload and with invalid
+        parent notif id expects 400
+        """
+        payload = self.data_to_payload_represent(self.test_data["updates"][4])
+        payload["parent_notification_id"] = 4353
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group]
+        )
+        response = client.post(
+            "/updates/",
+            payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
     def test_post_ends_notif(self):
         """
         Attempts to post a valid notification payload and tests that the

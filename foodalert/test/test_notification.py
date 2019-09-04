@@ -442,6 +442,61 @@ class NotificationTest(TestCase):
 
         self.test_data[2]["host"] = None
 
+    def test_post_bad_allergen(self):
+        """
+        Attempts to post payload with invalid allergen and expects 400
+        """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
+        self.test_data[2]["host"] = self.user2
+        
+        old_allergens = self.test_data[2]["allergens"]
+        self.test_data[2]["allergens"].append("sgsffds")
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+        self.test_data[2]["allergens"] = old_allergens
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+
+        response = client.post(
+            "/notification/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        self.test_data[2]["host"] = None
+    
+    def test_post_bad_food_qualifications(self):
+        """
+        Attempts to post payload with invalid food_qualifications and
+        expects 400
+        """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
+        self.test_data[2]["host"] = self.user2
+        
+        old_food_qualifications = self.test_data[2]["food_qualifications"]
+        self.test_data[2]["food_qualifications"].append("sgsffds")
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+        self.test_data[2]["food_qualifications"] = old_food_qualifications
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+
+        response = client.post(
+            "/notification/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        self.test_data[2]["host"] = None
+
     def test_post_to_id(self):
         """
         Attempts to post to 1 valid ID and 1 invalid ID and expects 403
