@@ -241,6 +241,7 @@ export default {
 
       if (value.length > 5) {
         const n = new AsYouType('US').input(value);
+
         return n;
       }
 
