@@ -3,7 +3,7 @@
     <b-container slot="header" class="p-0">
       <b-row>
         <b-col cols="8">
-          <slot name="opt_heading">Placeholder Text</slot>
+          <strong>Email</strong>
           <br/>
           <br/>
           {{email}}

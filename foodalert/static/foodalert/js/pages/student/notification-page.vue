@@ -15,8 +15,11 @@
         :requestUpdate="requestUpdate"
         errorDesc="Carrier rates may apply"
         :resendVerif="()=>{return 1}">
-        <template #opt_heading>
-          Text
+        <template #disclaimer>
+          Only US numbers are supported at this time. Carrier rates may apply.
+        </template>
+        <template #update-note>
+          Remove or update your phone number.
         </template>
         <template #unverifNotifText>
           We sent a verification text to {{notif_info.sms_number}}.
@@ -30,11 +33,8 @@
         label="Enter an email" :subid="subid"
         :requestUpdate="requestUpdate"
         :email="netID+'@uw.edu'">
-        <template #opt_heading>
-          Email
-        </template>
         <template #disclaimer>
-          <p>Only UW NetIDs are support at this time</p>
+          <p>Only UW NetIDs are supported at this time</p>
         </template>
       </email-notif>
 
@@ -46,7 +46,9 @@
 import GenericPage from '../../components/generic-page.vue';
 import TextNotif from '../../components/text_notif_option.vue';
 import EmailNotif from '../../components/email_notif_option.vue';
+import {AsYouType} from 'libphonenumber-js';
 const axios = require('axios');
+
 
 export default {
   components: {
@@ -77,12 +79,13 @@ export default {
 
       return this.subid;
     },
-    formatSms(data) {
+    stripSms(data) {
       // strips sms of the +1
       if (data['sms_number']) {
         let num = data['sms_number'];
 
         num = num.replace('+1', '');
+        num = new AsYouType('US').input(num);
         data['sms_number'] = num;
       }
 
@@ -101,7 +104,7 @@ export default {
 
               axios.get(url, {headers})
                   .then((response) => {
-                    response.data = this.formatSms(response.data);
+                    response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
                   })
                   .catch((error) =>

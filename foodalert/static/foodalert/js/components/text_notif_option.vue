@@ -3,7 +3,7 @@
     <b-container slot="header" class="p-0">
       <b-row>
         <b-col cols="8">
-          <slot name="opt_heading">Placeholder Text</slot>
+          <strong>Text</strong>
           <span v-if="serverData.text != ''">
             &#xb7;
             <span v-if="!serverData.verified" class="text-unverified">
@@ -14,39 +14,47 @@
             </span>
           </span>
           <div v-if="serverData.verified" class="pt-1">
-            {{serverData.text}}
+              <span class="m-auto">
+                {{serverData.text}}
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  class="verified_link_btn p-0"
+                  :aria-label="'Edit ' + type">
+                  Edit
+                </b-button>
+              </span>
           </div>
-          <div v-if="!isOpen">
-            <br/>
-            <div v-if="serverData.text === ''">
-              <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                class="toggle_link_btn p-0" v-if="serverData.text == ''"
-                :aria-label="'Add ' + type">
-                Add
-              </b-button>
-            </div>
-            <div v-else>
-              <slot v-if="serverData.text !== ''" name="unverifNotifText">
-              </slot>
-              <small class="form-text pt-2 pb-0 error-desp"
-                      v-if="errorDesc != ''">
-                      {{errorDesc}}
-              </small>
-              <br />
-              <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                @click="updateMode=localData.verified"
-                class="toggle_link_btn p-0"
-                :aria-label="'Edit ' + type">
-                Edit
-              </b-button>
-              <b-button variant="link"
-                        @click="resendVerif(spinners.resend)"
-                        class="px-0">
-                Resend {{type}}
-                <b-spinner small class="mr-2 spinner-padding"
-                      :class="{'spinner-hide': !spinners.resend.state}">
-                </b-spinner>
-              </b-button>
+          <div v-else>
+            <div v-if="!isOpen">
+              <br/>
+              <div v-if="serverData.text === ''">
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  class="toggle_link_btn p-0" v-if="serverData.text == ''">
+                  Add number
+                </b-button>
+              </div>
+              <div v-else>
+                <slot v-if="serverData.text !== ''" name="unverifNotifText">
+                </slot>
+                <small class="form-text pt-2 pb-0 error-desp"
+                        v-if="errorDesc != ''">
+                        {{errorDesc}}
+                </small>
+                <br />
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  @click="updateMode=localData.verified"
+                  class="toggle_link_btn p-0"
+                  :aria-label="'Edit ' + type">
+                  Edit
+                </b-button>
+                <b-button variant="link"
+                          @click="resendVerif(spinners.resend)"
+                          class="px-0">
+                  Resend {{type}}
+                  <b-spinner small class="mr-2 spinner-padding"
+                        :class="{'spinner-hide': !spinners.resend.state}">
+                  </b-spinner>
+                </b-button>
+              </div>
             </div>
           </div>
         </b-col>
@@ -55,7 +63,7 @@
             <b-form-checkbox v-model="checked"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
-                  :aria-label="'enable'+type"
+                  :aria-label="'enable  '+type"
                   :disabled="!serverData.verified" switch>
             </b-form-checkbox>
           </div>
@@ -64,23 +72,17 @@
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
                       v-b-toggle="accord_id"
-                      @click="localData.text = ''; updateMode=false;
-                      validateOn=false"
+                      @click="updateMode=false; validateOn=false;
+                      localData.text=''"
                       :aria-label="'Cancel ' + type">
-              <b-spinner small class="mr-2 spinner-padding"
-                          :class="{'spinner-hide': !spinners.cancel.state}" >
-              </b-spinner>
-              <slot name="opt_cancel">Cancel</slot>
+              Cancel
             </b-button>
             <b-button v-else
                       block href="#" variant="link"
                       class="opt_link_btn p-0"
-                      @click="cancelUpdate($event, spinners.cancel)"
+                      v-b-toggle="accord_id"
                       :aria-label="'Cancel ' + type">
-              <b-spinner small class="mr-2 spinner-padding"
-                          :class="{'spinner-hide': !spinners.cancel.state}">
-              </b-spinner>
-              <slot name="opt_cancel">Cancel</slot>
+              Cancel
             </b-button>
           </div>
         </b-col>
@@ -96,17 +98,20 @@
                 <b-form v-if="serverData.text == ''"
                         @submit.prevent="getNewState(spinners.verify);
                         updateMode=false">
-                  <small :id="type+'-add-label'"
-                         class="form-text text-muted pt-0">{{label}}</small>
+                  <slot name="disclaimer"></slot>
+                  <label :for="type+'-add-input'"
+                         class="form-text text-muted pt-3 pb-0">
+                         <strong>{{label}}</strong>
+                  </label>
                   <b-form-group :description="description">
                     <b-form-input required :type="type" :formatter="formatter"
                                   v-model="localData.text" width="300px"
-                                  :aria-labelledby="type+'-add-label'">
+                                  :id="type+'-add-input'">
                     </b-form-input>
                     <div class="invalid-feedback pt-2"
                         :class="{'super-show':validateOn}"
                         :id="type+'-verify-feedback'"
-                        role="alert">
+                        role="alert" aria-live="polite">
                       <span aria-hidden="true">
                         {{errorMsg}}
                       </span>
@@ -128,15 +133,17 @@
                 <b-form v-else
                         @submit.prevent="getNewState(spinners.update)"
                         @reset.prevent="deleteData(spinners.delete)">
-                  <small :id="type+'-update-label'"
-                    class="form-text text-muted">
-                      {{label}}
-                  </small>
+                  <slot name="update-note"></slot>
+                  <slot name="disclaimer"></slot>
+                  <label :for="type+'-update-input'"
+                    class="form-text text-muted pt-3 pb-0">
+                      <strong>{{label}}</strong>
+                  </label>
                   <b-form-group :description="description">
                     <b-form-input required :type="type"
                                   :formatter="formatter"
                                   v-model="localData.text"
-                                  :aria-labelledby="type+'-update-label'"
+                                  :id="type+'-update-input'"
                                   width="300px">
                     </b-form-input>
                     <div class="invalid-feedback pt-2"
@@ -182,7 +189,7 @@
 const axios = require('axios');
 
 import Cookies from 'js-cookie';
-import {parsePhoneNumber, ParseError}
+import {parsePhoneNumber, ParseError, AsYouType}
   from 'libphonenumber-js';
 
 export default {
@@ -238,14 +245,13 @@ export default {
         return value.substr(0, 14);
       }
 
-      const cleaned = ('' + value).replace(/\D/g, '');
-      const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+      if (value.length > 5) {
+        const n = new AsYouType('US').input(value);
 
-      if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+        return n;
       }
 
-      return cleaned;
+      return value;
     },
     getNewState(spinnerOpt) {
       this.validateOn = false;
@@ -353,40 +359,27 @@ export default {
       this.localData.text = '';
       this.getNewState(spinnerOpt);
     },
-    cancelUpdate(event, spinnerOpt) {
-      spinnerOpt.state = true;
-
-      if (this.serverData.text === '') {
-        this.isOpen = false;
-      } else if (this.updateMode) {
-        this.updateMode = false;
-      } else if (!this.serverData.verified) {
-        this.deleteData(spinnerOpt);
-      }
-    },
   },
   watch: {
     serverData(newVal, oldVal) {
       this.localData.text = newVal.text; // this is inputting sms with +1
       this.localData.verified = newVal.verified;
     },
-    watch: {
-      checked(newVal, oldVal) {
-        const data = {
-          'send_sms': newVal,
-        };
-        const csrftoken = Cookies.get('csrftoken');
-        const headers = {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
-        };
-        const url = '/subscription/' + this.subid + '/';
+    checked(newVal, oldVal) {
+      const data = {
+        'send_sms': newVal,
+      };
+      const csrftoken = Cookies.get('csrftoken');
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      };
+      const url = '/subscription/' + this.subid + '/';
 
-        axios.patch(url, data, {headers})
-            .catch((error) => {
-              this.showErrorPage(error.response, 's-notifications');
-            });
-      },
+      axios.patch(url, data, {headers})
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
     },
   },
   computed: {
@@ -422,6 +415,11 @@ export default {
     }
     .notif-option-card .toggle_link_btn {
         text-align: left;
+    }
+    .notif-option-card .verified_link_btn {
+      text-align: left;
+      margin-left: 8px;
+      display: inline;
     }
     .notif-option-card.notif-option-card {
         border-radius: 0;
