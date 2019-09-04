@@ -449,7 +449,7 @@ class NotificationTest(TestCase):
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
         self.test_data[2]["host"] = self.user2
-        
+
         old_allergens = self.test_data[2]["allergens"]
         self.test_data[2]["allergens"].append("sgsffds")
         valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
@@ -468,7 +468,7 @@ class NotificationTest(TestCase):
         self.assertEqual(response.status_code, 400)
 
         self.test_data[2]["host"] = None
-    
+
     def test_post_bad_food_qualifications(self):
         """
         Attempts to post payload with invalid food_qualifications and
@@ -477,7 +477,7 @@ class NotificationTest(TestCase):
         end_time = (datetime.now().astimezone() +
                     timedelta(seconds=3600)).isoformat()
         self.test_data[2]["host"] = self.user2
-        
+
         old_food_qualifications = self.test_data[2]["food_qualifications"]
         self.test_data[2]["food_qualifications"].append("sgsffds")
         valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
