@@ -393,7 +393,7 @@ class SubscriptionTest(TestCase):
                                    content_type='application/json')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        #email should not change
+        # email should not change
         self.assertEqual(email, data['email'])
         self.assertEqual(payload['sms_number'], data['sms_number'])
         after_len = len(Subscription.objects.all())
