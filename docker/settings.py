@@ -307,8 +307,8 @@ TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "NONE")
 TWILIO_NOTIFY_SERVICE_ID = os.getenv("TWILIO_NOTIFY_SERVICE_ID", "NONE")
 
 FOODALERT_AUTHZ_GROUPS = {
-    'create': 'u_test_host',
-    'audit': 'u_test_admin'
+    'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),
+    'audit': os.getenv("FA_AUDIT_GROUP", 'u_test_admin')
 }
 
 

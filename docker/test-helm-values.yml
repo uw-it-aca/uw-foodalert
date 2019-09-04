@@ -26,6 +26,10 @@ environmentVariables:
     value: foodalert.aca-aws.s.uw.edu
   - name: SAML_ENTITY_ID
     value: https://foodalert.aca-aws.s.uw.edu
+  - name: FA_HOST_GROUP
+    value: u_acadev_foodalert-eval-hosts
+  - name: FA_AUDIT_GROUP
+    value: u_acadev_foodalert-eval-auditors
 environmentVariablesSecrets:
   twilioSID:
     name: TWILIO_ACCOUNT_SID
