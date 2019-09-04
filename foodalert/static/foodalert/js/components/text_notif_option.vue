@@ -14,39 +14,48 @@
             </span>
           </span>
           <div v-if="serverData.verified" class="pt-1">
-            {{serverData.text}}
+              <span class="m-auto">
+                {{serverData.text}}
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  class="verified_link_btn p-0"
+                  :aria-label="'Edit ' + type">
+                  Edit
+                </b-button>
+              </span>
           </div>
-          <div v-if="!isOpen">
-            <br/>
-            <div v-if="serverData.text === ''">
-              <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                class="toggle_link_btn p-0" v-if="serverData.text == ''"
-                :aria-label="'Add ' + type">
-                Add
-              </b-button>
-            </div>
-            <div v-else>
-              <slot v-if="serverData.text !== ''" name="unverifNotifText">
-              </slot>
-              <small class="form-text pt-2 pb-0 error-desp"
-                      v-if="errorDesc != ''">
-                      {{errorDesc}}
-              </small>
-              <br />
-              <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                @click="updateMode=localData.verified"
-                class="toggle_link_btn p-0"
-                :aria-label="'Edit ' + type">
-                Edit
-              </b-button>
-              <b-button variant="link"
-                        @click="resendVerif(spinners.resend)"
-                        class="px-0">
-                Resend {{type}}
-                <b-spinner small class="mr-2 spinner-padding"
-                      :class="{'spinner-hide': !spinners.resend.state}">
-                </b-spinner>
-              </b-button>
+          <div v-else>
+            <div v-if="!isOpen">
+              <br/>
+              <div v-if="serverData.text === ''">
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  class="toggle_link_btn p-0" v-if="serverData.text == ''"
+                  :aria-label="'Add ' + type">
+                  Add number
+                </b-button>
+              </div>
+              <div v-else>
+                <slot v-if="serverData.text !== ''" name="unverifNotifText">
+                </slot>
+                <small class="form-text pt-2 pb-0 error-desp"
+                        v-if="errorDesc != ''">
+                        {{errorDesc}}
+                </small>
+                <br />
+                <b-button block href="#" v-b-toggle="accord_id" variant="link"
+                  @click="updateMode=localData.verified"
+                  class="toggle_link_btn p-0"
+                  :aria-label="'Edit ' + type">
+                  Edit
+                </b-button>
+                <b-button variant="link"
+                          @click="resendVerif(spinners.resend)"
+                          class="px-0">
+                  Resend {{type}}
+                  <b-spinner small class="mr-2 spinner-padding"
+                        :class="{'spinner-hide': !spinners.resend.state}">
+                  </b-spinner>
+                </b-button>
+              </div>
             </div>
           </div>
         </b-col>
@@ -70,7 +79,7 @@
               <b-spinner small class="mr-2 spinner-padding"
                           :class="{'spinner-hide': !spinners.cancel.state}" >
               </b-spinner>
-              <slot name="opt_cancel">Cancel</slot>
+              Cancel
             </b-button>
             <b-button v-else
                       block href="#" variant="link"
@@ -422,6 +431,11 @@ export default {
     }
     .notif-option-card .toggle_link_btn {
         text-align: left;
+    }
+    .notif-option-card .verified_link_btn {
+      text-align: left;
+      margin-left: 8px;
+      display: inline;
     }
     .notif-option-card.notif-option-card {
         border-radius: 0;
