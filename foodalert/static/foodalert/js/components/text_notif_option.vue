@@ -243,11 +243,12 @@ export default {
       }
     },
     numberFormatter(value, event) {
-      
       if (value.length > 14) {
         return value.substr(0, 14);
       }
-      let n = new AsYouType('US').input(value)
+
+      const n = new AsYouType('US').input(value);
+
       return n;
     },
     getNewState(spinnerOpt) {

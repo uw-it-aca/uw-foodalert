@@ -46,8 +46,9 @@
 import GenericPage from '../../components/generic-page.vue';
 import TextNotif from '../../components/text_notif_option.vue';
 import EmailNotif from '../../components/email_notif_option.vue';
-const axios = require('axios');
 import {AsYouType} from 'libphonenumber-js';
+const axios = require('axios');
+
 
 export default {
   components: {
@@ -75,14 +76,16 @@ export default {
       if (response.data[0]) {
         this.subid = response.data[0].id;
       }
+
       return this.subid;
     },
     stripSms(data) {
       // strips sms of the +1
       if (data['sms_number']) {
         let num = data['sms_number'];
+
         num = num.replace('+1', '');
-        num = new AsYouType('US').input(num)
+        num = new AsYouType('US').input(num);
         data['sms_number'] = num;
       }
 
