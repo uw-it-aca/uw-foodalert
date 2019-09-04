@@ -375,10 +375,11 @@ export default {
         'X-CSRFToken': csrftoken,
       };
       const url = '/subscription/' + this.subid + '/';
+
       axios.patch(url, data, {headers})
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications');
-        });
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
     },
   },
   computed: {
