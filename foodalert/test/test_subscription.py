@@ -271,6 +271,7 @@ class SubscriptionTest(TestCase):
         updated_data = get_res.json()
         self.assertEqual(updated_data, data)
 
+        # email is not writable--should not change
         payload2 = {
             "email": "practice@mail.com"
         }
@@ -284,11 +285,7 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, after_len)
         self.assertEqual(sms_before, data['sms_number'])
         data = response.json()
-        self.assertEqual(payload2['email'], data['email'])
-
-        get_res = self.client.get('/subscription/{}/'.format(patch_id))
-        updated_data = get_res.json()
-        self.assertEqual(updated_data, data)
+        self.assertNotEqual(payload2['email'], data['email'])
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
@@ -396,7 +393,8 @@ class SubscriptionTest(TestCase):
                                    content_type='application/json')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        self.assertEqual(payload['email'], data['email'])
+        #email should not change
+        self.assertEqual(email, data['email'])
         self.assertEqual(payload['sms_number'], data['sms_number'])
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
@@ -427,8 +425,8 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, new_len)
 
         sub = Subscription.objects.get(pk=sub.id)
-
-        self.assertEqual(update['email'], sub.email)
+        # cannot unsubscribe email
+        self.assertEqual(email, sub.email)
         self.assertEqual(update['sms_number'], sub.sms_number)
 
     @parameterized.expand(VERIFIED_TEST_CASES)
@@ -465,7 +463,7 @@ class SubscriptionTest(TestCase):
 
         sub = Subscription.objects.get(pk=sub.id)
         data = response.json()
-        self.assertEqual(data['email'], sub.email)
+        self.assertEqual(email, sub.email)
         self.assertEqual(data['sms_number'], sub.sms_number)
         # email verified state does not change
         self.assertFalse(sub.number_verified)
