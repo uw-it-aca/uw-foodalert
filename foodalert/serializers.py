@@ -249,10 +249,16 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 "Bad Request": "Post data must have a valid sms_number field"
                 })
-        if not data['email'].endswith('@uw.edu') and data['email'] != '':
-            raise ValidationError({
-                "Bad Request": "Email must be a UW email."
-                })
+        if data['email'] != '':
+            if not data['email'].endswith('@uw.edu'):
+                raise ValidationError({
+                    "Bad Request": "Email must be a UW email."
+                    })
+            user_netid = self.context['request'].user.username
+            if not data['email'].startswith(user_netid):
+                raise ValidationError({
+                    "Bad Request": "Email must match netid"
+                    })
         return data
 
     def check_valid(self, obj, field):

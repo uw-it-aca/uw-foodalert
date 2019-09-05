@@ -46,7 +46,7 @@ class SubscriptionTest(TestCase):
         user = "testuser"
         passw = "test"
         cls.user = User.objects.create_user(username=user,
-                                            email="testuser@test.com",
+                                            email="testuser@uw.edu",
                                             password=passw)
         user2 = "testuser2"
         passw2 = "test2"
@@ -115,18 +115,38 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
-    def test_invalid_email_post_subscription(self, email=None, sms=None):
+    def test_nonUW_email_post_subscription(self, email=None, sms=None):
         """
-        Tests that subscription object is correctly created in db by
-        sending a post request to the '/subscription/' endpoint. Post
-        request should include email and sms_number and return 201 status code
+        Tests that only emails that end in '@uw.edu' are accepted through
+        post request
         """
-        valid_payload = {
+        invalid_payload = {
             "email": email.replace('@uw.edu', '@gmail.com'),
             "sms_number": sms,
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/subscription/', valid_payload)
+        response = self.client.post('/subscription/', invalid_payload)
+        if email != '':
+            self.assertEqual(400, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(new_len, original_len)
+        else:
+            self.assertEqual(201, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(1, new_len - original_len)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_wrongnetid_post_sub(self, email='', sms=''):
+        """
+        Tests that netid in email matches the user's login netid
+        """
+        invalid_payload = {
+            "email": email.replace('testuser', 'wrongNetid'),
+            "sms_number": sms,
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload)
         if email != '':
             self.assertEqual(400, response.status_code)
             new_len = len(Subscription.objects.all())
