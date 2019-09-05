@@ -288,11 +288,7 @@ export default {
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
-            if (error instanceof ParseError) {
-              // console.log(error.message);
-            } else {
-              throw error;
-            }
+              validInput = false;
           }
         }
       }
