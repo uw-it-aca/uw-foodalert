@@ -12,7 +12,8 @@
                 <b-form-checkbox
                     v-model="selected"
                     value="non-perishable"
-                    @change="uncheckCheckbox(3); uncheckCheckbox(2)">
+                    @change="uncheckCheckbox(3); uncheckCheckbox(2)"
+                    @click.native.capture="stopOnButtonClick">
                     <span>
                         My food is non-perishable.
                         <div v-if="isIOSDevice">
@@ -35,7 +36,8 @@
                     v-model="selected"
                     class="mt-2"
                     value="pre-packaged"
-                    @change="uncheckCheckbox(3); uncheckCheckbox(2)">
+                    @change="uncheckCheckbox(3); uncheckCheckbox(2)"
+                    @click.native.capture="stopOnButtonClick">
                     <span>
                         My food was commercially pre-packaged.
                         <div v-if="isIOSDevice">
@@ -153,6 +155,11 @@ export default {
 
         if (!this.validateOn) this.validateOn = true;
       }.bind(this), 100);
+    },
+    stopOnButtonClick(evt) {
+      if(evt.target.tagName == "BUTTON") {
+        evt.preventDefault();
+      }
     },
   },
   data() {
