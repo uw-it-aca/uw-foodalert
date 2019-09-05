@@ -58,6 +58,7 @@ window.vueData.routes = [
         component: UnauthzTemplate,
         name: 'h-form',
         meta: {title: 'Unauthorized Page'},
+        props: true,
       },
       {
         path: 'update',

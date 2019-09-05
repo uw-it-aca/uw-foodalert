@@ -4,7 +4,7 @@ from unittest.mock import patch, Mock, PropertyMock
 from django.contrib.auth.models import User
 from django.test import Client
 
-from foodalert.models import Notification, Allergen, Update
+from foodalert.models import Notification, Allergen, Update, FoodQualification
 from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
 
 
@@ -22,6 +22,10 @@ def create_notification_from_data(data, user):
         ended=data["ended"])
     for allergen in data["allergens"]:
         notif_obj.allergens.add(Allergen.objects.get(name=allergen))
+    for food_qualification in data["food_qualifications"]:
+        notif_obj.food_qualifications.add(
+            FoodQualification.objects.get(internalName=food_qualification)
+        )
     data["id"] = notif_obj.id
     data["created_time"] = notif_obj.created_time
     data["end_time"] = notif_obj.end_time

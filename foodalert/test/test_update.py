@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 import foodalert
 from foodalert.models import Update, Notification, Allergen, \
-    Subscription
+    Subscription, FoodQualification
 from foodalert.views import UpdateDetail, UpdateList
 from foodalert.sender import TwilioSender
 from foodalert.test.test_utils import create_notification_from_data, \
@@ -82,6 +82,12 @@ class UpdateTest(TestCase):
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
 
+        for food_qualification in cls.real_data["food_qualifications"]:
+            FoodQualification.objects.create(
+                internalName=food_qualification["internalName"],
+                externalName=food_qualification["externalName"]
+            )
+
         Subscription.objects.create(
             user=cls.user1, email=cls.real_data["subscription"]["email"],
             email_verified=cls.real_data["subscription"]["email_verified"],
@@ -97,6 +103,7 @@ class UpdateTest(TestCase):
         Notification.objects.all().delete()
         Update.objects.all().delete()
         Allergen.objects.all().delete()
+        FoodQualification.objects.all().delete()
         Subscription.objects.all().delete()
 
     def setUp(self):
@@ -428,6 +435,24 @@ class UpdateTest(TestCase):
             response = client2.get('/updates/')
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.json()), init_len)
+
+    def test_post_invalid_notif_id(self):
+        """
+        Attempts to post a valid notification payload and with invalid
+        parent notif id expects 400
+        """
+        payload = self.data_to_payload_represent(self.test_data["updates"][4])
+        payload["parent_notification_id"] = 4353
+        client = create_client_with_mock_saml(
+            self.user1,
+            [create_group]
+        )
+        response = client.post(
+            "/updates/",
+            payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
 
     def test_post_ends_notif(self):
         """

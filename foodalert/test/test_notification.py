@@ -12,7 +12,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 import foodalert
-from foodalert.models import Notification, Allergen, Subscription
+from foodalert.models import Notification, Allergen, Subscription, \
+    FoodQualification
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.test.test_utils import create_notification_from_data,\
@@ -42,6 +43,12 @@ class NotificationTest(TestCase):
         for allergen in cls.real_data["allergens"]:
             Allergen.objects.create(name=allergen)
 
+        for food_qualification in cls.real_data["food_qualifications"]:
+            FoodQualification.objects.create(
+                internalName=food_qualification["internalName"],
+                externalName=food_qualification["externalName"]
+            )
+
         cls.user1 = create_user_from_data(cls.real_data["users"][0])
         cls.user2 = create_user_from_data(cls.real_data["users"][1])
 
@@ -68,6 +75,7 @@ class NotificationTest(TestCase):
         User.objects.all().delete()
         Notification.objects.all().delete()
         Allergen.objects.all().delete()
+        FoodQualification.objects.all().delete()
 
     """
     GET tests
@@ -434,6 +442,61 @@ class NotificationTest(TestCase):
 
         self.test_data[2]["host"] = None
 
+    def test_post_bad_allergen(self):
+        """
+        Attempts to post payload with invalid allergen and expects 400
+        """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
+        self.test_data[2]["host"] = self.user2
+
+        old_allergens = self.test_data[2]["allergens"]
+        self.test_data[2]["allergens"].append("sgsffds")
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+        self.test_data[2]["allergens"] = old_allergens
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+
+        response = client.post(
+            "/notification/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        self.test_data[2]["host"] = None
+
+    def test_post_bad_food_qualifications(self):
+        """
+        Attempts to post payload with invalid food_qualifications and
+        expects 400
+        """
+        end_time = (datetime.now().astimezone() +
+                    timedelta(seconds=3600)).isoformat()
+        self.test_data[2]["host"] = self.user2
+
+        old_food_qualifications = self.test_data[2]["food_qualifications"]
+        self.test_data[2]["food_qualifications"].append("sgsffds")
+        valid_payload = self.data_to_payload_json(self.test_data[2], end_time)
+        self.test_data[2]["food_qualifications"] = old_food_qualifications
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group, audit_group]
+        )
+
+        response = client.post(
+            "/notification/",
+            data=valid_payload,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        self.test_data[2]["host"] = None
+
     def test_post_to_id(self):
         """
         Attempts to post to 1 valid ID and 1 invalid ID and expects 403
@@ -581,7 +644,8 @@ class NotificationTest(TestCase):
                 "food": {
                     "served": data["food_served"],
                     "amount": data["amount_of_food_left"],
-                    "allergens": data["allergens"]
+                    "allergens": data["allergens"],
+                    "qualifications": data["food_qualifications"]
                 },
                 "userAgent": data["userAgent"],
                 "ended": data["ended"]
@@ -598,7 +662,8 @@ class NotificationTest(TestCase):
                 "food": {
                     "served": data["food_served"],
                     "amount": data["amount_of_food_left"],
-                    "allergens": data["allergens"]
+                    "allergens": data["allergens"],
+                    "qualifications": data["food_qualifications"]
                 },
                 "host": {
                     "userAgent": data["userAgent"]

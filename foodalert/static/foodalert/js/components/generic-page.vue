@@ -170,4 +170,8 @@ export default {
     .foodalert .alert-dismissible .close:hover{
       color: white;
     }
+
+    .foodalert .btn.btn-link[role='link'] {
+      vertical-align: initial;
+    }
 </style>

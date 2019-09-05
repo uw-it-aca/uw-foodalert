@@ -9,6 +9,7 @@
         "amount_of_food_left": "Test Food Amount One",
         "bring_container": false,
         "allergens": ["wheat", "fish", "eggs"],
+        "food_qualifications": ["hasPermit", "preparedByAuth"],
         "host": null,
         "userAgent": "Test Browser One",
         "ended": false
@@ -22,6 +23,7 @@
         "amount_of_food_left": "Test Food Amount Two",
         "bring_container": false,
         "allergens": ["milk"],
+        "food_qualifications": ["preparedByAuth"],
         "host": null,
         "userAgent": "Test Browser Two",
         "ended": true
@@ -35,6 +37,7 @@
         "amount_of_food_left": "Test Food Amount Three",
         "bring_container": false,
         "allergens": [],
+        "food_qualifications": ["hasPermit", "preparedByAuth"],
         "host": null,
         "userAgent": "Test Browser Three",
         "ended": false
@@ -48,11 +51,30 @@
         "amount_of_food_left": "Test Food Amount Four",
         "bring_container": false,
         "allergens": ["nuts", "eggs"],
+        "food_qualifications": ["non-perishable"],
         "host": null,
         "userAgent": "Test Browser Four",
         "ended": false
     }],
     "allergens": ["wheat", "nuts", "fish", "eggs", "milk"],
+    "food_qualifications": [
+        {
+            "internalName": "hasPermit",
+            "externalName": "Food permit"
+        },
+        {
+            "internalName": "preparedByAuth",
+            "externalName": "HFS / Bay Laurel"
+        },
+        {
+            "internalName": "non-perishable",
+            "externalName": "Non-perishable"
+        },
+        {
+            "internalName": "pre-packaged",
+            "externalName": "Commercially pre-packaged"
+        }
+    ],
     "subscription": {
         "email": "testemail@test.com",
         "email_verified": true,

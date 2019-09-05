@@ -123,6 +123,7 @@ export default {
       type: String,
       default: 'h-food-service',
     },
+    food_qualifications: Array,
   },
   methods: {
     getNextPage() {
@@ -132,7 +133,10 @@ export default {
         return;
       }
 
-      this.$router.push({name: 'h-form'});
+      this.$router.push({
+        name: 'h-form',
+        params: {food_qualifications: this.food_qualifications},
+      });
     },
     getBackPage() {
       this.$router.push({name: this.backPage});
@@ -158,6 +162,10 @@ export default {
     };
   },
   beforeMount() {
+    if (typeof this.food_qualifications === 'undefined') {
+      this.$router.push({name: 'h-welcome'});
+    }
+
     const headers = {
       'Content-Type': 'application/json',
     };
