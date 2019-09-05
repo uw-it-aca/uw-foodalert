@@ -241,14 +241,31 @@ export default {
       }
     },
     numberFormatter(value, event) {
+      if(this.validateOn){
+        try {
+          const phoneNum = parsePhoneNumber(value, 'US');
+
+          if(phoneNum.isValid()){
+            this.validateOn = false;
+          }
+        } catch (error) {
+          if (error instanceof ParseError) {
+            // can alter the error message as user types
+          } else {
+            throw error;
+          }
+        }
+      }
+
       if (value.length > 14) {
+        
         return value.substr(0, 14);
       }
 
       if (value.length > 5) {
         const n = new AsYouType('US').input(value);
 
-        return n;
+        value = n;
       }
 
       return value;
