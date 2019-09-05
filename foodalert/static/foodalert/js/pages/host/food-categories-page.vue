@@ -74,7 +74,8 @@
                 </b-form-checkbox>
                 <div class="invalid-feedback pt-2"
                      :class="{'super-show': selected.length==0 && validateOn}"
-                     id="food-service-feedback">
+                     id="food-service-feedback"
+                     role="alert">
                   Please select at least one option to move on.
                 </div>
             </b-form-group>
