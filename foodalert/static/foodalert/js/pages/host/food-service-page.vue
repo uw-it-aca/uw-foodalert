@@ -19,7 +19,8 @@
         </b-form-checkbox>
         <b-form-checkbox v-model="selected" class="mt-2" value="hasPermit"
                          aria-labelledby="permit-option"
-                         @change="uncheckCheckbox(2)">
+                         @change="uncheckCheckbox(2)"
+                         @click.native.capture="stopOnButtonClick">
           <span id="permit-option">
             I have a UW Temporary Food Service Permit.
             <div v-if="isIOSDevice">

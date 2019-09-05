@@ -16,7 +16,8 @@
           value="cond1"
           aria-describedby="condition-feedback"
           :state="inputValid('cond1')"
-          @change="addToValidate('cond1')">
+          @change="addToValidate('cond1')"
+          @click.native.capture="stopOnButtonClick">
           <span>
             <span>
               My office is responsible for the safety of the food I am
@@ -47,7 +48,8 @@
           value="cond2"
           aria-describedby="condition-feedback"
           :state="inputValid('cond2')"
-          @change="addToValidate('cond2')">
+          @change="addToValidate('cond2')"
+          @click.native.capture="stopOnButtonClick">
           <span>
             <span>
               Potentially hazardous food must be kept at appropriate
