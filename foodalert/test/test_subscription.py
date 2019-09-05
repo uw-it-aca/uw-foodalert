@@ -13,9 +13,9 @@ from foodalert.serializers import SubscriptionSerializer
 from foodalert.views import SubscriptionDetail, SubscriptionList
 
 VALID_TEST_CASES = [
-    param(email="testuser@test.com", sms="+41524204242"),
+    param(email="testuser@uw.edu", sms="+41524204242"),
     param(sms="+41524204242", email=""),
-    param(email="testuser@test.com", sms=""),
+    param(email="testuser@uw.edu", sms=""),
 ]
 
 VERIFIED_TEST_CASES = [
@@ -112,6 +112,30 @@ class SubscriptionTest(TestCase):
         self.assertEqual(self.user.username, model.netid)
         self.assertEqual(email, model.email)
         self.assertEqual(sms, model.sms_number)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_invalid_email_post_subscription(self, email=None, sms=None):
+        """
+        Tests that subscription object is correctly created in db by
+        sending a post request to the '/subscription/' endpoint. Post
+        request should include email and sms_number and return 201 status code
+        """
+        valid_payload = {
+            "email": email.replace('@uw.edu', '@gmail.com'),
+            "sms_number": sms,
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', valid_payload)
+        if email != '':
+            self.assertEqual(400, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(new_len, original_len)
+        else:
+            self.assertEqual(201, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(1, new_len - original_len)
+
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
