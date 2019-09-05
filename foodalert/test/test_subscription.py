@@ -13,9 +13,9 @@ from foodalert.serializers import SubscriptionSerializer
 from foodalert.views import SubscriptionDetail, SubscriptionList
 
 VALID_TEST_CASES = [
-    param(email="testuser@test.com", sms="+41524204242"),
+    param(email="testuser@uw.edu", sms="+41524204242"),
     param(sms="+41524204242", email=""),
-    param(email="testuser@test.com", sms=""),
+    param(email="testuser@uw.edu", sms=""),
 ]
 
 VERIFIED_TEST_CASES = [
@@ -46,7 +46,7 @@ class SubscriptionTest(TestCase):
         user = "testuser"
         passw = "test"
         cls.user = User.objects.create_user(username=user,
-                                            email="testuser@test.com",
+                                            email="testuser@uw.edu",
                                             password=passw)
         user2 = "testuser2"
         passw2 = "test2"
@@ -115,6 +115,49 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
+    def test_nonUW_email_post_subscription(self, email=None, sms=None):
+        """
+        Tests that only emails that end in '@uw.edu' are accepted through
+        post request
+        """
+        invalid_payload = {
+            "email": email.replace('@uw.edu', '@gmail.com'),
+            "sms_number": sms,
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload)
+        if email != '':
+            self.assertEqual(400, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(new_len, original_len)
+        else:
+            self.assertEqual(201, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(1, new_len - original_len)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_wrongnetid_post_sub(self, email='', sms=''):
+        """
+        Tests that netid in email matches the user's login netid
+        """
+        invalid_payload = {
+            "email": email.replace('testuser', 'wrongNetid'),
+            "sms_number": sms,
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload)
+        if email != '':
+            self.assertEqual(400, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(new_len, original_len)
+        else:
+            self.assertEqual(201, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(1, new_len - original_len)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
     def test_invalid_post_subscription(self, email='', sms=''):
         """
         Post request should not be made to '/subsription/{id}/' endpoint.
@@ -159,6 +202,15 @@ class SubscriptionTest(TestCase):
         }
         original_len = len(Subscription.objects.all())
         response = self.client.post('/subscription/', invalid_payload)
+        self.assertEqual(response.status_code, 400)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+
+        invalid_payload2 = {
+            "sms": "+41524204242",
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload2)
         self.assertEqual(response.status_code, 400)
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
@@ -271,6 +323,7 @@ class SubscriptionTest(TestCase):
         updated_data = get_res.json()
         self.assertEqual(updated_data, data)
 
+        # email is not writable--should not change
         payload2 = {
             "email": "practice@mail.com"
         }
@@ -284,11 +337,7 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, after_len)
         self.assertEqual(sms_before, data['sms_number'])
         data = response.json()
-        self.assertEqual(payload2['email'], data['email'])
-
-        get_res = self.client.get('/subscription/{}/'.format(patch_id))
-        updated_data = get_res.json()
-        self.assertEqual(updated_data, data)
+        self.assertNotEqual(payload2['email'], data['email'])
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
@@ -396,7 +445,8 @@ class SubscriptionTest(TestCase):
                                    content_type='application/json')
         self.assertEqual(200, response.status_code)
         data = response.json()
-        self.assertEqual(payload['email'], data['email'])
+        # email should not change
+        self.assertEqual(email, data['email'])
         self.assertEqual(payload['sms_number'], data['sms_number'])
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
@@ -427,8 +477,8 @@ class SubscriptionTest(TestCase):
         self.assertEqual(original_len, new_len)
 
         sub = Subscription.objects.get(pk=sub.id)
-
-        self.assertEqual(update['email'], sub.email)
+        # cannot unsubscribe email
+        self.assertEqual(email, sub.email)
         self.assertEqual(update['sms_number'], sub.sms_number)
 
     @parameterized.expand(VERIFIED_TEST_CASES)
@@ -465,7 +515,7 @@ class SubscriptionTest(TestCase):
 
         sub = Subscription.objects.get(pk=sub.id)
         data = response.json()
-        self.assertEqual(data['email'], sub.email)
+        self.assertEqual(email, sub.email)
         self.assertEqual(data['sms_number'], sub.sms_number)
         # email verified state does not change
         self.assertFalse(sub.number_verified)
