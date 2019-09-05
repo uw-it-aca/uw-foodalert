@@ -241,11 +241,11 @@ export default {
       }
     },
     numberFormatter(value, event) {
-      if(this.validateOn){
+      if (this.validateOn) {
         try {
           const phoneNum = parsePhoneNumber(value, 'US');
 
-          if(phoneNum.isValid()){
+          if (phoneNum.isValid()) {
             this.validateOn = false;
           }
         } catch (error) {
@@ -258,7 +258,6 @@ export default {
       }
 
       if (value.length > 14) {
-        
         return value.substr(0, 14);
       }
 
