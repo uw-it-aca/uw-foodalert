@@ -264,8 +264,9 @@ export default {
       if (value.length > 0) {
         if (value.length === 4 &&
           event.inputType === 'deleteContentBackward') {
-          value = value.substr(0,3)
+          value = value.substr(0, 3);
         }
+
         value = new AsYouType('US').input(value);
       }
 
@@ -288,7 +289,7 @@ export default {
             notifValue=phoneNum.number;
             validInput = phoneNum.isValid();
           } catch (error) {
-              validInput = false;
+            validInput = false;
           }
         }
       }
