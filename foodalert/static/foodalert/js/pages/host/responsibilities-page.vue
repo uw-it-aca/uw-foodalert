@@ -73,7 +73,8 @@
         <div class="invalid-feedback pt-2"
               :class="{'super-show': (inputValid('cond1') == false)
                 || (inputValid('cond2') == false)}"
-              id="condition-feedback">
+              id="condition-feedback"
+              role="alert">
           In order to use the service please agree to above
           responsibilities.
         </div>
