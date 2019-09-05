@@ -48,7 +48,7 @@ if (typeof netid !== 'undefined') {
         }});
       },
       stopOnButtonClick(evt) {
-        if(evt.target.tagName == "BUTTON") {
+        if (evt.target.tagName === 'BUTTON') {
           evt.preventDefault();
         }
       },
