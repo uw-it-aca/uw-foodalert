@@ -136,7 +136,6 @@ class SubscriptionTest(TestCase):
             new_len = len(Subscription.objects.all())
             self.assertEqual(1, new_len - original_len)
 
-
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_invalid_post_subscription(self, email='', sms=''):
