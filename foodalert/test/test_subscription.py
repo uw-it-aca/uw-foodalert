@@ -186,6 +186,15 @@ class SubscriptionTest(TestCase):
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
 
+        invalid_payload2 = {
+            "sms": "+41524204242",
+        }
+        original_len = len(Subscription.objects.all())
+        response = self.client.post('/subscription/', invalid_payload2)
+        self.assertEqual(response.status_code, 400)
+        after_len = len(Subscription.objects.all())
+        self.assertEqual(original_len, after_len)
+
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_get_subscriptionlist(self, email='', sms=''):
