@@ -261,10 +261,12 @@ export default {
         return value.substr(0, 14);
       }
 
-      if (value.length > 5) {
-        const n = new AsYouType('US').input(value);
-
-        value = n;
+      if (value.length > 0) {
+        if (value.length === 4 &&
+          event.inputType === 'deleteContentBackward') {
+          value = value.substr(0,3)
+        }
+        value = new AsYouType('US').input(value);
       }
 
       return value;
