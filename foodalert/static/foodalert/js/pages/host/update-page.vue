@@ -200,7 +200,7 @@ export default {
         axios.post('/updates/', data, {headers})
             .then(function(response) {
               this.privNotifText = 'Your update was sent.';
-              this.$refs.notifBox.showNotification();
+              this.$refs.notifBox.notificationState = true;
             }.bind(this))
             .catch((error) => this.showErrorPage(error.response, 'h-update'));
       }
