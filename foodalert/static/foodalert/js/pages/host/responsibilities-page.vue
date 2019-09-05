@@ -150,11 +150,6 @@ export default {
         this.enableValidation.push(fieldValue);
       }
     },
-    stopOnButtonClick(evt) {
-      if(evt.target.tagName == "BUTTON") {
-        evt.preventDefault();
-      }
-    },
   },
   data() {
     return {

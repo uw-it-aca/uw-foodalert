@@ -47,6 +47,11 @@ if (typeof netid !== 'undefined') {
           tryAgainPage: redirectPage,
         }});
       },
+      stopOnButtonClick(evt) {
+        if(evt.target.tagName == "BUTTON") {
+          evt.preventDefault();
+        }
+      },
     },
   });
 }

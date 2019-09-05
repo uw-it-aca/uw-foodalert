@@ -137,11 +137,6 @@ export default {
         if (!this.validateOn) this.validateOn = true;
       }.bind(this), 1);
     },
-    stopOnButtonClick(evt) {
-      if(evt.target.tagName == "BUTTON") {
-        evt.preventDefault();
-      }
-    },
   },
   data() {
     return {
