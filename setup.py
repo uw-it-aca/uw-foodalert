@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'django==2.1',
+        'django<2.2',
         'django-webpack-loader',
         'UW-Django-SAML2<2.0',
         'psycopg2',

@@ -16,6 +16,7 @@
 <script type="text/javascript">
 import WelcomePage from '../../components/welcome-page.vue';
 const axios = require('axios');
+
 export default {
   components: {
     'welcome-page': WelcomePage,
@@ -25,8 +26,16 @@ export default {
     };
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',

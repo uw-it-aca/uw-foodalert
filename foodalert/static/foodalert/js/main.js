@@ -1,13 +1,11 @@
-'use strict';
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue';
 
 import '../css/custom.scss';
 
 Vue.use(BootstrapVue);
-Vue.use(Vuelidate);
 Vue.use(VueRouter);
 
 require('../css/styles.css');
@@ -28,10 +26,12 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-if (netid != undefined) {
+/* global netid*/
+if (typeof netid !== 'undefined') {
   const _netID = netid;
+
   Vue.mixin({
-    data: function() {
+    data() {
       return {
         get netID() {
           return _netID;
@@ -47,9 +47,13 @@ if (netid != undefined) {
           tryAgainPage: redirectPage,
         }});
       },
+      stopOnButtonClick(evt) {
+        if (evt.target.tagName === 'BUTTON') {
+          evt.preventDefault();
+        }
+      },
     },
   });
-  netid = undefined;
 }
 
 export const vm = new Vue({

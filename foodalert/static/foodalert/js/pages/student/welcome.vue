@@ -13,6 +13,7 @@
 <script type="text/javascript">
 import WelcomePage from '../../components/welcome-page.vue';
 const axios = require('axios');
+
 export default {
   components: {
     'welcome-page': WelcomePage,
@@ -22,7 +23,11 @@ export default {
     };
   },
   beforeMount() {
-    axios.get('/subscription/?netID=' + this.netID)
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get('/subscription/?netID=' + this.netID, {headers})
         .then((result) => {
           if (result.data.length) {
             this.$router.push({name: 's-notifications'});

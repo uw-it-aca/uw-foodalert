@@ -1,7 +1,10 @@
 from datetime import datetime
 from unittest.mock import patch, Mock, PropertyMock
 
-from foodalert.models import Notification, Allergen, Update
+from django.contrib.auth.models import User
+from django.test import Client
+
+from foodalert.models import Notification, Allergen, Update, FoodQualification
 from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
 
 
@@ -19,6 +22,10 @@ def create_notification_from_data(data, user):
         ended=data["ended"])
     for allergen in data["allergens"]:
         notif_obj.allergens.add(Allergen.objects.get(name=allergen))
+    for food_qualification in data["food_qualifications"]:
+        notif_obj.food_qualifications.add(
+            FoodQualification.objects.get(internalName=food_qualification)
+        )
     data["id"] = notif_obj.id
     data["created_time"] = notif_obj.created_time
     data["end_time"] = notif_obj.end_time
@@ -34,6 +41,24 @@ def create_update_from_data(data, notifs):
     )
     data["id"] = update_data.id
     data["created_time"] = update_data.created_time
+
+
+def create_user_from_data(data):
+    user = User.objects.create_user(username=data["username"],
+                                    email=data["email"],
+                                    password=data["password"],
+                                    is_active=1)
+    return user
+
+
+def create_client_with_mock_saml(user, member_of):
+    client = Client()
+    client.force_login(user)
+    session = client.session
+    session['samlUserdata'] = {"isMemberOf": member_of}
+    session.save()
+
+    return client
 
 
 def generate_twilio_mock():

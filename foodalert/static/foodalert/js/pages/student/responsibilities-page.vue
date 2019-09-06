@@ -7,29 +7,61 @@
       <p>
         We ask that you agree to the following terms of service.
       </p>
-      <b-form @submit="getNextPage()" ref="resForm">
-        <b-form-checkbox v-model="selected" name="cond1" value="cond1"
-          required>
-          <span>We cannot confirm all potential allergy ingredients.</span>
+      <b-form-group ref="resForm">
+        <b-form-checkbox
+          v-model="selected"
+          id="cond1"
+          class="mt-2"
+          value="cond1"
+          aria-describedby="condition-feedback"
+          :state="inputValid('cond1')"
+          @change="addToValidate('cond1')">
+          <span>
+            <span>
+              We cannot confirm all potential allergy ingredients.
+            </span>
+          </span>
         </b-form-checkbox>
-        <b-form-checkbox v-model="selected" class="mt-3" name="cond2"
-          value="cond2" required>
-          <span>Placeholder for terms and service</span>
+        <b-form-checkbox
+          v-model="selected"
+          id="cond2"
+          class="mt-2"
+          value="cond2"
+          aria-describedby="condition-feedback"
+          :state="inputValid('cond2')"
+          @change="addToValidate('cond2')">
+          <span>
+            <span>
+              Placeholder for terms and service
+            </span>
+          </span>
         </b-form-checkbox>
-        <div style="margin-top: 32px">
-          <b-row align-h="between">
-            <b-col md="4" lg="3" order-md="2">
-              <b-button size="lg" class="mb-3" type="submit" block
-                variant="primary" :disabled="selected.length != 2"
-                aria-label="Agree to the selected checkboxes">
-                  Agree
-              </b-button>
-            </b-col>
-            <b-col md="4" lg="3" order-md="1">
-            </b-col>
-          </b-row>
+        <div class="invalid-feedback pt-2"
+              :class="{'super-show': (inputValid('cond1') == false)
+                || (inputValid('cond2') == false)}"
+              id="condition-feedback"
+              role="alert">
+          In order to use the service please agree to above
+          responsibilities.
         </div>
-      </b-form>
+        <div class="mt-5">
+            <b-row align-h="between">
+                <b-col md="3" lg="3" order-md="2">
+                  <b-button
+                    class="mb-3 button-text"
+                    size="lg"
+                    type="submit"
+                    block variant="primary"
+                    aria-label="Agree to the selected checkboxes"
+                    @click="getNextPage()">
+                      Agree
+                  </b-button>
+                </b-col>
+                <b-col md="3" lg="3" order-md="1">
+                </b-col>
+            </b-row>
+        </div>
+      </b-form-group>
     </template>
   </generic-page>
 </template>
@@ -46,12 +78,31 @@ export default {
   },
   methods: {
     getNextPage() {
+      this.enableValidation = ['cond1', 'cond2'];
+
+      if (this.selected.length !== 2) {
+        return;
+      }
+
       this.$router.push({name: 's-notifications'});
+    },
+    inputValid(fieldValue) {
+      if (this.enableValidation.indexOf(fieldValue) !== -1) {
+        return (this.selected.indexOf(fieldValue) !== -1 ? null : false);
+      }
+
+      return null;
+    },
+    addToValidate(fieldValue) {
+      if (this.enableValidation.indexOf(fieldValue) === -1) {
+        this.enableValidation.push(fieldValue);
+      }
     },
   },
   data() {
     return {
       selected: [],
+      enableValidation: [],
     };
   },
 };

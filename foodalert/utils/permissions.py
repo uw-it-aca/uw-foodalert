@@ -2,7 +2,7 @@ from django.conf import settings
 from rest_framework import permissions
 from rest_framework import exceptions
 from uw_saml.utils import is_member_of_group
-from foodalert.models import Notification, Update, SafeFood, Allergen,\
+from foodalert.models import Notification, Update, Allergen,\
         Subscription
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
@@ -26,14 +26,17 @@ class IsSelf(permissions.BasePermission):
                                          "with this class.", code=500)
 
 
-class AuditReadOnly(permissions.BasePermission):
+class AuditRead(permissions.BasePermission):
     """
     Allows users with audit tag to get a resource.
     """
 
     def has_permission(self, request, view):
-        return (request.method in permissions.SAFE_METHODS) and
-        is_member_of_group(request.user, audit_group)
+        return (request.method in permissions.SAFE_METHODS) and \
+            is_member_of_group(request, audit_group)
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
 
 
 class HostRead(permissions.BasePermission):
@@ -42,8 +45,11 @@ class HostRead(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return (request.method in permissions.SAFE_METHODS) and
-        is_member_of_group(request.user, create_group)
+        return (request.method in permissions.SAFE_METHODS) and \
+            is_member_of_group(request, create_group)
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
 
 
 class HostCreate(permissions.BasePermission):
@@ -52,5 +58,9 @@ class HostCreate(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return (request.method == "POST") and
-        is_member_of_group(request.user, create_group)
+        if request.method == "POST":
+            return is_member_of_group(request, create_group)
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)

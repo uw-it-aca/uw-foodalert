@@ -10,7 +10,9 @@ class Notification(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
     food_served = models.CharField(max_length=100, blank=False)
-    amount_of_food_left = models.CharField(max_length=100, blank=False)
+    food_qualifications = models.ManyToManyField(
+        'FoodQualification', blank=False)
+    amount_of_food_left = models.CharField(max_length=150, blank=False)
     bring_container = models.BooleanField(default=False)
     allergens = models.ManyToManyField(
         'Allergen', related_name='allergens', blank=True)
@@ -19,13 +21,19 @@ class Notification(models.Model):
     ended = models.BooleanField(default=False)
 
 
+class FoodQualification(models.Model):
+    internalName = models.CharField(max_length=20, blank=False, unique=True)
+    externalName = models.CharField(max_length=50, blank=False, unique=True)
+
+
 class Subscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
-    email_verified = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=True)
+    send_email = models.BooleanField(default=False)
     sms_number = PhoneNumberField(blank=True)
     number_verified = models.BooleanField(default=False)
-    notif_on = models.BooleanField(default=False)
+    send_sms = models.BooleanField(default=False)
 
     @property
     def netid(self):

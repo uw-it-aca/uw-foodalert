@@ -7,17 +7,22 @@ module.exports = {
   'extends': [
     'plugin:vue/essential',
     'google',
+    'plugin:vue-a11y/recommended',
+    'stylelint',
+    'plugin:node/recommended'
   ],
   'globals': {
     'Atomics': 'readonly',
     'SharedArrayBuffer': 'readonly',
   },
   'parserOptions': {
-    'ecmaVersion': 2018,
+    'ecmaVersion': 2019,
+    'sourceType': 'module',
   },
   'plugins': [
     'vue',
   ],
   'rules': {
+    'node/no-unsupported-features/es-syntax': 'off',
   },
 };
