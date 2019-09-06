@@ -313,7 +313,10 @@ FOODALERT_AUTHZ_GROUPS = {
 
 
 if os.getenv("AUTH", "NONE") == "SAML_MOCK":
-    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+    MOCK_SAML_ATTRIBUTES['isMemberOf'] = [
+        FOODALERT_AUTHZ_GROUPS['create'],
+        FOODALERT_AUTHZ_GROUPS['audit']
+    ]
     from django.urls import reverse_lazy
     LOGIN_URL = reverse_lazy('saml_login')
     LOGOUT_URL = reverse_lazy('saml_logout')
