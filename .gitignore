@@ -122,3 +122,7 @@ docs/*.rst
 
 #mac ds store files
 *.DS_Store
+
+#nightwatch-vrt
+nightwatch/vrt/diff
+nightwatch/vrt/latest
