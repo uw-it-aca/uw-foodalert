@@ -15,7 +15,6 @@ def create_notification_from_data(data, user):
         end_time=datetime.strptime(data["end_time"] +
                                    "+0000", "%Y-%m-%dT%H:%M:%S.%fZ%z"),
         food_served=data["food_served"],
-        amount_of_food_left=data["amount_of_food_left"],
         bring_container=data["bring_container"],
         host=user,
         host_user_agent=data["userAgent"],

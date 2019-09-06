@@ -49,7 +49,6 @@ class Sender:
         details = {
             'Food Served:': message['food']['served'],
             'Location:': message['location'],
-            'Amount Left:': message['food']['amount'],
             'Ends At:': time,
         }
         for title, desc in details.items():
