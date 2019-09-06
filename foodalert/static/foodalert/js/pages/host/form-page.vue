@@ -350,7 +350,6 @@ export default {
         'food': {
           'served': this.form.food_served,
           'qualifications': this.food_qualifications,
-          'amount': 'test amount',
           'allergens': this.form.allergens,
         },
         'bring_container': this.form.bring_container,
