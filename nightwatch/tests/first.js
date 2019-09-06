@@ -3,7 +3,7 @@ module.exports = {
     browser
         .url('http://food:8000/h/welcome');
 
-    browser.waitForElementVisible('body');
+    browser.waitForElementVisible('body').pause(100);
 
     browser.getTitle(function(title) {
       browser.assert.equal(
