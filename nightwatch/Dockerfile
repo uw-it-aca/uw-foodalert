@@ -1,4 +1,4 @@
-FROM node:12-buster
+FROM node:12-buster-slim
 
 USER node
 WORKDIR /home/node
