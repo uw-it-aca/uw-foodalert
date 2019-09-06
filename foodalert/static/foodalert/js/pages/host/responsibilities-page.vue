@@ -16,7 +16,8 @@
           value="cond1"
           aria-describedby="condition-feedback"
           :state="inputValid('cond1')"
-          @change="addToValidate('cond1')">
+          @change="addToValidate('cond1')"
+          @click.native.capture="stopOnButtonClick">
           <span>
             <span>
               My office is responsible for the safety of the food I am
@@ -47,7 +48,8 @@
           value="cond2"
           aria-describedby="condition-feedback"
           :state="inputValid('cond2')"
-          @change="addToValidate('cond2')">
+          @change="addToValidate('cond2')"
+          @click.native.capture="stopOnButtonClick">
           <span>
             <span>
               Potentially hazardous food must be kept at appropriate
@@ -73,7 +75,8 @@
         <div class="invalid-feedback pt-2"
               :class="{'super-show': (inputValid('cond1') == false)
                 || (inputValid('cond2') == false)}"
-              id="condition-feedback">
+              id="condition-feedback"
+              role="alert">
           In order to use the service please agree to above
           responsibilities.
         </div>
@@ -122,27 +125,33 @@ export default {
       type: String,
       default: 'h-food-service',
     },
+    food_qualifications: Array,
   },
   methods: {
     getNextPage() {
       this.enableValidation = ['cond1', 'cond2'];
-      if (this.selected.length != 2) {
+
+      if (this.selected.length !== 2) {
         return;
       }
 
-      this.$router.push({name: 'h-form'});
+      this.$router.push({
+        name: 'h-form',
+        params: {food_qualifications: this.food_qualifications},
+      });
     },
     getBackPage() {
       this.$router.push({name: this.backPage});
     },
     inputValid(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) != -1) {
-        return (this.selected.indexOf(fieldValue) != -1 ? null : false);
+      if (this.enableValidation.indexOf(fieldValue) !== -1) {
+        return (this.selected.indexOf(fieldValue) !== -1 ? null : false);
       }
+
       return null;
     },
     addToValidate(fieldValue) {
-      if (this.enableValidation.indexOf(fieldValue) == -1) {
+      if (this.enableValidation.indexOf(fieldValue) === -1) {
         this.enableValidation.push(fieldValue);
       }
     },
@@ -155,8 +164,20 @@ export default {
     };
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    if (typeof this.food_qualifications === 'undefined') {
+      this.$router.push({name: 'h-welcome'});
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({
           name: 'h-update',

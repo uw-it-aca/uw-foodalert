@@ -22,7 +22,7 @@
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB Ballroom</span>
+          <span v-else>{{placeholderForm.location}}</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -46,99 +46,100 @@
         </p>
 
         <div>
-          <label id="event-label" class="standard-label" for="event-name">
+          <label class="standard-label w-100 mb-0" for="event-name">
             Event name
+            <b-form-input id="event-name" ref="event"
+              v-model="form.event" :state="inputValid('event')"
+              :placeholder="placeholderForm.event"
+              class="standard-placeholder mt-2"
+              size="lg" @blur="enableValidation.event=true">
+            </b-form-input>
+            <b-form-invalid-feedback id="event-name-feedback" role="alert">
+              Please enter an event name.
+            </b-form-invalid-feedback>
           </label>
-          <b-form-input id="event-name" ref="event"
-            aria-labelledby="event-label"
-            v-model="form.event" :state="inputValid('event')"
-            placeholder="Graduate student social"
-            class="standard-placeholder"
-            size="lg" @blur="enableValidation.event=true">
-          </b-form-input>
-          <b-form-invalid-feedback id="event-name-feedback" role="alert">
-            Please enter an event name.
-          </b-form-invalid-feedback>
         </div>
 
         <div>
-          <label id="food-label" class="standard-label mb-0"
+          <label id="food-label" class="standard-label mb-0 w-100"
             for="food-description">
             Describe the food
+            <p id="food-clarification" class="mb-2"
+               style="font-size: 14px; font-weight: 400;">
+              Tell people about your
+              food and the approximate quantity.</p>
+            <b-form-textarea id="food-description" ref="food_served"
+                            aria-describedby="food-clarification"
+                            v-model="form.food_served"
+                            :state="inputValid('food_served')"
+                            :placeholder="placeholderForm.food_served"
+                            class="standard-placeholder" size="lg"
+                            @blur="enableValidation.food_served=true"
+                            rows="3"
+                            max-rows="8">
+            </b-form-textarea>
+            <b-form-invalid-feedback id="food-description-feedback"
+              role="alert">
+              Please enter a description of your food.
+            </b-form-invalid-feedback>
           </label>
-          <p id="food-clarification" class="mb-2" style="font-size: 15px;">
-            Tell people about your
-            food and the approximate quantity.</p>
-          <b-form-textarea id="food-description" ref="food_served"
-                          aria-labelledby="food-label"
-                          aria-describedby="food-clarification"
-                          v-model="form.food_served"
-                          :state="inputValid('food_served')"
-                          placeholder="3 platters of Mediterranean appetizers:
-                           marinated mushrooms, grilled asparagus,
-                           caprese salad, cured meats"
-                          class="standard-placeholder" size="lg"
-                          @blur="enableValidation.food_served=true"
-                          rows="3"
-                          max-rows="8">
-          </b-form-textarea>
-          <b-form-invalid-feedback id="food-description-feedback"
-            role="alert">
-            Please enter a description of your food.
-          </b-form-invalid-feedback>
         </div>
 
         <div>
-          <label id="location-label" class="standard-label"
-            for="location">Location</label>
-          <b-form-input id="location" aria-labelledby="location-label"
-            ref="location"
-            v-model="form.location" :state="inputValid('location')"
-            placeholder="HUB Ballroom" class="standard-placeholder" size="lg"
-            @blur="enableValidation.location=true">
-          </b-form-input>
-          <b-form-invalid-feedback id="location-feedback" role="alert">
-            Please enter the location of your event.
-          </b-form-invalid-feedback>
+          <label id="location-label" class="standard-label w-100 mb-0"
+            for="location">Location
+            <b-form-input id="location"
+              ref="location"
+              v-model="form.location" :state="inputValid('location')"
+              :placeholder="placeholderForm.location"
+              class="standard-placeholder mt-2" size="lg"
+              @blur="enableValidation.location=true">
+            </b-form-input>
+            <b-form-invalid-feedback id="location-feedback" role="alert">
+              Please enter the location of your event.
+            </b-form-invalid-feedback>
+            </label>
         </div>
 
-        <label class="standard-label mb-0" id="end-time-label" for="end-time">
+        <label class="standard-label mb-0 w-100"
+          id="end-time-label" for="end-time">
           End time
-        </label>
-        <p id="time-clarification" class="mb-2" style="font-size: 14px;">
-          Set the time when food service will be over.
-        </p>
-        <b-row>
-          <b-col sm=12 md=8>
-            <div v-if="isMobile">
-              <b-form-input id="end-time" aria-describedby="end-time-feedback"
-                v-model="form.end_time"
-                :state="inputValid('end_time')"
-                type="time" class="standard-placeholder" size="lg">
-              </b-form-input>
-              <b-form-invalid-feedback id="end-time-feedback" role="alert">
-                Please enter the at which this food service will be over.
-              </b-form-invalid-feedback>
-            </div>
+          <p id="time-clarification" class="mb-2"
+             style="font-size: 14px; font-weight: 400;">
+            Set the time when food service will be over.
+          </p>
+          <b-row>
+            <b-col sm=12 md=8>
+              <div v-if="isMobile">
+                <b-form-input id="end-time" aria-describedby="end-time-feedback"
+                  v-model="form.end_time"
+                  :state="inputValid('end_time')"
+                  type="time" class="standard-placeholder" size="lg">
+                </b-form-input>
+                <b-form-invalid-feedback id="end-time-feedback" role="alert">
+                  Please enter the at which this food service will be over.
+                </b-form-invalid-feedback>
+              </div>
 
-            <time-picker timeID="end-time" v-model="form.end_time"
-                      startWithCurrent labelbyID="end-time-label" v-else>
-            </time-picker>
-          </b-col>
-        </b-row>
+              <time-picker timeID="end-time" v-model="form.end_time"
+                        startWithCurrent labelbyID="end-time-label" v-else>
+              </time-picker>
+            </b-col>
+          </b-row>
+        </label>
 
         <h2 class="h2 pb-0 mb-0">Food specifications</h2>
         <h3 id="allergen-label" class="standard-label mb-0">
           Does the food contain the following allergens?
         </h3>
         <p id="allergen-clarification" class="mb-2" style="font-size: 14px;">
-          It's ok if you are unsure, just select to the best of your
+          It's OK if you are unsure, just select to the best of your
           knowledge.
         </p>
 
         <b-container class="px-0 mx-0">
           <b-form-checkbox-group id="allergens-checkbox"
-            v-model="form.allergens" aria-labelledby="allergen-label"
+            v-model="form.allergens"
             aria-describedby="allergen-clarification">
             <b-row>
               <b-col v-for="allergen in allergens" :key="allergen" cols="6">
@@ -156,7 +157,7 @@
           Do people need to bring food storage containers?
         </h3>
         <b-container class="px-0 mx-0">
-          <b-form-radio-group id="bring-radio" aria-labelledby="bring-label"
+          <b-form-radio-group id="bring-radio"
             v-model="form.bring_container" stacked>
             <b-form-radio :value="true">
               <span>Yes</span>
@@ -178,7 +179,7 @@
           <span v-else>--:-- --</span>
           <br />
           Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>HUB Ballroom</span>
+          <span v-else>{{placeholderForm.location}}</span>
           <span v-if="form.allergens.length != 0">
             <br />
             May contain:
@@ -226,6 +227,9 @@ export default {
     'preview-box': PreviewBox,
     'time-picker': TimePicker,
   },
+  props: {
+    food_qualifications: Array,
+  },
   data() {
     return {
       form: {
@@ -236,6 +240,13 @@ export default {
         bring_container: false,
         allergens: [],
         host_user_agent: '',
+      },
+      placeholderForm: {
+        location: 'HUB Ballroom',
+        event: 'Graduate student social',
+        food_served: '3 platters of Mediterranean appetizers:' +
+         ' marinated mushrooms, grilled asparagus, caprese salad,' +
+         ' cured meats',
       },
       formValidate: {
         event: false,
@@ -259,12 +270,14 @@ export default {
   methods: {
     focusMyElement(e) {
       const el = document.getElementById('submitconfirmation');
+
       el.setAttribute('tabIndex', '-1');
       el.focus();
       el.removeAttribute('tabIndex');
     },
     concatinateMessage() {
       let msg = '';
+
       if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
@@ -272,12 +285,15 @@ export default {
               ' marinated mushrooms, grilled asparagus,' +
               ' caprese salad, cured meats';
       }
+
       msg += ' from ';
+
       if (this.form.event) {
         msg += this.form.event;
       } else {
-        msg += 'Graduate student social';
+        msg += this.placeholderForm.event;
       }
+
       msg += '.';
 
       return msg;
@@ -291,10 +307,10 @@ export default {
       }.bind(this));
 
       let flag = false;
+
       Object.keys(this.formValidate).forEach(function(key) {
-        if (this.formValidate[key] == false && flag != true) {
+        if (this.formValidate[key] === false && flag !== true) {
           flag = true;
-          console.log(key);
           this.$refs[key].$el.focus();
         }
       }.bind(this));
@@ -304,22 +320,26 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      const splitTime = this.form.end_time.split(/\:| /);
+      const splitTime = this.form.end_time.split(/:| /);
       let hours = parseInt(splitTime[0]);
       const mins = splitTime[1];
       let timeExt = 'AM';
-      if (hours == 0) {
+
+      if (hours === 0) {
         hours = 12;
       } else if (hours > 12) {
         hours -= 12;
         timeExt = 'PM';
       }
+
       return hours + ':' + mins + ' ' + timeExt;
     },
     submitAndNext() {
-      const splitTime = this.form.end_time.split(/\:/);
+      const splitTime = this.form.end_time.split(/:/);
       const datetime = new Date();
+
       datetime.setHours(splitTime[0], splitTime[1]);
+
       if (datetime < new Date()) {
         datetime.setDate(datetime.getDate() + 1);
       }
@@ -331,6 +351,7 @@ export default {
         'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
+          'qualifications': this.food_qualifications,
           'amount': 'test amount',
           'allergens': this.form.allergens,
         },
@@ -346,7 +367,8 @@ export default {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
-      axios.post('/notification/', data, {'headers': headers})
+
+      axios.post('/notification/', data, {headers})
           .then(function(response) {
             this.$router.push({name: 'h-update', params: {
               notificationText: 'Your notification was sent.',
@@ -358,10 +380,11 @@ export default {
       if (this.enableValidation[fieldName]) {
         return (this.formValidate[fieldName] ? null : false);
       }
+
       return null;
     },
     updateValidity(newState, fieldName, checkFunction) {
-      if (newState[fieldName] != undefined &&
+      if (newState[fieldName] !== undefined &&
           checkFunction(newState[fieldName])) {
         this.formValidate[fieldName] = true;
         this.enableValidation[fieldName] = true;
@@ -371,15 +394,27 @@ export default {
     },
   },
   beforeMount() {
-    axios.get('/notification/?host_netid=' + this.netID).then((result) => {
+    if (typeof this.food_qualifications === 'undefined') {
+      this.$router.push({name: 'h-welcome'});
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    axios.get(
+        '/notification/?host_netid=' + this.netID,
+        {headers}
+    ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
+
       if (result.data.length) {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',
         }});
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-    axios.get('/allergen/').then((result) => {
+    axios.get('/allergen/', {headers}).then((result) => {
       this.allergens = [];
       result.data.forEach((allergen)=>{
         this.allergens.push(allergen.name);
@@ -396,6 +431,7 @@ export default {
         const checkFunction = (text)=>{
           return text.length > 0;
         };
+
         this.updateValidity(newState, 'location', checkFunction);
         this.updateValidity(newState, 'event', checkFunction);
         this.updateValidity(newState, 'food_served', checkFunction);

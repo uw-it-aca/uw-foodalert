@@ -1,0 +1,35 @@
+[
+    {
+        "model": "foodalert.FoodQualification",
+        "pk": 1,
+        "fields": {
+            "internalName": "hasPermit",
+            "externalName": "Food permit"
+        }
+    },
+    {
+        "model": "foodalert.FoodQualification",
+        "pk": 2,
+        "fields": {
+            "internalName": "preparedByAuth",
+            "externalName": "HFS / Bay Laurel"
+        }
+    },
+    {
+        "model": "foodalert.FoodQualification",
+        "pk": 3,
+        "fields": {
+            "internalName": "non-perishable",
+            "externalName": "Non-perishable"
+        }
+    },
+    {
+        "model": "foodalert.FoodQualification",
+        "pk": 4,
+        "fields": {
+            "internalName": "pre-packaged",
+            "externalName": "Commercially pre-packaged"
+        }
+    }
+]
+    
