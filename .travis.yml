@@ -30,7 +30,7 @@ matrix:
       node_js: 8.15.1
       cache: npm
       install:
-        - npm install eslint eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y stylelint
+        - npm install eslint eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y eslint-config-stylelint
       script:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
         - npx webpack
@@ -38,5 +38,6 @@ matrix:
       services:
         - docker
       script:
-        - docker-compose -f docker-compose.test.yml build
+        - docker-compose -f docker-compose.test.yml build food
+        - docker-compose -f docker-compose.test.yml build taster
         - docker-compose -f docker-compose.test.yml run taster
