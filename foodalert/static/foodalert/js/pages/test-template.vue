@@ -15,6 +15,7 @@ import GenericPage from '../components/generic-page.vue';
 import TimePicker from '../components/time-picker.vue';
 import AlertBox from '../components/alert-box.vue';
 const axios = require('axios');
+
 export default {
   components: {
     'generic-page': GenericPage,
@@ -29,12 +30,14 @@ export default {
   methods: {
     getNotif() {
       axios.get('/notification/1/')
-        .then((response) => {
-          console.log(response)
-        })
-        .catch(console.log)
-    }
-  }
+          .then((response) => {
+            // console.log(response);
+          })
+          .catch((error) => {
+            // console.log(error)
+          });
+    },
+  },
 };
 </script>
 
