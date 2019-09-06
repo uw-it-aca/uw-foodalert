@@ -34,9 +34,9 @@ matrix:
       script:
         - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
         - npx webpack
-    - language: minimal
-      services:
-        - docker
-      script:
-        - docker-compose -f docker-compose.test.yml build
-        - docker-compose -f docker-compose.test.yml run taster
+    # - language: minimal
+    #   services:
+    #     - docker
+    #   script:
+    #     - docker-compose -f docker-compose.test.yml build
+    #     - docker-compose -f docker-compose.test.yml run taster
