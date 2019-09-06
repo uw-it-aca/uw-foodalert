@@ -38,6 +38,5 @@ matrix:
       services:
         - docker
       script:
-        - docker-compose -f docker-compose.test.yml build food
-        - docker-compose -f docker-compose.test.yml build taster
+        - docker-compose -f docker-compose.test.yml build
         - docker-compose -f docker-compose.test.yml run taster
