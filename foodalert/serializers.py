@@ -47,7 +47,7 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('location', 'event', 'created_time',
-                  'end_time', 'food_served', 'amount_of_food_left',
+                  'end_time', 'food_served',
                   'food_qualifications', 'host', 'bring_container',
                   'allergens', 'host_user_agent', 'ended')
         read_only_fields = ['created_time', 'end_time', 'host', 'ended']
@@ -83,7 +83,6 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
             'bring_container': notif.bring_container,
             'food': {
                 'served': notif.food_served,
-                'amount': notif.amount_of_food_left,
                 'allergens': [x.name for x in notif.allergens.all()],
                 'qualifications': [
                     x.internalName for x in notif.food_qualifications.all()
@@ -111,7 +110,6 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                 "Bad Request": "Post data must have a bring_container field"})
         if not self.check_valid(data, "food") or \
            not self.check_valid(data["food"], "served") or \
-           not self.check_valid(data["food"], "amount") or \
            not self.check_valid(data["food"], "qualifications"):
             raise ValidationError({
                 "Bad Request": "Post data must have a proper food field"})
@@ -123,7 +121,6 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
             'location': data["location"],
             'event': data["event"],
             'food_served': data["food"]["served"],
-            'amount_of_food_left': data["food"]["amount"],
             'bring_container': data["bring_container"],
             'allergens': None,
             'host_user_agent': data["host"]["userAgent"]

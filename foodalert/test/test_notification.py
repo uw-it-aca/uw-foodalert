@@ -643,7 +643,6 @@ class NotificationTest(TestCase):
                 "bring_container": data["bring_container"],
                 "food": {
                     "served": data["food_served"],
-                    "amount": data["amount_of_food_left"],
                     "allergens": data["allergens"],
                     "qualifications": data["food_qualifications"]
                 },
@@ -661,7 +660,6 @@ class NotificationTest(TestCase):
                 "bring_container": data["bring_container"],
                 "food": {
                     "served": data["food_served"],
-                    "amount": data["amount_of_food_left"],
                     "allergens": data["allergens"],
                     "qualifications": data["food_qualifications"]
                 },

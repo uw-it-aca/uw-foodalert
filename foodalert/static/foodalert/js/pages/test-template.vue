@@ -4,6 +4,8 @@
       <alert-box>
       </alert-box>
       <time-picker timeID="randid" startWithCurrent></time-picker>
+      <br/>
+      <b-button @click="getNotif">GET Notification</b-button>
     </template>
   </generic-page>
 </template>
@@ -12,6 +14,8 @@
 import GenericPage from '../components/generic-page.vue';
 import TimePicker from '../components/time-picker.vue';
 import AlertBox from '../components/alert-box.vue';
+const axios = require('axios');
+
 export default {
   components: {
     'generic-page': GenericPage,
@@ -22,6 +26,17 @@ export default {
   data() {
     return {
     };
+  },
+  methods: {
+    getNotif() {
+      axios.get('/notification/1/')
+          .then((response) => {
+            // console.log(response);
+          })
+          .catch((error) => {
+            // console.log(error)
+          });
+    },
   },
 };
 </script>

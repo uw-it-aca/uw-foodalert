@@ -62,7 +62,6 @@ class SMSTest(TestCase):
             },
             'food': {
                 'served': 'Food',
-                'amount': 'One box',
                 'allergens': ['wheat']
             },
             'bring_container': True,
@@ -70,7 +69,6 @@ class SMSTest(TestCase):
         expected = ("A new Hungry Husky Event: 'UW Event' has been posted! \n"
                     "Food Served: Food\n"
                     "Location: UW Campus\n"
-                    "Amount Left: One box\n"
                     "Ends At: Thu Sep 13 19:23:06 2018\n"
                     "Food Contains: wheat\n"
                     "Please bring a container!")
