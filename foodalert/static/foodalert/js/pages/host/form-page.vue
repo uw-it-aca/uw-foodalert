@@ -281,9 +281,7 @@ export default {
       if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
-        msg += '3 platters of Mediterranean appetizers:' +
-              ' marinated mushrooms, grilled asparagus,' +
-              ' caprese salad, cured meats';
+        msg += this.placeholderForm.food_served;
       }
 
       msg += ' from ';
