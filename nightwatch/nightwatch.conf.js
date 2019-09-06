@@ -1,4 +1,4 @@
-var path = require("path");
+const path = require("path");
 
 module.exports = (function(settings) {
     settings.globals.visual_regression_settings.generate_screenshot_path =

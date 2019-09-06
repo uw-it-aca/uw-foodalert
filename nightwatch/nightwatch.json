@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["./foodalert/static/foodalert/js/tests"],
+  "src_folders" : ["./tests"],
 
   "webdriver" : {
     "start_process": true,
@@ -14,7 +14,12 @@
         "javascriptEnabled" : true,
         "acceptSslCerts" : true,
         "chromeOptions" : {
-          "args" : ["--headless", "--no-sandbox", "window-size=320, 600"]
+          "args" : [
+            "--headless",
+            "--disable-gpu",
+            "--disable-features=NetworkService",
+            "window-size=360, 640"
+          ]
         }
       }
     }

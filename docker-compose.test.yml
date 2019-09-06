@@ -12,7 +12,15 @@ services:
       DATABASE_HOST: db
       DB: ${DB:-sqlite3}
       AUTH: ${AUTH:-SAML_MOCK}
-    ports:
-      - "${RUNSERVER_PORT:-8000}:8000"
   db:
     image: postgres
+  taster:
+    build:
+      context: ./nightwatch
+    depends_on:
+      - food
+    volumes:
+      - ./nightwatch/tests:/home/node/tests
+      - ./nightwatch/vrt:/home/node/vrt
+    privileged: true
+    command: ./wait-for-it.sh food:8000 -- ./node_modules/.bin/nightwatch
