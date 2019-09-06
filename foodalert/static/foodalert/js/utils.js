@@ -7,6 +7,7 @@
  */
 export function activatePage(rootPath, name, page, title) {
   const route = rootPath.children.find((obj) => obj.path === name);
+
   route.component = page;
   route.meta.title = title;
 }

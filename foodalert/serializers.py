@@ -6,7 +6,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
 from django.contrib.auth.models import User
-from foodalert.models import Notification, Update, Allergen, Subscription
+from foodalert.models import Notification, Update, Allergen, Subscription, \
+    FoodQualification
 from phonenumber_field.serializerfields import PhoneNumberField
 
 
@@ -46,18 +47,26 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('location', 'event', 'created_time',
-                  'end_time', 'food_served', 'amount_of_food_left', 'host',
-                  'bring_container', 'allergens', 'host_user_agent', 'ended')
+                  'end_time', 'food_served', 'amount_of_food_left',
+                  'food_qualifications', 'host', 'bring_container',
+                  'allergens', 'host_user_agent', 'ended')
         read_only_fields = ['created_time', 'end_time', 'host', 'ended']
 
     def create(self, validated_data):
         allergen_data = validated_data.pop('allergens')
+        food_qualifications_data = validated_data.pop('food_qualifications')
         notif = Notification.objects.create(**validated_data)
-        notif.save()
         if allergen_data:
             for allergen in allergen_data:
                 entry = Allergen.objects.get(name=allergen)
                 notif.allergens.add(entry)
+        if food_qualifications_data:
+            for food_qualification in food_qualifications_data:
+                entry = FoodQualification.objects.get(
+                    internalName=food_qualification
+                )
+                notif.food_qualifications.add(entry)
+        notif.save()
         return notif
 
     def to_representation(self, notif):
@@ -76,6 +85,9 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                 'served': notif.food_served,
                 'amount': notif.amount_of_food_left,
                 'allergens': [x.name for x in notif.allergens.all()],
+                'qualifications': [
+                    x.internalName for x in notif.food_qualifications.all()
+                ]
             },
             'userAgent': notif.host_user_agent,
             'ended': notif.ended
@@ -99,7 +111,8 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
                 "Bad Request": "Post data must have a bring_container field"})
         if not self.check_valid(data, "food") or \
            not self.check_valid(data["food"], "served") or \
-           not self.check_valid(data["food"], "amount"):
+           not self.check_valid(data["food"], "amount") or \
+           not self.check_valid(data["food"], "qualifications"):
             raise ValidationError({
                 "Bad Request": "Post data must have a proper food field"})
         if not self.check_valid(data, "host") or \
@@ -121,6 +134,23 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
             ret["allergens"] = data["food"]["allergens"]
+            for allergen in ret["allergens"]:
+                if not Allergen.objects.filter(
+                    name=allergen
+                ).exists():
+                    raise ValidationError({
+                        "Bad Request": "Allergen does not exist"
+                    })
+
+        if data["food"]["qualifications"] != []:
+            ret["food_qualifications"] = data["food"]["qualifications"]
+            for food_qualification in ret["food_qualifications"]:
+                if not FoodQualification.objects.filter(
+                    internalName=food_qualification
+                ).exists():
+                    raise ValidationError({
+                        "Bad Request": "Food Qualification does not exist"
+                    })
 
         return ret
 
@@ -192,27 +222,28 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
-                  'email_verified', 'notif_on')
-        read_only_fields = ("number_verified", 'email_verified')
+                  'send_sms', 'email_verified', 'send_email')
+        read_only_fields = ("number_verified", 'email_verified', 'email')
 
     def to_internal_value(self, data):
         obj = self.context['view'].get_object()
         ret = {
             'email_verified': obj.email_verified,
-            'number_verified': obj.number_verified
+            'number_verified': obj.number_verified,
+            'email': obj.email
         }
-        if 'email' in data:
-            ret['email'] = data['email']
-            if data['email'] != obj.email:
-                ret['email_verified'] = False
         if 'sms_number' in data:
             ret['sms_number'] = data['sms_number']
             if data['sms_number'] != obj.sms_number:
                 ret['number_verified'] = False
-        if not ret['email_verified'] and not ret['number_verified']:
-            ret['notif_on'] = False
-        elif 'notif_on' in data:
-            ret['notif_on'] = data['notif_on']
+        if 'send_sms' in data:
+            ret['send_sms'] = data['send_sms']
+            if not ret['number_verified']:
+                ret['send_sms'] = False
+        if 'send_email' in data:
+            ret['send_email'] = data['send_email']
+            if not ret['email_verified']:
+                ret['send_email'] = False
         return ret
 
 
@@ -229,9 +260,10 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                 "netID": update.netid,
                 "email": update.email,
                 "email_verified": update.email_verified,
+                "send_email": update.send_email,
                 "sms_number": str(update.sms_number),
                 "number_verified": update.number_verified,
-                "notif_on": update.notif_on,
+                "send_sms": update.send_sms,
             }
         else:
             return {
@@ -247,6 +279,16 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 "Bad Request": "Post data must have a valid sms_number field"
                 })
+        if data['email'] != '':
+            if not data['email'].endswith('@uw.edu'):
+                raise ValidationError({
+                    "Bad Request": "Email must be a UW email."
+                    })
+            user_netid = self.context['request'].user.username
+            if not data['email'].startswith(user_netid):
+                raise ValidationError({
+                    "Bad Request": "Email must match netid"
+                    })
         return data
 
     def check_valid(self, obj, field):

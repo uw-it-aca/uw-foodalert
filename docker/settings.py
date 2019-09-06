@@ -306,14 +306,33 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "NONE")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "NONE")
 TWILIO_NOTIFY_SERVICE_ID = os.getenv("TWILIO_NOTIFY_SERVICE_ID", "NONE")
 
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "NONE")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "NONE")
+AWS_MESSAGE_ATTRIBUTES = {
+    'SMSType': 'Promotional',
+    'MaxPrice': '0.50',
+    'mySenderID': 'foodalert'
+}
+
+# SETTINGS FOR EMAIL BACKEND
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_HOST = 'localhost'
+
+    # EMAIL_BACKEND='saferecipient.EmailBackend'
+    SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+
 FOODALERT_AUTHZ_GROUPS = {
     'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),
     'audit': os.getenv("FA_AUDIT_GROUP", 'u_test_admin')
 }
 
-
 if os.getenv("AUTH", "NONE") == "SAML_MOCK":
-    MOCK_SAML_ATTRIBUTES['isMemberOf'] = ['u_test_host', 'u_test_admin']
+    MOCK_SAML_ATTRIBUTES['isMemberOf'] = [
+        FOODALERT_AUTHZ_GROUPS['create'],
+        FOODALERT_AUTHZ_GROUPS['audit']
+    ]
     from django.urls import reverse_lazy
     LOGIN_URL = reverse_lazy('saml_login')
     LOGOUT_URL = reverse_lazy('saml_logout')

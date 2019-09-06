@@ -6,8 +6,8 @@
             without this we can still use the default bootstrap checkmark and
             but they look worse and dont match the color that we need.
         !-->
-        <img src="../../img/check.svg" style="display: none">
-        <img src="../../img/dot.svg" style="display: none">
+        <img src="../../img/check.svg" style="display: none" alt="check">
+        <img src="../../img/dot.svg" style="display: none" alt="dot">
     </div>
 </template>
 
@@ -196,5 +196,17 @@ export default {
         font-weight: 400;
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    .foodalert .dropdown-menu.dropdown-menu-right {
+        min-width: 0;
+    }
+
+    .foodalert .nav-link.dropdown-toggle.text-decoration-none {
+        color: black;
+    }
+
+    .foodalert .nav-link.dropdown-toggle.text-decoration-none::after {
+        margin-left: 8px;
     }
 </style>

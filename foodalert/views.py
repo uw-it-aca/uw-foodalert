@@ -16,7 +16,9 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser
 from foodalert.sender import Sender
+from foodalert.utils.permissions import *
 
 # Create your views here.
 
@@ -28,10 +30,13 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationDetailSerializer
+    permission_classes = [(IsSelf & HostRead) | AuditRead]
 
 
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
+    permission_classes = [((IsSelf & HostRead) | AuditRead) | HostCreate]
+
     def get_queryset(self):
         qs = Notification.objects.all()
         if 'host_netid' in self.request.query_params:
@@ -39,9 +44,11 @@ class NotificationList(generics.ListCreateAPIView):
                 user = User.objects.get(
                     username=self.request.query_params['host_netid']
                 )
-                return qs.filter(host=user)
+                qs = qs.filter(host=user)
             except User.DoesNotExist:
                 return Notification.objects.none()
+        for obj in qs:
+            self.check_object_permissions(self.request, obj)
         return qs
 
     def get_serializer_class(self):
@@ -67,11 +74,10 @@ class NotificationList(generics.ListCreateAPIView):
                 email_recipients = []
                 sms_recipients = []
                 for sub in Subscription.objects.all():
-                    if sub.notif_on:
-                        if sub.email != '' and sub.email_verified:
-                            email_recipients.append(sub.email)
-                        if sub.sms_number != '' and sub.number_verified:
-                            sms_recipients.append(str(sub.sms_number))
+                    if sub.send_email:
+                        email_recipients.append(sub.email)
+                    if sub.send_sms:
+                        sms_recipients.append(str(sub.sms_number))
 
                 message = Sender.format_message(data)
 
@@ -98,11 +104,14 @@ class NotificationList(generics.ListCreateAPIView):
 class UpdateDetail(generics.RetrieveAPIView):
     queryset = Update.objects.all()
     serializer_class = UpdateDetailSerializer
+    permission_classes = [(IsSelf & HostRead) | AuditRead]
 
 
 @method_decorator(login_required(), name='dispatch')
 class UpdateList(generics.ListCreateAPIView):
     queryset = Update.objects.all()
+    permission_classes = [((IsSelf & HostRead) | AuditRead) |
+                          (IsSelf & HostCreate)]
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -111,9 +120,11 @@ class UpdateList(generics.ListCreateAPIView):
                 notif = Notification.objects.get(
                     pk=self.request.query_params['parent_notification']
                 )
-                return qs.filter(parent_notification=notif)
+                qs = qs.filter(parent_notification=notif)
             except Notification.DoesNotExist:
                 return Update.objects.none()
+        for obj in qs:
+            self.check_object_permissions(self.request, obj)
         return qs
 
     def get_serializer_class(self):
@@ -125,6 +136,11 @@ class UpdateList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
+            parent = Notification.objects.get(
+                pk=request.data['parent_notification_id']
+            )
+            self.check_object_permissions(self.request, parent)
+
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
@@ -135,14 +151,11 @@ class UpdateList(generics.ListCreateAPIView):
             email_recipients = []
             sms_recipients = []
             for sub in Subscription.objects.all():
-                if sub.email != '':
+                if sub.send_email:
                     email_recipients.append(sub.email)
-                if sub.sms_number != '':
+                if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
 
-            parent = Notification.objects.get(
-                pk=data['parent_notification_id']
-            )
             if not settings.DEBUG:
                 if settings.FOODALERT_USE_SMS == "twilio":
                     Sender.send_twilio_sms(sms_recipients,
@@ -165,17 +178,21 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubscriptionDetailSerializer
 
     def put(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().put(request, pk)
 
     def patch(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified
-           and not Subscription.objects.get(pk=pk).number_verified):
-            if 'notif_on' in request.data:
-                request.data['notif_on'] = False
+        if (not Subscription.objects.get(pk=pk).email_verified):
+            if 'send_email' in request.data:
+                request.data['send_email'] = False
+        if (not Subscription.objects.get(pk=pk).number_verified):
+            if 'send_sms' in request.data:
+                request.data['send_sms'] = False
         return super().patch(request, pk)
 
 
@@ -201,11 +218,15 @@ class SubscriptionList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            data = serializer.data
-            return Response(
-                data, status=status.HTTP_201_CREATED, headers=headers)
+            # catch invalid phone number
+            try:
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                data = serializer.data
+                return Response(
+                    data, status=status.HTTP_201_CREATED, headers=headers)
+            except ValueError as error:
+                return Response(str(error), status=status.HTTP_400_BAD_REQUEST)
         else:
             print("failed to post update")
             return Response(
@@ -229,13 +250,8 @@ class HomeView(TemplateView):
 class AllergensList(generics.ListCreateAPIView):
     queryset = Allergen.objects.all()
     serializer_class = AllergenSerializer
+    permission_classes = [HostRead | AuditRead | IsAdminUser]
 
     # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
-
-
-@method_decorator(login_required(), name='dispatch')
-class AllergensDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Allergen.objects.all()
-    serializer_class = AllergenSerializer

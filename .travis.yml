@@ -1,29 +1,41 @@
 sudo: false
-language: python
+language: minimal
 dist: xenial
-python:
-  - "3.6"
-addons:
-  postgresql: "9.4"
-install:
-  - sudo apt-get update && sudo apt-get install -y libxmlsec1-dev
-  - python setup.py -q install
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - pip install coverage
-  - pip install python-coveralls
-  - pip install pycodestyle
-  - pip install .
-  - cp travis/manage.py manage.py
-  - python manage.py migrate --noinput
-  - npm install
-  - gem install coveralls-lcov
-script:
-  - npx webpack
-  - pycodestyle foodalert/ --exclude=migrations
-  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/components/
-  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/pages/
-  - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/*.js
-  - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
-after_script:
-  - coveralls
+matrix:
+  include:
+    - language: python
+      python: 3.6
+      cache: pip
+      addons:
+        apt:
+          update: true
+          packages:
+            - libxmlsec1-dev
+        postgresql: "9.4"
+      install:
+        - pip install coverage
+        - pip install python-coveralls
+        - pip install pycodestyle
+        - pip install . 
+      before_script:
+        - psql -c 'create database travis_ci_test;' -U postgres
+        - cp travis/manage.py manage.py
+        - python manage.py migrate --noinput
+      script:
+        - pycodestyle foodalert/ --exclude=migrations
+        - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
+      after_script:
+        - coveralls
+    - language: node_js
+      node_js: 8.15.1
+      cache: npm
+      install:
+        - npm install eslint eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y eslint-config-stylelint
+      script:
+        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
+        - npx webpack
+    # - language: minimal
+    #   services:
+    #     - docker
+    #   script:
+    #     - docker-compose -f docker-compose.test.yml up --build taster
