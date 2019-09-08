@@ -204,11 +204,12 @@ elif os.getenv('AUTH', 'NONE') == 'SAML':
 APPLICATION_CERT_PATH = os.getenv('CERT_PATH', '')
 APPLICATION_KEY_PATH = os.getenv('KEY_PATH', '')
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = os.getenv('SESSION_EXPIRE_AT_BROWSER_CLOSE', False)
+if os.getenv('SESSION_EXPIRE_AT_BROWSER_CLOSE') == "TRUE":
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Restclient config
 
-RESTCLIENTS_CA_BUNDLE = '/app/certs/ca-bundle.crt' 
+RESTCLIENTS_CA_BUNDLE = '/app/certs/ca-bundle.crt'
 
 if os.getenv('GWS_ENV') == 'PROD' or os.getenv('GWS_ENV') == 'EVAL':
     RESTCLIENTS_GWS_DAO_CLASS = 'Live'
