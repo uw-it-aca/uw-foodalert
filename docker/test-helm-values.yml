@@ -26,6 +26,8 @@ environmentVariables:
     value: foodalert.aca-aws.s.uw.edu
   - name: SAML_ENTITY_ID
     value: https://foodalert.aca-aws.s.uw.edu
+  - name: SESSION_EXPIRE_AT_BROSER_CLOSE
+    value: True
   - name: FA_HOST_GROUP
     value: u_acadev_foodalert-eval-hosts
   - name: FA_AUDIT_GROUP

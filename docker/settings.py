@@ -204,6 +204,8 @@ elif os.getenv('AUTH', 'NONE') == 'SAML':
 APPLICATION_CERT_PATH = os.getenv('CERT_PATH', '')
 APPLICATION_KEY_PATH = os.getenv('KEY_PATH', '')
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = os.getenv('SESSION_EXPIRE_AT_BROWSER_CLOSE', False)
+
 # Restclient config
 
 RESTCLIENTS_CA_BUNDLE = '/app/certs/ca-bundle.crt' 
