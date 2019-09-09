@@ -229,6 +229,17 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/')
+        self.assertEqual(403, response.status_code)
+
+        sub2.delete()
+
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.json()
@@ -293,6 +304,22 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
+    def test_get_wrong_subscription_detail(self, email='', sms=''):
+        """
+        Calling get request to '/subscription/{id}/' endpoint should return
+        a 403 status code when called by a different user.
+        """
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/{}/'.format(sub2.id))
+        self.assertEqual(403, response.status_code)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
     def test_patch_subscription(self, email=None, sms=None):
         """
         A patch request to update either sms or email is valid. The fields in
@@ -338,6 +365,26 @@ class SubscriptionTest(TestCase):
         self.assertEqual(sms_before, data['sms_number'])
         data = response.json()
         self.assertNotEqual(payload2['email'], data['email'])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_wrong_user_patch_subscription(self, email=None, sms=None):
+        """
+        A patch request to a different user's subscription should return 403
+        """
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        payload = {
+            "sms_number": "+14084388625"
+        }
+        response = self.client.patch('/subscription/{}/'.format(sub2.id),
+                                     data=json.dumps(payload),
+                                     content_type='application/json')
+        self.assertEqual(403, response.status_code)
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic

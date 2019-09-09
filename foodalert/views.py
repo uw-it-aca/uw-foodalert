@@ -176,6 +176,7 @@ class UpdateList(generics.ListCreateAPIView):
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionDetailSerializer
+    permission_classes = [IsSelf]
 
     def put(self, request, pk):
         if (not Subscription.objects.get(pk=pk).email_verified):
@@ -199,18 +200,21 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
     serializer_class = SubscriptionSerializer
+    permission_classes = [IsSelf]
 
     def get_queryset(self):
-        queryset = Subscription.objects.all()
+        qs = Subscription.objects.all()
         if 'netID' in self.request.query_params:
             try:
                 netid = User.objects.get(
                     username=self.request.query_params['netID']
                 )
-                return queryset.filter(user=netid)
+                qs = qs.filter(user=netid)
             except User.DoesNotExist:
                 return Subscription.objects.none()
-        return queryset
+        for obj in qs:
+            self.check_object_permissions(self.request, obj)
+        return qs
 
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
