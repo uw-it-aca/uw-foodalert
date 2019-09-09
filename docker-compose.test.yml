@@ -23,4 +23,4 @@ services:
       - ./nightwatch/tests:/home/node/tests
       - ./nightwatch/vrt:/home/node/vrt
     privileged: true
-    command: ./wait-for-it.sh food:8000 -- ./node_modules/.bin/nightwatch
+    command: wait-for-it food:8000 -- ./node_modules/.bin/nightwatch
