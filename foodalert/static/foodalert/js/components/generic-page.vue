@@ -23,6 +23,7 @@
                 UW NetID
                 <b-button variant="link"
                   id="sign-out"
+                  :href="logoutURL"
                   type="submit">
                   Sign out
                 </b-button>
@@ -63,6 +64,7 @@ export default {
   data() {
     return {
       notificationState: false,
+      logoutURL: logoutUrl,
     };
   },
   beforeMount() {
