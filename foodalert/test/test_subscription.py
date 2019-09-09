@@ -309,12 +309,6 @@ class SubscriptionTest(TestCase):
         Calling get request to '/subscription/{id}/' endpoint should return
         a 403 status code when called by a different user.
         """
-        sub = Subscription.objects.create(
-            user=self.user,
-            email=email,
-            sms_number=sms
-        )
-
         sub2 = Subscription.objects.create(
             user=self.user2,
             email=email,
@@ -376,15 +370,8 @@ class SubscriptionTest(TestCase):
     @transaction.atomic
     def test_wrong_user_patch_subscription(self, email=None, sms=None):
         """
-        A patch request to update either sms or email is valid. The fields in
-        the payload should be the only fields that are updated
+        A patch request to a different user's subscription should return 403
         """
-        sub = Subscription.objects.create(
-            user=self.user,
-            email=email,
-            sms_number=sms
-        )
-
         sub2 = Subscription.objects.create(
             user=self.user2,
             email=email,
@@ -394,7 +381,6 @@ class SubscriptionTest(TestCase):
         payload = {
             "sms_number": "+14084388625"
         }
-        original_len = len(Subscription.objects.all())
         response = self.client.patch('/subscription/{}/'.format(sub2.id),
                                      data=json.dumps(payload),
                                      content_type='application/json')
