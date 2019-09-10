@@ -2,7 +2,10 @@
      <div class="audit-parent">
          <div id="filter-bar">
            <div class="d-flex">
-              <b-input id="search-filter" type="search" class="mr-3" v-model="search"></b-input>
+              <b-input
+                id="search-filter" type="search"
+                class="mr-3" v-model="search">
+              </b-input>
               <b-dropdown text="Year" v-on:click.native="setYear($event)">
                 <b-dropdown-item v-for="year in this.years" :key="year">
                   {{ year }}
@@ -35,13 +38,12 @@ export default {
     months: {
       type: Array,
     },
-    requestLogs: Function
+    requestLogs: Function,
   },
   watch: {
     search(newVal, oldVal) {
-      console.log("watch is entered")
       this.requestLogs(this.search);
-    }
+    },
   },
   methods: {
     exportTable() {
@@ -63,7 +65,7 @@ export default {
         {key: 'location', label: 'Location'},
         {key: 'food.qualifications', label: 'Food Qualifications'},
         {key: 'time.created', label: 'Time Created'},
-        {key: 'food.served', label: 'Message'}
+        {key: 'food.served', label: 'Message'},
       ],
     };
   },

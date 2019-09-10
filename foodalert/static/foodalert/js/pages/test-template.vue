@@ -12,14 +12,11 @@
 </template>
 
 <script type="text/javascript">
-import GenericPage from '../components/generic-page.vue';
 import AuditController from '../components/audit-controller.vue';
-const axios = require('axios');
 
 export default {
   components: {
-    'generic-page': GenericPage,
-    'audit-controller':AuditController,
+    'audit-controller': AuditController,
   },
 
   data() {

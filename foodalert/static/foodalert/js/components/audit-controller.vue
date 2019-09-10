@@ -42,25 +42,28 @@ export default {
 
       let url = '/notification/';
 
-      if(search) {
+      if (search) {
         this.items = [];
         url = url + '?search=' + search;
       }
 
       axios.get(url, {headers})
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i++) {
+          .then((response) => {
+            for (let i = 0; i < response.data.length; i++) {
             // Iterate through each detail
-            axios.get('/notification/' + response.data[i].id + '/', {headers})
-              .then(this.addItems)
-              .catch(console.log);
-          }
-          this.$emit('requestComplete');
-        })
-        .catch((error) => this.showErrorPage(error.response,
-            'a-audit'));
+              axios.get('/notification/' + response.data[i].id + '/', {headers})
+                  .then(this.addItems)
+                  .catch((error) => this.showErrorPage(error.response,
+                      'a-audit')
+                  );
+            }
+
+            this.$emit('requestComplete');
+          })
+          .catch((error) => this.showErrorPage(error.response,
+              'a-audit'));
     },
-    addItems(response){
+    addItems(response) {
       const log = response.data;
 
       // Make datetimes readable
@@ -80,7 +83,7 @@ export default {
         this.months.push(month);
       }
 
-      //format food qualifications text
+      // format food qualifications text
       log.food.qualifications = log.food.qualifications.join(' / ');
 
       // Flatten the row and rename columns
