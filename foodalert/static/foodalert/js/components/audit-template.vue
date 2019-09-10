@@ -47,13 +47,12 @@ export default {
   data() {
     return {
       fields: [
-        'netID',
-        'event',
-        'location',
-        'food.qualifications',
-        'time.created',
-        'time.end',
-        'food.served',  //message
+        {key: 'netID', label: 'netID'},
+        {key: 'event', label: 'Event'},
+        {key: 'location', label: 'Location'},
+        {key: 'food.qualifications', label: 'Food Qualifications'},
+        {key: 'time.created', label: 'Time Created'},
+        {key: 'food.served', label: 'Message'}
       ],
     };
   },
