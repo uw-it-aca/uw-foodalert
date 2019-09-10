@@ -48,6 +48,7 @@
             <b-row align-h="between">
                 <b-col md="3" lg="3" order-md="2">
                   <b-button
+                    id="s-agree"
                     class="mb-3 button-text"
                     size="lg"
                     type="submit"
