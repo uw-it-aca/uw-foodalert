@@ -17,6 +17,8 @@ services:
   taster:
     build:
       context: ./nightwatch
+      args:
+        curr_uid: ${uid:-1000}
     depends_on:
       - food
     volumes:
