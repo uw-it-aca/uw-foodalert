@@ -1,16 +1,19 @@
 <template>
      <div class="audit-parent">
-         <div>
-             <b-dropdown text="Year" v-on:click.native="setYear($event)">
+         <div id="filter-bar">
+           <div class="d-flex">
+              <b-input id="search-filter" type="search" class="mr-3" v-model="search"></b-input>
+              <b-dropdown text="Year" v-on:click.native="setYear($event)">
                 <b-dropdown-item v-for="year in this.years" :key="year">
-                {{ year }}
+                  {{ year }}
                 </b-dropdown-item>
-             </b-dropdown>
-             <b-dropdown text="Month" v-on:click.native="setMonth($event)">
+              </b-dropdown>
+              <b-dropdown text="Month" v-on:click.native="setMonth($event)">
                 <b-dropdown-item v-for="month in this.months" :key="month">
-                {{ month }}
-              </b-dropdown-item>
-            </b-dropdown>
+                  {{ month }}
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
             <b-button style="float: right" @click="exportTable">
               Export
             </b-button>
@@ -32,6 +35,13 @@ export default {
     months: {
       type: Array,
     },
+    requestLogs: Function
+  },
+  watch: {
+    search(newVal, oldVal) {
+      console.log("watch is entered")
+      this.requestLogs(this.search);
+    }
   },
   methods: {
     exportTable() {
@@ -46,6 +56,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       fields: [
         {key: 'netID', label: 'netID'},
         {key: 'event', label: 'Event'},
@@ -62,5 +73,10 @@ export default {
 <style>
     .audit-parent .table-update td {
         border-top : 0;
+    }
+
+    #filter-bar {
+      display: flex;
+      justify-content: space-between;
     }
 </style>

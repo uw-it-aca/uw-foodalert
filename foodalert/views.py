@@ -13,9 +13,8 @@ from foodalert.serializers import NotificationDetailSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
@@ -36,6 +35,8 @@ class NotificationDetail(generics.RetrieveAPIView):
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
     permission_classes = [((IsSelf & HostRead) | AuditRead) | HostCreate]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['host__username', 'event']
 
     def get_queryset(self):
         qs = Notification.objects.all()

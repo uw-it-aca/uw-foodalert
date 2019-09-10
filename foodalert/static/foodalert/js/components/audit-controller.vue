@@ -3,6 +3,7 @@
         :items="this.filteredItems"
         :years="this.years"
         :months="this.months"
+        :requestLogs="this.requestLogs"
         @export="this.exportTable"
         @updateMonth="this.updateMonth"
         @updateYear="this.updateYear"
@@ -34,10 +35,33 @@ export default {
     };
   },
   methods: {
+    requestLogs(search) {
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      let url = '/notification/';
+
+      if(search) {
+        this.items = [];
+        url = url + '?search=' + search;
+      }
+
+      axios.get(url, {headers})
+        .then((response) => {
+          for (let i = 0; i < response.data.length; i++) {
+            // Iterate through each detail
+            axios.get('/notification/' + response.data[i].id + '/', {headers})
+              .then(this.addItems)
+              .catch(console.log);
+          }
+          this.$emit('requestComplete');
+        })
+        .catch((error) => this.showErrorPage(error.response,
+            'a-audit'));
+    },
     addItems(response){
       const log = response.data;
-
-      console.log(log)
 
       // Make datetimes readable
       log.time.created = new Date(log.time.created).toDateString() +
@@ -55,7 +79,7 @@ export default {
       if (!this.months.includes(month)) {
         this.months.push(month);
       }
-      
+
       //format food qualifications text
       log.food.qualifications = log.food.qualifications.join(' / ');
 
@@ -74,24 +98,6 @@ export default {
       for (let j = 0; j < itemUpdates.length; j++) {
         this.items.push(this.updateToLog(itemUpdates[j]));
       }
-    },
-    requestLogs() {
-      const headers = {
-        'Content-Type': 'application/json',
-      };
-
-      axios.get('/notification/', {headers})
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i++) {
-            // Iterate through each detail
-            axios.get('/notification/' + response.data[i].id + '/', {headers})
-              .then(this.addItems)
-              .catch(console.log);
-          }
-          this.$emit('requestComplete');
-        })
-        .catch((error) => this.showErrorPage(error.response,
-            'a-audit'));
     },
     requestUpdates() {
       const headers = {
