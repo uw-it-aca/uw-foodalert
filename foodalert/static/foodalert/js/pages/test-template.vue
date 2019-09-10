@@ -1,26 +1,25 @@
 <template>
-  <generic-page :timeoutOfNotification="3000">
-    <template #body>
-      <alert-box>
-      </alert-box>
-      <time-picker timeID="randid" startWithCurrent></time-picker>
-      <br/>
-      <b-button @click="getNotif">GET Notification</b-button>
-    </template>
-  </generic-page>
+  <div>
+    <b-navbar class="mx-auto" style="height: 64px;">
+      <b-navbar-brand class="pl-2 pb-2">
+        <img :src="require('../../img/food-alert-logo.svg')"
+              alt="UW Food Alert Logo" height="22"
+              >
+      </b-navbar-brand>
+    </b-navbar>
+    <audit-controller></audit-controller>
+  </div>
 </template>
 
 <script type="text/javascript">
 import GenericPage from '../components/generic-page.vue';
-import TimePicker from '../components/time-picker.vue';
-import AlertBox from '../components/alert-box.vue';
+import AuditController from '../components/audit-controller.vue';
 const axios = require('axios');
 
 export default {
   components: {
     'generic-page': GenericPage,
-    'time-picker': TimePicker,
-    'alert-box': AlertBox,
+    'audit-controller':AuditController,
   },
 
   data() {
@@ -28,15 +27,6 @@ export default {
     };
   },
   methods: {
-    getNotif() {
-      axios.get('/notification/1/')
-          .then((response) => {
-            // console.log(response);
-          })
-          .catch((error) => {
-            // console.log(error)
-          });
-    },
   },
 };
 </script>

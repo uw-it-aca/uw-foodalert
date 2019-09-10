@@ -34,58 +34,64 @@ export default {
     };
   },
   methods: {
+    addItems(response){
+      const log = response.data;
+
+      console.log(log)
+
+      // Make datetimes readable
+      log.time.created = new Date(log.time.created).toDateString() +
+        ' ' + new Date(log.time.created).toLocaleTimeString('en-US');
+      log.time.end = new Date(log.time.end).toDateString() +
+        ' ' + new Date(log.time.end).toLocaleTimeString('en-US');
+      // Add the year and month to respective arrays for sorting
+      const year = log.time.created.substring(11, 15);
+      const month = log.time.created.substring(4, 7);
+
+      if (!this.years.includes(year)) {
+        this.years.push(year);
+      }
+
+      if (!this.months.includes(month)) {
+        this.months.push(month);
+      }
+      
+      //format food qualifications text
+      log.food.qualifications = log.food.qualifications.join(' / ');
+
+      // Flatten the row and rename columns
+      const flat = flatten(log);
+
+      // Add the item to our audit logs
+      this.items.push(flat);
+
+      // Gather all updates to this corresponding item
+      const itemUpdates = this.updates.filter(function(update) {
+        return (update.parent_notification === log.id);
+      });
+
+      // Add each update of this item to the log
+      for (let j = 0; j < itemUpdates.length; j++) {
+        this.items.push(this.updateToLog(itemUpdates[j]));
+      }
+    },
     requestLogs() {
       const headers = {
         'Content-Type': 'application/json',
       };
 
       axios.get('/notification/', {headers})
-          .then((response) => {
-            const data = response.data;
-
-            for (let i = 0; i < data.length; i++) {
-            // Iterate over our logs row by row
-              const log = data[i];
-
-              // Make datetimes readable
-              log.time.created = new Date(log.time.created).toDateString() +
-                ' ' + new Date(log.time.created).toLocaleTimeString('en-US');
-              log.time.ended = new Date(log.time.ended).toDateString() +
-                ' ' + new Date(log.time.ended).toLocaleTimeString('en-US');
-
-              // Add the year and month to respective arrays for sorting
-              const year = log.time.created.substring(11, 15);
-              const month = log.time.created.substring(4, 7);
-
-              if (!this.years.includes(year)) {
-                this.years.push(year);
-              }
-
-              if (!this.months.includes(month)) {
-                this.months.push(month);
-              }
-
-              // Flatten the row and rename columns
-              const flat = flatten(log);
-
-              // Add the item to our audit logs
-              this.items.push(flat);
-
-              // Gather all updates to this corresponding item
-              const itemUpdates = this.updates.filter(function(update) {
-                return (update.parent_notification === log.id);
-              });
-
-              // Add each update of this item to the log
-              for (let j = 0; j < itemUpdates.length; j++) {
-                this.items.push(this.updateToLog(itemUpdates[j]));
-              }
-            }
-
-            this.$emit('requestComplete');
-          })
-          .catch((error) => this.showErrorPage(error.response,
-              'a-audit'));
+        .then((response) => {
+          for (let i = 0; i < response.data.length; i++) {
+            // Iterate through each detail
+            axios.get('/notification/' + response.data[i].id + '/', {headers})
+              .then(this.addItems)
+              .catch(console.log);
+          }
+          this.$emit('requestComplete');
+        })
+        .catch((error) => this.showErrorPage(error.response,
+            'a-audit'));
     },
     requestUpdates() {
       const headers = {

@@ -47,17 +47,13 @@ export default {
   data() {
     return {
       fields: [
-        'host.netID',
-        'location',
+        'netID',
         'event',
+        'location',
+        'food.qualifications',
         'time.created',
-        'time.ended',
-        'food.served',
-        'food.amount',
-        'food.allergens',
-        'bringContainers',
-        'host.userAgent',
-        'ended',
+        'time.end',
+        'food.served',  //message
       ],
     };
   },
