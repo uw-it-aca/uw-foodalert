@@ -1,3 +1,5 @@
+import json
+
 from dbmail import send_db_mail
 from dbmail.models import MailTemplate
 from django.conf import settings
@@ -72,8 +74,12 @@ class TwilioSender(object):
     def send_message(self, recipients, message):
         bindings = []
         for recipient in recipients:
-            bindings.append("{\"binding_type\": \"sms\", \"address\": \"" +
-                            recipient + "\"}")
+            bindings.append(json.dumps(
+                {
+                    "binding_type": "sms",
+                    "address": recipient
+                }
+            ))
 
         sms = self.c.notify.services(settings.TWILIO_NOTIFY_SERVICE_ID) \
                     .notifications.create(

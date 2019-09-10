@@ -9,6 +9,11 @@ USER root
 RUN apt-get update
 RUN apt-get install -y wait-for-it /home/node/google-chrome-stable_current_amd64.deb
 
+ARG curr_uid
+RUN usermod -u ${curr_uid} node
+RUN groupmod -g ${curr_uid} node
+RUN usermod -d /home/node -m node
+
 USER node
 WORKDIR /home/node
 RUN npm init --force
