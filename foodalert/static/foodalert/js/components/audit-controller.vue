@@ -138,42 +138,6 @@ export default {
 
       return ret;
     },
-    exportTable() {
-      // Write the column names as the first line in the result
-      const keys = Object.keys(this.items[0]);
-      let result = '';
-
-      result += keys.join(',');
-      result += '\n';
-
-      // Iterate over each row and append them with comma seperation
-      this.filteredItems.forEach(function(item) {
-        keys.forEach(function(key) {
-          if (item[key] === '') {
-            result += 'null';
-          } else {
-            result += item[key];
-          }
-
-          result += ',';
-        });
-        result = result.slice(0, -1);
-        result += '\n';
-      });
-
-      // Define the content of our csv & encode the URI
-      const csv = 'data:text/csv;charset=utf-8,' + result;
-      const data = encodeURI(csv);
-
-      // Programmatically make a link to download the csv and click it
-      const link = document.createElement('a');
-
-      link.setAttribute('href', data);
-      link.setAttribute('download', 'auditlog.csv');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    },
     updateMonth(value) {
       this.selectedMonth = value;
     },

@@ -17,9 +17,6 @@
                 </b-dropdown-item>
               </b-dropdown>
             </div>
-            <b-button style="float: right" @click="exportTable">
-              Export
-            </b-button>
          </div>
          <p></p>
          <b-table hover :items="items" :fields="fields"></b-table>
@@ -42,13 +39,10 @@ export default {
   },
   watch: {
     search(newVal, oldVal) {
-      this.requestLogs(this.search);
+      setTimeout(this.requestLogs(newVal), 5000);
     },
   },
   methods: {
-    exportTable() {
-      this.$emit('export');
-    },
     setMonth(event) {
       this.$emit('updateMonth', event.target.innerText);
     },
