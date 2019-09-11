@@ -15,14 +15,10 @@ services:
   db:
     image: postgres
   taster:
-    build:
-      context: ./nightwatch
-      args:
-        curr_uid: ${uid:-1000}
+    image: cypress/included:3.4.1
+    command: ["--browser", "chrome"]
     depends_on:
       - food
     volumes:
-      - ./nightwatch/tests:/home/node/tests
-      - ./nightwatch/vrt:/home/node/vrt
-    privileged: true
-    command: wait-for-it food:8000 -- ./node_modules/.bin/nightwatch
+      - .:/e2e
+    working_dir: /e2e

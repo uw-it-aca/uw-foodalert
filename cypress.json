@@ -1,0 +1,8 @@
+{
+    "baseUrl": "http://food:8000",
+    "video": false,
+    "ignoreTestFiles": [
+        "**/__snapshots__/*",
+        "**/__image_snapshots__/*"
+    ]
+}
