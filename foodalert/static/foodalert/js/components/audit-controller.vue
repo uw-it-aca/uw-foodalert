@@ -40,10 +40,11 @@ export default {
         'Content-Type': 'application/json',
       };
 
+      this.items = [];
+      
       let url = '/notification/';
-
+      
       if (search) {
-        this.items = [];
         url = url + '?search=' + search;
       }
 
