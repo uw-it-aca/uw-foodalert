@@ -7,16 +7,16 @@
               >
       </b-navbar-brand>
     </b-navbar>
-    <audit-controller></audit-controller>
+    <audit-template></audit-template>
   </div>
 </template>
 
 <script type="text/javascript">
-import AuditController from '../components/audit-controller.vue';
+import AuditTemplate from '../components/audit-template.vue';
 
 export default {
   components: {
-    'audit-controller': AuditController,
+    'audit-template': AuditTemplate,
   },
 
   data() {
