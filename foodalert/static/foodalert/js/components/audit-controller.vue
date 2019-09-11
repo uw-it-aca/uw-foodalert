@@ -84,7 +84,7 @@ export default {
       }
 
       // format food qualifications text
-      log.food.qualifications = log.food.qualifications.join(' / ');
+      log.food.qualifications = log.food.qualifications.join(', ');
 
       // Flatten the row and rename columns
       const flat = flatten(log);
