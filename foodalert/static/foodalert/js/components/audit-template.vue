@@ -6,7 +6,8 @@
               id="search-filter" type="search"
               class="mr-3 ml-2" v-model="search">
             </b-input>
-            <b-dropdown text="Year" v-on:click.native="setYear($event)" class="mr-1">
+            <b-dropdown text="Year" 
+              v-on:click.native="setYear($event)" class="mr-1">
               <b-dropdown-item v-for="year in this.years" :key="year">
                 {{ year }}
               </b-dropdown-item>
