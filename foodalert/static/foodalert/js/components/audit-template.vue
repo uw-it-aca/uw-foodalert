@@ -112,15 +112,13 @@ export default {
 
       // format food qualifications and allergens
       log.food.qualifications = log.food.qualifications.join(', ');
-      log.food.allergens = log.food.allergens.join(', ')
+      log.food.allergens = log.food.allergens.join(', ');
 
       // Flatten the row and rename columns
       const flat = flatten(log);
 
       // Add the item to our audit logs
       this.items.push(flat);
-      
-      console.log(this.items)
 
       // Gather all updates to this corresponding item
       const itemUpdates = this.updates.filter(function(update) {
