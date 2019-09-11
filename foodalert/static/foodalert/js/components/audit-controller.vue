@@ -4,7 +4,6 @@
         :years="this.years"
         :months="this.months"
         :requestLogs="this.requestLogs"
-        @export="this.exportTable"
         @updateMonth="this.updateMonth"
         @updateYear="this.updateYear"
         >
@@ -41,9 +40,9 @@ export default {
       };
 
       this.items = [];
-      
+
       let url = '/notification/';
-      
+
       if (search) {
         url = url + '?search=' + search;
       }

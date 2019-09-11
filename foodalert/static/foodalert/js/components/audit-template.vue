@@ -37,19 +37,6 @@ export default {
     },
     requestLogs: Function,
   },
-  watch: {
-    search(newVal, oldVal) {
-      setTimeout(this.requestLogs(newVal), 5000);
-    },
-  },
-  methods: {
-    setMonth(event) {
-      this.$emit('updateMonth', event.target.innerText);
-    },
-    setYear(event) {
-      this.$emit('updateYear', event.target.innerText);
-    },
-  },
   data() {
     return {
       search: '',
@@ -61,7 +48,26 @@ export default {
         {key: 'time.created', label: 'Time Created'},
         {key: 'food.served', label: 'Message'},
       ],
+      req: null,
     };
+  },
+  watch: {
+    search(newVal, oldVal) {
+      if(this.req != null){
+        clearTimeout(this.req);
+      }
+      this.req = setTimeout(() => {
+        this.requestLogs(newVal)
+      }, 1000);
+    },
+  },
+  methods: {
+    setMonth(event) {
+      this.$emit('updateMonth', event.target.innerText);
+    },
+    setYear(event) {
+      this.$emit('updateYear', event.target.innerText);
+    },
   },
 };
 </script>
