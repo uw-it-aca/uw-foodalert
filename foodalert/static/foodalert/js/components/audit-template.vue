@@ -1,7 +1,7 @@
 <template>
      <div class="audit-parent">
         <b-row>
-          <b-col id = "filter-bar" cols="6">
+          <b-col id = "filter-bar" sm="12" md="8" lg="6">
             <b-input
               id="search-filter" type="search"
               class="mr-3 ml-2" v-model="search">
