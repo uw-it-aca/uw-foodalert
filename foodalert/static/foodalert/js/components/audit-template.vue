@@ -1,23 +1,23 @@
 <template>
      <div class="audit-parent">
-         <div id="filter-bar">
-           <div class="d-flex">
-              <b-input
-                id="search-filter" type="search"
-                class="mr-3" v-model="search">
-              </b-input>
-              <b-dropdown text="Year" v-on:click.native="setYear($event)">
-                <b-dropdown-item v-for="year in this.years" :key="year">
-                  {{ year }}
-                </b-dropdown-item>
-              </b-dropdown>
-              <b-dropdown text="Month" v-on:click.native="setMonth($event)">
-                <b-dropdown-item v-for="month in this.months" :key="month">
-                  {{ month }}
-                </b-dropdown-item>
-              </b-dropdown>
-            </div>
-         </div>
+        <b-row>
+          <b-col id = "filter-bar" cols="6">
+            <b-input
+              id="search-filter" type="search"
+              class="mr-3 ml-2" v-model="search">
+            </b-input>
+            <b-dropdown text="Year" v-on:click.native="setYear($event)" class="mr-1">
+              <b-dropdown-item v-for="year in this.years" :key="year">
+                {{ year }}
+              </b-dropdown-item>
+            </b-dropdown>
+            <b-dropdown text="Month" v-on:click.native="setMonth($event)">
+              <b-dropdown-item v-for="month in this.months" :key="month">
+                {{ month }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-col>
+        </b-row>
          <p></p>
          <b-table hover :items="items" :fields="fields"></b-table>
      </div>
