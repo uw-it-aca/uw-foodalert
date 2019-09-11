@@ -53,11 +53,12 @@ export default {
   },
   watch: {
     search(newVal, oldVal) {
-      if(this.req != null){
+      if (this.req !== null) {
         clearTimeout(this.req);
       }
+
       this.req = setTimeout(() => {
-        this.requestLogs(newVal)
+        this.requestLogs(newVal);
       }, 1000);
     },
   },
