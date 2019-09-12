@@ -3,7 +3,7 @@ version: '3'
 services:
   food:
     restart: always
-    build: .
+    build: ../
     links:
       - db
     environment:
