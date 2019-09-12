@@ -20,7 +20,44 @@
           </b-col>
         </b-row>
          <p></p>
-         <b-table hover :items="items" :fields="fields"></b-table>
+         <b-table @click="showDetails" hover :items="items" :fields="fields">
+            <template v-slot:cell(food.served)="row">
+              {{ row.value }}
+              <b-button @click="row.toggleDetails" class="float-right" variant="link">
+                Show {{row.detailsShowing ? 'Less' : 'More'}}
+              </b-button>
+            </template>
+
+            <template v-slot:row-details="row">
+              <b-card class="message-details">
+                <b-row>
+                  <b-col class="text-sm-left">
+                    <strong>Event:</strong> {{row.item.event }}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-sm-left">
+                    <strong>Location:</strong> {{row.item.location }}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-sm-left">
+                    <strong>End time:</strong> {{ row.item['time.end'] }}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-sm-left">
+                    <strong>May Contain:</strong> {{ row.item['food.allergens'] }}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col class="text-sm-left">
+                    <strong>Bring Container:</strong> {{ row.item['bring_container'] }}
+                  </b-col>
+                </b-row>
+              </b-card>
+            </template>
+         </b-table>
      </div>
 </template>
 
@@ -44,7 +81,7 @@ export default {
         {key: 'food.qualifications', label: 'Food Qualifications'},
         {key: 'time.created', label: 'Time Created'},
         {key: 'food.served', label: 'Message'},
-        {key: 'food.allergens', label: 'Allergens'},
+        {key: 'ended', label: 'Event Ended'}
       ],
       req: null,
     };
@@ -61,6 +98,10 @@ export default {
     },
   },
   methods: {
+    showDetails(items) {
+      console.log("show details");
+      console.log(items);
+    },
     requestLogs(search) {
       const headers = {
         'Content-Type': 'application/json',
@@ -214,5 +255,9 @@ export default {
     #filter-bar {
       display: flex;
       justify-content: space-between;
+    }
+
+    .message-details {
+      margin-left: 50%;
     }
 </style>
