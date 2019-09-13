@@ -18,6 +18,8 @@ services:
       AUTH: ${AUTH:-SAML_MOCK}
     ports:
       - "${RUNSERVER_PORT:-8000}:8000"
+    stdin_open: true
+    tty: true
   db:
     image: postgres
   devtools:
