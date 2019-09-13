@@ -126,3 +126,6 @@ docs/*.rst
 #nightwatch-vrt
 nightwatch/vrt/diff
 nightwatch/vrt/latest
+
+# VS code
+.vscode/*
