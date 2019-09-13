@@ -6,7 +6,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: (process.env.ENV === 'localdev' ? 'source-map' : 'none'),
   mode: (process.env.ENV === 'localdev' ? 'development' : 'production'),
   context: __dirname,
   entry: {
