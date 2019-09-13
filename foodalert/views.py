@@ -203,7 +203,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
         if ('sms_number' in request.data and
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
-                request.data['sms_number'],
+                [request.data['sms_number']],
                 "Test Verify"
             )
         return super().patch(request, pk)
