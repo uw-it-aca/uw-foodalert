@@ -20,10 +20,10 @@
           </b-col>
         </b-row>
          <p></p>
-         <b-table @click="showDetails" hover :items="items" :fields="fields">
+         <b-table hover :items="items" :fields="fields">
             <template v-slot:cell(food.served)="row">
               {{ row.value }}
-              <b-button @click="row.toggleDetails" class="float-right" variant="link">
+              <b-button @click="row.toggleDetails(); getUpdates(row)" class="float-right" variant="link">
                 Show {{row.detailsShowing ? 'Less' : 'More'}}
               </b-button>
             </template>
@@ -98,9 +98,29 @@ export default {
     },
   },
   methods: {
-    showDetails(items) {
-      console.log("show details");
-      console.log(items);
+    getUpdates(row) {
+      const id = row.item.id;
+      //make axios request to get updates and display accordingly
+      axios.get('/updates/?parent_notification_id=' + id)
+        .then((response) => {
+          for(let i = 0; i < response.data.length; i++){
+            let updateID = response.data[i].id;
+            axios.get('/updates/' + updateID + '/')
+              .then((response) => {
+                // console.log(response)
+                let details = this.items[row.index];
+                let updateText = response.data.text;
+                let createdTime = new Date(response.data.created_time).toDateString() +
+                  ' ' + new Date(response.data.created_time).toLocaleTimeString('en-US');
+                console.log(details)
+
+                // push updates to items array
+                
+              })
+              .catch(console.log);
+          }
+        })
+        .catch(console.log);
     },
     requestLogs(search) {
       const headers = {
