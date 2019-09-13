@@ -17,6 +17,8 @@ database:
   engine: postgres
 repo: foodalert-map
 branch: aws
+metrics:
+  enabled: False
 environmentVariables:
   - name: AUTH
     value: SAML
