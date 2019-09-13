@@ -194,10 +194,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
             if 'send_sms' in request.data:
                 if not settings.DEBUG:
                     if settings.FOODALERT_USE_SMS == "twilio":
-                        Sender.send_twilio_sms(sms_recipients, message)
-                    elif settings.FOODALERT_USE_SMS == "amazon":
-                        Sender.send_amazon_sms(sms_recipients, message)
-                    Sender.send_email(message, email_recipients, slug)
+                        Sender.send_twilio_sms(request.data['sms_number'], message)
                 request.data['send_sms'] = False
         return super().patch(request, pk)
 
