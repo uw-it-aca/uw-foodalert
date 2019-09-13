@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  mode: 'development',
+  mode: (process.env.ENV === 'localdev' ? 'development' : 'production'),
   context: __dirname,
   entry: {
       main:  './foodalert/static/foodalert/js/main',
