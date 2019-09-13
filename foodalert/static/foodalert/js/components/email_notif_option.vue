@@ -25,6 +25,8 @@
 <script>
 const axios = require('axios');
 
+import Cookies from 'js-cookie';
+
 export default {
   props: {
     email: String,

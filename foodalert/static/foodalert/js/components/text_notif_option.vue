@@ -48,7 +48,7 @@
                     Edit
                   </b-button>
                   <b-button variant="link"
-                            @click="resendVerif(spinners.resend)"
+                            @click="getNewState(spinners.resend)"
                             class="px-0">
                     Resend {{type}}
                     <b-spinner small class="mr-2 spinner-padding"
@@ -210,7 +210,6 @@ export default {
     visible: Boolean,
     serverData: Object,
     requestUpdate: Function,
-    resendVerif: Function,
     subid: Number,
   },
   data() {
@@ -402,7 +401,7 @@ export default {
   computed: {
   },
   beforeMount() {
-    this.localData.text = this.serverData.text; // inputting sms with +1
+    this.localData.text = this.serverData.text;
     this.localData.verified = this.serverData.verified;
     this.isOpen = this.visible;
   },

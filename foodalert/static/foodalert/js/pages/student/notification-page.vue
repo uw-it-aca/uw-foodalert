@@ -13,8 +13,7 @@
         :serverData="{ text: notif_info.sms_number,
           verified: notif_info.number_verified }"
         :requestUpdate="requestUpdate"
-        errorDesc="Carrier rates may apply"
-        :resendVerif="()=>{return 1}">
+        errorDesc="Carrier rates may apply">
         <template #disclaimer>
           Only US numbers are supported at this time. Carrier rates may apply.
         </template>
@@ -48,6 +47,7 @@ import TextNotif from '../../components/text_notif_option.vue';
 import EmailNotif from '../../components/email_notif_option.vue';
 import {AsYouType} from 'libphonenumber-js';
 const axios = require('axios');
+
 import Cookies from 'js-cookie';
 
 
@@ -111,7 +111,7 @@ export default {
                   .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
             } else {
-              //create subscription with email if it does not exist
+              // create subscription with email if it does not exist
               const csrftoken = Cookies.get('csrftoken');
               const postHeaders = {
                 'Content-Type': 'application/json',
@@ -121,6 +121,7 @@ export default {
                 'email': this.netID + '@uw.edu',
                 'sms_number': '',
               };
+
               axios.post('/subscription/', postData, {'headers': postHeaders})
                   .then((response) => {
                     this.subid = response.data.id;
