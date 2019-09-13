@@ -13,8 +13,7 @@
         :serverData="{ text: notif_info.sms_number,
           verified: notif_info.number_verified }"
         :requestUpdate="requestUpdate"
-        errorDesc="Carrier rates may apply"
-        :resendVerif="()=>{return 1}">
+        errorDesc="Carrier rates may apply">
         <template #disclaimer>
           Only US numbers are supported at this time. Carrier rates may apply.
         </template>
@@ -122,7 +121,7 @@ export default {
                 'email': this.netID + '@uw.edu',
                 'sms_number': '',
               };
-              
+
               axios.post('/subscription/', postData, {'headers': postHeaders})
                   .then((response) => {
                     this.subid = response.data.id;
