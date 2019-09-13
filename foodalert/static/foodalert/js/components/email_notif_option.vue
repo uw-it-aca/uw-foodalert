@@ -25,8 +25,6 @@
 <script>
 const axios = require('axios');
 
-import Cookies from 'js-cookie';
-
 export default {
   props: {
     email: String,
@@ -41,35 +39,6 @@ export default {
     };
   },
   methods: {
-    createSubscription() {
-      // create Subscription model with uw email
-      axios.get('/subscription/?netID=' + this.netID)
-          .then((response) => {
-            if (!response.data[0]) {
-              const csrftoken = Cookies.get('csrftoken');
-              const headers = {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-              };
-              const postData = {
-                'email': this.netID + '@uw.edu',
-                'sms_number': '',
-              };
-
-              axios.post('/subscription/', postData, {headers})
-                  .then((response) => {
-                    this.requestUpdate();
-                  })
-                  .catch((error) => {
-                    this.showErrorPage(error.response,
-                        's-notifications');
-                  });
-            }
-          })
-          .catch((error) => {
-            this.showErrorPage(error.response, 's-notifications');
-          });
-    },
   },
   watch: {
     checked(newVal, oldVal) {
@@ -89,9 +58,6 @@ export default {
             this.showErrorPage(error.response, 's-notifications');
           });
     },
-  },
-  beforeMount() {
-    this.createSubscription();
   },
 };
 </script>
