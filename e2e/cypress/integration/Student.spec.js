@@ -51,5 +51,8 @@ describe('Notifiction Preferences', function() {
 
     cy.get('.custom-control.custom-switch').eq(1).click()
     cy.document().toMatchImageSnapshot()
+
+    cy.get('.custom-control.custom-switch').eq(1).click()
+    cy.document().toMatchImageSnapshot()
   })
 })
