@@ -242,8 +242,9 @@ export default {
       }
     },
     numberFormatter(value, event) {
-      if (value === '1' || value === '0')
-        value = ''
+      if (value === '1' || value === '0') {
+        value = '';
+      }
 
       if (this.validateOn) {
         try {
