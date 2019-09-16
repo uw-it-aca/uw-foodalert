@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
@@ -273,3 +274,9 @@ class AllergensList(generics.ListCreateAPIView):
     # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
+
+
+@csrf_exempt
+def sms_reciver(request):
+    print(request)
+    return HttpResponse('')
