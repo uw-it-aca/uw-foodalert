@@ -50,7 +50,7 @@
                       Other message
                       <b-form-textarea
                         id="other-message"
-                        ref="otherMessage"
+                        ref="otherMessage" maxlength="100"
                         required placeholder="We've moved to HUB 120"
                         class="mb-2 standard-placeholder" v-model="otherText"
                         size="lg" @click="selected='otherUpdate'"

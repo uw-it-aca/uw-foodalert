@@ -48,7 +48,7 @@
         <div>
           <label class="standard-label w-100 mb-0" for="event-name">
             Event name
-            <b-form-input id="event-name" ref="event"
+            <b-form-input id="event-name" ref="event" maxlength="40"
               v-model="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
               class="standard-placeholder mt-2"
@@ -69,6 +69,7 @@
               Tell people about your
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
+                            maxlength="200"
                             aria-describedby="food-clarification"
                             v-model="form.food_served"
                             :state="inputValid('food_served')"
@@ -89,7 +90,7 @@
           <label id="location-label" class="standard-label w-100 mb-0"
             for="location">Location
             <b-form-input id="location"
-              ref="location"
+              ref="location" maxlength="100"
               v-model="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
               class="standard-placeholder mt-2" size="lg"
