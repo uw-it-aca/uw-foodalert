@@ -1,6 +1,8 @@
+import urllib
+
 from django.shortcuts import render
 from django.template import loader
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponseForbidden, HttpResponse
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from uw_saml.utils import is_member_of_group
@@ -14,10 +16,12 @@ from foodalert.serializers import NotificationDetailSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+from twilio.twiml.messaging_response import MessagingResponse
+
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -192,7 +196,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Test Verify"
+                "Reply YES to verify your number for HungryHusky"
             )
         return super().put(request, pk)
 
@@ -207,7 +211,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Test Verify"
+                "Reply YES to verify your number for HungryHusky"
             )
         return super().patch(request, pk)
 
@@ -276,7 +280,44 @@ class AllergensList(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 
-@csrf_exempt
-def sms_reciver(request):
-    print(request)
-    return HttpResponse('')
+class SmsReciver(APIView):
+    @csrf_exempt
+    def post(self, request, format=None):
+        if ('AccountSid' not in request.data or \
+            request.data['AccountSid'] != settings.TWILIO_ACCOUNT_SID):
+            return HttpResponseForbidden()
+        
+        resp = MessagingResponse()
+        
+        try:
+            sub = Subscription.objects.get(sms_number=request.data['From'])
+            if (request.data['Body'] == "YES") and not sub.number_verified:
+                resp.message('HungryHusky has verified your number.' +
+                             ' Your notifications are currently paused. ' +
+                             'Send RESUME to resume receiving notifications.')
+                sub.number_verified = True
+                sub.save()
+            elif (request.data['Body'] == "RESUME") and\
+                  sub.number_verified and not sub.send_sms:
+                resp.message('HungryHusky has resumed sending you' +
+                             ' more notifications. Send PAUSE to pause ' +
+                             'receiving notifications.')
+                sub.send_sms = True
+                sub.save()
+            elif (request.data['Body'] == "PAUSE") and\
+                  sub.number_verified and sub.send_sms:
+                resp.message('HungryHusky will not send any send you any' +
+                             ' more notifications. Send RESUME to resume ' +
+                             'receiving notifications.')
+                sub.send_sms = False
+                sub.save()
+            else:
+                resp.message('HungryHusky did not understand that command.\n' +
+                             'The available commands are:\n' +
+                             ("YES: To verify your number." if not sub.number_verified else ("PAUSE: Pause reciving notifications." if sub.send_sms else "RESUME: Resume reciving notifications.")))
+        except Subscription.DoesNotExist:
+            resp.message('HungryHusky does not have this number registered.')
+            return HttpResponse(resp)
+        
+        return HttpResponse(resp)
+

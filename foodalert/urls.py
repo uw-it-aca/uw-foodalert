@@ -19,7 +19,7 @@ urlpatterns = [
         SubscriptionDetail.as_view(), name='subscription_detail'),
     url(r'^allergen/$', AllergensList.as_view(),
         name='allergen_list'),
-    url(r'^sms/$', sms_reciver,
+    url(r'^sms/$', SmsReciver.as_view(),
         name='sms'),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]
