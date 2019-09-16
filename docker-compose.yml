@@ -10,6 +10,8 @@ services:
       - ./docker/urls.py:/app/project/urls.py
     links:
       - db
+    env_file:
+      - .env
     environment:
       DATABASE_DB_NAME: postgres
       DATABASE_USERNAME: postgres
