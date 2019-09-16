@@ -49,5 +49,7 @@ describe('Notifiction Preferences', function() {
     cy.title().should('eq', 'Choose how you want to be notified')
     cy.document().toMatchImageSnapshot()
 
+    cy.get('.custom-control.custom-switch').eq(1).click()
+    cy.document().toMatchImageSnapshot()
   })
 })
