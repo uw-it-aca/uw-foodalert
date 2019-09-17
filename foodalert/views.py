@@ -283,12 +283,12 @@ class AllergensList(generics.ListCreateAPIView):
 class SmsReciver(APIView):
     @csrf_exempt
     def post(self, request, format=None):
-        if ('AccountSid' not in request.data or \
-            request.data['AccountSid'] != settings.TWILIO_ACCOUNT_SID):
+        if ('AccountSid' not in request.data or
+           request.data['AccountSid'] != settings.TWILIO_ACCOUNT_SID):
             return HttpResponseForbidden()
-        
+
         resp = MessagingResponse()
-        
+
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if (request.data['Body'] == "YES") and not sub.number_verified:
@@ -297,27 +297,36 @@ class SmsReciver(APIView):
                              'Send RESUME to resume receiving notifications.')
                 sub.number_verified = True
                 sub.save()
-            elif (request.data['Body'] == "RESUME") and\
-                  sub.number_verified and not sub.send_sms:
+            elif (request.data['Body'] == "RESUME" and
+                  sub.number_verified and not sub.send_sms):
                 resp.message('HungryHusky has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
                              'receiving notifications.')
                 sub.send_sms = True
                 sub.save()
-            elif (request.data['Body'] == "PAUSE") and\
-                  sub.number_verified and sub.send_sms:
+            elif (request.data['Body'] == "PAUSE" and
+                  sub.number_verified and sub.send_sms):
                 resp.message('HungryHusky will not send any send you any' +
                              ' more notifications. Send RESUME to resume ' +
                              'receiving notifications.')
                 sub.send_sms = False
                 sub.save()
             else:
-                resp.message('HungryHusky did not understand that command.\n' +
-                             'The available commands are:\n' +
-                             ("YES: To verify your number." if not sub.number_verified else ("PAUSE: Pause reciving notifications." if sub.send_sms else "RESUME: Resume reciving notifications.")))
+                resp.message(
+                    'HungryHusky did not understand that command.\n' +
+                    'The available commands are:\n' +
+                    (
+                        (
+                            "PAUSE: Pause reciving notifications."
+                            if sub.send_sms else
+                            "RESUME: Resume reciving notifications."
+                        )
+                        if sub.number_verified else
+                        "YES: To verify your number."
+                    )
+                )
         except Subscription.DoesNotExist:
             resp.message('HungryHusky does not have this number registered.')
             return HttpResponse(resp)
-        
-        return HttpResponse(resp)
 
+        return HttpResponse(resp)
