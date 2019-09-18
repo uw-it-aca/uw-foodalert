@@ -1,22 +1,27 @@
+import urllib
+
 from django.shortcuts import render
 from django.template import loader
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden, HttpResponse
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from uw_saml.utils import is_member_of_group
 from django.conf import settings
 from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+from twilio.twiml.messaging_response import MessagingResponse
+
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -191,7 +196,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Test Verify"
+                "Reply YES to verify your number for HungryHusky"
             )
         return super().put(request, pk)
 
@@ -206,7 +211,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Test Verify"
+                "Reply YES to verify your number for HungryHusky"
             )
         return super().patch(request, pk)
 
@@ -273,3 +278,55 @@ class AllergensList(generics.ListCreateAPIView):
     # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
+
+
+class SmsReciver(APIView):
+    @csrf_exempt
+    def post(self, request, format=None):
+        if ('AccountSid' not in request.data or
+           request.data['AccountSid'] != settings.TWILIO_ACCOUNT_SID):
+            return HttpResponseForbidden()
+
+        resp = MessagingResponse()
+
+        try:
+            sub = Subscription.objects.get(sms_number=request.data['From'])
+            if (request.data['Body'] == "YES") and not sub.number_verified:
+                resp.message('HungryHusky has verified your number.' +
+                             ' Your notifications are currently paused. ' +
+                             'Send RESUME to resume receiving notifications.')
+                sub.number_verified = True
+                sub.save()
+            elif (request.data['Body'] == "RESUME" and
+                  sub.number_verified and not sub.send_sms):
+                resp.message('HungryHusky has resumed sending you' +
+                             ' more notifications. Send PAUSE to pause ' +
+                             'receiving notifications.')
+                sub.send_sms = True
+                sub.save()
+            elif (request.data['Body'] == "PAUSE" and
+                  sub.number_verified and sub.send_sms):
+                resp.message('HungryHusky will not send any send you any' +
+                             ' more notifications. Send RESUME to resume ' +
+                             'receiving notifications.')
+                sub.send_sms = False
+                sub.save()
+            else:
+                resp.message(
+                    'HungryHusky did not understand that command.\n' +
+                    'The available commands are:\n' +
+                    (
+                        (
+                            "PAUSE: Pause reciving notifications."
+                            if sub.send_sms else
+                            "RESUME: Resume reciving notifications."
+                        )
+                        if sub.number_verified else
+                        "YES: To verify your number."
+                    )
+                )
+        except Subscription.DoesNotExist:
+            resp.message('HungryHusky does not have this number registered.')
+            return HttpResponse(resp)
+
+        return HttpResponse(resp)
