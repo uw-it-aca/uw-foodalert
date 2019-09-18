@@ -10,6 +10,8 @@ services:
       - ./docker/urls.py:/app/project/urls.py
     links:
       - db
+    env_file:
+      - .env
     environment:
       DATABASE_DB_NAME: postgres
       DATABASE_USERNAME: postgres
@@ -24,6 +26,8 @@ services:
     container_name: foodalert-devtools
     image: node:8.15.1-jessie
     working_dir: /devtools/uw-foodalert
+    environment:
+      ENV: localdev
     volumes:
       - ./package.json:/devtools/uw-foodalert/package.json
       - ./webpack.config.js:/devtools/uw-foodalert/webpack.config.js
