@@ -292,15 +292,17 @@ class SmsReciver(APIView):
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if not sub.number_verified:
-                if request.data['Body'] == "YES": 
-                    resp.message('HungryHusky has verified your number.' +
-                                ' Your notifications are currently paused. ' +
-                                'Send RESUME to resume receiving notifications.')
+                if request.data['Body'] == "YES":
+                    resp.message(
+                        'HungryHusky has verified your number.' +
+                        ' Your notifications are currently paused. ' +
+                        'Send RESUME to resume receiving notifications.'
+                    )
                     sub.number_verified = True
                     sub.save()
                 elif request.data['Body'] == "NO":
                     resp.message('HungryHusky has deleted your number')
-                    sub.sms_number=''
+                    sub.sms_number = ''
                     sub.save()
             elif (request.data['Body'] == "RESUME" and
                   sub.number_verified and not sub.send_sms):

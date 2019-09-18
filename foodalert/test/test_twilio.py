@@ -104,7 +104,7 @@ class TwilioTest(TestCase):
 
         sub.delete()
         sub_user.delete()
-    
+
     @override_settings(TWILIO_ACCOUNT_SID="test_sid")
     def test_reply_verify_no(self):
         """
