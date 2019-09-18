@@ -1,63 +1,79 @@
 <template>
      <div class="audit-parent">
-        <b-row>
-          <b-col id = "filter-bar" sm="12" md="8" lg="6">
+        <b-row class="ml-1">
+          <b-col id="filter-bar" sm="4" lg="4">
             <b-input
               id="search-filter" type="search"
-              class="mr-3 ml-2" v-model="search">
-            </b-input>
-            <b-dropdown text="Year"
-              v-on:click.native="setYear($event)" class="mr-1">
-              <b-dropdown-item v-for="year in this.years" :key="year">
-                {{ year }}
-              </b-dropdown-item>
-            </b-dropdown>
-            <b-dropdown text="Month" v-on:click.native="setMonth($event)">
-              <b-dropdown-item v-for="month in this.months" :key="month">
-                {{ month }}
-              </b-dropdown-item>
-            </b-dropdown>
+              class="mr-3" v-model="search"
+              placeholder="Search by netID, event name">
+            </b-input> 
+          </b-col>
+          <b-col id="time-filter" sm="3" lg="4">
+            <label for="from">
+              From
+            </label>
+            <b-input id="from" type="date" class="mr-2"> </b-input>
+            <label for="to">
+              to
+            </label>
+            <b-input id="to" type="date"></b-input>
+            <button class="ml-2">
+              Filter
+            </button>
           </b-col>
         </b-row>
-         <p></p>
-         <b-table hover :items="items" :fields="fields">
-            <template v-slot:cell(food.served)="row">
-              {{ row.value }}
-              <b-button @click="row.toggleDetails(); getUpdates(row)" class="float-right" variant="link">
-                Show {{row.detailsShowing ? 'Less' : 'More'}}
-              </b-button>
-            </template>
+        <p></p>
+        <b-table hover
+          :sort-by.sync="sortBy"
+          :items="items" 
+          :fields="fields">
+          <template v-slot:cell(food.served)="row">
+            {{ row.value }}
+            <b-button @click="getUpdates(row.item)" class="toggle-button float-right" 
+              variant="link">
+              Show {{row.detailsShowing ? 'Less' : 'More'}}
+            </b-button>
+          </template>
 
-            <template v-slot:row-details="row">
-              <b-card class="message-details">
-                <b-row>
-                  <b-col class="text-sm-left">
-                    <strong>Event:</strong> {{row.item.event }}
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col class="text-sm-left">
-                    <strong>Location:</strong> {{row.item.location }}
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col class="text-sm-left">
-                    <strong>End time:</strong> {{ row.item['time.end'] }}
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col class="text-sm-left">
-                    <strong>May Contain:</strong> {{ row.item['food.allergens'] }}
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col class="text-sm-left">
-                    <strong>Bring Container:</strong> {{ row.item['bring_container'] }}
-                  </b-col>
-                </b-row>
-              </b-card>
-            </template>
-         </b-table>
+          <template v-if="items.length > 0" v-slot:head(food.served)="data">
+            <span>{{data.label}}</span>
+            <b-button
+              id="show-all"
+              @click="items.forEach(function(el, arr){getUpdates(el, showAll)});
+              showAll = !showAll" class="toggle-button" variant="link">
+              {{showAll ? 'Expand' : 'Collapse'}} All Details
+            </b-button>
+          </template>
+
+          <template v-slot:row-details="row">
+            <b-card class="message-details">
+              <b-row>
+                <b-col class="text-sm-left">
+                  <strong>End time:</strong> {{ row.item['time.end'] }}
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col class="text-sm-left">
+                  <strong>May Contain:</strong> {{ row.item['food.allergens'] }}
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col class="text-sm-left">
+                  <strong>Bring Container:</strong> {{ row.item['bring_container'] }}
+                </b-col>
+              </b-row>
+              <div v-if="row.item.updates && row.item.updates.length > 0">
+                <br/>
+                <strong>Updates:</strong>
+                <div  v-for="(update, index) in row.item.updates" :key="index">
+                  <strong>Update: </strong>{{ row.item.updates[index].update_text }}
+                  <br/>
+                  <strong>Created Time: </strong>{{ row.item.updates[index].created_time }}
+                </div>
+              </div>
+            </b-card>
+          </template>
+        </b-table>
      </div>
 </template>
 
@@ -74,6 +90,8 @@ export default {
       selectedMonth: 'All',
       selectedYear: 'All',
       search: '',
+      sortBy: 'unformatted_time_created',
+      showAll: true,
       fields: [
         {key: 'netID', label: 'netID'},
         {key: 'event', label: 'Event'},
@@ -98,29 +116,59 @@ export default {
     },
   },
   methods: {
-    getUpdates(row) {
-      const id = row.item.id;
-      //make axios request to get updates and display accordingly
-      axios.get('/updates/?parent_notification_id=' + id)
-        .then((response) => {
-          for(let i = 0; i < response.data.length; i++){
-            let updateID = response.data[i].id;
-            axios.get('/updates/' + updateID + '/')
-              .then((response) => {
-                // console.log(response)
-                let details = this.items[row.index];
-                let updateText = response.data.text;
-                let createdTime = new Date(response.data.created_time).toDateString() +
-                  ' ' + new Date(response.data.created_time).toLocaleTimeString('en-US');
-                console.log(details)
+    getUpdates(item, showAll) {
+      const id = item.id;
+      // make axios request to get updates and display accordingly
+      if(!item.updates){
+        axios.get('/updates/?parent_notification=' + id)
+          .then((response) => {
+            let context = [];
+            let length = response.data.length;
+            if (length === 0){
+              if(showAll !== undefined) {
+                item._showDetails = showAll;
+              } else {
+                item._showDetails = !item._showDetails;
+              }
+            } else {
+              for(let i = 0; i < length; i++){
+                let updateID = response.data[i].id;
+                axios.get('/updates/' + updateID + '/')
+                  .then((response) => {
+                    let updateText = response.data.text;
+                    let createdTime = new Date(response.data.created_time).toDateString() +
+                      ' ' + new Date(response.data.created_time).toLocaleTimeString('en-US');
+                    
+                    let innerContext = {
+                      'created_time': createdTime,
+                      'update_text': updateText,
+                    }
+                    context.push(innerContext);
+                    item['updates'] = context;
 
-                // push updates to items array
-                
-              })
-              .catch(console.log);
-          }
-        })
-        .catch(console.log);
+                    //toggle only when all updates have been retrieved
+                    if(i === length - 1) {
+                      setTimeout(() => {
+                        if(showAll !== undefined) {
+                          item._showDetails = showAll;
+                        } else {
+                          item._showDetails = !item._showDetails;
+                        }
+                      }, 100);
+                    }
+                  })
+                  .catch(console.log);
+              }
+            }
+          })
+          .catch(console.log);
+      } else {
+        if(showAll !== undefined) {
+          item._showDetails = showAll;
+        } else {
+          item._showDetails = !item._showDetails;
+        }
+      }
     },
     requestLogs(search) {
       const headers = {
@@ -154,6 +202,9 @@ export default {
     addItems(response) {
       const log = response.data;
 
+      // store unformatted time for sorting
+      log['unformatted_time_created'] = log.time.created;
+
       // Make datetimes readable
       log.time.created = new Date(log.time.created).toDateString() +
         ' ' + new Date(log.time.created).toLocaleTimeString('en-US');
@@ -174,6 +225,9 @@ export default {
       // format food qualifications and allergens
       log.food.qualifications = log.food.qualifications.join(', ');
       log.food.allergens = log.food.allergens.join(', ');
+
+      // add _showDetails to each item to use to toggle details
+      log['_showDetails'] = false;
 
       // Flatten the row and rename columns
       const flat = flatten(log);
@@ -268,16 +322,19 @@ export default {
 </script>
 
 <style>
-    .audit-parent .table-update td {
-        border-top : 0;
-    }
-
-    #filter-bar {
+    #filter-bar, #time-filter {
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      margin-left: 5px;
     }
 
     .message-details {
       margin-left: 50%;
     }
+
+    .audit-parent .toggle-button {
+      font-size: 11pt;
+      padding: 1px;
+      float: right;
+    }                                                                                           
 </style>
