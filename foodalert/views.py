@@ -307,7 +307,7 @@ class SmsReciver(APIView):
                     sub.save()
                     return HttpResponse(resp)
             if (request.data['Body'] == "RESUME" and
-                  sub.number_verified and not sub.send_sms):
+               sub.number_verified and not sub.send_sms):
                 resp.message('HungryHusky has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
                              'receiving notifications.')
