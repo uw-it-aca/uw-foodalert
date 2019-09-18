@@ -62,7 +62,7 @@
         </b-col>
         <b-col cols="4">
           <div v-if="!isOpen">
-            <b-form-checkbox v-model="checked"
+            <b-form-checkbox v-model="serverData.send_sms"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
                   :aria-label="'enable  '+type"
@@ -217,6 +217,7 @@ export default {
       localData: {
         text: '',
         verified: false,
+        send_sms: false,
       },
       spinners: {
         cancel: {state: false},
@@ -230,7 +231,6 @@ export default {
       errorDesc: '',
       validateOn: false,
       errorMsg: '',
-      checked: false,
     };
   },
   methods: {
