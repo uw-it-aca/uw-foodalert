@@ -300,11 +300,13 @@ class SmsReciver(APIView):
                     )
                     sub.number_verified = True
                     sub.save()
+                    return HttpResponse(resp)
                 elif request.data['Body'] == "NO":
                     resp.message('HungryHusky has deleted your number')
                     sub.sms_number = ''
                     sub.save()
-            elif (request.data['Body'] == "RESUME" and
+                    return HttpResponse(resp)
+            if (request.data['Body'] == "RESUME" and
                   sub.number_verified and not sub.send_sms):
                 resp.message('HungryHusky has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
