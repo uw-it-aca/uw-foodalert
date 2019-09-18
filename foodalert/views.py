@@ -196,7 +196,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Reply YES to verify your number for HungryHusky"
+                "Reply YES/NO to verify/delete your number for HungryHusky"
             )
         return super().put(request, pk)
 
@@ -211,7 +211,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Reply YES to verify your number for HungryHusky"
+                "Reply YES/NO to verify/delete your number for HungryHusky"
             )
         return super().patch(request, pk)
 
@@ -291,14 +291,23 @@ class SmsReciver(APIView):
 
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
-            if (request.data['Body'] == "YES") and not sub.number_verified:
-                resp.message('HungryHusky has verified your number.' +
-                             ' Your notifications are currently paused. ' +
-                             'Send RESUME to resume receiving notifications.')
-                sub.number_verified = True
-                sub.save()
-            elif (request.data['Body'] == "RESUME" and
-                  sub.number_verified and not sub.send_sms):
+            if not sub.number_verified:
+                if request.data['Body'] == "YES":
+                    resp.message(
+                        'HungryHusky has verified your number.' +
+                        ' Your notifications are currently paused. ' +
+                        'Send RESUME to resume receiving notifications.'
+                    )
+                    sub.number_verified = True
+                    sub.save()
+                    return HttpResponse(resp)
+                elif request.data['Body'] == "NO":
+                    resp.message('HungryHusky has deleted your number')
+                    sub.sms_number = ''
+                    sub.save()
+                    return HttpResponse(resp)
+            if (request.data['Body'] == "RESUME" and
+               sub.number_verified and not sub.send_sms):
                 resp.message('HungryHusky has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
                              'receiving notifications.')

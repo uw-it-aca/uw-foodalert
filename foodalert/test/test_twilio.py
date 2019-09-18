@@ -76,7 +76,7 @@ class TwilioTest(TestCase):
             self.assertEquals(400, sms.status)
 
     @override_settings(TWILIO_ACCOUNT_SID="test_sid")
-    def test_reply_verify(self):
+    def test_reply_verify_yes(self):
         """
         Tests replies recivied form twilio
         """
@@ -101,6 +101,36 @@ class TwilioTest(TestCase):
 
         sub.refresh_from_db()
         self.assertTrue(sub.number_verified)
+
+        sub.delete()
+        sub_user.delete()
+
+    @override_settings(TWILIO_ACCOUNT_SID="test_sid")
+    def test_reply_verify_no(self):
+        """
+        Tests replies recivied form twilio
+        """
+        sub_user = create_user_from_data({
+            "username": "test_sub",
+            "email": "test_sub@uw.edu",
+            "password": "test_password"
+        })
+        sub = Subscription.objects.create(
+            user=sub_user,
+            email=sub_user.email,
+            sms_number="+41524204242"
+        )
+
+        client = Client()
+        response = client.post('/sms/', data={
+            'AccountSid': 'test_sid',
+            'From': str(sub.sms_number),
+            'Body': 'NO'
+        })
+        self.assertEqual(response.status_code, 200)
+
+        sub.refresh_from_db()
+        self.assertEqual(sub.sms_number, '')
 
         sub.delete()
         sub_user.delete()
