@@ -55,13 +55,13 @@ export default {
       const url = '/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
-        .then(() => {
-          this.requestUpdate();
-        })
-        .catch((error) => {
-          this.showErrorPage(error.response, 's-notifications');
-        });
-    }
+          .then(() => {
+            this.requestUpdate();
+          })
+          .catch((error) => {
+            this.showErrorPage(error.response, 's-notifications');
+          });
+    },
   },
 };
 </script>

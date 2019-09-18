@@ -112,7 +112,7 @@ export default {
                     response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
                   })
-                  .catch((error) => 
+                  .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
             } else {
               // create subscription with email if it does not exist
