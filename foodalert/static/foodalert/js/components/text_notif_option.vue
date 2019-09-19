@@ -63,6 +63,7 @@
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-form-checkbox v-model="serverData.send_sms"
+                  @change="check($event)"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
                   :aria-label="'enable  '+type"
@@ -385,9 +386,9 @@ export default {
       this.localData.text = newVal.text; // this is inputting sms with +1
       this.localData.verified = newVal.verified;
     },
-    checked(newVal, oldVal) {
+    check(event) {
       const data = {
-        'send_sms': newVal,
+        'send_sms': event,
       };
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
@@ -401,8 +402,6 @@ export default {
             this.showErrorPage(error.response, 's-notifications');
           });
     },
-  },
-  computed: {
   },
   beforeMount() {
     this.localData.text = this.serverData.text;
