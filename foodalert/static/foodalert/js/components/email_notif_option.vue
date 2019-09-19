@@ -10,7 +10,8 @@
           <slot name="disclaimer">Placeholder disclaimer</slot>
         </b-col>
         <b-col cols="4">
-          <b-form-checkbox v-model="checked"
+          <b-form-checkbox v-model="serverData.send_email"
+            @change="check($event)"
             name="email-enable-switch"
             class="float-right mr-3"
             aria-label="email-switch"
@@ -32,21 +33,19 @@ export default {
     email: String,
     subid: Number,
     requestUpdate: Function,
+    serverData: Object,
   },
   data() {
     return {
       // variables for switch
       disableNotif: false,
-      checked: false,
     };
   },
   methods: {
-  },
-  watch: {
-    checked(newVal, oldVal) {
+    check(event) {
       // change email_notif value
       const data = {
-        'send_email': newVal,
+        'send_email': event,
       };
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
@@ -56,6 +55,7 @@ export default {
       const url = '/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
+          .then(this.requestUpdate)
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });

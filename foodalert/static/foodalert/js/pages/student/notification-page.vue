@@ -11,7 +11,8 @@
       <text-notif accord_id="text" type="text"
         label="Enter a phone number" :subid="subid"
         :serverData="{ text: notif_info.sms_number,
-          verified: notif_info.number_verified }"
+          verified: notif_info.number_verified,
+          send_sms: notif_info.send_sms}"
         :requestUpdate="requestUpdate"
         errorDesc="Carrier rates may apply">
         <template #disclaimer>
@@ -31,6 +32,7 @@
       <email-notif accord_id="email" type="email"
         label="Enter an email" :subid="subid"
         :requestUpdate="requestUpdate"
+        :serverData="{send_email: notif_info.send_email}"
         :email="netID+'@uw.edu'">
         <template #disclaimer>
           <p>Only UW NetIDs are supported at this time</p>
@@ -66,8 +68,10 @@ export default {
       notif_info: {
         email: '',
         email_verified: false,
+        send_email: false,
         sms_number: '',
         number_verified: false,
+        send_sms: false,
       },
       subid: undefined,
     };
@@ -137,7 +141,7 @@ export default {
           });
     },
   },
-  mounted() {
+  beforeMount() {
     this.requestUpdate();
   },
 };
