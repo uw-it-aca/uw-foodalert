@@ -15,10 +15,14 @@ services:
   db:
     image: postgres
   taster:
-    image: cypress/included:3.4.1
-    command: ["--browser", "chrome"]
+    build:
+      context: .
+      args:
+        curr_uid: ${USERID:-1000}
+        curr_gid: ${GROUPID:-1000}
     depends_on:
       - food
     volumes:
-      - .:/e2e
-    working_dir: /e2e
+      - .:/home/node/e2e
+    working_dir: /home/node/e2e
+    command: ./node_modules/.bin/cypress run --browser chrome
