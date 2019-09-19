@@ -3,7 +3,7 @@ version: '3'
 services:
   food:
     restart: always
-    build: .
+    build: ../
     links:
       - db
     environment:
@@ -16,13 +16,13 @@ services:
     image: postgres
   taster:
     build:
-      context: ./nightwatch
+      context: .
       args:
-        curr_uid: ${uid:-1000}
+        curr_uid: ${USERID:-1000}
+        curr_gid: ${GROUPID:-1000}
     depends_on:
       - food
     volumes:
-      - ./nightwatch/tests:/home/node/tests
-      - ./nightwatch/vrt:/home/node/vrt
-    privileged: true
-    command: wait-for-it food:8000 -- ./node_modules/.bin/nightwatch
+      - .:/home/node/e2e
+    working_dir: /home/node/e2e
+    command: ./node_modules/.bin/cypress run --browser chrome
