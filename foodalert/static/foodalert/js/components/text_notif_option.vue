@@ -380,12 +380,6 @@ export default {
       this.localData.text = '';
       this.getNewState(spinnerOpt);
     },
-  },
-  watch: {
-    serverData(newVal, oldVal) {
-      this.localData.text = newVal.text; // this is inputting sms with +1
-      this.localData.verified = newVal.verified;
-    },
     check(event) {
       const data = {
         'send_sms': event,
@@ -398,9 +392,16 @@ export default {
       const url = '/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
+          .then(this.requestUpdate)
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });
+    },
+  },
+  watch: {
+    serverData(newVal, oldVal) {
+      this.localData.text = newVal.text; // this is inputting sms with +1
+      this.localData.verified = newVal.verified;
     },
   },
   beforeMount() {
