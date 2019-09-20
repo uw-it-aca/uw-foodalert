@@ -233,6 +233,7 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
             ret['sms_number'] = data['sms_number']
             if data['sms_number'] != obj.sms_number:
                 ret['number_verified'] = False
+                ret['send_sms'] = False
         if 'send_sms' in data:
             ret['send_sms'] = data['send_sms']
             if not ret['number_verified']:
