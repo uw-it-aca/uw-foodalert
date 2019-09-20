@@ -57,8 +57,7 @@ if (typeof netid !== 'undefined') {
 }
 
 export const vm = new Vue({
-  delimiters: ['[[', ']]'],
-  el: '#app',
+  render: (createElement) => createElement('router-view'),
   router,
   data() {
     return {
@@ -66,6 +65,6 @@ export const vm = new Vue({
     };
   },
   components,
-});
+}).$mount('#app');
 
 global.vm = vm;

@@ -11,8 +11,3 @@ RUN usermod -d /home/node -m node
 USER node
 WORKDIR /home/node
 RUN mkdir e2e
-WORKDIR /home/node/e2e
-
-ADD package.json package.json
-
-RUN npm install .

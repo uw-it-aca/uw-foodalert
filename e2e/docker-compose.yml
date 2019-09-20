@@ -25,4 +25,4 @@ services:
     volumes:
       - .:/home/node/e2e
     working_dir: /home/node/e2e
-    command: ./node_modules/.bin/cypress run --browser chrome
+    command: bash -c "npm install . && ./node_modules/.bin/cypress run --browser chrome"
