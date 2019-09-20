@@ -236,15 +236,17 @@ export default {
   },
   methods: {
     focusCollapse() {
-      console.log("this")
-      let input = "";
-      if (this.serverData.text == '') {
-        input = this.type + "-add-input";
+      let input = '';
+
+      if (this.serverData.text === '') {
+        input = this.type + '-add-input';
       } else {
-        input = this.type + "-update-input";
+        input = this.type + '-update-input';
       }
-      const el = document.getElementById(input)
-      if(el) {
+
+      const el = document.getElementById(input);
+
+      if (el) {
         el.focus();
       }
     },
@@ -415,7 +417,7 @@ export default {
     serverData(newVal, oldVal) {
       this.localData.text = newVal.text; // this is inputting sms with +1
       this.localData.verified = newVal.verified;
-    }
+    },
   },
   beforeMount() {
     this.localData.text = this.serverData.text;
