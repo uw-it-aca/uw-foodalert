@@ -57,7 +57,7 @@ if (typeof netid !== 'undefined') {
 }
 
 export const vm = new Vue({
-  render: createElement => createElement('router-view'),
+  render: (createElement) => createElement('router-view'),
   router,
   data() {
     return {
