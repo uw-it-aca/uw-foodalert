@@ -92,7 +92,7 @@
       </b-row>
     </b-container>
     <b-collapse :id="accord_id" accordion="my-accordion"
-                role="tabpanel" v-model="isOpen">
+                role="tabpanel" v-model="isOpen" @show="focusCollapse">
       <b-card-body>
         <b-container class="p-0">
           <b-row>
@@ -235,6 +235,21 @@ export default {
     };
   },
   methods: {
+    focusCollapse() {
+      let input = '';
+
+      if (this.serverData.text === '') {
+        input = this.type + '-add-input';
+      } else {
+        input = this.type + '-update-input';
+      }
+
+      const el = document.getElementById(input);
+
+      if (el) {
+        el.focus();
+      }
+    },
     formatter(value, event) {
       if (this.type === 'text') {
         return this.numberFormatter(value, event);

@@ -25,7 +25,6 @@
           We sent a verification text to {{notif_info.sms_number}}.
           Please reply YES to finish signup.
           <br />
-          Check your spam folder if you don't receive our email. <br />
         </template>
       </text-notif>
 
