@@ -11,7 +11,8 @@ from twilio.twiml.messaging_response import MessagingResponse
 
 from foodalert.sender import TwilioSender, Sender
 from foodalert.models import Subscription
-from foodalert.test.test_utils import create_user_from_data
+from foodalert.test.test_utils import create_user_from_data,\
+    generate_twilio_request_validator_mock
 
 
 class TwilioTest(TestCase):
@@ -91,16 +92,17 @@ class TwilioTest(TestCase):
             sms_number="+41524204242"
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'YES'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock:
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'YES'
+            })
+            self.assertEqual(response.status_code, 200)
 
-        sub.refresh_from_db()
-        self.assertTrue(sub.number_verified)
+            sub.refresh_from_db()
+            self.assertTrue(sub.number_verified)
 
         sub.delete()
         sub_user.delete()
