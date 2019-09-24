@@ -287,7 +287,7 @@ class AllergensList(generics.ListCreateAPIView):
 class SmsReciver(APIView):
     @csrf_exempt
     def post(self, request, format=None):
-        validator = RequestValidator(os.environ.get('TWILIO_AUTH_TOKEN'))
+        validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
         request_valid = validator.validate(
             request.url,
             request.form,
