@@ -14,7 +14,7 @@ services:
       AUTH: ${AUTH:-SAML_MOCK}
   db:
     image: postgres
-  taster:
+  cypress:
     build:
       context: .
       args:
@@ -23,6 +23,10 @@ services:
     depends_on:
       - food
     volumes:
-      - .:/home/node/e2e
+      - ./cypress:/home/node/e2e/cypress
+      - ./cypress.json:/home/node/e2e/cypress.json
+      - ./docker-compose.yml:/home/node/e2e/docker-compose.yml
+      - ./package-lock.json:/home/node/e2e/package-lock.json
+      - ./package.json:/home/node/e2e/package.json
     working_dir: /home/node/e2e
-    command: bash -c "npm install . && ./node_modules/.bin/cypress run --browser chrome"
+    command: ./node_modules/.bin/cypress run --browser chrome --env updateSnapshots=$UPDATE_SNAPSHOTS
