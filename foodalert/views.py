@@ -288,10 +288,15 @@ class SmsReciver(APIView):
     @csrf_exempt
     def post(self, request, format=None):
         validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
+        url = "{}://{}{}".format(
+            request.META.get('wsgi.url_scheme', ''),
+            request.META.get('HTTP_HOST', ''),
+            request.META.get('PATH_INFO', '')
+        )
         request_valid = validator.validate(
-            'http://watermelon.aca.uw.edu:8000/sms/',
+            url,
             request.POST.dict(),
-            request.META['HTTP_X_TWILIO_SIGNATURE']
+            request.META.get('HTTP_X_TWILIO_SIGNATURE', '')
         )
         if not request_valid:
             return HttpResponseForbidden()
