@@ -79,8 +79,11 @@ def generate_twilio_mock():
 
 
 def generate_twilio_request_validator_mock():
-    return patch.object(RequestValidator, 'validate',
-                        new_callable=PropertyMock, return_value=True)
+    return patch.object(
+        RequestValidator, 'validate',
+        new_callable=PropertyMock,
+        return_value=PropertyMock(return_value=True)
+    )
 
 
 def generate_amazon_mock():
