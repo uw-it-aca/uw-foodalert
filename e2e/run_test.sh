@@ -2,17 +2,17 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-if [ -n "$1" ]; then
-    case "$1" in
- 
-    -b) USERID=$(id -u) GROUPID=$(id -g) docker-compose -f $DIR/docker-compose.yml build $2 ;;
+updateSnapshots=false
 
-    *) echo "Option $1 not recognized" ;;
+while getopts "ub" opt; do
+    case "$opt" in
 
+    u) updateSnapshots=true ;;
+
+    b) USERID=$(id -u) GROUPID=$(id -g) UPDATE_SNAPSHOTS=$updateSnapshots docker-compose -f $DIR/docker-compose.yml build $2 ;;
+    
     esac
- 
-    shift
-fi
+done
 
-USERID=$(id -u) GROUPID=$(id -g) docker-compose -f $DIR/docker-compose.yml run taster
-USERID=$(id -u) GROUPID=$(id -g) docker-compose -f $DIR/docker-compose.yml down
+USERID=$(id -u) GROUPID=$(id -g) UPDATE_SNAPSHOTS=$updateSnapshots docker-compose -f $DIR/docker-compose.yml run cypress
+USERID=$(id -u) GROUPID=$(id -g) UPDATE_SNAPSHOTS=$updateSnapshots docker-compose -f $DIR/docker-compose.yml down
