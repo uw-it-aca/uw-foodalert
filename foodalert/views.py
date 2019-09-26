@@ -1,4 +1,5 @@
 import urllib
+import logging
 
 from django.shortcuts import render
 from django.template import loader
@@ -33,6 +34,8 @@ from foodalert.utils.permissions import *
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
+
+logger = logging.getLogger('django.request')
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -293,11 +296,16 @@ class SmsReciver(APIView):
             request.META.get('HTTP_HOST', ''),
             request.META.get('PATH_INFO', '')
         )
+
+        logger.info("URL: {}".format(url))
+
         request_valid = validator.validate(
             url,
             request.POST.dict(),
             request.META.get('HTTP_X_TWILIO_SIGNATURE', '')
         )
+
+        logger.info("request_valid: {}".format(request_valid))
         if not request_valid:
             return HttpResponseForbidden()
 
