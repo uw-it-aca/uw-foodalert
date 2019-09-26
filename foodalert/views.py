@@ -289,9 +289,10 @@ class SmsReciver(APIView):
     def post(self, request, format=None):
         validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
         request_valid = validator.validate(
-            request.url,
-            request.form,
-            request.headers.get('X-TWILIO-SIGNATURE', ''))
+            'http://watermelon.aca.uw.edu:8000/sms/',
+            request.POST.dict(),
+            request.META['HTTP_X_TWILIO_SIGNATURE']
+        )
         if not request_valid:
             return HttpResponseForbidden()
 
