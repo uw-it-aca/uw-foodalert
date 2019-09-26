@@ -4,6 +4,8 @@ from unittest.mock import patch, Mock, PropertyMock
 from django.contrib.auth.models import User
 from django.test import Client
 
+from twilio.request_validator import RequestValidator
+
 from foodalert.models import Notification, Allergen, Update, FoodQualification
 from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
 
@@ -74,6 +76,14 @@ def generate_twilio_mock():
 
     return patch.object(TwilioSender, 'c',
                         new_callable=PropertyMock, return_value=m1)
+
+
+def generate_twilio_request_validator_mock():
+    return patch.object(
+        RequestValidator, 'validate',
+        new_callable=PropertyMock,
+        return_value=PropertyMock(return_value=True)
+    )
 
 
 def generate_amazon_mock():

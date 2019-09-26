@@ -5,23 +5,27 @@ from django.template import loader
 from django.http import Http404, HttpResponseForbidden, HttpResponse
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
-from uw_saml.utils import is_member_of_group
 from django.conf import settings
-from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.request_validator import RequestValidator
+
+from uw_saml.decorators import group_required
+from uw_saml.utils import is_member_of_group
+
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
-from django.contrib.auth.models import User
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
-from rest_framework.views import APIView
-from twilio.twiml.messaging_response import MessagingResponse
-
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -283,8 +287,18 @@ class AllergensList(generics.ListCreateAPIView):
 class SmsReciver(APIView):
     @csrf_exempt
     def post(self, request, format=None):
-        if ('AccountSid' not in request.data or
-           request.data['AccountSid'] != settings.TWILIO_ACCOUNT_SID):
+        validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
+        url = "{}://{}{}".format(
+            request.META.get('wsgi.url_scheme', ''),
+            request.META.get('HTTP_HOST', ''),
+            request.META.get('PATH_INFO', '')
+        )
+        request_valid = validator.validate(
+            url,
+            request.POST.dict(),
+            request.META.get('HTTP_X_TWILIO_SIGNATURE', '')
+        )
+        if not request_valid:
             return HttpResponseForbidden()
 
         resp = MessagingResponse()

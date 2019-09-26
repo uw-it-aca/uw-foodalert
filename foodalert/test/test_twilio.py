@@ -11,7 +11,8 @@ from twilio.twiml.messaging_response import MessagingResponse
 
 from foodalert.sender import TwilioSender, Sender
 from foodalert.models import Subscription
-from foodalert.test.test_utils import create_user_from_data
+from foodalert.test.test_utils import create_user_from_data,\
+    generate_twilio_request_validator_mock
 
 
 class TwilioTest(TestCase):
@@ -91,16 +92,17 @@ class TwilioTest(TestCase):
             sms_number="+41524204242"
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'YES'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'YES'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        sub.refresh_from_db()
-        self.assertTrue(sub.number_verified)
+            sub.refresh_from_db()
+            self.assertTrue(sub.number_verified)
 
         sub.delete()
         sub_user.delete()
@@ -121,16 +123,17 @@ class TwilioTest(TestCase):
             sms_number="+41524204242"
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'NO'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'NO'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        sub.refresh_from_db()
-        self.assertEqual(sub.sms_number, '')
+            sub.refresh_from_db()
+            self.assertEqual(sub.sms_number, '')
 
         sub.delete()
         sub_user.delete()
@@ -152,16 +155,17 @@ class TwilioTest(TestCase):
             number_verified=True
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'RESUME'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'RESUME'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        sub.refresh_from_db()
-        self.assertTrue(sub.send_sms)
+            sub.refresh_from_db()
+            self.assertTrue(sub.send_sms)
 
         sub.delete()
         sub_user.delete()
@@ -184,16 +188,17 @@ class TwilioTest(TestCase):
             send_sms=True
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'PAUSE'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'PAUSE'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        sub.refresh_from_db()
-        self.assertFalse(sub.send_sms)
+            sub.refresh_from_db()
+            self.assertFalse(sub.send_sms)
 
         sub.delete()
         sub_user.delete()
@@ -214,18 +219,19 @@ class TwilioTest(TestCase):
             sms_number="+41524204242"
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': str(sub.sms_number),
-            'Body': 'TEST_MESSAGE'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': str(sub.sms_number),
+                'Body': 'TEST_MESSAGE'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        sub_updated = Subscription.objects.get(pk=sub.pk)
-        self.assertEqual(sub_updated.sms_number, sub.sms_number)
-        self.assertEqual(sub_updated.number_verified, sub.number_verified)
-        self.assertEqual(sub_updated.send_sms, sub.send_sms)
+            sub_updated = Subscription.objects.get(pk=sub.pk)
+            self.assertEqual(sub_updated.sms_number, sub.sms_number)
+            self.assertEqual(sub_updated.number_verified, sub.number_verified)
+            self.assertEqual(sub_updated.send_sms, sub.send_sms)
 
         sub.delete()
         sub_user.delete()
@@ -246,37 +252,23 @@ class TwilioTest(TestCase):
             sms_number="+41524204242"
         )
 
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'test_sid',
-            'From': "+41524204243",
-            'Body': 'YES'
-        })
-        self.assertEqual(response.status_code, 200)
+        with generate_twilio_request_validator_mock():
+            client = Client()
+            response = client.post('/sms/', data={
+                'AccountSid': 'test_sid',
+                'From': "+41524204243",
+                'Body': 'YES'
+            }, HTTP_X_TWILIO_SIGNATURE='unknown_value')
+            self.assertEqual(response.status_code, 200)
 
-        resp = MessagingResponse()
-        resp.message('HungryHusky does not have this number registered.')
-        self.assertEqual(response.content.decode("utf-8"), str(resp))
+            resp = MessagingResponse()
+            resp.message('HungryHusky does not have this number registered.')
+            self.assertEqual(response.content.decode("utf-8"), str(resp))
 
-        sub_updated = Subscription.objects.get(pk=sub.pk)
-        self.assertEqual(sub_updated.sms_number, sub.sms_number)
-        self.assertEqual(sub_updated.number_verified, sub.number_verified)
-        self.assertEqual(sub_updated.send_sms, sub.send_sms)
+            sub_updated = Subscription.objects.get(pk=sub.pk)
+            self.assertEqual(sub_updated.sms_number, sub.sms_number)
+            self.assertEqual(sub_updated.number_verified, sub.number_verified)
+            self.assertEqual(sub_updated.send_sms, sub.send_sms)
 
         sub.delete()
         sub_user.delete()
-
-    @override_settings(TWILIO_ACCOUNT_SID="test_sid")
-    def test_reply_wrong_SID(self):
-        """
-        Tests replies recivied form twilio
-        """
-        client = Client()
-        response = client.post('/sms/', data={})
-        self.assertEqual(response.status_code, 403)
-
-        client = Client()
-        response = client.post('/sms/', data={
-            'AccountSid': 'random value'
-        })
-        self.assertEqual(response.status_code, 403)
