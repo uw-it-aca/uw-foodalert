@@ -125,7 +125,7 @@ LOGGING = {
             'stream': sys.stderr
         },
         'file': {
-            'level':'INFO',
+            'level':'DEBUG',
             'class':'logging.FileHandler',
             'filename':'/app/foodalert.log',
         }
@@ -133,12 +133,12 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['stdout', 'file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': False,
         },
         '': {
             'handlers': ['stderr', 'file'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': False,
         }
     }
