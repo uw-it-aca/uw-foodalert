@@ -292,7 +292,7 @@ class SmsReciver(APIView):
     def post(self, request, format=None):
         validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
         url = "{}://{}{}".format(
-            request.META.get('wsgi.url_scheme', ''),
+            request.META.get('HTTP_X_SCHEME', ''),
             request.META.get('HTTP_HOST', ''),
             request.META.get('PATH_INFO', '')
         )
