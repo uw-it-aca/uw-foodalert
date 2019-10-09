@@ -298,8 +298,6 @@ class SmsReciver(APIView):
         )
 
         logger.info("URL: {}".format(url))
-        logger.info("request.META: {}".format(request.META))
-        logger.info("request.POST.dict(): {}".format(request.POST.dict()))
 
         request_valid = validator.validate(
             url,
