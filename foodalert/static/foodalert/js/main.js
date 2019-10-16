@@ -29,16 +29,12 @@ router.beforeEach((to, from, next) => {
 /* global netid*/
 if (typeof netid !== 'undefined') {
   const _netID = netid;
-  const _logoutUrl = logoutUrl;
 
   Vue.mixin({
     data() {
       return {
         get netID() {
           return _netID;
-        },
-        get logoutUrl() {
-          return _logoutUrl;
         },
       };
     },

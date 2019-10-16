@@ -44,6 +44,7 @@
 </template>
 
 <script>
+/* global logoutUrl:readable */
 import AlertBox from '../components/alert-box.vue';
 export default {
   components: {
