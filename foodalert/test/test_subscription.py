@@ -11,6 +11,7 @@ import foodalert
 from foodalert.models import Subscription
 from foodalert.serializers import SubscriptionSerializer
 from foodalert.views import SubscriptionDetail, SubscriptionList
+from foodalert.test.test_utils import generate_twilio_mock
 
 VALID_TEST_CASES = [
     param(email="testuser@uw.edu", sms="+41524204242"),
@@ -229,6 +230,17 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/')
+        self.assertEqual(403, response.status_code)
+
+        sub2.delete()
+
         response = self.client.get('/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.json()
@@ -293,6 +305,22 @@ class SubscriptionTest(TestCase):
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
+    def test_get_wrong_subscription_detail(self, email='', sms=''):
+        """
+        Calling get request to '/subscription/{id}/' endpoint should return
+        a 403 status code when called by a different user.
+        """
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        response = self.client.get('/subscription/{}/'.format(sub2.id))
+        self.assertEqual(403, response.status_code)
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
     def test_patch_subscription(self, email=None, sms=None):
         """
         A patch request to update either sms or email is valid. The fields in
@@ -309,35 +337,57 @@ class SubscriptionTest(TestCase):
             "sms_number": "+14084388625"
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.patch('/subscription/{}/'.format(patch_id),
-                                     data=json.dumps(payload),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        after_len = len(Subscription.objects.all())
-        self.assertEqual(original_len, after_len)
-        data = response.json()
-        self.assertEqual(payload['sms_number'], data['sms_number'])
-        self.assertEqual(email, data['email'])
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                         data=json.dumps(payload),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            after_len = len(Subscription.objects.all())
+            self.assertEqual(original_len, after_len)
+            data = response.json()
+            self.assertEqual(payload['sms_number'], data['sms_number'])
+            self.assertEqual(email, data['email'])
 
-        get_res = self.client.get('/subscription/{}/'.format(patch_id))
-        updated_data = get_res.json()
-        self.assertEqual(updated_data, data)
+            get_res = self.client.get('/subscription/{}/'.format(patch_id))
+            updated_data = get_res.json()
+            self.assertEqual(updated_data, data)
 
-        # email is not writable--should not change
-        payload2 = {
-            "email": "practice@mail.com"
+            # email is not writable--should not change
+            payload2 = {
+                "email": "practice@mail.com"
+            }
+            sms_before = updated_data['sms_number']
+            original_len = len(Subscription.objects.all())
+            response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                         data=json.dumps(payload2),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            after_len = len(Subscription.objects.all())
+            self.assertEqual(original_len, after_len)
+            self.assertEqual(sms_before, data['sms_number'])
+            data = response.json()
+            self.assertNotEqual(payload2['email'], data['email'])
+
+    @parameterized.expand(VALID_TEST_CASES)
+    @transaction.atomic
+    def test_wrong_user_patch_subscription(self, email=None, sms=None):
+        """
+        A patch request to a different user's subscription should return 403
+        """
+        sub2 = Subscription.objects.create(
+            user=self.user2,
+            email=email,
+            sms_number=sms
+        )
+
+        payload = {
+            "sms_number": "+14084388625"
         }
-        sms_before = updated_data['sms_number']
-        original_len = len(Subscription.objects.all())
-        response = self.client.patch('/subscription/{}/'.format(patch_id),
-                                     data=json.dumps(payload2),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        after_len = len(Subscription.objects.all())
-        self.assertEqual(original_len, after_len)
-        self.assertEqual(sms_before, data['sms_number'])
-        data = response.json()
-        self.assertNotEqual(payload2['email'], data['email'])
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub2.id),
+                                         data=json.dumps(payload),
+                                         content_type='application/json')
+            self.assertEqual(403, response.status_code)
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
@@ -359,13 +409,14 @@ class SubscriptionTest(TestCase):
             'send_sms': number_verified,
             'send_email': email_verified
         }
-        response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(valid_payload),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        data = response.json()
-        self.assertEqual(valid_payload['send_sms'], data['send_sms'])
-        self.assertEqual(valid_payload['send_email'], data['send_email'])
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                         data=json.dumps(valid_payload),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertEqual(valid_payload['send_sms'], data['send_sms'])
+            self.assertEqual(valid_payload['send_email'], data['send_email'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -384,12 +435,13 @@ class SubscriptionTest(TestCase):
         invalid_payload = {
             'send_sms': True
         }
-        response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(invalid_payload),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        data = response.json()
-        self.assertFalse(data['send_sms'])
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                         data=json.dumps(invalid_payload),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertFalse(data['send_sms'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -404,24 +456,25 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
         patch_id = sub.id
-        # current value of read only fields
-        get_res = self.client.get('/subscription/{}/'.format(patch_id))
-        email_verif_state = get_res.json()['email_verified']
-        sms_verif_state = get_res.json()['number_verified']
-        invalid_payload = {
-            'email_verified': not email_verif_state,
-            'number_verified': not sms_verif_state
-        }
+        with generate_twilio_mock() as mock:
+            # current value of read only fields
+            get_res = self.client.get('/subscription/{}/'.format(patch_id))
+            email_verif_state = get_res.json()['email_verified']
+            sms_verif_state = get_res.json()['number_verified']
+            invalid_payload = {
+                'email_verified': not email_verif_state,
+                'number_verified': not sms_verif_state
+            }
 
-        response = self.client.patch('/subscription/{}/'.format(patch_id),
-                                     data=json.dumps(invalid_payload),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        data = response.json()
-        self.assertEqual(email_verif_state, data['email_verified'])
-        self.assertEqual(sms_verif_state, data['number_verified'])
-        get_current = self.client.get('/subscription/{}/'.format(patch_id))
-        self.assertEqual(get_res.json(), get_current.json())
+            response = self.client.patch('/subscription/{}/'.format(patch_id),
+                                         data=json.dumps(invalid_payload),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertEqual(email_verif_state, data['email_verified'])
+            self.assertEqual(sms_verif_state, data['number_verified'])
+            get_current = self.client.get('/subscription/{}/'.format(patch_id))
+            self.assertEqual(get_res.json(), get_current.json())
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -440,16 +493,17 @@ class SubscriptionTest(TestCase):
             'email': 'putEmail@mail.com',
             'sms_number': '+13438765646'
         }
-        response = self.client.put('/subscription/{}/'.format(sub.id),
-                                   data=payload,
-                                   content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        data = response.json()
-        # email should not change
-        self.assertEqual(email, data['email'])
-        self.assertEqual(payload['sms_number'], data['sms_number'])
-        after_len = len(Subscription.objects.all())
-        self.assertEqual(original_len, after_len)
+        with generate_twilio_mock() as mock:
+            response = self.client.put('/subscription/{}/'.format(sub.id),
+                                       data=payload,
+                                       content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            # email should not change
+            self.assertEqual(email, data['email'])
+            self.assertEqual(payload['sms_number'], data['sms_number'])
+            after_len = len(Subscription.objects.all())
+            self.assertEqual(original_len, after_len)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
@@ -469,17 +523,18 @@ class SubscriptionTest(TestCase):
         }
 
         original_len = len(Subscription.objects.all())
-        response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(update),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        new_len = len(Subscription.objects.all())
-        self.assertEqual(original_len, new_len)
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                         data=json.dumps(update),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(original_len, new_len)
 
-        sub = Subscription.objects.get(pk=sub.id)
-        # cannot unsubscribe email
-        self.assertEqual(email, sub.email)
-        self.assertEqual(update['sms_number'], sub.sms_number)
+            sub = Subscription.objects.get(pk=sub.id)
+            # cannot unsubscribe email
+            self.assertEqual(email, sub.email)
+            self.assertEqual(update['sms_number'], sub.sms_number)
 
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
@@ -506,21 +561,22 @@ class SubscriptionTest(TestCase):
             update['sms_number'] = ""
 
         original_len = len(Subscription.objects.all())
-        response = self.client.patch('/subscription/{}/'.format(sub.id),
-                                     data=json.dumps(update),
-                                     content_type='application/json')
-        self.assertEqual(200, response.status_code)
-        new_len = len(Subscription.objects.all())
-        self.assertEqual(original_len, new_len)
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                         data=json.dumps(update),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            new_len = len(Subscription.objects.all())
+            self.assertEqual(original_len, new_len)
 
-        sub = Subscription.objects.get(pk=sub.id)
-        data = response.json()
-        self.assertEqual(email, sub.email)
-        self.assertEqual(data['sms_number'], sub.sms_number)
-        # email verified state does not change
-        self.assertFalse(sub.number_verified)
-        self.assertFalse(sub.send_sms)
-        self.assertFalse(sub.send_email)
+            sub = Subscription.objects.get(pk=sub.id)
+            data = response.json()
+            self.assertEqual(email, sub.email)
+            self.assertEqual(data['sms_number'], sub.sms_number)
+            # email verified state does not change
+            self.assertFalse(sub.number_verified)
+            self.assertFalse(sub.send_sms)
+            self.assertFalse(sub.send_email)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic

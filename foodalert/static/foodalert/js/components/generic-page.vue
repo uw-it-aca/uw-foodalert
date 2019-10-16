@@ -14,7 +14,7 @@
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
             <b-nav-form>
               <label for="sign-out">
-                UW NetID
+                {{netID}}
                 <b-button variant="link"
                   id="sign-out"
                   :href="logoutURL"

@@ -10,9 +10,7 @@
         </script>
     </head>
     <body>
-        <div id="app">
-            <router-view></router-view>
-        </div>
+        <div id="app"></div>
 
         {% render_bundle 'base' %}
         {% if signup %}
@@ -25,5 +23,5 @@
             {% render_bundle 'audit' %}
         {% endif %}
         {% render_bundle 'main' %}
-    </body>  
+    </body>
 </html>

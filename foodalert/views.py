@@ -1,22 +1,32 @@
+import urllib
+import logging
+
 from django.shortcuts import render
 from django.template import loader
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden, HttpResponse
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
-from uw_saml.utils import is_member_of_group
 from django.conf import settings
-from uw_saml.decorators import group_required
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.request_validator import RequestValidator
+
+from uw_saml.decorators import group_required
+from uw_saml.utils import is_member_of_group
+
 from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
         NotificationListSerializer
-from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAdminUser
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -24,6 +34,8 @@ from foodalert.utils.permissions import *
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
+
+logger = logging.getLogger('django.request')
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -82,11 +94,13 @@ class NotificationList(generics.ListCreateAPIView):
                 message = Sender.format_message(data)
 
                 if not settings.DEBUG:
-                    if settings.FOODALERT_USE_SMS == "twilio":
+                    if settings.FOODALERT_USE_SMS == "twilio" and\
+                       sms_recipients != []:
                         Sender.send_twilio_sms(sms_recipients, message)
                     elif settings.FOODALERT_USE_SMS == "amazon":
                         Sender.send_amazon_sms(sms_recipients, message)
-                    Sender.send_email(message, email_recipients, slug)
+                    if email_recipients != []:
+                        Sender.send_email(message, email_recipients, slug)
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -157,7 +171,8 @@ class UpdateList(generics.ListCreateAPIView):
                     sms_recipients.append(str(sub.sms_number))
 
             if not settings.DEBUG:
-                if settings.FOODALERT_USE_SMS == "twilio":
+                if settings.FOODALERT_USE_SMS == "twilio" and\
+                   sms_recipients != []:
                     Sender.send_twilio_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
@@ -165,9 +180,12 @@ class UpdateList(generics.ListCreateAPIView):
                     Sender.send_amazon_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                Sender.send_email(parent.event + ' Update: ' + data['text'],
-                                  email_recipients,
-                                  slug)
+                if email_recipients != []:
+                    Sender.send_email(
+                        parent.event + ' Update: ' + data['text'],
+                        email_recipients,
+                        slug
+                    )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -176,6 +194,7 @@ class UpdateList(generics.ListCreateAPIView):
 class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionDetailSerializer
+    permission_classes = [IsSelf]
 
     def put(self, request, pk):
         if (not Subscription.objects.get(pk=pk).email_verified):
@@ -184,6 +203,12 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
         if (not Subscription.objects.get(pk=pk).number_verified):
             if 'send_sms' in request.data:
                 request.data['send_sms'] = False
+        if ('sms_number' in request.data and
+                not settings.DEBUG and request.data['sms_number'] != ''):
+            Sender.send_twilio_sms(
+                request.data['sms_number'],
+                "Reply YES/NO to verify/delete your number for HungryHusky"
+            )
         return super().put(request, pk)
 
     def patch(self, request, pk):
@@ -193,24 +218,33 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
         if (not Subscription.objects.get(pk=pk).number_verified):
             if 'send_sms' in request.data:
                 request.data['send_sms'] = False
+        if ('sms_number' in request.data and
+                not settings.DEBUG and request.data['sms_number'] != ''):
+            Sender.send_twilio_sms(
+                [request.data['sms_number']],
+                "Reply YES/NO to verify/delete your number for HungryHusky"
+            )
         return super().patch(request, pk)
 
 
 @method_decorator(login_required(), name='dispatch')
 class SubscriptionList(generics.ListCreateAPIView):
     serializer_class = SubscriptionSerializer
+    permission_classes = [IsSelf]
 
     def get_queryset(self):
-        queryset = Subscription.objects.all()
+        qs = Subscription.objects.all()
         if 'netID' in self.request.query_params:
             try:
                 netid = User.objects.get(
                     username=self.request.query_params['netID']
                 )
-                return queryset.filter(user=netid)
+                qs = qs.filter(user=netid)
             except User.DoesNotExist:
                 return Subscription.objects.none()
-        return queryset
+        for obj in qs:
+            self.check_object_permissions(self.request, obj)
+        return qs
 
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
@@ -256,3 +290,84 @@ class AllergensList(generics.ListCreateAPIView):
     # may not need
     def perform_create(self, serializer, *args, **kwargs):
         serializer.save(user=self.request.user)
+
+
+class SmsReciver(APIView):
+    @csrf_exempt
+    def post(self, request, format=None):
+        validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
+        url = "{}://{}{}".format(
+            request.META.get(
+                'HTTP_X_SCHEME',
+                request.META.get('wsgi.url_scheme', '')
+            ),
+            request.META.get('HTTP_HOST', ''),
+            request.META.get('PATH_INFO', '')
+        )
+
+        logger.info("URL: {}".format(url))
+        logger.info("request.META: {}".format(request.META))
+        logger.info("request.POST.dict(): {}".format(request.POST.dict()))
+
+        request_valid = validator.validate(
+            url,
+            request.POST.dict(),
+            request.META.get('HTTP_X_TWILIO_SIGNATURE', '')
+        )
+
+        logger.info("request_valid: {}".format(request_valid))
+        if not request_valid:
+            return HttpResponseForbidden()
+
+        resp = MessagingResponse()
+
+        try:
+            sub = Subscription.objects.get(sms_number=request.data['From'])
+            if not sub.number_verified:
+                if request.data['Body'] == "YES":
+                    resp.message(
+                        'HungryHusky has verified your number.' +
+                        ' Your notifications are currently paused. ' +
+                        'Send RESUME to resume receiving notifications.'
+                    )
+                    sub.number_verified = True
+                    sub.save()
+                    return HttpResponse(resp)
+                elif request.data['Body'] == "NO":
+                    resp.message('HungryHusky has deleted your number')
+                    sub.sms_number = ''
+                    sub.save()
+                    return HttpResponse(resp)
+            if (request.data['Body'] == "RESUME" and
+               sub.number_verified and not sub.send_sms):
+                resp.message('HungryHusky has resumed sending you' +
+                             ' more notifications. Send PAUSE to pause ' +
+                             'receiving notifications.')
+                sub.send_sms = True
+                sub.save()
+            elif (request.data['Body'] == "PAUSE" and
+                  sub.number_verified and sub.send_sms):
+                resp.message('HungryHusky will not send any send you any' +
+                             ' more notifications. Send RESUME to resume ' +
+                             'receiving notifications.')
+                sub.send_sms = False
+                sub.save()
+            else:
+                resp.message(
+                    'HungryHusky did not understand that command.\n' +
+                    'The available commands are:\n' +
+                    (
+                        (
+                            "PAUSE: Pause reciving notifications."
+                            if sub.send_sms else
+                            "RESUME: Resume reciving notifications."
+                        )
+                        if sub.number_verified else
+                        "YES: To verify your number."
+                    )
+                )
+        except Subscription.DoesNotExist:
+            resp.message('HungryHusky does not have this number registered.')
+            return HttpResponse(resp)
+
+        return HttpResponse(resp)

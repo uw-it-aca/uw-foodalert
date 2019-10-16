@@ -11,10 +11,10 @@
       <text-notif accord_id="text" type="text"
         label="Enter a phone number" :subid="subid"
         :serverData="{ text: notif_info.sms_number,
-          verified: notif_info.number_verified }"
+          verified: notif_info.number_verified,
+          send_sms: notif_info.send_sms}"
         :requestUpdate="requestUpdate"
-        errorDesc="Carrier rates may apply"
-        :resendVerif="()=>{return 1}">
+        errorDesc="Carrier rates may apply">
         <template #disclaimer>
           Only US numbers are supported at this time. Carrier rates may apply.
         </template>
@@ -25,13 +25,13 @@
           We sent a verification text to {{notif_info.sms_number}}.
           Please reply YES to finish signup.
           <br />
-          Check your spam folder if you don't receive our email. <br />
         </template>
       </text-notif>
 
       <email-notif accord_id="email" type="email"
         label="Enter an email" :subid="subid"
         :requestUpdate="requestUpdate"
+        :serverData="{send_email: notif_info.send_email}"
         :email="netID+'@uw.edu'">
         <template #disclaimer>
           <p>Only UW NetIDs are supported at this time</p>
@@ -49,6 +49,8 @@ import EmailNotif from '../../components/email_notif_option.vue';
 import {AsYouType} from 'libphonenumber-js';
 const axios = require('axios');
 
+import Cookies from 'js-cookie';
+
 
 export default {
   components: {
@@ -65,8 +67,10 @@ export default {
       notif_info: {
         email: '',
         email_verified: false,
+        send_email: false,
         sms_number: '',
         number_verified: false,
+        send_sms: false,
       },
       subid: undefined,
     };
@@ -109,6 +113,26 @@ export default {
                   })
                   .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
+            } else {
+              // create subscription with email if it does not exist
+              const csrftoken = Cookies.get('csrftoken');
+              const postHeaders = {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+              };
+              const postData = {
+                'email': this.netID + '@uw.edu',
+                'sms_number': '',
+              };
+
+              axios.post('/subscription/', postData, {'headers': postHeaders})
+                  .then((response) => {
+                    this.subid = response.data.id;
+                  })
+                  .catch((error) => {
+                    this.showErrorPage(error.response,
+                        's-notifications');
+                  });
             }
           })
           .catch((error) => {
