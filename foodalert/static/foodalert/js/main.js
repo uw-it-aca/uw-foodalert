@@ -38,8 +38,8 @@ if (typeof netid !== 'undefined') {
           return _netID;
         },
         get logoutUrl() {
-          return _logoutUrl
-        }
+          return _logoutUrl;
+        },
       };
     },
     methods: {
