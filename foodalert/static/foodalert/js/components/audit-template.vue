@@ -1,5 +1,13 @@
 <template>
      <div class="audit-parent">
+       <b-navbar class="mx-auto" style="height: 64px;">
+          <b-navbar-brand class="pl-2 pb-2">
+            <img :src="require('../../img/food-alert-logo.svg')"
+                  alt="UW Food Alert Logo" height="22"
+                  >
+          </b-navbar-brand>
+        </b-navbar>
+        <!-- search and filter feature -->
         <b-row class="ml-1">
           <b-col id="filter-bar" sm="4" lg="4">
             <b-input
@@ -13,7 +21,7 @@
               From
             </label>
             <b-input id="from" type="date" class="mr-2"> </b-input>
-            <label for="to">
+            <label for="to"> 
               to
             </label>
             <b-input id="to" type="date"></b-input>
@@ -23,15 +31,25 @@
           </b-col>
         </b-row>
         <p></p>
+        <!-- audit log table -->
         <b-table hover
           :sort-by.sync="sortBy"
           :items="items" 
           :fields="fields">
           <template v-slot:cell(food.served)="row">
-            {{ row.value }}
+            Food served: {{ row.value }}
+            <br/>
+            Ends at: {{ row.item['time.end'] }}
+            <br/>
+            Food Contains: {{ row.item['food.allergens']}}
+            <br/>
+            <div v-if="row.item.bring_container">
+                Please bring a container!
+            </div>
+            <br/>
             <b-button @click="getUpdates(row.item)" class="toggle-button float-right" 
               variant="link">
-              Show {{row.detailsShowing ? 'Less' : 'More'}}
+              {{row.detailsShowing ? 'Hide' : 'Show'}} Updates
             </b-button>
           </template>
 
@@ -41,39 +59,36 @@
               id="show-all"
               @click="items.forEach(function(el, arr){getUpdates(el, showAll)});
               showAll = !showAll" class="toggle-button" variant="link">
-              {{showAll ? 'Expand' : 'Collapse'}} All Details
+              {{showAll ? 'Expand' : 'Collapse'}} All Updates
             </b-button>
           </template>
 
           <template v-slot:row-details="row">
-            <b-card class="message-details">
-              <b-row>
-                <b-col class="text-sm-left">
-                  <strong>End time:</strong> {{ row.item['time.end'] }}
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col class="text-sm-left">
-                  <strong>May Contain:</strong> {{ row.item['food.allergens'] }}
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col class="text-sm-left">
-                  <strong>Bring Container:</strong> {{ row.item['bring_container'] }}
-                </b-col>
-              </b-row>
-              <div v-if="row.item.updates && row.item.updates.length > 0">
-                <br/>
-                <strong>Updates:</strong>
-                <div  v-for="(update, index) in row.item.updates" :key="index">
-                  <strong>Update: </strong>{{ row.item.updates[index].update_text }}
-                  <br/>
-                  <strong>Created Time: </strong>{{ row.item.updates[index].created_time }}
+            <b-card v-if="row.item.updates && row.item.updates.length > 0" class="message-details">
+                <b-row>
+                    <b-col class="col-5">
+                      <strong>Time created</strong>
+                    </b-col>
+                    <b-col>
+                      <strong>Update</strong>
+                    </b-col>
+                </b-row>
+                <div v-for="(update, index) in row.item.updates" :key="index">
+                  <b-row>
+                    <b-col class="col-5">
+                      {{ row.item.updates[index].created_time }}
+                    </b-col>
+                    <b-col>
+                      {{ row.item.updates[index].update_text }}
+                    </b-col>
+                  </b-row>
                 </div>
-              </div>
             </b-card>
           </template>
         </b-table>
+        <nav role="navigation" aria-label="Search results pages">
+          <b-button @click="requestLogs">See More</b-button>
+        </nav>
      </div>
 </template>
 
@@ -102,6 +117,7 @@ export default {
         {key: 'ended', label: 'Event Ended'}
       ],
       req: null,
+      url: "/notification/?page=1"
     };
   },
   watch: {
@@ -176,18 +192,20 @@ export default {
       };
 
       this.items = [];
-
-      let url = '/notification/';
+      
+      let url = this.url
 
       if (search) {
-        url = url + '?search=' + search;
+        this.url = url + '?search=' + search;
       }
 
       axios.get(url, {headers})
           .then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
+            this.url = response.data.next
+            
+            for (let i = 0; i < response.data.results.length; i++) {
             // Iterate through each detail
-              axios.get('/notification/' + response.data[i].id + '/', {headers})
+              axios.get('/notification/' + response.data.results[i].id + '/', {headers})
                   .then(this.addItems)
                   .catch((error) => this.showErrorPage(error.response,
                       'a-audit')
@@ -329,7 +347,8 @@ export default {
     }
 
     .message-details {
-      margin-left: 50%;
+      margin-left: 38%;
+      margin-right: 10%;
     }
 
     .audit-parent .toggle-button {
