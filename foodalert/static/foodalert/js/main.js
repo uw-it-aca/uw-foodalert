@@ -27,6 +27,7 @@ router.beforeEach((to, from, next) => {
 });
 
 /* global netid*/
+/* global logoutUrl*/
 if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
   const _netID = netid;
   const _logoutUrl = logoutUrl;
