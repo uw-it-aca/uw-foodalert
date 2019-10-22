@@ -57,6 +57,9 @@ TEMPLATES = [
     }
 ]
 
+LOGOUT_URL = '/logout'
+LOGIN_URL = '/login'
+
 FOODALERT_USE_SMS = 'twilio'
 
 AWS_ACCESS_KEY_ID = ''

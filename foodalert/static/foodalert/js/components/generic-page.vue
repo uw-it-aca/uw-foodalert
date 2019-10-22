@@ -14,7 +14,7 @@
           <b-navbar-nav class="d-flex d-sm-none ml-auto">
             <b-nav-item-dropdown variant="link" :text="netID"
               right toggle-class="text-decoration-none">
-              <b-dropdown-item href="#">Sign out</b-dropdown-item>
+              <b-dropdown-item :href="logoutUrl">Sign out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
@@ -23,6 +23,7 @@
                 {{netID}}
                 <b-button variant="link"
                   id="sign-out"
+                  :href="logoutUrl"
                   type="submit">
                   Sign out
                 </b-button>

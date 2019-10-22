@@ -277,6 +277,7 @@ class HomeView(TemplateView):
         context['netid'] = self.request.user
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
+        context['logout_url'] = settings.LOGOUT_URL
         return context
 
 
