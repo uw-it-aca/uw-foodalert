@@ -168,10 +168,14 @@ export default {
       this.$router.push({name: 'h-welcome'});
     }
 
+    this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
+  },
+  mounted() {
     const headers = {
       'Content-Type': 'application/json',
     };
 
+    this.$children[0].$data.showUpdateOverlay = true;
     axios.get(
         '/notification/?host_netid=' + this.netID,
         {headers}
@@ -182,10 +186,11 @@ export default {
         this.$router.push({
           name: 'h-update',
           params: {notificationText: 'You already have an event running.'}});
+      } else {
+        this.$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) =>
       this.showErrorPage(error.response, 'h-responsibilities'));
-    this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
   },
 };
 </script>
