@@ -110,6 +110,7 @@ export default {
                   .then((response) => {
                     response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
+                    this.$children[0].$data.showUpdateOverlay = false;
                   })
                   .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
@@ -128,6 +129,7 @@ export default {
               axios.post('/subscription/', postData, {'headers': postHeaders})
                   .then((response) => {
                     this.subid = response.data.id;
+                    this.$children[0].$data.showUpdateOverlay = false;
                   })
                   .catch((error) => {
                     this.showErrorPage(error.response,
@@ -140,7 +142,8 @@ export default {
           });
     },
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$data.showUpdateOverlay = true;
     this.requestUpdate();
   },
 };

@@ -22,7 +22,8 @@ export default {
     return {
     };
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$children[0].$data.showUpdateOverlay = true;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -31,6 +32,8 @@ export default {
         .then((result) => {
           if (result.data.length) {
             this.$router.push({name: 's-notifications'});
+          } else {
+            this.$children[0].$children[0].$data.showUpdateOverlay = false;
           }
         }).catch((error) => this.showErrorPage(error.response, 's-welcome'));
   },

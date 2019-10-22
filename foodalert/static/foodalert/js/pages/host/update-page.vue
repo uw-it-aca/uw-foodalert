@@ -124,7 +124,9 @@ export default {
       validationOn: false,
     };
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$data.showUpdateOverlay = true;
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -142,6 +144,7 @@ export default {
                 {headers})
                 .then((response) => {
                   this.state = response.data;
+                  this.$children[0].$data.showUpdateOverlay = false;
                 }).catch((error) =>
                   this.showErrorPage(error.response, 'h-update'));
           }

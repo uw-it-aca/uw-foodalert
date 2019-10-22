@@ -168,7 +168,8 @@ export default {
       isIOSDevice: false,
     };
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$data.showUpdateOverlay = true;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -183,6 +184,8 @@ export default {
         this.$router.push({
           name: 'h-update',
           params: {notificationText: 'You already have an event running.'}});
+      } else {
+        this.$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-categories'));
     this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);

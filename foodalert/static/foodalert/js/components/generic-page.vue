@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page-content pb-2" @togglePageLoadingAnim="showUpdateOverlay = true">
+    <div class="page-content pb-2">
       <alert-box v-if="notificationState" aria-live="polite" role="alert">
           <slot name="notification"></slot>
       </alert-box>
@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       notificationState: false,
-      showUpdateOverlay: false, 
+      showUpdateOverlay: false,
     };
   },
   beforeMount() {
