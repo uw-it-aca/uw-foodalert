@@ -17,7 +17,7 @@
                 {{netID}}
                 <b-button variant="link"
                   id="sign-out"
-                  :href="logoutURL"
+                  :href="logoutUrl"
                   type="submit">
                   Sign out
                 </b-button>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-/* global logoutUrl:readable */
 import AlertBox from '../components/alert-box.vue';
 export default {
   components: {
@@ -59,7 +58,6 @@ export default {
   data() {
     return {
       notificationState: false,
-      logoutURL: logoutUrl,
     };
   },
   beforeMount() {
