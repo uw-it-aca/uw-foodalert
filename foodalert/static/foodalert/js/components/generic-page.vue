@@ -36,7 +36,9 @@
           <b-spinner label="Loading..."></b-spinner>
         </div>
       </main>
-      <main id="standard-body" class="standard-container mt-md-5 mt-3" v-show="!showUpdateOverlay">
+      <main id="standard-body"
+        class="standard-container mt-md-5 mt-3"
+        v-show="!showUpdateOverlay">
         <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>

@@ -167,6 +167,7 @@ export default {
     if (typeof this.food_qualifications === 'undefined') {
       this.$router.push({name: 'h-welcome'});
     }
+
     this.isIOSDevice = /iPhone|iPod/i.test(navigator.userAgent);
   },
   mounted() {
