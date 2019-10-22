@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page-content pb-2">
+    <div class="page-content pb-2" @togglePageLoadingAnim="showUpdateOverlay = true">
       <alert-box v-if="notificationState" aria-live="polite" role="alert">
           <slot name="notification"></slot>
       </alert-box>
@@ -31,7 +31,12 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5 mt-3">
+      <main id="page-loader" v-if="showUpdateOverlay">
+        <div>
+          <b-spinner label="Loading..."></b-spinner>
+        </div>
+      </main>
+      <main id="standard-body" class="standard-container mt-md-5 mt-3" v-show="!showUpdateOverlay">
         <h1 id="standard-heading">
             <slot name="heading"></slot>
         </h1>
@@ -63,6 +68,7 @@ export default {
   data() {
     return {
       notificationState: false,
+      showUpdateOverlay: false, 
     };
   },
   beforeMount() {
@@ -121,10 +127,31 @@ export default {
         -moz-osx-font-smoothing: grayscale;
     }
 
+    #page-loader {
+      flex-grow: 1;
+      display: flex;
+    }
+
+    #page-loader > div {
+      margin: auto;
+      font-size: 25px;
+    }
+
+    #page-loader > div > span {
+      width: 100px;
+      height: 100px;
+    }
+
     .page .page-content .page-content-padding {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
+    }
+
+    .page .page-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .page {
