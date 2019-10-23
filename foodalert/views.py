@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
+from rest_framework.pagination import PageNumberPagination
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -23,6 +24,12 @@ from foodalert.utils.permissions import *
 
 create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
 audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
+
+
+# Override pagination settings
+class StandardPaginationResult(PageNumberPagination):
+    page_size = 5
+    page_query_param = 'page_size'
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -40,7 +47,10 @@ class NotificationList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         qs = Notification.objects.all()
-        if 'host_netid' in self.request.query_params:
+        # use pagination only when 'page' query param is present
+        if 'page' in self.request.query_params:
+            self.pagination_class = StandardPaginationResult
+        elif 'host_netid' in self.request.query_params:
             try:
                 user = User.objects.get(
                     username=self.request.query_params['host_netid']
