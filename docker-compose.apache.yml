@@ -8,6 +8,7 @@ services:
       - db
     environment:
       AUTH: SAML_MOCK
+      ENV: ENV
     ports:
       - "${APACHE_PORT:-8080}:80"
   db:
