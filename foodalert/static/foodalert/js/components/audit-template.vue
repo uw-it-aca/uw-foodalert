@@ -13,82 +13,79 @@
             <b-input
               id="search-filter" type="search"
               class="mr-3" v-model="search"
-              placeholder="Search by netID, event name">
-            </b-input> 
-          </b-col>
-          <b-col id="time-filter" sm="3" lg="4">
-            <label for="from">
-              From
-            </label>
-            <b-input id="from" type="date" class="mr-2"> </b-input>
-            <label for="to"> 
-              to
-            </label>
-            <b-input id="to" type="date"></b-input>
-            <button class="ml-2">
-              Filter
-            </button>
+              placeholder="Search by netID, event name"
+              aria-label="search input"/>
           </b-col>
         </b-row>
-        <p></p>
+        <br/>
+
         <!-- audit log table -->
         <b-table hover
           :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
           :items="items" 
           :fields="fields">
-          <template v-slot:cell(food.served)="row">
-            Food served: {{ row.value }}
-            <br/>
-            Ends at: {{ row.item['time.end'] }}
-            <br/>
-            Food Contains: {{ row.item['food.allergens']}}
-            <br/>
-            <div v-if="row.item.bring_container">
-                Please bring a container!
+          <template  v-slot:cell(food.served)="row">
+            <div v-if="row.item['netID']!=''">
+              Food served: {{ row.value }}
+              <br/>
+              Ends at: {{ row.item['time.end'] }}
+              <br/>
+              Food Contains: {{ row.item['food.allergens'] }}
+              <br/>
+              <div v-if="row.item.bring_container">
+                  Please bring a container!
+              </div>
+            </div>
+            <div v-else>
+              Update: {{row.value}}
             </div>
             <br/>
-            <b-button @click="getUpdates(row.item)" class="toggle-button float-right" 
-              variant="link">
-              {{row.detailsShowing ? 'Hide' : 'Show'}} Updates
-            </b-button>
-          </template>
-
-          <template v-if="items.length > 0" v-slot:head(food.served)="data">
-            <span>{{data.label}}</span>
-            <b-button
-              id="show-all"
-              @click="items.forEach(function(el, arr){getUpdates(el, showAll)});
-              showAll = !showAll" class="toggle-button" variant="link">
-              {{showAll ? 'Expand' : 'Collapse'}} All Updates
-            </b-button>
-          </template>
-
-          <template v-slot:row-details="row">
-            <b-card v-if="row.item.updates && row.item.updates.length > 0" class="message-details">
-                <b-row>
-                    <b-col class="col-5">
-                      <strong>Time created</strong>
-                    </b-col>
-                    <b-col>
-                      <strong>Update</strong>
-                    </b-col>
-                </b-row>
-                <div v-for="(update, index) in row.item.updates" :key="index">
-                  <b-row>
-                    <b-col class="col-5">
-                      {{ row.item.updates[index].created_time }}
-                    </b-col>
-                    <b-col>
-                      {{ row.item.updates[index].update_text }}
-                    </b-col>
-                  </b-row>
-                </div>
-            </b-card>
           </template>
         </b-table>
-        <nav role="navigation" aria-label="Search results pages">
-          <b-button @click="requestLogs">See More</b-button>
+
+        <!-- pagination -->
+        <nav id="pagination" role="navigation" aria-label="Search results pages">
+          <ul id="btn-nav" class="list-unstyled">
+            <li>
+              <b-button id="prev-btn" variant="link"
+                :disabled="!prevPage" aria-label="Previous page"
+                @click="currentPage--; requestLogs()"> &lt;Previous  </b-button>
+            </li>
+            <!-- anchor first page -->
+            <li>
+              <b-button variant="link"
+                @click="currentPage=1; requestLogs()"
+                v-bind:class="{'active': (1 === currentPage)}">
+                  1
+              </b-button>
+            </li>
+            <li v-bind:class="{'d-none': (currentPage  <= 2)}">...</li>
+            <li v-for="page in pages" :key="page">
+              <b-button type="button" v-bind:class="{'active': (page === currentPage)}"
+                variant="link" @click="currentPage=page; requestLogs()">
+                  {{ page }}
+              </b-button>
+            </li>
+            <li v-bind:class="{'d-none': (currentPage  >= totalPages-1)}">...</li>
+            <!-- anchor last page -->
+            <li>
+              <b-button variant="link"
+                @click="currentPage=totalPages; requestLogs()"
+                v-bind:class="{'active': (totalPages === currentPage)}">
+                  {{totalPages}}
+              </b-button>
+            </li>
+            <li>
+              <b-button id="next-btn" variant="link" :disabled="!nextPage"
+                aria-label="Next page" @click="currentPage++; requestLogs()">
+                  Next&gt;
+              </b-button>
+            </li>
+          </ul>
+          <small id="num-results"></small>
         </nav>
+        
      </div>
 </template>
 
@@ -99,14 +96,9 @@ export default {
   data() {
     return {
       items: [],
-      updates: [],
-      years: ['All'],
-      months: ['All'],
-      selectedMonth: 'All',
-      selectedYear: 'All',
       search: '',
-      sortBy: 'unformatted_time_created',
-      showAll: true,
+      sortBy: 'id',
+      sortDesc: true,
       fields: [
         {key: 'netID', label: 'netID'},
         {key: 'event', label: 'Event'},
@@ -117,7 +109,12 @@ export default {
         {key: 'ended', label: 'Event Ended'}
       ],
       req: null,
-      url: "/notification/?page=1"
+      baseURL: "/notification/",
+      currentPage: null,
+      totalPages: null,
+      nextPage: null,
+      prevPage: null,
+      pages: [],
     };
   },
   watch: {
@@ -127,92 +124,81 @@ export default {
       }
 
       this.req = setTimeout(() => {
-        this.requestLogs(newVal);
+        let url = this.baseURL
+        if(newVal !== ""){
+          url += "?search=" + newVal
+        }else {
+          // navigte back to first page
+          this.currentPage = 1
+          url += "?page=1"
+        }
+        this.requestLogs(url);
       }, 500);
     },
   },
   methods: {
-    getUpdates(item, showAll) {
-      const id = item.id;
-      // make axios request to get updates and display accordingly
-      if(!item.updates){
-        axios.get('/updates/?parent_notification=' + id)
-          .then((response) => {
-            let context = [];
-            let length = response.data.length;
-            if (length === 0){
-              if(showAll !== undefined) {
-                item._showDetails = showAll;
-              } else {
-                item._showDetails = !item._showDetails;
-              }
-            } else {
-              for(let i = 0; i < length; i++){
-                let updateID = response.data[i].id;
-                axios.get('/updates/' + updateID + '/')
-                  .then((response) => {
-                    let updateText = response.data.text;
-                    let createdTime = new Date(response.data.created_time).toDateString() +
-                      ' ' + new Date(response.data.created_time).toLocaleTimeString('en-US');
-                    
-                    let innerContext = {
-                      'created_time': createdTime,
-                      'update_text': updateText,
-                    }
-                    context.push(innerContext);
-                    item['updates'] = context;
-
-                    //toggle only when all updates have been retrieved
-                    if(i === length - 1) {
-                      setTimeout(() => {
-                        if(showAll !== undefined) {
-                          item._showDetails = showAll;
-                        } else {
-                          item._showDetails = !item._showDetails;
-                        }
-                      }, 100);
-                    }
-                  })
-                  .catch(console.log);
-              }
-            }
-          })
-          .catch(console.log);
+    updatePagination(response) {
+      if(!response.data.previous && !response.data.next){
+        // if only one page do not display buttons
+        document.getElementById('button-nav').classList.add('d-none')
       } else {
-        if(showAll !== undefined) {
-          item._showDetails = showAll;
-        } else {
-          item._showDetails = !item._showDetails;
+        document.getElementById('pagination').classList.remove('d-none');
+        this.prevPage = response.data.previous.page;
+        this.nextPage = response.data.next.page;
+
+        // add specific page buttons
+        this.totalPages = Math.ceil(response.data.count / response.data.pagesize);
+        this.pages = [];
+        if(this.prevPage && this.prevPage !== 1){
+          this.pages.push(this.prevPage);
+        }
+        if(this.currentPage !== 1 && this.currentPage !== this.totalPages) {
+          this.pages.push(this.currentPage);
+        }
+        if(this.nextPage && this.nextPage !== this.totalPages){
+          this.pages.push(this.nextPage);
         }
       }
+      // Fill in result text
+      let results = document.getElementById('num-results')
+      const x = response.data.pagesize * (this.currentPage - 1) + 1
+      const y = x + response.data.results.length - 1
+      results.innerText = x + '-' + y + ' of ' + response.data.count + " results"
     },
-    requestLogs(search) {
+    requestLogs(url) {
       const headers = {
         'Content-Type': 'application/json',
       };
 
       this.items = [];
-      
-      let url = this.url
 
-      if (search) {
-        this.url = url + '?search=' + search;
+      // default to load page 1 if not url passed
+      if(!url){
+        url = this.baseURL + "?page=" + this.currentPage;
       }
 
       axios.get(url, {headers})
           .then((response) => {
-            this.url = response.data.next
+            this.isBusy = true;
+
+            let resp;
             
-            for (let i = 0; i < response.data.results.length; i++) {
-            // Iterate through each detail
-              axios.get('/notification/' + response.data.results[i].id + '/', {headers})
+            if(url.includes('?page=')){
+              resp = response.data.results;
+
+              this.updatePagination(response);
+            } else {
+              document.getElementById('pagination').classList.add('d-none')
+              resp = response.data;
+            }
+            for (let i = 0; i < resp.length; i++) {
+            // Iterate through each notification detail
+              axios.get('/notification/' + resp[i].id + '/', {headers})
                   .then(this.addItems)
                   .catch((error) => this.showErrorPage(error.response,
                       'a-audit')
                   );
             }
-
-            this.$emit('requestComplete');
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
@@ -228,24 +214,10 @@ export default {
         ' ' + new Date(log.time.created).toLocaleTimeString('en-US');
       log.time.end = new Date(log.time.end).toDateString() +
         ' ' + new Date(log.time.end).toLocaleTimeString('en-US');
-      // Add the year and month to respective arrays for sorting
-      const year = log.time.created.substring(11, 15);
-      const month = log.time.created.substring(4, 7);
-
-      if (!this.years.includes(year)) {
-        this.years.push(year);
-      }
-
-      if (!this.months.includes(month)) {
-        this.months.push(month);
-      }
 
       // format food qualifications and allergens
       log.food.qualifications = log.food.qualifications.join(', ');
       log.food.allergens = log.food.allergens.join(', ');
-
-      // add _showDetails to each item to use to toggle details
-      log['_showDetails'] = false;
 
       // Flatten the row and rename columns
       const flat = flatten(log);
@@ -253,107 +225,67 @@ export default {
       // Add the item to our audit logs
       this.items.push(flat);
 
-      // Gather all updates to this corresponding item
-      const itemUpdates = this.updates.filter(function(update) {
-        return (update.parent_notification === log.id);
-      });
-
-      // Add each update of this item to the log
-      for (let j = 0; j < itemUpdates.length; j++) {
-        this.items.push(this.updateToLog(itemUpdates[j]));
-      }
+      this.requestUpdates(log.id)
     },
-    requestUpdates() {
+    requestUpdates(id) {
       const headers = {
         'Content-Type': 'application/json',
       };
 
-      axios.get('/updates/', {headers})
+      axios.get('/updates/?parent_notification=' + id, {headers})
           .then((response) => {
             const data = response.data;
 
             for (let i = 0; i < data.length; i++) {
-              this.updates.push(data[i]);
+              axios.get('/updates/' + data[i].id + '/', {headers})
+                .then((response) => {
+                  const update = response.data
+                  let calc = id - (i+1)/(data.length +1)
+                  let ret = {
+                    'id': calc,
+                    'netID': '',
+                    'location': '',
+                    'event': '',
+                    'time.created': new Date(update.created_time).toDateString() +
+                      ' ' + new Date(update.created_time).toLocaleTimeString('en-US'),
+                    'time.ended': '',
+                    'food.served': update.text,
+                    'food.allergens': '',
+                    'bringContainers': '',
+                    'host.netID': '',
+                    'host.userAgent': '',
+                    'ended': '',
+                    '_rowVariant': 'update',
+                    '_showDetails': false,
+                  };
+                  ret = flatten(ret)
+                  this.items.push(ret);
+                })
             }
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
     },
-    updateToLog(update) {
-      const ret = {
-        'location': '',
-        'event': '',
-        'time.created': new Date(update.created_time).toDateString() +
-          ' ' + new Date(update.created_time).toLocaleTimeString('en-US'),
-        'time.ended': '',
-        'food.served': '',
-        'food.amount': update.text,
-        'food.allergens': '',
-        'bringContainers': '',
-        'host.netID': '',
-        'host.userAgent': '',
-        'ended': '',
-        '_rowVariant': 'update',
-      };
-
-      return ret;
-    },
-    updateMonth(value) {
-      this.selectedMonth = value;
-    },
-    updateYear(value) {
-      this.selectedYear = value;
-    },
-    setMonth(event) {
-      this.updateMonth(event.target.innerText);
-    },
-    setYear(event) {
-      this.updateYear(event.target.innerText);
-    },
   },
-  mounted() {
-    this.requestUpdates();
-    this.requestLogs();
-  },
-  computed: {
-    filteredItems() {
-      let logs = this.items;
-      const year = this.selectedYear;
-      const month = this.selectedMonth;
-
-      if (year !== 'All') {
-        logs = logs.filter(function(log) {
-          return log['time.created'].includes(year);
-        });
-      }
-
-      if (month !== 'All') {
-        logs = logs.filter(function(log) {
-          return log['time.created'].includes(month);
-        });
-      }
-
-      return logs;
-    },
-  },
+  beforeMount() {
+    this.currentPage = 1;
+    this.requestLogs(this.baseURL + "?page=1");
+  }
 };
 </script>
 
 <style>
-    #filter-bar, #time-filter {
+    .audit-parent #pagination {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #btn-nav {
       display: flex;
-      align-items: center;
-      margin-left: 5px;
+      justify-content: center;
     }
 
-    .message-details {
-      margin-left: 38%;
-      margin-right: 10%;
-    }
-
-    .audit-parent .toggle-button {
-      font-size: 11pt;
-      padding: 1px;
-      float: right;
-    }                                                                                           
+    #btn-nav .active {
+      border: solid 1px black;
+    }                                                                          
 </style>

@@ -28,8 +28,31 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 
 # Override pagination settings
 class StandardPaginationResult(PageNumberPagination):
-    page_size = 5
-    page_query_param = 'page_size'
+    page_size = 15
+    page_query_param = 'page'
+
+    def get_paginated_response(self, data):
+        next_pg = None
+        if(self.page.has_next()):
+            next_pg = self.page.next_page_number()
+
+        previous_pg = None
+        if(self.page.has_previous()):
+            previous_pg = self.page.previous_page_number()
+
+        return Response({
+            'next': {
+                'link': self.get_next_link(),
+                'page': next_pg,
+            },
+            'previous': {
+                'link': self.get_previous_link(),
+                'page': previous_pg,
+            },
+            'pagesize': self.page_size,
+            'count': self.page.paginator.count,
+            'results': data
+        })
 
 
 @method_decorator(login_required(), name='dispatch')
@@ -50,7 +73,7 @@ class NotificationList(generics.ListCreateAPIView):
         # use pagination only when 'page' query param is present
         if 'page' in self.request.query_params:
             self.pagination_class = StandardPaginationResult
-        elif 'host_netid' in self.request.query_params:
+        if 'host_netid' in self.request.query_params:
             try:
                 user = User.objects.get(
                     username=self.request.query_params['host_netid']
