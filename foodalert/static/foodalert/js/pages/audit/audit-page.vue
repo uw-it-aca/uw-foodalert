@@ -19,7 +19,7 @@
                 <b-table hover
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
-                :items="items" 
+                :items="items"
                 :fields="fields">
                 <template  v-slot:cell(food.served)="row">
                     <div v-if="row.item['netID']!=''">
@@ -41,12 +41,15 @@
                 </b-table>
 
                 <!-- pagination -->
-                <nav id="pagination" role="navigation" aria-label="Search results pages">
+                <nav id="pagination" role="navigation"
+                    aria-label="Search results pages">
                 <ul id="btn-nav" class="list-unstyled">
                     <li>
                     <b-button id="prev-btn" variant="link"
                         :disabled="!prevPage" aria-label="Previous page"
-                        @click="currentPage--; requestLogs()"> &lt;Previous  </b-button>
+                        @click="currentPage--; requestLogs()">
+                            &lt;Previous
+                    </b-button>
                     </li>
                     <!-- anchor first page -->
                     <li>
@@ -58,12 +61,15 @@
                     </li>
                     <li v-bind:class="{'d-none': (currentPage  <= 2)}">...</li>
                     <li v-for="page in pages" :key="page">
-                    <b-button type="button" v-bind:class="{'active': (page === currentPage)}"
+                    <b-button v-bind:class="{'active':(page===currentPage)}"
                         variant="link" @click="currentPage=page; requestLogs()">
                         {{ page }}
                     </b-button>
                     </li>
-                    <li v-bind:class="{'d-none': (currentPage  >= totalPages-1)}">...</li>
+                    <li
+                        v-bind:class="{'d-none':(currentPage>=totalPages-1)}">
+                        ...
+                    </li>
                     <!-- anchor last page -->
                     <li>
                     <b-button variant="link"
@@ -74,7 +80,8 @@
                     </li>
                     <li>
                     <b-button id="next-btn" variant="link" :disabled="!nextPage"
-                        aria-label="Next page" @click="currentPage++; requestLogs()">
+                        aria-label="Next page"
+                        @click="currentPage++; requestLogs()">
                         Next&gt;
                     </b-button>
                     </li>
@@ -87,192 +94,205 @@
 </template>
 
 <script type="text/javascript">
-import GenericPage from '../../components/generic-page.vue'
+import GenericPage from '../../components/generic-page.vue';
 import axios from 'axios';
 import flatten from 'flat';
 
 export default {
-    components: {
-        'generic-page': GenericPage,
-    },
-    data() {
+  components: {
+    'generic-page': GenericPage,
+  },
+  data() {
     return {
-        items: [],
-        search: '',
-        sortBy: 'id',
-        sortDesc: true,
-        fields: [
+      items: [],
+      search: '',
+      sortBy: 'id',
+      sortDesc: true,
+      fields: [
         {key: 'netID', label: 'netID'},
         {key: 'event', label: 'Event'},
         {key: 'location', label: 'Location'},
         {key: 'food.qualifications', label: 'Food Qualifications'},
         {key: 'time.created', label: 'Time Created'},
         {key: 'food.served', label: 'Message'},
-        {key: 'ended', label: 'Event Ended'}
-        ],
-        req: null,
-        baseURL: "/notification/",
-        currentPage: null,
-        totalPages: null,
-        nextPage: null,
-        prevPage: null,
-        pages: [],
+        {key: 'ended', label: 'Event Ended'},
+      ],
+      req: null,
+      baseURL: '/notification/',
+      currentPage: null,
+      totalPages: null,
+      nextPage: null,
+      prevPage: null,
+      pages: [],
     };
-    },
-    watch: {
+  },
+  watch: {
     search(newVal, oldVal) {
-        if (this.req !== null) {
+      if (this.req !== null) {
         clearTimeout(this.req);
+      }
+
+      this.req = setTimeout(() => {
+        let url = this.baseURL;
+
+        if (newVal !== '') {
+          url += '?search=' + newVal;
+        } else {
+          // navigte back to first page
+          this.currentPage = 1;
+          url += '?page=1';
         }
 
-        this.req = setTimeout(() => {
-        let url = this.baseURL
-        if(newVal !== ""){
-            url += "?search=" + newVal
-        }else {
-            // navigte back to first page
-            this.currentPage = 1
-            url += "?page=1"
-        }
         this.requestLogs(url);
-        }, 500);
+      }, 500);
     },
-    },
-    methods: {
+  },
+  methods: {
     updatePagination(response) {
-        if(!response.data.previous && !response.data.next){
+      if (!response.data.previous && !response.data.next) {
         // if only one page do not display buttons
-        document.getElementById('button-nav').classList.add('d-none')
-        } else {
+        document.getElementById('button-nav').classList.add('d-none');
+      } else {
         document.getElementById('pagination').classList.remove('d-none');
         this.prevPage = response.data.previous.page;
         this.nextPage = response.data.next.page;
 
         // add specific page buttons
-        this.totalPages = Math.ceil(response.data.count / response.data.pagesize);
+        this.totalPages = Math.ceil(
+            response.data.count / response.data.pagesize);
         this.pages = [];
-        if(this.prevPage && this.prevPage !== 1){
-            this.pages.push(this.prevPage);
+
+        if (this.prevPage && this.prevPage !== 1) {
+          this.pages.push(this.prevPage);
         }
-        if(this.currentPage !== 1 && this.currentPage !== this.totalPages) {
-            this.pages.push(this.currentPage);
+
+        if (this.currentPage !== 1 && this.currentPage !== this.totalPages) {
+          this.pages.push(this.currentPage);
         }
-        if(this.nextPage && this.nextPage !== this.totalPages){
-            this.pages.push(this.nextPage);
+
+        if (this.nextPage && this.nextPage !== this.totalPages) {
+          this.pages.push(this.nextPage);
         }
-        }
-        // Fill in result text
-        let results = document.getElementById('num-results')
-        const x = response.data.pagesize * (this.currentPage - 1) + 1
-        const y = x + response.data.results.length - 1
-        results.innerText = x + '-' + y + ' of ' + response.data.count + " results"
+      }
+
+      // Fill in result text
+      const results = document.getElementById('num-results');
+      const x = response.data.pagesize * (this.currentPage - 1) + 1;
+      const y = x + response.data.results.length - 1;
+
+      results.innerText = x + '-' + y + ' of ' +
+        response.data.count + ' results';
     },
     requestLogs(url) {
-        const headers = {
+      const headers = {
         'Content-Type': 'application/json',
-        };
+      };
 
-        this.items = [];
+      this.items = [];
 
-        // default to load page 1 if not url passed
-        if(!url){
-        url = this.baseURL + "?page=" + this.currentPage;
-        }
+      // default to load page 1 if not url passed
+      if (!url) {
+        url = this.baseURL + '?page=' + this.currentPage;
+      }
 
-        axios.get(url, {headers})
-            .then((response) => {
+      axios.get(url, {headers})
+          .then((response) => {
             this.isBusy = true;
 
             let resp;
-            
-            if(url.includes('?page=')){
-                resp = response.data.results;
 
-                this.updatePagination(response);
+            if (url.includes('?page=')) {
+              resp = response.data.results;
+
+              this.updatePagination(response);
             } else {
-                document.getElementById('pagination').classList.add('d-none')
-                resp = response.data;
+              document.getElementById('pagination').classList.add('d-none');
+              resp = response.data;
             }
+
             for (let i = 0; i < resp.length; i++) {
             // Iterate through each notification detail
-                axios.get('/notification/' + resp[i].id + '/', {headers})
-                    .then(this.addItems)
-                    .catch((error) => this.showErrorPage(error.response,
-                        'a-audit')
-                    );
+              axios.get('/notification/' + resp[i].id + '/', {headers})
+                  .then(this.addItems)
+                  .catch((error) => this.showErrorPage(error.response,
+                      'a-audit'),
+                  );
             }
-            })
-            .catch((error) => this.showErrorPage(error.response,
-                'a-audit'));
+          })
+          .catch((error) => this.showErrorPage(error.response,
+              'a-audit'));
     },
     addItems(response) {
-        const log = response.data;
+      const log = response.data;
 
-        // store unformatted time for sorting
-        log['unformatted_time_created'] = log.time.created;
+      // store unformatted time for sorting
+      log['unformatted_time_created'] = log.time.created;
 
-        // Make datetimes readable
-        log.time.created = new Date(log.time.created).toDateString() +
+      // Make datetimes readable
+      log.time.created = new Date(log.time.created).toDateString() +
         ' ' + new Date(log.time.created).toLocaleTimeString('en-US');
-        log.time.end = new Date(log.time.end).toDateString() +
+      log.time.end = new Date(log.time.end).toDateString() +
         ' ' + new Date(log.time.end).toLocaleTimeString('en-US');
 
-        // format food qualifications and allergens
-        log.food.qualifications = log.food.qualifications.join(', ');
-        log.food.allergens = log.food.allergens.join(', ');
+      // format food qualifications and allergens
+      log.food.qualifications = log.food.qualifications.join(', ');
+      log.food.allergens = log.food.allergens.join(', ');
 
-        // Flatten the row and rename columns
-        const flat = flatten(log);
+      // Flatten the row and rename columns
+      const flat = flatten(log);
 
-        // Add the item to our audit logs
-        this.items.push(flat);
+      // Add the item to our audit logs
+      this.items.push(flat);
 
-        this.requestUpdates(log.id)
+      this.requestUpdates(log.id);
     },
     requestUpdates(id) {
-        const headers = {
+      const headers = {
         'Content-Type': 'application/json',
-        };
+      };
 
-        axios.get('/updates/?parent_notification=' + id, {headers})
-            .then((response) => {
+      axios.get('/updates/?parent_notification=' + id, {headers})
+          .then((response) => {
             const data = response.data;
 
             for (let i = 0; i < data.length; i++) {
-                axios.get('/updates/' + data[i].id + '/', {headers})
-                .then((response) => {
-                    const update = response.data
-                    let calc = id - (i+1)/(data.length +1)
+              axios.get('/updates/' + data[i].id + '/', {headers})
+                  .then((response) => {
+                    const update = response.data;
+                    const calc = id - (i+1)/(data.length +1);
                     let ret = {
-                    'id': calc,
-                    'netID': '',
-                    'location': '',
-                    'event': '',
-                    'time.created': new Date(update.created_time).toDateString() +
-                        ' ' + new Date(update.created_time).toLocaleTimeString('en-US'),
-                    'time.ended': '',
-                    'food.served': update.text,
-                    'food.allergens': '',
-                    'bringContainers': '',
-                    'host.netID': '',
-                    'host.userAgent': '',
-                    'ended': '',
-                    '_rowVariant': 'update',
-                    '_showDetails': false,
+                      'id': calc,
+                      'netID': '',
+                      'location': '',
+                      'event': '',
+                      'time.created':
+                          new Date(update.created_time).toDateString() + ' ' +
+                          new Date(update.created_time)
+                              .toLocaleTimeString('en-US'),
+                      'time.ended': '',
+                      'food.served': update.text,
+                      'food.allergens': '',
+                      'bringContainers': '',
+                      'host.netID': '',
+                      'host.userAgent': '',
+                      'ended': '',
+                      '_rowVariant': 'update',
+                      '_showDetails': false,
                     };
-                    ret = flatten(ret)
+
+                    ret = flatten(ret);
                     this.items.push(ret);
-                })
+                  });
             }
-            })
-            .catch((error) => this.showErrorPage(error.response,
-                'a-audit'));
+          })
+          .catch((error) => this.showErrorPage(error.response,
+              'a-audit'));
     },
-    },
-    beforeMount() {
-        this.currentPage = 1;
-        this.requestLogs(this.baseURL + "?page=1");
-    }
+  },
+  beforeMount() {
+    this.currentPage = 1;
+    this.requestLogs(this.baseURL + '?page=1');
+  },
 };
 </script>
 
@@ -291,5 +311,5 @@ export default {
 
     #btn-nav .active {
       border: solid 1px black;
-    }                                                                   
+    }
 </style>

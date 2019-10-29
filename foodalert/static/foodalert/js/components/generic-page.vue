@@ -91,7 +91,7 @@ export default {
 
           window.addEventListener('resize', this.updateHeightOfPage);
           this.updateHeightOfPage();
-        }.bind(this)
+        }.bind(this),
     );
   },
   methods: {
