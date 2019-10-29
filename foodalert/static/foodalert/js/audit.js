@@ -1,10 +1,10 @@
 import {activatePage} from './utils.js';
-import AuditTemplate from './components/audit-template.vue';
+import AuditLog from './pages/audit/audit-page.vue';
 
 window.vueData.routes[0].children = window.vueData.routes[0].children.concat([
-  {path: 'a/audit', component: AuditTemplate},
+  {path: 'a/audit', component: AuditLog},
 ]);
 
 const rootPath = window.vueData.routes.find((obj) => obj.path === '/a/');
 
-activatePage(rootPath, 'audit', AuditTemplate, 'Audit Page');
+activatePage(rootPath, 'audit', AuditLog, 'Audit Page');

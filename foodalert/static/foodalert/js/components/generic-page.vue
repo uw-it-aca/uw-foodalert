@@ -5,7 +5,7 @@
           <slot name="notification"></slot>
       </alert-box>
       <header class="md-5 mb-2" role="banner">
-        <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
+        <b-navbar class="mx-auto" style="height: 64px;">
           <b-navbar-brand class="pl-2 pb-2">
             <img :src="require('../../img/food-alert-logo.svg')"
                   alt="UW Food Alert Logo" height="22"
@@ -31,12 +31,20 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="standard-container mt-md-5 mt-3">
-        <h1 id="standard-heading">
-            <slot name="heading"></slot>
-        </h1>
-        <slot name="body"></slot>
-        <slot name="navigation"></slot>
+      <main id="standard-body" class="mt-md-5 mt-3">
+        <div class="standard-container">
+          <h1 id="standard-heading">
+              <slot name="heading"></slot>
+          </h1>
+          <slot name="body"></slot>
+          <slot name="navigation"></slot>
+        </div>
+        <div class="full-container">
+          <h1 id="full-heading">
+            <slot name=full-heading></slot>
+          </h1>
+          <slot name="full-body"></slot>
+        </div>
       </main>
     </div>
     <footer id="relative-footer" class="text-center" role="contentinfo">
@@ -106,7 +114,7 @@ export default {
         width: 100%;
         z-index: 1;
     }
-    #standard-heading {
+    #standard-heading, #full-heading {
         font-size: 32px;
         line-height: 1.2;
         font-weight: 700;
@@ -120,20 +128,17 @@ export default {
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
-
     .page .page-content .page-content-padding {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
     }
-
     .page {
         display: flex;
         min-height: 100vh;
         flex-direction: column;
         align-content: space-between;
     }
-
     #relative-footer {
         margin-top: auto;
         padding-top: 16px;
@@ -141,16 +146,16 @@ export default {
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
     }
-
-    .standard-container {
-      max-width: 700px;
+    .standard-container, .full-container{
       padding-left: 24px;
       padding-right: 24px;
       position: relative;
       margin-left: auto;
       margin-right: auto;
     }
-
+    .standard-container {
+      max-width: 700px;
+    }
     .foodalert .alert {
       font-weight: 600;
       font-size: 20px;
@@ -161,16 +166,13 @@ export default {
       height: 70px;
       border-radius: 10px;
     }
-
     .foodalert .alert-dismissible .close{
       height: 100%;
       opacity: 1;
     }
-
     .foodalert .alert-dismissible .close:hover{
       color: white;
     }
-
     .foodalert .btn.btn-link[role='link'] {
       vertical-align: initial;
     }
