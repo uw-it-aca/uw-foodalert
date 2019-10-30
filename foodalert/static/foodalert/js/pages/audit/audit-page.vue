@@ -59,7 +59,10 @@
                         1
                     </b-button>
                     </li>
-                    <li v-bind:class="{'d-none': (currentPage  <= 2)}">...</li>
+                    <li
+                      v-bind:class="{'d-none':(currentPage<=3 || totalPages<=3)}">
+                      ...
+                    </li>
                     <li v-for="page in pages" :key="page">
                     <b-button v-bind:class="{'active':(page===currentPage)}"
                         variant="link" @click="currentPage=page; requestLogs()">
@@ -67,7 +70,7 @@
                     </b-button>
                     </li>
                     <li
-                        v-bind:class="{'d-none':(currentPage>=totalPages-1)}">
+                        v-bind:class="{'d-none':(currentPage>=totalPages-2 || totalPages<=3)}">
                         ...
                     </li>
                     <!-- anchor last page -->
