@@ -6,6 +6,8 @@ RUN apt-get install -y libpq-dev
 RUN apt-get install -y postgresql-client-10
 ADD docker/info.conf /tmp/info.conf
 RUN cp /tmp/info.conf /etc/apache2/conf-enabled/
+ADD docker/remoteip.conf /tmp/remoteip.conf
+RUN cp /tmp/remoteip.conf /etc/apache2/conf-enabled/
 USER acait
 
 ADD --chown=acait:acait setup.py /app/
