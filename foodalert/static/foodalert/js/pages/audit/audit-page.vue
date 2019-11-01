@@ -89,7 +89,8 @@
                       </b-button>
                     </li>
                     <li>
-                      <b-button id="next-btn" variant="link" :disabled="!nextPage"
+                      <b-button id="next-btn" variant="link"
+                        :disabled="!nextPage"
                         aria-label="Next page"
                         @click="currentPage++; requestLogs()">
                         Next&gt;
@@ -159,7 +160,6 @@ export default {
   },
   methods: {
     updatePagination(response) {
-
       if (!response.data.previous.page && !response.data.next.page) {
         // if only one page do not display buttons
         document.getElementById('btn-nav').classList.add('d-none');
@@ -171,7 +171,7 @@ export default {
         this.totalPages = Math.ceil(
             response.data.count / response.data.pagesize);
         this.pages = [];
-        
+
         if (this.prevPage && this.prevPage !== 1) {
           this.pages.push(this.prevPage);
         }
@@ -184,12 +184,12 @@ export default {
           this.pages.push(this.nextPage);
         }
       }
+
       // Fill in result text
       const results = document.getElementById('num-results');
       const x = response.data.pagesize * (this.currentPage - 1) + 1;
       const y = x + response.data.results.length - 1;
 
-      
 
       results.innerText = x + '-' + y + ' of ' +
         response.data.count + ' results';
