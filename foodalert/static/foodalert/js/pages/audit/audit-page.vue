@@ -27,7 +27,9 @@
                     <br/>
                     Ends at: {{ row.item['time.end'] }}
                     <br/>
-                    Food Contains: {{ row.item['food.allergens'] }}
+                    <div v-if="row.item['food.allergens']">
+                      Food Contains: {{ row.item['food.allergens'] }}
+                    </div>
                     <br/>
                     <div v-if="row.item.bring_container">
                         Please bring a container!
@@ -45,20 +47,20 @@
                   aria-label="Search results page navigation">
                   <ul id="btn-nav" class="list-unstyled">
                     <li>
-                    <b-button id="prev-btn" variant="link"
-                      :disabled="!prevPage" aria-label="Previous page"
-                      @click="currentPage--; requestLogs()">
-                          &lt;Previous
-                    </b-button>
+                      <b-button id="prev-btn" variant="link"
+                        :disabled="!prevPage" aria-label="Previous page"
+                        @click="currentPage--; requestLogs()">
+                            &lt;Previous
+                      </b-button>
                     </li>
                     <!-- anchor first page -->
                     <li>
-                    <b-button variant="link"
-                      aria-label="navigate to page one"
-                      @click="currentPage=1; requestLogs()"
-                      v-bind:class="{'active': (1 === currentPage)}">
-                      1
-                    </b-button>
+                      <b-button variant="link"
+                        aria-label="navigate to page one"
+                        @click="currentPage=1; requestLogs()"
+                        v-bind:class="{'active': (1 === currentPage)}">
+                        1
+                      </b-button>
                     </li>
                     <li
                       v-bind:class="{'d-none':
@@ -66,11 +68,11 @@
                       ...
                     </li>
                     <li v-for="page in pages" :key="page">
-                    <b-button v-bind:class="{'active':(page===currentPage)}"
-                      variant="link" aria-live="navigate to page " + page
-                      @click="currentPage=page; requestLogs()">
-                      {{ page }}
-                    </b-button>
+                      <b-button v-bind:class="{'active':(page===currentPage)}"
+                        variant="link" :aria-label="'navigate to page '+page"
+                        @click="currentPage=page; requestLogs()">
+                        {{ page }}
+                      </b-button>
                     </li>
                     <li
                       v-bind:class="{'d-none':
@@ -79,19 +81,19 @@
                     </li>
                     <!-- anchor last page -->
                     <li>
-                    <b-button variant="link"
-                      aria-label="navigate to page " + totalPages
-                      @click="currentPage=totalPages; requestLogs()"
-                      v-bind:class="{'active': (totalPages === currentPage)}">
-                      {{totalPages}}
-                    </b-button>
+                      <b-button variant="link"
+                        :aria-label="'navigate to page ' + totalPages"
+                        @click="currentPage=totalPages; requestLogs()"
+                        v-bind:class="{'active': (totalPages === currentPage)}">
+                        {{totalPages}}
+                      </b-button>
                     </li>
                     <li>
-                    <b-button id="next-btn" variant="link" :disabled="!nextPage"
-                      aria-label="Next page"
-                      @click="currentPage++; requestLogs()">
-                      Next&gt;
-                    </b-button>
+                      <b-button id="next-btn" variant="link" :disabled="!nextPage"
+                        aria-label="Next page"
+                        @click="currentPage++; requestLogs()">
+                        Next&gt;
+                      </b-button>
                     </li>
                   </ul>
                   <small id="num-results" aria-live="polite"></small>
@@ -157,19 +159,19 @@ export default {
   },
   methods: {
     updatePagination(response) {
-      if (!response.data.previous && !response.data.next) {
+
+      if (!response.data.previous.page && !response.data.next.page) {
         // if only one page do not display buttons
-        document.getElementById('button-nav').classList.add('d-none');
+        document.getElementById('btn-nav').classList.add('d-none');
       } else {
         document.getElementById('pagination').classList.remove('d-none');
         this.prevPage = response.data.previous.page;
         this.nextPage = response.data.next.page;
-
         // add specific page buttons
         this.totalPages = Math.ceil(
             response.data.count / response.data.pagesize);
         this.pages = [];
-
+        
         if (this.prevPage && this.prevPage !== 1) {
           this.pages.push(this.prevPage);
         }
@@ -182,11 +184,12 @@ export default {
           this.pages.push(this.nextPage);
         }
       }
-
       // Fill in result text
       const results = document.getElementById('num-results');
       const x = response.data.pagesize * (this.currentPage - 1) + 1;
       const y = x + response.data.results.length - 1;
+
+      
 
       results.innerText = x + '-' + y + ' of ' +
         response.data.count + ' results';
@@ -205,8 +208,6 @@ export default {
 
       axios.get(url, {headers})
           .then((response) => {
-            this.isBusy = true;
-
             let resp;
 
             if (url.includes('?page=')) {
