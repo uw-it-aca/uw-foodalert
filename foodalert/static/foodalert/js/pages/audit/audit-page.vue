@@ -42,21 +42,22 @@
 
                 <!-- pagination -->
                 <nav id="pagination" role="navigation"
-                    aria-label="Search results pages">
-                <ul id="btn-nav" class="list-unstyled">
+                  aria-label="Search results page navigation">
+                  <ul id="btn-nav" class="list-unstyled">
                     <li>
                     <b-button id="prev-btn" variant="link"
-                        :disabled="!prevPage" aria-label="Previous page"
-                        @click="currentPage--; requestLogs()">
-                            &lt;Previous
+                      :disabled="!prevPage" aria-label="Previous page"
+                      @click="currentPage--; requestLogs()">
+                          &lt;Previous
                     </b-button>
                     </li>
                     <!-- anchor first page -->
                     <li>
                     <b-button variant="link"
-                        @click="currentPage=1; requestLogs()"
-                        v-bind:class="{'active': (1 === currentPage)}">
-                        1
+                      aria-label="navigate to page one"
+                      @click="currentPage=1; requestLogs()"
+                      v-bind:class="{'active': (1 === currentPage)}">
+                      1
                     </b-button>
                     </li>
                     <li
@@ -66,33 +67,34 @@
                     </li>
                     <li v-for="page in pages" :key="page">
                     <b-button v-bind:class="{'active':(page===currentPage)}"
-                        variant="link"
-                        @click="currentPage=page; requestLogs()">
-                        {{ page }}
+                      variant="link" aria-live="navigate to page " + page
+                      @click="currentPage=page; requestLogs()">
+                      {{ page }}
                     </b-button>
                     </li>
                     <li
-                        v-bind:class="{'d-none':
-                        (currentPage>=totalPages-2 || totalPages<=3)}">
+                      v-bind:class="{'d-none':
+                      (currentPage>=totalPages-2 || totalPages<=3)}">
                         ...
                     </li>
                     <!-- anchor last page -->
                     <li>
                     <b-button variant="link"
-                        @click="currentPage=totalPages; requestLogs()"
-                        v-bind:class="{'active': (totalPages === currentPage)}">
-                        {{totalPages}}
+                      aria-label="navigate to page " + totalPages
+                      @click="currentPage=totalPages; requestLogs()"
+                      v-bind:class="{'active': (totalPages === currentPage)}">
+                      {{totalPages}}
                     </b-button>
                     </li>
                     <li>
                     <b-button id="next-btn" variant="link" :disabled="!nextPage"
-                        aria-label="Next page"
-                        @click="currentPage++; requestLogs()">
-                        Next&gt;
+                      aria-label="Next page"
+                      @click="currentPage++; requestLogs()">
+                      Next&gt;
                     </b-button>
                     </li>
-                </ul>
-                <small id="num-results"></small>
+                  </ul>
+                  <small id="num-results" aria-live="polite"></small>
                 </nav>
             </div>
         </template>
