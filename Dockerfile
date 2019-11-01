@@ -8,6 +8,8 @@ ADD docker/info.conf /tmp/info.conf
 RUN cp /tmp/info.conf /etc/apache2/conf-enabled/
 ADD docker/remoteip.conf /tmp/remoteip.conf
 RUN cp /tmp/remoteip.conf /etc/apache2/conf-enabled/
+ADD docker/log_forensic.conf /tmp/log_forensic.conf
+RUN cp /tmp/log_forensic.conf /etc/apache2/conf-enabled/
 USER acait
 
 ADD --chown=acait:acait setup.py /app/
