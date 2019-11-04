@@ -62,8 +62,8 @@ export default {
     },
     pageSizeClass: {
       type: String,
-      default: "standard-container"
-    }
+      default: 'standard-container',
+    },
   },
   data() {
     return {
@@ -111,7 +111,7 @@ export default {
         width: 100%;
         z-index: 1;
     }
-    #standard-heading, #full-heading {
+    #standard-heading {
         font-size: 32px;
         line-height: 1.2;
         font-weight: 700;
