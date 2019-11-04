@@ -31,20 +31,13 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="mt-md-5 mt-3">
-        <div class="standard-container">
-          <h1 id="standard-heading">
-              <slot name="heading"></slot>
-          </h1>
-          <slot name="body"></slot>
-          <slot name="navigation"></slot>
-        </div>
-        <div class="full-container">
-          <h1 id="full-heading">
-            <slot name=full-heading></slot>
-          </h1>
-          <slot name="full-body"></slot>
-        </div>
+      <main id="standard-body" class="mt-md-5 mt-3"
+        v-bind:class="pageSizeClass">
+        <h1 id="standard-heading">
+          <slot name="heading"></slot>
+        </h1>
+        <slot name="body"></slot>
+        <slot name="navigation"></slot>
       </main>
     </div>
     <footer id="relative-footer" class="text-center" role="contentinfo">
@@ -67,6 +60,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    pageSizeClass: {
+      type: String,
+      default: "standard-container"
+    }
   },
   data() {
     return {

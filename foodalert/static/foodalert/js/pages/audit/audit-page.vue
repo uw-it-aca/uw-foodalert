@@ -1,7 +1,7 @@
 <template>
-    <generic-page>
-        <template #full-heading>Audit Log</template>
-        <template #full-body>
+    <generic-page pageSizeClass='full-container'>
+        <template #heading>Audit Log</template>
+        <template #body>
             <div class="audit-parent">
                 <!-- search and filter feature -->
                 <b-row class="mt-1">
