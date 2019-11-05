@@ -9,36 +9,41 @@
                     <b-input
                     id="search-filter" type="search"
                     v-model="search"
-                    placeholder="Search by netID, event name"
-                    aria-label="search input"/>
+                    placeholder="Filter by sender's UW NetID or name of event"
+                    aria-label="filter results by uw netid or name of event"/>
                 </b-col>
                 </b-row>
                 <br/>
 
                 <!-- audit log table -->
-                <b-table hover
+                <b-table 
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
                 :items="items"
                 :fields="fields">
                 <template  v-slot:cell(food.served)="row">
                     <div v-if="row.item['netID']!=''">
-                    Food served: {{ row.value }}
-                    <br/>
-                    Ends at: {{ row.item['time.end'] }}
-                    <br/>
-                    <div v-if="row.item['food.allergens']">
-                      Food Contains: {{ row.item['food.allergens'] }}
-                    </div>
-                    <br/>
-                    <div v-if="row.item.bring_container">
+                      Food served: {{ row.value }}
+                      <br/>
+                      Ends at: {{ row.item['time.end'] }}
+                      <div v-if="row.item['food.allergens']">
+                        Food Contains: {{ row.item['food.allergens'] }}
+                      </div>
+                      <div v-if="row.item.bring_container">
                         Please bring a container!
-                    </div>
+                      </div>
                     </div>
                     <div v-else>
-                    Update: {{row.value}}
+                      Update: {{row.value}}
                     </div>
-                    <br/>
+                </template>
+                <template  v-slot:cell(ended)="row">
+                  <div v-if="row.value">
+                    yes
+                  </div>
+                  <div v-else-if="row.value === false">
+                    no
+                  </div>
                 </template>
                 </b-table>
 
@@ -120,13 +125,13 @@ export default {
       sortBy: 'id',
       sortDesc: true,
       fields: [
-        {key: 'netID', label: 'netID'},
+        {key: 'netID', label: 'UW NetID'},
         {key: 'event', label: 'Event'},
         {key: 'location', label: 'Location'},
         {key: 'food.qualifications', label: 'Food Qualifications'},
         {key: 'time.created', label: 'Time Created'},
         {key: 'food.served', label: 'Message'},
-        {key: 'ended', label: 'Event Ended'},
+        {key: 'ended', label: 'Host ended event'},
       ],
       req: null,
       baseURL: '/notification/',
