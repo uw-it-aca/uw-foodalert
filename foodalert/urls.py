@@ -20,10 +20,10 @@ urlpatterns = [
             SubscriptionDetail.as_view(), name='subscription_detail'),
         url(r'^allergen/$', AllergensList.as_view(),
             name='allergen_list'),
+
+        url(r'^auditlog/$', AuditList.as_view(), name='audit_log'),
     ])),
-    
     url(r'^sms/$', SmsReciver.as_view(),
         name='sms'),
-    url(r'^auditlog/$', AuditList.as_view(), name='audit_log'),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]
