@@ -329,7 +329,7 @@ export default {
       // make patch request if subid is set; post if not
       if (validInput) {
         if (this.subid) {
-          const url = '/subscription/' + this.subid + '/';
+          const url = '/v1/subscription/' + this.subid + '/';
 
           axios.patch(url, data, {headers})
               .then((response) => {
@@ -354,7 +354,7 @@ export default {
           };
 
           postData[inputType] = notifValue;
-          axios.post('/subscription/', postData, {headers})
+          axios.post('/v1/subscription/', postData, {headers})
               .then((response) => {
                 this.requestUpdate();
 
@@ -404,7 +404,7 @@ export default {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
-      const url = '/subscription/' + this.subid + '/';
+      const url = 'v1/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
           .then(this.requestUpdate)

@@ -177,7 +177,7 @@ export default {
 
     this.$children[0].$data.showUpdateOverlay = true;
     axios.get(
-        '/notification/?host_netid=' + this.netID,
+        '/v1/notification/?host_netid=' + this.netID,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);

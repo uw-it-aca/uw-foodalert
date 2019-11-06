@@ -28,7 +28,7 @@ export default {
       'Content-Type': 'application/json',
     };
 
-    axios.get('/subscription/?netID=' + this.netID, {headers})
+    axios.get('/v1/subscription/?netID=' + this.netID, {headers})
         .then((result) => {
           if (result.data.length) {
             this.$router.push({name: 's-notifications'});
