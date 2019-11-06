@@ -5,7 +5,7 @@
           <slot name="notification"></slot>
       </alert-box>
       <header class="md-5 mb-2" role="banner">
-        <b-navbar class="mx-auto" style="height: 64px;">
+        <b-navbar class="mx-auto" style="height: 64px; max-width: 1232px;">
           <b-navbar-brand class="pl-2 pb-2">
             <img :src="require('../../img/food-alert-logo.svg')"
                   alt="UW Food Alert Logo" height="22"

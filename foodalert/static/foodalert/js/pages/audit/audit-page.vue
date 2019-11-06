@@ -311,9 +311,6 @@ export default {
 </script>
 
 <style>
-    #app .foodalert .page .page-content  .standard-container .audit-parent{
-        max-width: 1000px !important;
-    }
     .audit-parent #pagination {
       text-align: center;
       margin-top: 30px;
