@@ -134,7 +134,7 @@ class NotificationTest(TestCase):
         for x in range(num_notifs):
             # create notification
             with generate_twilio_mock() as mock:
-                end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+                end_time = datetime.now().astimezone()+timedelta(seconds=3600)
                 response = client.post(
                     "/notification/",
                     data=self.data_to_payload_json(
