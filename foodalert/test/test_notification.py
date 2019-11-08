@@ -130,7 +130,7 @@ class NotificationTest(TestCase):
         self.test_data[2]["host"] = self.user2
 
         # create multiple notifications
-        num_notifs = 20
+        num_notifs = 35
         for x in range(num_notifs):
             # create notification
             with generate_twilio_mock() as mock:
@@ -166,13 +166,13 @@ class NotificationTest(TestCase):
             [audit_group]
         )
 
-        page = 1
+        page = 2
         response1 = client.get('/notification/?page={}'.format(page))
         self.assertEqual(response1.status_code, 200)
         # check next page is 2
         self.assertEqual(response1.data['next']['page'], page + 1)
         # check previous page is None
-        self.assertEqual(response1.data['previous']['page'], None)
+        self.assertEqual(response1.data['previous']['page'], page - 1)
         # check for results list
         self.assertIsInstance(response1.data['results'], list)
 
