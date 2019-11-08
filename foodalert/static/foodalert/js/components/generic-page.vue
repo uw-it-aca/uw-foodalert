@@ -14,7 +14,7 @@
           <b-navbar-nav class="d-flex d-sm-none ml-auto">
             <b-nav-item-dropdown variant="link" :text="netID"
               right toggle-class="text-decoration-none">
-              <b-dropdown-item href="#">Sign out</b-dropdown-item>
+              <b-dropdown-item :href="logoutUrl">Sign out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav class="d-none d-sm-flex ml-auto">
@@ -23,6 +23,7 @@
                 {{netID}}
                 <b-button variant="link"
                   id="sign-out"
+                  :href="logoutUrl"
                   type="submit">
                   Sign out
                 </b-button>
@@ -31,8 +32,15 @@
           </b-navbar-nav>
         </b-navbar>
       </header>
-      <main id="standard-body" class="mt-md-5 mt-3"
-        v-bind:class="pageSizeClass">
+      <main id="page-loader" v-if="showUpdateOverlay">
+        <div>
+          <b-spinner label="Loading..."></b-spinner>
+        </div>
+      </main>
+      <main id="standard-body"
+        class="mt-md-5 mt-3"
+        v-bind:class="pageSizeClass"
+        v-show="!showUpdateOverlay">
         <h1 id="standard-heading">
           <slot name="heading"></slot>
         </h1>
@@ -68,6 +76,7 @@ export default {
   data() {
     return {
       notificationState: false,
+      showUpdateOverlay: false,
     };
   },
   beforeMount() {
@@ -125,10 +134,29 @@ export default {
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
+    #page-loader {
+      flex-grow: 1;
+      display: flex;
+    }
+
+    #page-loader > div {
+      margin: auto;
+      font-size: 25px;
+    }
+
+    #page-loader > div > span {
+      width: 100px;
+      height: 100px;
+    }
     .page .page-content .page-content-padding {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
+    }
+    .page .page-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
     .page {
         display: flex;

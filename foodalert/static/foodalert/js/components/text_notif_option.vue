@@ -48,7 +48,7 @@
                     Edit
                   </b-button>
                   <b-button variant="link"
-                            @click="resendVerif(spinners.resend)"
+                            @click="getNewState(spinners.resend)"
                             class="px-0">
                     Resend {{type}}
                     <b-spinner small class="mr-2 spinner-padding"
@@ -62,7 +62,8 @@
         </b-col>
         <b-col cols="4">
           <div v-if="!isOpen">
-            <b-form-checkbox v-model="checked"
+            <b-form-checkbox v-model="serverData.send_sms"
+                  @change="check($event)"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
                   :aria-label="'enable  '+type"
@@ -91,7 +92,7 @@
       </b-row>
     </b-container>
     <b-collapse :id="accord_id" accordion="my-accordion"
-                role="tabpanel" v-model="isOpen">
+                role="tabpanel" v-model="isOpen" @show="focusCollapse">
       <b-card-body>
         <b-container class="p-0">
           <b-row>
@@ -210,7 +211,6 @@ export default {
     visible: Boolean,
     serverData: Object,
     requestUpdate: Function,
-    resendVerif: Function,
     subid: Number,
   },
   data() {
@@ -218,6 +218,7 @@ export default {
       localData: {
         text: '',
         verified: false,
+        send_sms: false,
       },
       spinners: {
         cancel: {state: false},
@@ -231,10 +232,24 @@ export default {
       errorDesc: '',
       validateOn: false,
       errorMsg: '',
-      checked: false,
     };
   },
   methods: {
+    focusCollapse() {
+      let input = '';
+
+      if (this.serverData.text === '') {
+        input = this.type + '-add-input';
+      } else {
+        input = this.type + '-update-input';
+      }
+
+      const el = document.getElementById(input);
+
+      if (el) {
+        el.focus();
+      }
+    },
     formatter(value, event) {
       if (this.type === 'text') {
         return this.numberFormatter(value, event);
@@ -243,6 +258,10 @@ export default {
       }
     },
     numberFormatter(value, event) {
+      if (value === '1' || value === '0') {
+        value = '';
+      }
+
       if (this.validateOn) {
         try {
           const phoneNum = parsePhoneNumber(value, 'US');
@@ -376,15 +395,9 @@ export default {
       this.localData.text = '';
       this.getNewState(spinnerOpt);
     },
-  },
-  watch: {
-    serverData(newVal, oldVal) {
-      this.localData.text = newVal.text; // this is inputting sms with +1
-      this.localData.verified = newVal.verified;
-    },
-    checked(newVal, oldVal) {
+    check(event) {
       const data = {
-        'send_sms': newVal,
+        'send_sms': event,
       };
       const csrftoken = Cookies.get('csrftoken');
       const headers = {
@@ -394,15 +407,20 @@ export default {
       const url = '/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
+          .then(this.requestUpdate)
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });
     },
   },
-  computed: {
+  watch: {
+    serverData(newVal, oldVal) {
+      this.localData.text = newVal.text; // this is inputting sms with +1
+      this.localData.verified = newVal.verified;
+    },
   },
   beforeMount() {
-    this.localData.text = this.serverData.text; // inputting sms with +1
+    this.localData.text = this.serverData.text;
     this.localData.verified = this.serverData.verified;
     this.isOpen = this.visible;
   },

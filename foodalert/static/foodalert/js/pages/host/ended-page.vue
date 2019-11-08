@@ -38,7 +38,9 @@ export default {
   components: {
     'generic-page': GenericPage,
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$data.showUpdateOverlay = true;
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -56,6 +58,8 @@ export default {
             notificationText: 'You already have an event running.',
           },
         });
+      } else {
+        this.$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-ended'));
   },

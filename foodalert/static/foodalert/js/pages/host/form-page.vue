@@ -395,7 +395,12 @@ export default {
     if (typeof this.food_qualifications === 'undefined') {
       this.$router.push({name: 'h-welcome'});
     }
+  },
+  mounted() {
+    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.formValidate.end_time = !this.isMobile;
 
+    this.$children[0].$data.showUpdateOverlay = true;
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -410,6 +415,8 @@ export default {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',
         }});
+      } else {
+        this.$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
     axios.get('/allergen/', {headers}).then((result) => {
@@ -418,10 +425,6 @@ export default {
         this.allergens.push(allergen.name);
       });
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-  },
-  mounted() {
-    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    this.formValidate.end_time = !this.isMobile;
   },
   watch: {
     form: {

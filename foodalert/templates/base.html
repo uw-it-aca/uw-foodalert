@@ -6,12 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script>
             var netid = '{{ netid }}';
+            var logoutUrl = "{{ logout_url }}"
         </script>
     </head>
     <body>
-        <div id="app">
-            <router-view></router-view>
-        </div>
+        <div id="app"></div>
 
         {% render_bundle 'base' %}
         {% if signup %}
@@ -24,5 +23,5 @@
             {% render_bundle 'audit' %}
         {% endif %}
         {% render_bundle 'main' %}
-    </body>  
+    </body>
 </html>

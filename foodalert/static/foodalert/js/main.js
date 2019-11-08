@@ -27,14 +27,19 @@ router.beforeEach((to, from, next) => {
 });
 
 /* global netid*/
-if (typeof netid !== 'undefined') {
+/* global logoutUrl*/
+if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
   const _netID = netid;
+  const _logoutUrl = logoutUrl;
 
   Vue.mixin({
     data() {
       return {
         get netID() {
           return _netID;
+        },
+        get logoutUrl() {
+          return _logoutUrl;
         },
       };
     },
@@ -57,8 +62,7 @@ if (typeof netid !== 'undefined') {
 }
 
 export const vm = new Vue({
-  delimiters: ['[[', ']]'],
-  el: '#app',
+  render: (createElement) => createElement('router-view'),
   router,
   data() {
     return {
@@ -66,6 +70,6 @@ export const vm = new Vue({
     };
   },
   components,
-});
+}).$mount('#app');
 
 global.vm = vm;

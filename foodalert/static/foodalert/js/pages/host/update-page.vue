@@ -31,26 +31,25 @@
                   Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
           </b-modal>
-          <p id="update-label" class="p pb-3">
+          <p class="p pb-3">
             When the food is all gone, please return here to send an update.
             This will prevent people from making unnecessary trips.
           </p>
           <b-form>
-            <b-form-radio-group id="update-food"
+            <b-form-radio-group
               v-model="selected" stacked>
               <b-form-radio value="noFoodUpdate"
-                aria-labelledby="update-label nofood-label"
                 @change="validationOn = false">
-                  <span id="nofood-label">No food left</span>
+                  <span>No food left</span>
               </b-form-radio>
               <b-form-radio id="otherRadio"
-                aria-labelledby="update-label otherup-label"
                 value="otherUpdate" class="mt-1" ref="otherUpdate">
-                  <span class="mt-2 w-100" id="otherup-label">
+                  <span class="mt-2 w-100">
                       Other message
                       <b-form-textarea
                         id="other-message"
                         ref="otherMessage" maxlength="100"
+                        aria-label="other message description"
                         required placeholder="We've moved to HUB 120"
                         class="mb-2 standard-placeholder" v-model="otherText"
                         size="lg" @click="selected='otherUpdate'"
@@ -125,7 +124,9 @@ export default {
       validationOn: false,
     };
   },
-  beforeMount() {
+  mounted() {
+    this.$children[0].$data.showUpdateOverlay = true;
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -143,6 +144,7 @@ export default {
                 {headers})
                 .then((response) => {
                   this.state = response.data;
+                  this.$children[0].$data.showUpdateOverlay = false;
                 }).catch((error) =>
                   this.showErrorPage(error.response, 'h-update'));
           }

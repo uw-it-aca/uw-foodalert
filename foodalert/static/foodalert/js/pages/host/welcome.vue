@@ -25,7 +25,11 @@ export default {
     return {
     };
   },
-  beforeMount() {
+  mounted() {
+    // first child is welcome-page
+    // second child is generic-page
+    this.$children[0].$children[0].$data.showUpdateOverlay = true;
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -40,6 +44,8 @@ export default {
         this.$router.push({name: 'h-update', params: {
           notificationText: 'You already have an event running.',
         }});
+      } else {
+        this.$children[0].$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-welcome'));
   },
