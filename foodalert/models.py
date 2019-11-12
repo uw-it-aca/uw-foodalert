@@ -9,7 +9,7 @@ class Notification(models.Model):
     event = models.CharField(max_length=40, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
-    food_served = models.CharField(max_length=100, blank=False)
+    food_served = models.CharField(max_length=200, blank=False)
     food_qualifications = models.ManyToManyField(
         'FoodQualification', blank=False)
     bring_container = models.BooleanField(default=False)
