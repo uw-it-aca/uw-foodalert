@@ -331,6 +331,13 @@ if DEBUG:
     # EMAIL_BACKEND='saferecipient.EmailBackend'
     SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
 
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_HOST = 'localhost'
+
+    # EMAIL_BACKEND='saferecipient.EmailBackend'
+    SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+
 FOODALERT_AUTHZ_GROUPS = {
     'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),
     'audit': os.getenv("FA_AUDIT_GROUP", 'u_test_admin')
