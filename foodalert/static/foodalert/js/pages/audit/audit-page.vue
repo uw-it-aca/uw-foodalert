@@ -134,7 +134,7 @@ export default {
         {key: 'ended', label: 'Host ended event'},
       ],
       req: null,
-      baseURL: '/notification/',
+      baseURL: '/v1/notification/',
       currentPage: null,
       totalPages: null,
       nextPage: null,
@@ -226,7 +226,7 @@ export default {
 
             for (let i = 0; i < resp.length; i++) {
             // Iterate through each notification detail
-              axios.get('/notification/' + resp[i].id + '/', {headers})
+              axios.get(this.baseURL + resp[i].id + '/', {headers})
                   .then(this.addItems)
                   .catch((error) => this.showErrorPage(error.response,
                       'a-audit'),
@@ -265,12 +265,12 @@ export default {
         'Content-Type': 'application/json',
       };
 
-      axios.get('/updates/?parent_notification=' + id, {headers})
+      axios.get('/v1/updates/?parent_notification=' + id, {headers})
           .then((response) => {
             const data = response.data;
 
             for (let i = 0; i < data.length; i++) {
-              axios.get('/updates/' + data[i].id + '/', {headers})
+              axios.get('/v1/updates/' + data[i].id + '/', {headers})
                   .then((response) => {
                     const update = response.data;
                     const calc = id - (i+1)/(data.length +1);
