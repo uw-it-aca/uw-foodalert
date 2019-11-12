@@ -16,7 +16,7 @@
                 <br/>
 
                 <!-- audit log table -->
-                <b-table 
+                <b-table
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
                 :items="items"
