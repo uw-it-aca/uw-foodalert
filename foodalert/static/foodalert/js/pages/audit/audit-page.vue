@@ -16,7 +16,7 @@
                 <br/>
 
                 <!-- audit log table -->
-                <b-table
+                <b-table 
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
                 :items="items"
@@ -314,15 +314,6 @@ export default {
     .audit-parent #pagination {
       text-align: center;
       margin-top: 30px;
-    }
-    .audit-parent tr.table-update td[aria-colindex="1"],
-    .audit-parent tr.table-update td[aria-colindex="2"],
-    .audit-parent tr.table-update td[aria-colindex="3"],
-    .audit-parent tr.table-update td[aria-colindex="4"]{
-      border-top: none;
-    }
-    .audit-parent tbody tr:not(.table-update){
-      border-top: solid 2px gray;
     }
     #btn-nav {
       display: flex;
