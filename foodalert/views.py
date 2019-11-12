@@ -182,11 +182,11 @@ class UpdateList(generics.ListCreateAPIView):
                                            parent.event +
                                            ' Update: ' + data['text'])
             if email_recipients != []:
-               Sender.send_email(
-                   parent.event + ' Update: ' + data['text'],
-                   email_recipients,
-                   slug
-               )
+                Sender.send_email(
+                    parent.event + ' Update: ' + data['text'],
+                    email_recipients,
+                    slug
+                )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 
