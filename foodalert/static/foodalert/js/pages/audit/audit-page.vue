@@ -5,19 +5,13 @@
             <div class="audit-parent">
                 <!-- search and filter feature -->
                 <b-row class="mt-1">
-                  <b-col id="filter-bar" sm="4" lg="5">
-                      <b-input
-                      id="search-filter" type="search"
-                      v-model="search"
-                      placeholder="Filter by sender's UW NetID or name of event"
-                      aria-label="filter results by uw netid or name of event"/>
-                  </b-col>
-                  <b-col>
-                    <b-button class="float-right"
-                    @click="exportTable">
-                      Export csv
-                    </b-button>
-                  </b-col>
+                <b-col id="filter-bar" sm="4" lg="4">
+                    <b-input
+                    id="search-filter" type="search"
+                    v-model="search"
+                    placeholder="Filter by sender's UW NetID or name of event"
+                    aria-label="filter results by uw netid or name of event"/>
+                </b-col>
                 </b-row>
                 <br/>
 
@@ -307,49 +301,6 @@ export default {
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
-    },
-    exportTable() {
-      // Write the column names as the first line in the result
-      const keys = Object.keys(this.items[0]);
-      let result = '';
-
-      result += keys.join(',');
-      result += '\n';
-
-      // Iterate over each row and append them with comma seperation
-      this.items.forEach(function(item) {
-        keys.forEach(function(key) {
-          if (key === 'allergens' || key == 'food.qualifications' && item[key]){
-            item[key] = item[key].replace(',', ' &')
-          }
-          // all associated notifications will have the same id
-          if (key === 'id') {
-            item[key] = Math.ceil(item[key])
-          }
-          if (item[key] === '') {
-            result += 'null';
-          } else {
-            result += item[key];
-          }
-
-          result += ',';
-        });
-        result = result.slice(0, -1);
-        result += '\n';
-      });
-
-      // Define the content of our csv & encode the URI
-      const csv = 'data:text/csv;charset=utf-8,' + result;
-      const data = encodeURI(csv);
-
-      // Programmatically make a link to download the csv and click it
-      const link = document.createElement('a');
-
-      link.setAttribute('href', data);
-      link.setAttribute('download', 'auditlog.csv');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
     },
   },
   beforeMount() {
