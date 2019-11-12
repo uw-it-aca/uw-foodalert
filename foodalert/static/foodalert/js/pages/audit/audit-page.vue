@@ -302,9 +302,7 @@ export default {
 
                     ret = flatten(ret);
                     this.items.push(ret);
-                  })
-                  .catch((error) => this.showErrorPage(error.response,
-              'a-audit'));
+                  });
             }
           })
           .catch((error) => this.showErrorPage(error.response,
@@ -313,11 +311,6 @@ export default {
     exportTable() {
       // Write the column names as the first line in the result
       const keys = Object.keys(this.items[0]);
-
-      this.items.sort(function(a, b) {
-        return b.id - a.id;
-      })
-
       let result = '';
 
       result += keys.join(',');
@@ -326,12 +319,12 @@ export default {
       // Iterate over each row and append them with comma seperation
       this.items.forEach(function(item) {
         keys.forEach(function(key) {
-          if (key === 'food.allergens' || key == 'food.qualifications' && item[key]){
+          if (key === 'allergens' || key == 'food.qualifications' && item[key]){
             item[key] = item[key].replace(',', ' &')
           }
           // all associated notifications will have the same id
           if (key === 'id') {
-            item[key] = Math.ceil(item[key]);
+            item[key] = Math.ceil(item[key])
           }
           if (item[key] === '') {
             result += 'null';
