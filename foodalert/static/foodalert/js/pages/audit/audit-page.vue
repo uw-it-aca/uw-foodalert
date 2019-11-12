@@ -223,7 +223,8 @@ export default {
 
             if (url.includes('?page=')) {
               resp = response.data.results;
-
+              document.getElementById('pagination').classList.remove('d-none');
+              
               this.updatePagination(response);
             } else {
               document.getElementById('pagination').classList.add('d-none');
