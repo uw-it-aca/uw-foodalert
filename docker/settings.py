@@ -329,14 +329,14 @@ if DEBUG:
     EMAIL_HOST = 'localhost'
     SAFE_EMAIL_RECIPIENT = 'javerage@uw.edu'
 
-if not DEBUG:
-    SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
-    EMAIL_BACKEND='saferecipient.EmailBackend'
-    EMAIL_HOST='smtp.gmail.com'
+if DEBUG:
+    SAFE_EMAIL_RECIPIENT = os.getenv("SAFE_EMAIL_RECIPIENT")
+    EMAIL_BACKEND = 'saferecipient.EmailBackend'
+    EMAIL_HOST = os.getenv("EMAIL_HOST")
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'notarealaddress@uw.edu'
-    EMAIL_HOST_PASSWORD = 'fakepass123'
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),
