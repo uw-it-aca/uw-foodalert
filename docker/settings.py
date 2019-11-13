@@ -327,8 +327,7 @@ AWS_MESSAGE_ATTRIBUTES = {
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     EMAIL_HOST = 'localhost'
-    # EMAIL_BACKEND='saferecipient.EmailBackend'
-    # SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+    SAFE_EMAIL_RECIPIENT = 'javerage@uw.edu'
 
 if not DEBUG:
     SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
