@@ -134,8 +134,9 @@ class NotificationList(generics.ListCreateAPIView):
                         Sender.send_twilio_sms(sms_recipients, message)
                     elif settings.FOODALERT_USE_SMS == "amazon":
                         Sender.send_amazon_sms(sms_recipients, message)
-                    if email_recipients != []:
-                        Sender.send_email(message, email_recipients, slug)
+
+                if email_recipients != []:
+                    Sender.send_email(message, email_recipients, slug)
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -215,12 +216,12 @@ class UpdateList(generics.ListCreateAPIView):
                     Sender.send_amazon_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                if email_recipients != []:
-                    Sender.send_email(
-                        parent.event + ' Update: ' + data['text'],
-                        email_recipients,
-                        slug
-                    )
+            if email_recipients != []:
+                Sender.send_email(
+                    parent.event + ' Update: ' + data['text'],
+                    email_recipients,
+                    slug
+                )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 

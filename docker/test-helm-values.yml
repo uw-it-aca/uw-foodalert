@@ -45,6 +45,22 @@ environmentVariablesSecrets:
     name: TWILIO_NOTIFY_SERVICE_ID
     secretName: foodalert-eval-twillio
     secretKey: service_sid
+  emailSafeEmail:
+    name: SAFE_EMAIL_RECIPIENT
+    secretName: foodalert-eval-email
+    secretKey: safe_email
+  emailEmailHost:
+    name: EMAIL_HOST
+    secretName: foodalert-eval-email
+    secretKey: email_host
+  emailEmailHostUser:
+    name: EMAIL_HOST_USER
+    secretName: foodalert-eval-email
+    secretKey: email_host_user
+  emailEmailHostPassword:
+    name: EMAIL_HOST_PASSWORD
+    secretName: foodalert-eval-email
+    secretKey: email_host_password
   spCert:
     name: SP_CERT
     secretName: foodalert.aca-aws.s.uw.edu
