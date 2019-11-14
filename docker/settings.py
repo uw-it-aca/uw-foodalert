@@ -329,7 +329,7 @@ if DEBUG:
     EMAIL_HOST = 'localhost'
     SAFE_EMAIL_RECIPIENT = 'javerage@uw.edu'
 
-if DEBUG:
+if not DEBUG:
     SAFE_EMAIL_RECIPIENT = os.getenv("SAFE_EMAIL_RECIPIENT")
     EMAIL_BACKEND = 'saferecipient.EmailBackend'
     EMAIL_HOST = os.getenv("EMAIL_HOST")
