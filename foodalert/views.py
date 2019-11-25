@@ -240,6 +240,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
             if 'send_sms' in request.data:
                 request.data['send_sms'] = False
         if ('sms_number' in request.data and
+                not Subscription.objects.get(pk=pk).number_verified and
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
@@ -255,6 +256,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
             if 'send_sms' in request.data:
                 request.data['send_sms'] = False
         if ('sms_number' in request.data and
+                not Subscription.objects.get(pk=pk).number_verified and
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
