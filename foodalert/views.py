@@ -243,7 +243,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                "Reply YES/NO to verify/delete your number for Food Alert"
             )
         return super().put(request, pk)
 
@@ -258,7 +258,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                "Reply YES/NO to verify/delete your number for Food Alert"
             )
         return super().patch(request, pk)
 
@@ -362,7 +362,7 @@ class SmsReciver(APIView):
             if not sub.number_verified:
                 if request.data['Body'].upper() == "YES":
                     resp.message(
-                        'HungryHusky has verified your number.' +
+                        'Food Alert has verified your number.' +
                         ' Your notifications are currently paused. ' +
                         'Send RESUME to resume receiving notifications.'
                     )
@@ -370,40 +370,40 @@ class SmsReciver(APIView):
                     sub.save()
                     return HttpResponse(resp)
                 elif request.data['Body'].upper() == "NO":
-                    resp.message('HungryHusky has deleted your number')
+                    resp.message('Food Alert has deleted your number')
                     sub.sms_number = ''
                     sub.save()
                     return HttpResponse(resp)
             if (request.data['Body'].upper() == "RESUME" and
                sub.number_verified and not sub.send_sms):
-                resp.message('HungryHusky has resumed sending you' +
+                resp.message('Food Alert has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
                              'receiving notifications.')
                 sub.send_sms = True
                 sub.save()
             elif (request.data['Body'].upper() == "PAUSE" and
                   sub.number_verified and sub.send_sms):
-                resp.message('HungryHusky will not send any send you any' +
+                resp.message('Food Alert will not send any send you any' +
                              ' more notifications. Send RESUME to resume ' +
                              'receiving notifications.')
                 sub.send_sms = False
                 sub.save()
             else:
                 resp.message(
-                    'HungryHusky did not understand that command.\n' +
+                    'Food Alert did not understand that command.\n' +
                     'The available commands are:\n' +
                     (
                         (
-                            "PAUSE: Pause reciving notifications."
+                            "PAUSE: Pause receiving notifications."
                             if sub.send_sms else
-                            "RESUME: Resume reciving notifications."
+                            "RESUME: Resume receiving notifications."
                         )
                         if sub.number_verified else
-                        "YES: To verify your number."
+                        "YES/NO: To verify/delete your number."
                     )
                 )
         except Subscription.DoesNotExist:
-            resp.message('HungryHusky does not have this number registered.')
+            resp.message('Food Alert does not have this number registered.')
             return HttpResponse(resp)
 
         return HttpResponse(resp)
