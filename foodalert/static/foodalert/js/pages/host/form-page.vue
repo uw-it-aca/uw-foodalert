@@ -431,6 +431,7 @@ export default {
       handler(newState) {
         const checkFunction = (text)=>{
           text = text.trim();
+
           return text.length > 0;
         };
 
