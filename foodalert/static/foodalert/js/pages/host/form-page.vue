@@ -69,6 +69,7 @@
               Tell people about your
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
+                            maxlength="200"
                             aria-describedby="food-clarification"
                             v-model="form.food_served"
                             :state="inputValid('food_served')"
