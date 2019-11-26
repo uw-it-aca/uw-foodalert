@@ -49,7 +49,7 @@
           <label class="standard-label w-100 mb-0" for="event-name">
             Event name
             <b-form-input id="event-name" ref="event"
-              v-model="form.event" :state="inputValid('event')"
+              v-model.trim="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
               class="standard-placeholder mt-2"
               size="lg" @blur="enableValidation.event=true">
@@ -70,7 +70,7 @@
               food and the approximate quantity.</p>
             <b-form-textarea id="food-description" ref="food_served"
                             aria-describedby="food-clarification"
-                            v-model="form.food_served"
+                            v-model.trim="form.food_served"
                             :state="inputValid('food_served')"
                             :placeholder="placeholderForm.food_served"
                             class="standard-placeholder" size="lg"
@@ -90,7 +90,7 @@
             for="location">Location
             <b-form-input id="location"
               ref="location"
-              v-model="form.location" :state="inputValid('location')"
+              v-model.trim="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
               class="standard-placeholder mt-2" size="lg"
               @blur="enableValidation.location=true">
@@ -112,7 +112,7 @@
             <b-col sm=12 md=8>
               <div v-if="isMobile">
                 <b-form-input id="end-time" aria-describedby="end-time-feedback"
-                  v-model="form.end_time"
+                  v-model.trim="form.end_time"
                   :state="inputValid('end_time')"
                   type="time" class="standard-placeholder" size="lg">
                 </b-form-input>
