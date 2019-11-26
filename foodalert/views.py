@@ -243,16 +243,12 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubscriptionDetailSerializer
     permission_classes = [IsSelf]
 
-    def put(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified):
-            if 'send_email' in request.data:
-                request.data['send_email'] = False
-        if (not Subscription.objects.get(pk=pk).number_verified):
-            if 'send_sms' in request.data:
-                request.data['send_sms'] = False
-        if ('sms_number' in request.data and
-                not Subscription.objects.get(pk=pk).number_verified and
-                not settings.DEBUG and request.data['sms_number'] != ''):
+    def put(self, request, pk): 
+        if ('sms_number' in request.data and not settings.DEBUG and
+                request.data['sms_number'] != '' and
+                (not Subscription.objects.get(pk=pk).number_verified or 
+                request.data['sms_number'] !=
+                Subscription.objects.get(pk=pk).sms_number)):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
                 ("You have registered this number with UW Food Alert to"
@@ -262,15 +258,11 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
         return super().put(request, pk)
 
     def patch(self, request, pk):
-        if (not Subscription.objects.get(pk=pk).email_verified):
-            if 'send_email' in request.data:
-                request.data['send_email'] = False
-        if (not Subscription.objects.get(pk=pk).number_verified):
-            if 'send_sms' in request.data:
-                request.data['send_sms'] = False
-        if ('sms_number' in request.data and
-                not Subscription.objects.get(pk=pk).number_verified and
-                not settings.DEBUG and request.data['sms_number'] != ''):
+        if ('sms_number' in request.data and not settings.DEBUG and
+                request.data['sms_number'] != '' and
+                (not Subscription.objects.get(pk=pk).number_verified or 
+                request.data['sms_number'] !=
+                Subscription.objects.get(pk=pk).sms_number)):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
                 ("You have registered this number with UW Food Alert to"
