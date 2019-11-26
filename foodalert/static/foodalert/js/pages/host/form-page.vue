@@ -48,7 +48,7 @@
         <div>
           <label class="standard-label w-100 mb-0" for="event-name">
             Event name
-            <b-form-input id="event-name" ref="event"
+            <b-form-input id="event-name" ref="event" maxlength="40"
               v-model="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
               class="standard-placeholder mt-2"
@@ -90,7 +90,7 @@
           <label id="location-label" class="standard-label w-100 mb-0"
             for="location">Location
             <b-form-input id="location"
-              ref="location"
+              ref="location" maxlength="200"
               v-model="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
               class="standard-placeholder mt-2" size="lg"
