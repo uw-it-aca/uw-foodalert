@@ -11,10 +11,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.request_validator import RequestValidator
@@ -38,6 +39,35 @@ audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
 logger = logging.getLogger('django.request')
 
 
+# Override pagination settings
+class StandardPaginationResult(PageNumberPagination):
+    page_size = 15
+    page_query_param = 'page'
+
+    def get_paginated_response(self, data):
+        next_pg = None
+        if(self.page.has_next()):
+            next_pg = self.page.next_page_number()
+
+        previous_pg = None
+        if(self.page.has_previous()):
+            previous_pg = self.page.previous_page_number()
+
+        return Response({
+            'next': {
+                'link': self.get_next_link(),
+                'page': next_pg,
+            },
+            'previous': {
+                'link': self.get_previous_link(),
+                'page': previous_pg,
+            },
+            'pagesize': self.page_size,
+            'count': self.page.paginator.count,
+            'results': data
+        })
+
+
 @method_decorator(login_required(), name='dispatch')
 class NotificationDetail(generics.RetrieveAPIView):
     queryset = Notification.objects.all()
@@ -48,9 +78,14 @@ class NotificationDetail(generics.RetrieveAPIView):
 @method_decorator(login_required(), name='dispatch')
 class NotificationList(generics.ListCreateAPIView):
     permission_classes = [((IsSelf & HostRead) | AuditRead) | HostCreate]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['host__username', 'event']
 
     def get_queryset(self):
         qs = Notification.objects.all()
+        # use pagination only when 'page' query param is present
+        if 'page' in self.request.query_params:
+            self.pagination_class = StandardPaginationResult
         if 'host_netid' in self.request.query_params:
             try:
                 user = User.objects.get(
@@ -99,8 +134,9 @@ class NotificationList(generics.ListCreateAPIView):
                         Sender.send_twilio_sms(sms_recipients, message)
                     elif settings.FOODALERT_USE_SMS == "amazon":
                         Sender.send_amazon_sms(sms_recipients, message)
-                    if email_recipients != []:
-                        Sender.send_email(message, email_recipients, slug)
+
+                if email_recipients != []:
+                    Sender.send_email(message, email_recipients, slug)
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -180,12 +216,12 @@ class UpdateList(generics.ListCreateAPIView):
                     Sender.send_amazon_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                if email_recipients != []:
-                    Sender.send_email(
-                        parent.event + ' Update: ' + data['text'],
-                        email_recipients,
-                        slug
-                    )
+            if email_recipients != []:
+                Sender.send_email(
+                    parent.event + ' Update: ' + data['text'],
+                    email_recipients,
+                    slug
+                )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 

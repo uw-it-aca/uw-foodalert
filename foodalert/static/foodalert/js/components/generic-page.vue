@@ -38,10 +38,11 @@
         </div>
       </main>
       <main id="standard-body"
-        class="standard-container mt-md-5 mt-3"
+        class="mt-md-5 mt-3"
+        v-bind:class="pageSizeClass"
         v-show="!showUpdateOverlay">
         <h1 id="standard-heading">
-            <slot name="heading"></slot>
+          <slot name="heading"></slot>
         </h1>
         <slot name="body"></slot>
         <slot name="navigation"></slot>
@@ -66,6 +67,10 @@ export default {
     startWithNotification: {
       type: Boolean,
       default: false,
+    },
+    pageSizeClass: {
+      type: String,
+      default: 'standard-container',
     },
   },
   data() {
@@ -129,7 +134,6 @@ export default {
         color: #484848;
         -moz-osx-font-smoothing: grayscale;
     }
-
     #page-loader {
       flex-grow: 1;
       display: flex;
@@ -144,26 +148,22 @@ export default {
       width: 100px;
       height: 100px;
     }
-
     .page .page-content .page-content-padding {
       padding-left: 24px;
       padding-right: 24px;
       padding-bottom: 8px;
     }
-
     .page .page-content {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
     }
-
     .page {
         display: flex;
         min-height: 100vh;
         flex-direction: column;
         align-content: space-between;
     }
-
     #relative-footer {
         margin-top: auto;
         padding-top: 16px;
@@ -171,16 +171,16 @@ export default {
         width: 100%;
         -moz-osx-font-smoothing: grayscale;
     }
-
-    .standard-container {
-      max-width: 700px;
+    .standard-container, .full-container{
       padding-left: 24px;
       padding-right: 24px;
       position: relative;
       margin-left: auto;
       margin-right: auto;
     }
-
+    .standard-container {
+      max-width: 700px;
+    }
     .foodalert .alert {
       font-weight: 600;
       font-size: 20px;
@@ -191,16 +191,13 @@ export default {
       height: 70px;
       border-radius: 10px;
     }
-
     .foodalert .alert-dismissible .close{
       height: 100%;
       opacity: 1;
     }
-
     .foodalert .alert-dismissible .close:hover{
       color: white;
     }
-
     .foodalert .btn.btn-link[role='link'] {
       vertical-align: initial;
     }
