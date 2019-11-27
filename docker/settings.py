@@ -331,7 +331,7 @@ if DEBUG:
 
 if not DEBUG:
     SAFE_EMAIL_RECIPIENT = os.getenv("SAFE_EMAIL_RECIPIENT")
-    EMAIL_BACKEND = 'saferecipient.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = os.getenv("EMAIL_HOST")
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
