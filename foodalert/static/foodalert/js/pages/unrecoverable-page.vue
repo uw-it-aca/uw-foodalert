@@ -21,7 +21,7 @@
     <template #navigation>
       <div style="margin-top: 32px">
           <div class="d-flex justify-content-center">
-            <b-button class="btn btn-primary center-block" type="submit" 
+            <b-button class="btn btn-primary center-block" type="submit"
               variant="primary" @click="getNextPage()">
               Try Again
             </b-button>
