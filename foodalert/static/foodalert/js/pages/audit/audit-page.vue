@@ -10,7 +10,8 @@
                       id="search-filter" type="search"
                       v-model="search"
                       placeholder="Filter by sender's UW NetID or name of event"
-                      aria-label="filter results by uw netid or name of event. Just type to filter table"/>
+                      aria-label="filter results by uw netid or name of event.
+                      Just type to filter table"/>
                   </b-col>
                   <b-col>
                     <b-button class="float-right"
@@ -165,6 +166,7 @@ export default {
           this.currentPage = 1;
           url += '?page=1';
         }
+
         this.requestLogs(url);
       }, 500);
     },
@@ -175,9 +177,10 @@ export default {
         // if only one page do not display buttons
         document.getElementById('btn-nav').classList.add('d-none');
         const results = document.getElementById('num-results');
-        let count = response.data.count
-        let word = count == 1 ? " result" : " results"
-        results.innerText = count + word
+        const count = response.data.count;
+        const word = count === 1 ? ' result' : ' results';
+
+        results.innerText = count + word;
       } else {
         document.getElementById('pagination').classList.remove('d-none');
         this.prevPage = response.data.previous.page;
@@ -198,16 +201,19 @@ export default {
         if (this.nextPage && this.nextPage !== this.totalPages) {
           this.pages.push(this.nextPage);
         }
+
         // Fill in result text
         const results = document.getElementById('num-results');
         const x = response.data.pagesize * (this.currentPage - 1) + 1;
         const y = x + response.data.results.length - 1;
+
         results.innerText = x + '-' + y + ' of ' +
           response.data.count + ' results';
       }
 
       // re set page focus
       const el = document.querySelector('h1');
+
       el.setAttribute('tabindex', '-1');
       el.style.outline = 'none';
       el.focus();
@@ -232,25 +238,29 @@ export default {
             if (url.includes('?page=')) {
               resp = response.data.results;
               document.getElementById('pagination').classList.remove('d-none');
-              
+
               this.updatePagination(response);
             } else {
               document.getElementById('btn-nav').classList.add('d-none');
               resp = response.data;
               // display total numbe of results
               const results = document.getElementById('num-results');
-              let word = resp.length == 1 ? " result" : " results"
-              results.innerText = resp.length + word
+              const word = resp.length === 1 ? ' result' : ' results';
+
+              results.innerText = resp.length + word;
             }
 
             // add notifications and updates to table
             for (let i = 0; i < resp.length; i++) {
-              let notification = resp[i].notification
-              this.addNotification(notification)
-              let updates = resp[i].updates
-              for(let j = 0; j < updates.length; j++){
-                let id = notification.id - (j + 1) / (updates.length + 1)
-                this.addUpdate(updates[j], notification.id)
+              const notification = resp[i].notification;
+
+              this.addNotification(notification);
+              const updates = resp[i].updates;
+
+              for (let j = 0; j < updates.length; j++) {
+                const id = notification.id - (j + 1) / (updates.length + 1);
+
+                this.addUpdate(updates[j], id);
               }
             }
           })
@@ -281,7 +291,7 @@ export default {
     },
     addUpdate(update, id) {
       let ret = {
-        'id': id,
+        id,
         'netID': '',
         'location': '',
         'event': '',
@@ -296,7 +306,7 @@ export default {
         'host.netID': '',
         'host.userAgent': '',
         'ended': '',
-        '_rowVariant': 'update'
+        '_rowVariant': 'update',
       };
 
       ret = flatten(ret);
@@ -304,26 +314,26 @@ export default {
     },
     exportTable() {
       const headers = {
-        'Accept' : 'text/csv'
+        'Accept': 'text/csv',
       };
 
       axios.get('/auditlog/', {headers})
-        .then(response => {
-          let result = response.data
+          .then((response) => {
+            const result = response.data;
 
-          // Define the content of our csv & encode the URI
-          const csv = 'data:text/csv;charset=utf-8,' + result;
-          const data = encodeURI(csv);
+            // Define the content of our csv & encode the URI
+            const csv = 'data:text/csv;charset=utf-8,' + result;
+            const data = encodeURI(csv);
 
-          // Programmatically make a link to download the csv and click it
-          const link = document.createElement('a');
+            // Programmatically make a link to download the csv and click it
+            const link = document.createElement('a');
 
-          link.setAttribute('href', data);
-          link.setAttribute('download', 'auditlog.csv');
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-        })
+            link.setAttribute('href', data);
+            link.setAttribute('download', 'auditlog.csv');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+          });
     },
   },
   beforeMount() {
