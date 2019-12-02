@@ -327,9 +327,16 @@ AWS_MESSAGE_ATTRIBUTES = {
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     EMAIL_HOST = 'localhost'
+    SAFE_EMAIL_RECIPIENT = 'javerage@uw.edu'
 
-    # EMAIL_BACKEND='saferecipient.EmailBackend'
-    SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
+if not DEBUG:
+    SAFE_EMAIL_RECIPIENT = os.getenv("SAFE_EMAIL_RECIPIENT")
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv("EMAIL_HOST")
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 FOODALERT_AUTHZ_GROUPS = {
     'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),

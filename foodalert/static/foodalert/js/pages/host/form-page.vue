@@ -90,7 +90,7 @@
           <label id="location-label" class="standard-label w-100 mb-0"
             for="location">Location
             <b-form-input id="location"
-              ref="location" maxlength="100"
+              ref="location" maxlength="200"
               v-model="form.location" :state="inputValid('location')"
               :placeholder="placeholderForm.location"
               class="standard-placeholder mt-2" size="lg"
@@ -430,6 +430,8 @@ export default {
     form: {
       handler(newState) {
         const checkFunction = (text)=>{
+          text = text.trim();
+
           return text.length > 0;
         };
 
