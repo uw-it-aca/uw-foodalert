@@ -11,7 +11,6 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.db.models import Value, ManyToManyField
 
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
@@ -414,8 +413,8 @@ class SmsReciver(APIView):
 @method_decorator(login_required(), name='dispatch')
 class AuditList(generics.ListAPIView):
     queryset = Notification.objects.all()
-    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)
-    + (r.CSVRenderer, )
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)\
+        + (r.CSVRenderer, )
     permission_classes = [AuditRead]
 
     filter_backends = [filters.SearchFilter]
@@ -428,7 +427,6 @@ class AuditList(generics.ListAPIView):
         return qs
 
     def get_serializer_class(self):
-        # import pdb; pdb.set_trace()
         if 'Accept' in self.request.META:
             if self.request.META['Accept'] == 'text/csv':
                 return CSVAuditListSerializer
@@ -440,8 +438,8 @@ class AuditList(generics.ListAPIView):
                 notifications = self.get_queryset()
 
                 response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] =
-                'attachment; filename="AuditLog.csv"'
+                response['Content-Disposition'] = 'attachment;\
+                 filename="AuditLog.csv"'
 
                 csv.register_dialect("unix_newline", lineterminator="\n")
                 writer = csv.writer(response, dialect="unix_newline")
@@ -475,7 +473,7 @@ class AuditList(generics.ListAPIView):
                     ])
 
                     try:
-                        # get update list
+                        # get associated update list
                         update_queryset = Update.objects.all()
                         update_queryset = update_queryset.filter(
                             parent_notification=notif
