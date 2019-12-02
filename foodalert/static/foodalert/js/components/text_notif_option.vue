@@ -478,7 +478,7 @@ export default {
     }
 
     .notif-option-card .text-unverified {
-        color: #E05018;
+        color: #D93900;
     }
 
     .notif-option-card .text-verified {
@@ -486,7 +486,7 @@ export default {
     }
 
     .notif-option-card .form-text.error-desp {
-        color: #E05018;
+        color: #D93900;
     }
 
     .notif-option-card .spinner-padding {
