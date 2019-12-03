@@ -19,7 +19,7 @@ class TwilioTest(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.recipients = ['+11111111111']
-        cls.message = "Hungry Husky Event: Test Event is Open"
+        cls.message = "UW Food Alert Event: Test Event is Open"
 
     @classmethod
     def tearDownClass(cls):
@@ -48,7 +48,7 @@ class TwilioTest(TestCase):
                          new_callable=PropertyMock) as mock:
             mock.return_value = m1
             sms = Sender.send_twilio_sms(self.recipients, self.message)
-            self.assertEquals('Hungry Husky Event: Test Event is Open',
+            self.assertEquals('UW Food Alert: Test Event is Open',
                               sms.body)
             self.assertEquals(200, sms.status)
 
@@ -262,7 +262,7 @@ class TwilioTest(TestCase):
             self.assertEqual(response.status_code, 200)
 
             resp = MessagingResponse()
-            resp.message('HungryHusky does not have this number registered.')
+            resp.message('UW Food Alert does not have this number registered.')
             self.assertEqual(response.content.decode("utf-8"), str(resp))
 
             sub_updated = Subscription.objects.get(pk=sub.pk)
