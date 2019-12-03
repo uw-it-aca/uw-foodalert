@@ -399,7 +399,7 @@ class SmsReciver(APIView):
                             "RESUME: Resume reciving notifications."
                         )
                         if sub.number_verified else
-                        "YES: To verify your number.\n" + 
+                        "YES: To verify your number.\n" +
                         "No: To delete your number."
                     )
                 )
