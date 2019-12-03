@@ -360,7 +360,7 @@ class SmsReciver(APIView):
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if not sub.number_verified:
-                if request.data['Body'] == "YES":
+                if request.data['Body'].lower() == "yes":
                     resp.message(
                         'HungryHusky has verified your number.' +
                         ' Your notifications are currently paused. ' +
@@ -369,19 +369,19 @@ class SmsReciver(APIView):
                     sub.number_verified = True
                     sub.save()
                     return HttpResponse(resp)
-                elif request.data['Body'] == "NO":
+                elif request.data['Body'].lower() == "no":
                     resp.message('HungryHusky has deleted your number')
                     sub.sms_number = ''
                     sub.save()
                     return HttpResponse(resp)
-            if (request.data['Body'] == "RESUME" and
+            if (request.data['Body'].lower() == "resume" and
                sub.number_verified and not sub.send_sms):
                 resp.message('HungryHusky has resumed sending you' +
                              ' more notifications. Send PAUSE to pause ' +
                              'receiving notifications.')
                 sub.send_sms = True
                 sub.save()
-            elif (request.data['Body'] == "PAUSE" and
+            elif (request.data['Body'].lower() == "pause" and
                   sub.number_verified and sub.send_sms):
                 resp.message('HungryHusky will not send any send you any' +
                              ' more notifications. Send RESUME to resume ' +
@@ -399,7 +399,8 @@ class SmsReciver(APIView):
                             "RESUME: Resume reciving notifications."
                         )
                         if sub.number_verified else
-                        "YES: To verify your number."
+                        "YES: To verify your number.\n" + 
+                        "No: To delete your number."
                     )
                 )
         except Subscription.DoesNotExist:
