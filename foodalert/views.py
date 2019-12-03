@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.settings import api_settings
@@ -331,6 +331,8 @@ class AllergensList(generics.ListCreateAPIView):
 
 
 class SmsReciver(APIView):
+    permission_classes = [AllowAny]
+
     @csrf_exempt
     def post(self, request, format=None):
         validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
