@@ -17,6 +17,7 @@ setup(
         'UW-Django-SAML2<2.0',
         'psycopg2',
         'djangorestframework',
+        'djangorestframework-csv',
         'phonenumbers',
         'django-phonenumber-field',
         'parameterized',

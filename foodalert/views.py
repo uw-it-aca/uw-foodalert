@@ -1,5 +1,6 @@
 import urllib
 import logging
+import csv
 
 from django.shortcuts import render
 from django.template import loader
@@ -16,6 +17,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.settings import api_settings
+from rest_framework_csv import renderers as r
+
 
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.request_validator import RequestValidator
@@ -27,7 +31,8 @@ from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
-        NotificationListSerializer
+        NotificationListSerializer, JSONAuditListSerializer, \
+        CSVAuditListSerializer
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -83,9 +88,6 @@ class NotificationList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         qs = Notification.objects.all()
-        # use pagination only when 'page' query param is present
-        if 'page' in self.request.query_params:
-            self.pagination_class = StandardPaginationResult
         if 'host_netid' in self.request.query_params:
             try:
                 user = User.objects.get(
@@ -407,3 +409,97 @@ class SmsReciver(APIView):
             return HttpResponse(resp)
 
         return HttpResponse(resp)
+
+
+@method_decorator(login_required(), name='dispatch')
+class AuditList(generics.ListAPIView):
+    queryset = Notification.objects.all()
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)\
+        + (r.CSVRenderer, )
+    permission_classes = [AuditRead]
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['host__username', 'event']
+
+    def get_queryset(self):
+        qs = Notification.objects.all()
+        if 'page' in self.request.query_params:
+            self.pagination_class = StandardPaginationResult
+        return qs
+
+    def get_serializer_class(self):
+        if 'Accept' in self.request.META:
+            if self.request.META['Accept'] == 'text/csv':
+                return CSVAuditListSerializer
+        return JSONAuditListSerializer
+
+    def get(self, request, *args, **kwargs):
+        if 'HTTP_ACCEPT' in request.META:
+            if request.META['HTTP_ACCEPT'] == 'text/csv':
+                notifications = self.get_queryset()
+
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment;\
+                 filename="AuditLog.csv"'
+
+                csv.register_dialect("unix_newline", lineterminator="\n")
+                writer = csv.writer(response, dialect="unix_newline")
+                writer.writerow([
+                    'id', 'UW NetID', 'Location', 'Event',
+                    'Food Qualifications', 'Time Created', 'Time End',
+                    'Message', 'Allergens', 'Bring Container', 'Ended'
+                ])
+
+                for notif in notifications:
+                    allergens = [x.name for x in notif.allergens.all()]
+                    allergens = ' & '.join(allergens)
+
+                    qual = [
+                        x.internalName for x in notif.food_qualifications.all()
+                    ]
+                    qual = ' & '.join(qual)
+
+                    writer.writerow([
+                        notif.id,
+                        User.objects.get(pk=notif.host.id).username,
+                        notif.location,
+                        notif.event,
+                        qual,
+                        notif.created_time,
+                        notif.end_time,
+                        notif.food_served,
+                        allergens,
+                        notif.bring_container,
+                        notif.ended
+                    ])
+
+                    try:
+                        # get associated update list
+                        update_queryset = Update.objects.all()
+                        update_queryset = update_queryset.filter(
+                            parent_notification=notif
+                        )
+                    except Update.DoesNotExist:
+                        update_queryset = None
+
+                    for update in update_queryset:
+                        elem = {
+                            'text': update.text,
+                            'created_time': update.created_time
+                        }
+                        writer.writerow([
+                            notif.id,
+                            "",
+                            "",
+                            "",
+                            "",
+                            update.created_time,
+                            "",
+                            update.text,
+                            "",
+                            "",
+                            ""
+                        ])
+
+                return response
+        return super().get(self, request, *args, **kwargs)

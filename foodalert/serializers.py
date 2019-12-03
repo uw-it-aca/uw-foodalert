@@ -291,3 +291,67 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
     def check_valid(self, obj, field):
         return field in obj and obj[field] is not None
+
+
+class JSONAuditListSerializer(serializers.ModelSerializer):
+    allergens = AllergenSerializer(many=True, required=False)
+
+    class Meta:
+        model = Notification
+        fields = ('location', 'event', 'created_time',
+                  'end_time', 'food_served',
+                  'food_qualifications', 'host', 'bring_container',
+                  'allergens', 'host_user_agent', 'ended')
+        read_only_fields = ['created_time', 'end_time', 'host', 'ended']
+
+    def to_representation(self, notif):
+        user = User.objects.get(pk=notif.host.id)
+        try:
+            # get update list
+            update_queryset = Update.objects.all()
+            update_queryset = update_queryset.filter(parent_notification=notif)
+        except Update.DoesNotExist:
+            update_queryset = None
+
+        updates = []
+        for update in update_queryset:
+            elem = {
+                'text': update.text,
+                'created_time': update.created_time
+            }
+            updates.append(elem)
+
+        return {
+            'notification': {
+                'id': notif.id,
+                'netID': user.username,
+                'location': notif.location,
+                'event': notif.event,
+                'time': {
+                    'created': notif.created_time,
+                    'end': notif.end_time,
+                },
+                'bring_container': notif.bring_container,
+                'food': {
+                    'served': notif.food_served,
+                    'allergens': [x.name for x in notif.allergens.all()],
+                    'qualifications': [
+                        x.internalName for x in notif.food_qualifications.all()
+                    ]
+                },
+                'ended': notif.ended
+            },
+            'updates': updates
+        }
+
+    def check_valid(self, obj, field):
+        return field in obj and obj[field] is not None and obj[field] != ""
+
+
+class CSVAuditListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ('location', 'event', 'created_time',
+                  'end_time', 'food_served',
+                  'food_qualifications', 'host', 'bring_container',
+                  'allergens', 'host_user_agent', 'ended')
