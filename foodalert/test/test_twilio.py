@@ -48,7 +48,7 @@ class TwilioTest(TestCase):
                          new_callable=PropertyMock) as mock:
             mock.return_value = m1
             sms = Sender.send_twilio_sms(self.recipients, self.message)
-            self.assertEquals('UW Food Alert: Test Event is Open',
+            self.assertEquals('UW Food Alert Event: Test Event is Open',
                               sms.body)
             self.assertEquals(200, sms.status)
 

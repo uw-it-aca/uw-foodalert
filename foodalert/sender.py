@@ -46,7 +46,7 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
-        text = "A new Food Alert Event: '" + event + "' has been posted! \n"
+        text = "A new UW Food Alert Event: '" + event + "' has been posted! \n"
         time = datetime.strftime(message['time']['end'], "%c")
         details = {
             'Food Served:': message['food']['served'],
