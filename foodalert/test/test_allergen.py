@@ -43,7 +43,7 @@ class AllergenTest(TestCase):
             self.user,
             [create_group, audit_group]
         )
-        response = client.get('/allergen/')
+        response = client.get('/v1/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
@@ -52,7 +52,7 @@ class AllergenTest(TestCase):
             self.user,
             [audit_group]
         )
-        response = client.get('/allergen/')
+        response = client.get('/v1/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
@@ -61,7 +61,7 @@ class AllergenTest(TestCase):
             self.user,
             [create_group]
         )
-        response = client.get('/allergen/')
+        response = client.get('/v1/allergen/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(data[0]["name"], self.realAllergen.name)
@@ -70,7 +70,7 @@ class AllergenTest(TestCase):
             self.user,
             []
         )
-        response = client.get('/allergen/')
+        response = client.get('/v1/allergen/')
         self.assertEqual(403, response.status_code)
 
     def test_post_allergen(self):
@@ -88,7 +88,7 @@ class AllergenTest(TestCase):
             []
         )
         original_len = len(Allergen.objects.all())
-        response = client.post('/allergen/', valid_payload)
+        response = client.post('/v1/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
@@ -98,7 +98,7 @@ class AllergenTest(TestCase):
             [create_group]
         )
         original_len = len(Allergen.objects.all())
-        response = client.post('/allergen/', valid_payload)
+        response = client.post('/v1/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
@@ -108,7 +108,7 @@ class AllergenTest(TestCase):
             [audit_group]
         )
         original_len = len(Allergen.objects.all())
-        response = client.post('/allergen/', valid_payload)
+        response = client.post('/v1/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
@@ -118,7 +118,7 @@ class AllergenTest(TestCase):
             [create_group, audit_group]
         )
         original_len = len(Allergen.objects.all())
-        response = client.post('/allergen/', valid_payload)
+        response = client.post('/v1/allergen/', valid_payload)
         self.assertEqual(403, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(new_len, original_len)
@@ -130,7 +130,7 @@ class AllergenTest(TestCase):
             []
         )
         original_len = len(Allergen.objects.all())
-        response = client.post('/allergen/', valid_payload)
+        response = client.post('/v1/allergen/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Allergen.objects.all())
         self.assertEqual(1, new_len - original_len)
@@ -153,15 +153,15 @@ class AllergenTest(TestCase):
             [create_group, audit_group]
         )
         original_len = len(Allergen.objects.all())
-        data_before = client.get("/allergen/")
+        data_before = client.get("/v1/allergen/")
         payload = {
             "name": self.realAllergen.name
         }
-        response = client.post('/allergen/', payload)
+        response = client.post('/v1/allergen/', payload)
         self.assertEqual(400, response.status_code)
         after_len = len(Allergen.objects.all())
         self.assertEqual(original_len, after_len)
-        data_after = client.get('/allergen/')
+        data_after = client.get('/v1/allergen/')
         self.assertEqual(data_before.json(), data_after.json())
 
         self.user.is_staff = False
@@ -182,7 +182,7 @@ class AllergenTest(TestCase):
         invalidRequest = {
             "name": "put update"
         }
-        response = client.put('/allergen/', invalidRequest)
+        response = client.put('/v1/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
 
         self.user.is_staff = False
@@ -203,7 +203,7 @@ class AllergenTest(TestCase):
         invalidRequest = {
             "name": "patch update"
         }
-        response = client.patch('/allergen/', invalidRequest)
+        response = client.patch('/v1/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
 
         self.user.is_staff = False
@@ -225,7 +225,7 @@ class AllergenTest(TestCase):
             "name": "delete update"
         }
         after_len = len(Allergen.objects.all())
-        response = client.delete('/allergen/', invalidRequest)
+        response = client.delete('/v1/allergen/', invalidRequest)
         self.assertEqual(405, response.status_code)
         self.assertEqual(original_len, after_len)
 

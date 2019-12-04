@@ -139,7 +139,7 @@ class UpdateTest(TestCase):
             self.user1,
             [create_group, audit_group]
         )
-        response = client.get('/updates/')
+        response = client.get('/v1/updates/')
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.json()), 3)
@@ -155,7 +155,7 @@ class UpdateTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get('/updates/')
+        response = client.get('/v1/updates/')
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.json()), 3)
@@ -171,7 +171,7 @@ class UpdateTest(TestCase):
             self.user1,
             [create_group]
         )
-        response = client.get('/updates/')
+        response = client.get('/v1/updates/')
         self.assertEqual(response.status_code, 403)
 
         # []
@@ -179,7 +179,7 @@ class UpdateTest(TestCase):
             self.user1,
             []
         )
-        response = client.get('/updates/')
+        response = client.get('/v1/updates/')
         self.assertEqual(response.status_code, 403)
 
     def test_get_update_list_query_args(self):
@@ -192,7 +192,7 @@ class UpdateTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get("/updates/?parent_notification={0}".format(
+        response = client.get("/v1/updates/?parent_notification={0}".format(
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 200)
@@ -209,7 +209,7 @@ class UpdateTest(TestCase):
             self.user1,
             [create_group]
         )
-        response = client.get("/updates/?parent_notification={0}".format(
+        response = client.get("/v1/updates/?parent_notification={0}".format(
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 200)
@@ -226,7 +226,7 @@ class UpdateTest(TestCase):
             self.user2,
             [create_group]
         )
-        response = client.get("/updates/?parent_notification={0}".format(
+        response = client.get("/v1/updates/?parent_notification={0}".format(
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 403)
@@ -236,7 +236,7 @@ class UpdateTest(TestCase):
             self.user1,
             []
         )
-        response = client.get("/updates/?parent_notification={0}".format(
+        response = client.get("/v1/updates/?parent_notification={0}".format(
             self.test_data["notifications"][0]["id"]
         ))
         self.assertEqual(response.status_code, 403)
@@ -251,7 +251,7 @@ class UpdateTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get("/updates/{0}/".format(
+        response = client.get("/v1/updates/{0}/".format(
             self.test_data["updates"][0]["id"]
         ))
 
@@ -268,7 +268,7 @@ class UpdateTest(TestCase):
             self.user1,
             [create_group]
         )
-        response = client.get("/updates/{0}/".format(
+        response = client.get("/v1/updates/{0}/".format(
             self.test_data["updates"][0]["id"]
         ))
 
@@ -285,7 +285,7 @@ class UpdateTest(TestCase):
             self.user2,
             [create_group]
         )
-        response = client.get("/updates/{0}/".format(
+        response = client.get("/v1/updates/{0}/".format(
             self.test_data["updates"][0]["id"]
         ))
 
@@ -296,7 +296,7 @@ class UpdateTest(TestCase):
             self.user1,
             []
         )
-        response = client.get("/updates/{0}/".format(
+        response = client.get("/v1/updates/{0}/".format(
             self.test_data["updates"][0]["id"]
         ))
 
@@ -312,7 +312,7 @@ class UpdateTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get("/updates/100/")
+        response = client.get("/v1/updates/100/")
 
         self.assertEqual(response.status_code, 404)
 
@@ -332,7 +332,7 @@ class UpdateTest(TestCase):
                 [audit_group]
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
@@ -344,7 +344,7 @@ class UpdateTest(TestCase):
                 [create_group]
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
@@ -358,7 +358,7 @@ class UpdateTest(TestCase):
 
             self.assertEqual(expected_reponse_json, response.json())
 
-            response2 = client.get("/updates/{0}/".format(
+            response2 = client.get("/v1/updates/{0}/".format(
                 self.test_data["updates"][4]["id"]
             ))
 
@@ -371,7 +371,7 @@ class UpdateTest(TestCase):
                 [create_group]
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
@@ -383,7 +383,7 @@ class UpdateTest(TestCase):
                 []
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
@@ -406,33 +406,33 @@ class UpdateTest(TestCase):
         )
         payload = self.data_to_payload_represent(self.test_data["updates"][5])
 
-        response = client2.get('/updates/')
+        response = client2.get('/v1/updates/')
         self.assertEqual(response.status_code, 200)
 
         init_len = len(response.json())
 
         with generate_twilio_mock() as mock:
-            response = client1.post("/updates/", {})
+            response = client1.post("/v1/updates/", {})
             self.assertEqual(response.status_code, 400)
-            response = client2.get('/updates/')
+            response = client2.get('/v1/updates/')
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.json()), init_len)
 
             invalid_payload = payload
             del invalid_payload["text"]
 
-            response = client1.post("/updates/", invalid_payload)
+            response = client1.post("/v1/updates/", invalid_payload)
             self.assertEqual(response.status_code, 400)
-            response = client2.get('/updates/')
+            response = client2.get('/v1/updates/')
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.json()), init_len)
 
             invalid_payload = payload
             del invalid_payload["parent_notification_id"]
 
-            response = client1.post("/updates/", invalid_payload)
+            response = client1.post("/v1/updates/", invalid_payload)
             self.assertEqual(response.status_code, 400)
-            response = client2.get('/updates/')
+            response = client2.get('/v1/updates/')
             self.assertEqual(response.status_code, 200)
             self.assertEqual(len(response.json()), init_len)
 
@@ -448,7 +448,7 @@ class UpdateTest(TestCase):
             [create_group]
         )
         response = client.post(
-            "/updates/",
+            "/v1/updates/",
             payload,
             content_type='application/json'
         )
@@ -475,7 +475,7 @@ class UpdateTest(TestCase):
                 [create_group]
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
@@ -493,7 +493,7 @@ class UpdateTest(TestCase):
                 self.test_data["updates"][7]
             )
             response = client.post(
-                "/updates/",
+                "/v1/updates/",
                 payload,
                 content_type='application/json'
             )
