@@ -396,7 +396,8 @@ class SmsReciver(APIView):
                 sub.save()
             else:
                 resp.message(
-                    'Sorry, UW Food Alert was unable to understand your message.'
+                    'Sorry, UW Food Alert was unable to understand' +
+                    ' your message.'
                 )
         except Subscription.DoesNotExist:
             resp.message('UW Food Alert does not have this number registered.')
