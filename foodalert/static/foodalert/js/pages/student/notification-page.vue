@@ -127,10 +127,10 @@ export default {
               };
 
               axios.post(
-                    '/v1/subscription/',
-                    postData,
-                    {'headers': postHeaders}
-                  )
+                  '/v1/subscription/',
+                  postData,
+                  {'headers': postHeaders},
+              )
                   .then((response) => {
                     this.subid = response.data.id;
                     this.$children[0].$data.showUpdateOverlay = false;
