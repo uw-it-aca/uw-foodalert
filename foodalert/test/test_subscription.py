@@ -338,7 +338,8 @@ class SubscriptionTest(TestCase):
         }
         original_len = len(Subscription.objects.all())
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(patch_id),
+            response = self.client.patch('/v1/subscription/{}/'
+                                         .format(patch_id),
                                          data=json.dumps(payload),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -358,7 +359,8 @@ class SubscriptionTest(TestCase):
             }
             sms_before = updated_data['sms_number']
             original_len = len(Subscription.objects.all())
-            response = self.client.patch('/v1/subscription/{}/'.format(patch_id),
+            response = self.client.patch('/v1/subscription/{}/'
+                                         .format(patch_id),
                                          data=json.dumps(payload2),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -384,7 +386,8 @@ class SubscriptionTest(TestCase):
             "sms_number": "+14084388625"
         }
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(sub2.id),
+            response = self.client.patch('/v1/subscription/{}/'
+                                         .format(sub2.id),
                                          data=json.dumps(payload),
                                          content_type='application/json')
             self.assertEqual(403, response.status_code)
@@ -466,14 +469,16 @@ class SubscriptionTest(TestCase):
                 'number_verified': not sms_verif_state
             }
 
-            response = self.client.patch('/v1/subscription/{}/'.format(patch_id),
+            response = self.client.patch('/v1/subscription/{}/'
+                                         .format(patch_id),
                                          data=json.dumps(invalid_payload),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
             data = response.json()
             self.assertEqual(email_verif_state, data['email_verified'])
             self.assertEqual(sms_verif_state, data['number_verified'])
-            get_current = self.client.get('/v1/subscription/{}/'.format(patch_id))
+            get_current = self.client.get('/v1/subscription/{}/'
+                                          .format(patch_id))
             self.assertEqual(get_res.json(), get_current.json())
 
     @parameterized.expand(VALID_TEST_CASES)

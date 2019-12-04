@@ -126,7 +126,11 @@ export default {
                 'sms_number': '',
               };
 
-              axios.post('/v1/subscription/', postData, {'headers': postHeaders})
+              axios.post(
+                    '/v1/subscription/',
+                    postData,
+                    {'headers': postHeaders}
+                  )
                   .then((response) => {
                     this.subid = response.data.id;
                     this.$children[0].$data.showUpdateOverlay = false;

@@ -8,7 +8,7 @@ import uw_saml
 urlpatterns = [
     url(r'^v1/', include([
         url(r'^notification/$', NotificationList.as_view(),
-        name='notificaion_list'),
+            name='notificaion_list'),
         url(r'^notification/(?P<pk>[0-9]+)/$',
             NotificationDetail.as_view(), name='notification_detail'),
         url(r'^updates/$', UpdateList.as_view(), name='update_list'),
