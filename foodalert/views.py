@@ -376,12 +376,16 @@ class SmsReciver(APIView):
                     sub.number_verified = True
                     sub.save()
                     return HttpResponse(resp)
+<<<<<<< HEAD
                 elif request.data['Body'].upper() == "NO":
                     resp.message('HungryHusky has deleted your number')
                     sub.sms_number = ''
                     sub.save()
                     return HttpResponse(resp)
             if (request.data['Body'].upper() == "RESUME" and
+=======
+            if (request.data['Body'] == "RESUME" and
+>>>>>>> removed 'no' response
                sub.number_verified and not sub.send_sms):
                 resp.message('Your notifications from UW Food Alert' +
                              ' have been resumed.')
