@@ -10,24 +10,25 @@ from datetime import datetime
 
 
 class Sender:
-    def send_email(body, recipients, time):
-        if body[:6] == 'Update':
-            MailTemplate.objects.create(
-                name="Food Alert Update",
-                subject="A Hungry Husky Event has posted an update",
-                message=body,
-                slug=time,
-                is_html=False,
-            )
-        else:
-            MailTemplate.objects.create(
-                name="Food Alert Notification",
-                subject="New Hungry Husky Event is Open",
-                message=body,
-                slug=time,
-                is_html=False,
-            )
+    def send_email(body, recipients, time, location):
+        email_name = "Food Alert "
+        email_subject = "[UW Food Alert] "
 
+        if body[:6] == 'Update':
+            email_name += "Update"
+            email_subject += "Update for Food in " + location
+        else:
+            email_name += "Notification"
+            email_subject += "Food Available in " + location
+
+        MailTemplate.objects.create(
+            name=email_name,
+            subject=email_subject,
+            message=body,
+            slug=time,
+            is_html=False,
+        )
+        
         send_db_mail(
             slug=time,
             recipient=settings.SAFE_EMAIL_RECIPIENT,
@@ -46,22 +47,25 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
-        text = "A new Hungry Husky Event: '" + event + "' has been posted! \n"
-        time = datetime.strftime(message['time']['end'], "%c")
+        text = foods + " leftover from " + event + ".\n\n"
+        time = datetime.strftime(message['time']['end'], "%I:%M %p")
         details = {
-            'Food Served:': message['food']['served'],
+            'End time:': time,
             'Location:': message['location'],
-            'Ends At:': time,
         }
         for title, desc in details.items():
             text += title + ' ' + desc + '\n'
         if len(message['food']['allergens']) > 0:
-            text += 'Food Contains:'
+            text += 'May contain: '
             for allergen in message['food']['allergens']:
-                text += ' ' + allergen
-            text += '\n'
+                text += allergen + ", "
+            text = text[:-2]
+            text += '\n\n'
         if message['bring_container']:
-            text += 'Please bring a container!'
+            text += 'You must bring a container.\n\n'
+
+        text += 'Thanks,\n'
+        text += 'UW Food Alert'
 
         return text
 

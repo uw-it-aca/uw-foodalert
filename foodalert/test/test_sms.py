@@ -62,16 +62,16 @@ class SMSTest(TestCase):
             },
             'food': {
                 'served': 'Food',
-                'allergens': ['wheat']
+                'allergens': ['wheat', 'fish', 'peanuts']
             },
             'bring_container': True,
         }
-        expected = ("A new Hungry Husky Event: 'UW Event' has been posted! \n"
-                    "Food Served: Food\n"
-                    "Location: UW Campus\n"
-                    "Ends At: Thu Sep 13 19:23:06 2018\n"
-                    "Food Contains: wheat\n"
-                    "Please bring a container!")
+        expected = ("Food leftover from UW Event.\n\n"
+                    "End time: 07:23 PM\n"
+                    "Food Contains: wheat, fish, peanuts\n\n"
+                    "You must bring a container.\n\n"
+                    "Thanks,\n"
+                    "UW Food Alert")
 
         message = Sender.format_message(data)
         self.assertEquals(message, expected)
