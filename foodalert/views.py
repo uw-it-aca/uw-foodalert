@@ -137,9 +137,9 @@ class NotificationList(generics.ListCreateAPIView):
 
                 if email_recipients != []:
                     Sender.send_email(message,
-                                    email_recipients,
-                                    slug,
-                                    data['location'])
+                                      email_recipients,
+                                      slug,
+                                      data['location'])
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -217,18 +217,20 @@ class UpdateList(generics.ListCreateAPIView):
                                            ' Update: ' + data['text'])
                 elif settings.FOODALERT_USE_SMS == "amazon":
                     Sender.send_amazon_sms(sms_recipients,
-                                        parent.event +
-                                        ' Update: ' + data['text'])
+                                           parent.event +
+                                           ' Update: ' + data['text'])
             if email_recipients != []:
-                message = ('Update: ' + data['text'] + '\n\n'
-                            'Thanks,\n'
-                            'UW Food Alert')
+                message = (
+                    'Update: ' + data['text'] + '\n\n'
+                    'Thanks,\n'
+                    'UW Food Alert'
+                )
 
                 Sender.send_email(
                     message,
                     email_recipients,
                     slug,
-                    data['location']
+                    parent['location']
                 )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
