@@ -52,7 +52,7 @@ export default {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
-      const url = '/v1/subscription/' + this.subid + '/';
+      const url = '/api/v1/subscription/' + this.subid + '/';
 
       axios.patch(url, data, {headers})
           .then(this.requestUpdate)

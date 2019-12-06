@@ -105,7 +105,7 @@ class SubscriptionTest(TestCase):
             "sms_number": sms,
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/v1/subscription/', valid_payload)
+        response = self.client.post('/api/v1/subscription/', valid_payload)
         self.assertEqual(201, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(1, new_len - original_len)
@@ -126,7 +126,7 @@ class SubscriptionTest(TestCase):
             "sms_number": sms,
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/v1/subscription/', invalid_payload)
+        response = self.client.post('/api/v1/subscription/', invalid_payload)
         if email != '':
             self.assertEqual(400, response.status_code)
             new_len = len(Subscription.objects.all())
@@ -147,7 +147,7 @@ class SubscriptionTest(TestCase):
             "sms_number": sms,
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/v1/subscription/', invalid_payload)
+        response = self.client.post('/api/v1/subscription/', invalid_payload)
         if email != '':
             self.assertEqual(400, response.status_code)
             new_len = len(Subscription.objects.all())
@@ -174,15 +174,15 @@ class SubscriptionTest(TestCase):
             "sms": "+14083429456",
         }
         original_len = len(Subscription.objects.all())
-        original_data = self.client.get('/v1/subscription/{}/'.format(sub.id))
+        original_data = self.client.get('/api/v1/subscription/{}/'.format(sub.id))
         original_data = original_data.json()
-        response = self.client.post('/v1/subscription/{}/'.format(sub.id),
+        response = self.client.post('/api/v1/subscription/{}/'.format(sub.id),
                                     data=json.dumps(invalid_payload),
                                     content_type='application/json')
         self.assertEqual(405, response.status_code)
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
-        after_data = self.client.get('/v1/subscription/{}/'.format(sub.id))
+        after_data = self.client.get('/api/v1/subscription/{}/'.format(sub.id))
         after_data = after_data.json()
         self.assertEqual(original_data, after_data)
 
@@ -202,7 +202,7 @@ class SubscriptionTest(TestCase):
             "email": "invalidemailpost@test.com",
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/v1/subscription/', invalid_payload)
+        response = self.client.post('/api/v1/subscription/', invalid_payload)
         self.assertEqual(response.status_code, 400)
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
@@ -211,7 +211,7 @@ class SubscriptionTest(TestCase):
             "sms": "+41524204242",
         }
         original_len = len(Subscription.objects.all())
-        response = self.client.post('/v1/subscription/', invalid_payload2)
+        response = self.client.post('/api/v1/subscription/', invalid_payload2)
         self.assertEqual(response.status_code, 400)
         after_len = len(Subscription.objects.all())
         self.assertEqual(original_len, after_len)
@@ -236,12 +236,12 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        response = self.client.get('/v1/subscription/')
+        response = self.client.get('/api/v1/subscription/')
         self.assertEqual(403, response.status_code)
 
         sub2.delete()
 
-        response = self.client.get('/v1/subscription/')
+        response = self.client.get('/api/v1/subscription/')
         self.assertEqual(200, response.status_code)
         data = response.json()
         self.assertEqual(self.user.username, data[0]['netID'])
@@ -268,7 +268,7 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        response = self.client.get('/v1/subscription/?netID={}'.format(
+        response = self.client.get('/api/v1/subscription/?netID={}'.format(
             sub.user.username
         ))
         self.assertEqual(200, response.status_code)
@@ -291,7 +291,7 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        response = self.client.get('/v1/subscription/{}/'.format(sub.id))
+        response = self.client.get('/api/v1/subscription/{}/'.format(sub.id))
         self.assertEqual(200, response.status_code)
         data = response.json()
         # email and sms should be updated with correct values
@@ -316,7 +316,7 @@ class SubscriptionTest(TestCase):
             sms_number=sms
         )
 
-        response = self.client.get('/v1/subscription/{}/'.format(sub2.id))
+        response = self.client.get('/api/v1/subscription/{}/'.format(sub2.id))
         self.assertEqual(403, response.status_code)
 
     @parameterized.expand(VALID_TEST_CASES)
@@ -338,7 +338,7 @@ class SubscriptionTest(TestCase):
         }
         original_len = len(Subscription.objects.all())
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'
+            response = self.client.patch('/api/v1/subscription/{}/'
                                          .format(patch_id),
                                          data=json.dumps(payload),
                                          content_type='application/json')
@@ -349,7 +349,7 @@ class SubscriptionTest(TestCase):
             self.assertEqual(payload['sms_number'], data['sms_number'])
             self.assertEqual(email, data['email'])
 
-            get_res = self.client.get('/v1/subscription/{}/'.format(patch_id))
+            get_res = self.client.get('/api/v1/subscription/{}/'.format(patch_id))
             updated_data = get_res.json()
             self.assertEqual(updated_data, data)
 
@@ -359,7 +359,7 @@ class SubscriptionTest(TestCase):
             }
             sms_before = updated_data['sms_number']
             original_len = len(Subscription.objects.all())
-            response = self.client.patch('/v1/subscription/{}/'
+            response = self.client.patch('/api/v1/subscription/{}/'
                                          .format(patch_id),
                                          data=json.dumps(payload2),
                                          content_type='application/json')
@@ -386,7 +386,7 @@ class SubscriptionTest(TestCase):
             "sms_number": "+14084388625"
         }
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'
+            response = self.client.patch('/api/v1/subscription/{}/'
                                          .format(sub2.id),
                                          data=json.dumps(payload),
                                          content_type='application/json')
@@ -413,7 +413,7 @@ class SubscriptionTest(TestCase):
             'send_email': email_verified
         }
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(sub.id),
+            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
                                          data=json.dumps(valid_payload),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -439,7 +439,7 @@ class SubscriptionTest(TestCase):
             'send_sms': True
         }
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(sub.id),
+            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
                                          data=json.dumps(invalid_payload),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -461,7 +461,7 @@ class SubscriptionTest(TestCase):
         patch_id = sub.id
         with generate_twilio_mock() as mock:
             # current value of read only fields
-            get_res = self.client.get('/v1/subscription/{}/'.format(patch_id))
+            get_res = self.client.get('/api/v1/subscription/{}/'.format(patch_id))
             email_verif_state = get_res.json()['email_verified']
             sms_verif_state = get_res.json()['number_verified']
             invalid_payload = {
@@ -469,7 +469,7 @@ class SubscriptionTest(TestCase):
                 'number_verified': not sms_verif_state
             }
 
-            response = self.client.patch('/v1/subscription/{}/'
+            response = self.client.patch('/api/v1/subscription/{}/'
                                          .format(patch_id),
                                          data=json.dumps(invalid_payload),
                                          content_type='application/json')
@@ -477,7 +477,7 @@ class SubscriptionTest(TestCase):
             data = response.json()
             self.assertEqual(email_verif_state, data['email_verified'])
             self.assertEqual(sms_verif_state, data['number_verified'])
-            get_current = self.client.get('/v1/subscription/{}/'
+            get_current = self.client.get('/api/v1/subscription/{}/'
                                           .format(patch_id))
             self.assertEqual(get_res.json(), get_current.json())
 
@@ -499,7 +499,7 @@ class SubscriptionTest(TestCase):
             'sms_number': '+13438765646'
         }
         with generate_twilio_mock() as mock:
-            response = self.client.put('/v1/subscription/{}/'.format(sub.id),
+            response = self.client.put('/api/v1/subscription/{}/'.format(sub.id),
                                        data=payload,
                                        content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -529,7 +529,7 @@ class SubscriptionTest(TestCase):
 
         original_len = len(Subscription.objects.all())
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(sub.id),
+            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
                                          data=json.dumps(update),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -567,7 +567,7 @@ class SubscriptionTest(TestCase):
 
         original_len = len(Subscription.objects.all())
         with generate_twilio_mock() as mock:
-            response = self.client.patch('/v1/subscription/{}/'.format(sub.id),
+            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
                                          data=json.dumps(update),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -598,7 +598,7 @@ class SubscriptionTest(TestCase):
         )
 
         original_len = len(Subscription.objects.all())
-        response = self.client.delete('/v1/subscription/{0}/'.format(sub.id))
+        response = self.client.delete('/api/v1/subscription/{0}/'.format(sub.id))
         self.assertEqual(204, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len - 1, new_len)
@@ -619,7 +619,7 @@ class SubscriptionTest(TestCase):
         )
 
         original_len = len(Subscription.objects.all())
-        response = self.client.delete('/v1/subscription/')
+        response = self.client.delete('/api/v1/subscription/')
         self.assertEqual(405, response.status_code)
         new_len = len(Subscription.objects.all())
         self.assertEqual(original_len, new_len)

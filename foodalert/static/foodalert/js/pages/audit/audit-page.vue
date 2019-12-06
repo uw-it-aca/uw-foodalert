@@ -142,7 +142,7 @@ export default {
         {key: 'ended', label: 'Host ended event'},
       ],
       req: null,
-      baseURL: '/v1/auditlog/',
+      baseURL: '/api/v1/auditlog/',
       currentPage: null,
       totalPages: null,
       nextPage: null,

@@ -6,7 +6,7 @@ from uw_saml.decorators import group_required
 import uw_saml
 
 urlpatterns = [
-    url(r'^v1/', include([
+    url(r'^api/v1/', include([
         url(r'^notification/$', NotificationList.as_view(),
             name='notificaion_list'),
         url(r'^notification/(?P<pk>[0-9]+)/$',
@@ -22,7 +22,7 @@ urlpatterns = [
             name='allergen_list'),
         url(r'^auditlog/$', AuditList.as_view(), name='audit_log'),
     ])),
-    url(r'^sms/$', SmsReciver.as_view(),
+    url(r'^v1/sms/$', SmsReciver.as_view(),
         name='sms'),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]

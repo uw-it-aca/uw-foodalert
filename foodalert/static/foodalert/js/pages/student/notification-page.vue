@@ -100,11 +100,11 @@ export default {
         'Content-Type': 'application/json',
       };
 
-      axios.get('/v1/subscription/?netID=' + this.netID, {headers})
+      axios.get('/api/v1/subscription/?netID=' + this.netID, {headers})
           .then(this.getSubID)
           .then((data) => {
             if (this.subid) {
-              const url = '/v1/subscription/' + this.subid + '/';
+              const url = '/api/v1/subscription/' + this.subid + '/';
 
               axios.get(url, {headers})
                   .then((response) => {
@@ -127,7 +127,7 @@ export default {
               };
 
               axios.post(
-                  '/v1/subscription/',
+                  '/api/v1/subscription/',
                   postData,
                   {'headers': postHeaders},
               )
