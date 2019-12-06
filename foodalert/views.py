@@ -418,14 +418,14 @@ class AuditList(generics.ListAPIView):
         return qs
 
     def get_serializer_class(self):
-        if 'HTTP_ACCEPT' in self.request.META:
-            if self.request.META['HTTP_ACCEPT'] == 'text/csv':
+        if 'Accept' in self.request.META:
+            if self.request.META['Accept'] == 'text/csv':
                 return CSVAuditListSerializer
         return JSONAuditListSerializer
 
     def get(self, request, *args, **kwargs):
-        if 'Accept' in request.META:
-            if request.META['Accept'] == 'text/csv':
+        if 'HTTP_ACCEPT' in request.META:
+            if request.META['HTTP_ACCEPT'] == 'text/csv':
                 notifications = self.get_queryset()
 
                 response = HttpResponse(content_type='text/csv')
