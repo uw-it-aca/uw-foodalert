@@ -390,7 +390,7 @@ class SmsReciver(APIView):
                 sub.send_sms = False
                 sub.save()
             elif(request.data['Body'] == "STOP" and
-                sub.number_verified and sub.send_sms):
+                 sub.number_verified and sub.send_sms):
                 sub.send_sms = False
                 sub.save()
             else:
