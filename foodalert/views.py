@@ -389,6 +389,10 @@ class SmsReciver(APIView):
                              ' want to start receiving notifications again.')
                 sub.send_sms = False
                 sub.save()
+            elif(request.data['Body'] == "STOP" and
+                sub.number_verified and sub.send_sms):
+                sub.send_sms = False
+                sub.save()
             else:
                 resp.message(
                     'Sorry, UW Food Alert was unable to understand' +
