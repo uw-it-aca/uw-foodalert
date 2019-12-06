@@ -68,7 +68,8 @@ class SMSTest(TestCase):
         }
         expected = ("Food leftover from UW Event.\n\n"
                     "End time: 07:23 PM\n"
-                    "Food Contains: wheat, fish, peanuts\n\n"
+                    "Location: UW Campus\n"
+                    "May Contain: wheat, fish, peanuts\n\n"
                     "You must bring a container.\n\n"
                     "Thanks,\n"
                     "UW Food Alert")

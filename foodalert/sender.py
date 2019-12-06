@@ -28,7 +28,7 @@ class Sender:
             slug=time,
             is_html=False,
         )
-        
+
         send_db_mail(
             slug=time,
             recipient=settings.SAFE_EMAIL_RECIPIENT,
