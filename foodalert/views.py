@@ -389,10 +389,6 @@ class SmsReciver(APIView):
                              ' want to start receiving notifications again.')
                 sub.send_sms = False
                 sub.save()
-            elif(request.data['Body'] == "STOP" and
-                 sub.number_verified and sub.send_sms):
-                sub.send_sms = False
-                sub.save()
             else:
                 resp.message(
                     'Sorry, UW Food Alert was unable to understand' +
@@ -423,13 +419,13 @@ class AuditList(generics.ListAPIView):
 
     def get_serializer_class(self):
         if 'HTTP_ACCEPT' in self.request.META:
-            if self.request.META['Accept'] == 'text/csv':
+            if self.request.META['HTTP_ACCEPT'] == 'text/csv':
                 return CSVAuditListSerializer
         return JSONAuditListSerializer
 
     def get(self, request, *args, **kwargs):
-        if 'HTTP_ACCEPT' in request.META:
-            if request.META['HTTP_ACCEPT'] == 'text/csv':
+        if 'Accept' in request.META:
+            if request.META['Accept'] == 'text/csv':
                 notifications = self.get_queryset()
 
                 response = HttpResponse(content_type='text/csv')
