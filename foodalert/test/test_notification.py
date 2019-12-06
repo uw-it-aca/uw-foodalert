@@ -406,7 +406,8 @@ class NotificationTest(TestCase):
             expected_json = self.data_to_detail_json(self.test_data[2])
             self.assertEqual(expected_json, response1.json())
 
-            url = "/api/v1/notification/{}/".format(str(self.test_data[2]["id"]))
+            url = "/api/v1/notification/{}/".format(
+                                        str(self.test_data[2]["id"]))
             response2 = client.get(url)
             # Assert that the response is successful
             self.assertEqual(response2.status_code, 200)

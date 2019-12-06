@@ -192,9 +192,10 @@ class UpdateTest(TestCase):
             self.user1,
             [audit_group]
         )
-        response = client.get("/api/v1/updates/?parent_notification={0}".format(
-            self.test_data["notifications"][0]["id"]
-        ))
+        response = client.get("/api/v1/updates/?parent_notification={0}"
+                              .format(
+                                self.test_data["notifications"][0]["id"]
+                              ))
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.json()), 2)
@@ -209,9 +210,10 @@ class UpdateTest(TestCase):
             self.user1,
             [create_group]
         )
-        response = client.get("/api/v1/updates/?parent_notification={0}".format(
-            self.test_data["notifications"][0]["id"]
-        ))
+        response = client.get("/api/v1/updates/?parent_notification={0}"
+                              .format(
+                                self.test_data["notifications"][0]["id"]
+                              ))
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.json()), 2)
@@ -226,9 +228,10 @@ class UpdateTest(TestCase):
             self.user2,
             [create_group]
         )
-        response = client.get("/api/v1/updates/?parent_notification={0}".format(
-            self.test_data["notifications"][0]["id"]
-        ))
+        response = client.get("/api/v1/updates/?parent_notification={0}"
+                              .format(
+                                self.test_data["notifications"][0]["id"]
+                              ))
         self.assertEqual(response.status_code, 403)
 
         # []
@@ -236,9 +239,10 @@ class UpdateTest(TestCase):
             self.user1,
             []
         )
-        response = client.get("/api/v1/updates/?parent_notification={0}".format(
-            self.test_data["notifications"][0]["id"]
-        ))
+        response = client.get("/api/v1/updates/?parent_notification={0}"
+                              .format(
+                                self.test_data["notifications"][0]["id"]
+                              ))
         self.assertEqual(response.status_code, 403)
 
     def test_get_update_detail_by_id(self):
