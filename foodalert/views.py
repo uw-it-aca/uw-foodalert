@@ -31,8 +31,7 @@ from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
-        NotificationListSerializer, JSONAuditListSerializer, \
-        CSVAuditListSerializer
+        NotificationListSerializer, JSONAuditListSerializer
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -418,6 +417,7 @@ class AuditList(generics.ListAPIView):
     queryset = Notification.objects.all()
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)\
         + (r.CSVRenderer, )
+    serializer_class = JSONAuditListSerializer
     permission_classes = [AuditRead]
 
     filter_backends = [filters.SearchFilter]
@@ -429,20 +429,15 @@ class AuditList(generics.ListAPIView):
             self.pagination_class = StandardPaginationResult
         return qs
 
-    def get_serializer_class(self):
-        if 'Accept' in self.request.META:
-            if self.request.META['Accept'] == 'text/csv':
-                return CSVAuditListSerializer
-        return JSONAuditListSerializer
-
     def get(self, request, *args, **kwargs):
         if 'HTTP_ACCEPT' in request.META:
             if request.META['HTTP_ACCEPT'] == 'text/csv':
                 notifications = self.get_queryset()
 
                 response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] = 'attachment;\
-                 filename="AuditLog.csv"'
+                response['Content-Disposition'] = (
+                    'attachment;filename="AuditLog.csv"'
+                )
 
                 csv.register_dialect("unix_newline", lineterminator="\n")
                 writer = csv.writer(response, dialect="unix_newline")

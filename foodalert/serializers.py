@@ -346,12 +346,3 @@ class JSONAuditListSerializer(serializers.ModelSerializer):
 
     def check_valid(self, obj, field):
         return field in obj and obj[field] is not None and obj[field] != ""
-
-
-class CSVAuditListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Notification
-        fields = ('location', 'event', 'created_time',
-                  'end_time', 'food_served',
-                  'food_qualifications', 'host', 'bring_container',
-                  'allergens', 'host_user_agent', 'ended')
