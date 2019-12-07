@@ -245,9 +245,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "You have registered this number with UW Food Alert to" +
-                " receive notifications when leftover food is available on" +
-                " campus. Reply YES to confirm."
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().put(request, pk)
 
@@ -370,29 +370,33 @@ class SmsReciver(APIView):
             if not sub.number_verified:
                 if request.data['Body'].upper() == "YES":
                     resp.message(
-                        'Thanks! Your number has been verified. You' +
-                        ' will now receive notifications from UW Food Alert.'
+                        ('Thanks! Your number has been verified. You'
+                         ' will now receive notifications from UW Food Alert.')
                     )
                     sub.number_verified = True
                     sub.save()
                     return HttpResponse(resp)
             if (request.data['Body'] == "RESUME" and
                sub.number_verified and not sub.send_sms):
-                resp.message('Your notifications from UW Food Alert' +
-                             ' have been resumed.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been resumed.')
+                )
                 sub.send_sms = True
                 sub.save()
             elif (request.data['Body'].upper() == "PAUSE" and
                   sub.number_verified and sub.send_sms):
-                resp.message('Your notifications from UW Food Alert' +
-                             ' have been paused. Text "RESUME" when you' +
-                             ' want to start receiving notifications again.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been paused. Text "RESUME" when you'
+                     ' want to start receiving notifications again.')
+                )
                 sub.send_sms = False
                 sub.save()
             else:
                 resp.message(
-                    'Sorry, UW Food Alert was unable to understand' +
-                    ' your message.'
+                    ('Sorry, UW Food Alert was unable to understand'
+                     ' your message.')
                 )
         except Subscription.DoesNotExist:
             resp.message('UW Food Alert does not have this number registered.')
