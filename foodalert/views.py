@@ -230,7 +230,7 @@ class UpdateList(generics.ListCreateAPIView):
                     message,
                     email_recipients,
                     slug,
-                    parent['location']
+                    parent.location
                 )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
