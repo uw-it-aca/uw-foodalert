@@ -262,9 +262,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "You have registered this number with UW Food Alert to" +
-                " receive notifications when leftover food is available on" +
-                " campus. Reply YES to confirm."
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().patch(request, pk)
 
