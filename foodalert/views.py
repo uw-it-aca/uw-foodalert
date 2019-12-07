@@ -392,6 +392,14 @@ class SmsReciver(APIView):
                              'receiving notifications.')
                 sub.send_sms = False
                 sub.save()
+            elif (request.data['Body'].upper() == "STOP" and
+                  sub.number_verified and sub.send_sms):
+                sub.send_sms = False
+                sub.save()
+            elif (request.data['Body'].upper() == "START" and
+                  sub.number_verified and not sub.send_sms):
+                sub.send_sms = True
+                sub.save()
             else:
                 resp.message(
                     'HungryHusky did not understand that command.\n' +
