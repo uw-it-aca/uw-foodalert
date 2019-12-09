@@ -21,8 +21,8 @@ urlpatterns = [
         url(r'^allergen/$', AllergensList.as_view(),
             name='allergen_list'),
         url(r'^auditlog/$', AuditList.as_view(), name='audit_log'),
-    ])),
-    url(r'^v1/sms/$', SmsReciver.as_view(),
+        url(r'^sms/$', SmsReciver.as_view(),
         name='sms'),
+    ])),
     url(r'^.*$', HomeView.as_view(), name='index'),
 ]
