@@ -5,13 +5,20 @@
             <div class="audit-parent">
                 <!-- search and filter feature -->
                 <b-row class="mt-1">
-                <b-col id="filter-bar" sm="4" lg="4">
-                    <b-input
-                    id="search-filter" type="search"
-                    v-model="search"
-                    placeholder="Filter by sender's UW NetID or name of event"
-                    aria-label="filter results by uw netid or name of event"/>
-                </b-col>
+                  <b-col id="filter-bar" sm="4" lg="5">
+                      <b-input
+                      id="search-filter" type="search"
+                      v-model="search"
+                      placeholder="Filter by sender's UW NetID or name of event"
+                      aria-label="filter results by uw netid or name of event.
+                      Just type to filter table"/>
+                  </b-col>
+                  <b-col>
+                    <b-button class="float-right"
+                    @click="exportTable">
+                      Download csv
+                    </b-button>
+                  </b-col>
                 </b-row>
                 <br/>
 
@@ -20,7 +27,8 @@
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
                 :items="items"
-                :fields="fields">
+                :fields="fields"
+                aria-live="polite">
                 <template  v-slot:cell(food.served)="row">
                     <div v-if="row.item['netID']!=''">
                       Food served: {{ row.value }}
@@ -102,7 +110,7 @@
                       </b-button>
                     </li>
                   </ul>
-                  <small id="num-results" aria-live="polite"></small>
+                  <small id="num-results" aria-live="assertive"></small>
                 </nav>
             </div>
         </template>
@@ -134,7 +142,7 @@ export default {
         {key: 'ended', label: 'Host ended event'},
       ],
       req: null,
-      baseURL: '/notification/',
+      baseURL: '/auditlog/',
       currentPage: null,
       totalPages: null,
       nextPage: null,
@@ -168,6 +176,11 @@ export default {
       if (!response.data.previous.page && !response.data.next.page) {
         // if only one page do not display buttons
         document.getElementById('btn-nav').classList.add('d-none');
+        const results = document.getElementById('num-results');
+        const count = response.data.count;
+        const word = count === 1 ? ' result' : ' results';
+
+        results.innerText = count + word;
       } else {
         document.getElementById('pagination').classList.remove('d-none');
         this.prevPage = response.data.previous.page;
@@ -188,16 +201,23 @@ export default {
         if (this.nextPage && this.nextPage !== this.totalPages) {
           this.pages.push(this.nextPage);
         }
+
+        // Fill in result text
+        const results = document.getElementById('num-results');
+        const x = response.data.pagesize * (this.currentPage - 1) + 1;
+        const y = x + response.data.results.length - 1;
+
+        results.innerText = x + '-' + y + ' of ' +
+          response.data.count + ' results';
       }
 
-      // Fill in result text
-      const results = document.getElementById('num-results');
-      const x = response.data.pagesize * (this.currentPage - 1) + 1;
-      const y = x + response.data.results.length - 1;
+      // re set page focus
+      const el = document.querySelector('h1');
 
-
-      results.innerText = x + '-' + y + ' of ' +
-        response.data.count + ' results';
+      el.setAttribute('tabindex', '-1');
+      el.style.outline = 'none';
+      el.focus();
+      el.removeAttribute('tabindex');
     },
     requestLogs(url) {
       const headers = {
@@ -206,7 +226,7 @@ export default {
 
       this.items = [];
 
-      // default to load page 1 if not url passed
+      // default to load current page if no url passed
       if (!url) {
         url = this.baseURL + '?page=' + this.currentPage;
       }
@@ -217,27 +237,38 @@ export default {
 
             if (url.includes('?page=')) {
               resp = response.data.results;
+              document.getElementById('pagination').classList.remove('d-none');
 
               this.updatePagination(response);
             } else {
-              document.getElementById('pagination').classList.add('d-none');
+              document.getElementById('btn-nav').classList.add('d-none');
               resp = response.data;
+              // display total numbe of results
+              const results = document.getElementById('num-results');
+              const word = resp.length === 1 ? ' result' : ' results';
+
+              results.innerText = resp.length + word;
             }
 
+            // add notifications and updates to table
             for (let i = 0; i < resp.length; i++) {
-            // Iterate through each notification detail
-              axios.get('/notification/' + resp[i].id + '/', {headers})
-                  .then(this.addItems)
-                  .catch((error) => this.showErrorPage(error.response,
-                      'a-audit'),
-                  );
+              const notification = resp[i].notification;
+
+              this.addNotification(notification);
+              const updates = resp[i].updates;
+
+              for (let j = 0; j < updates.length; j++) {
+                const id = notification.id - (j + 1) / (updates.length + 1);
+
+                this.addUpdate(updates[j], id);
+              }
             }
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
     },
-    addItems(response) {
-      const log = response.data;
+    addNotification(notification) {
+      const log = notification;
 
       // store unformatted time for sorting
       log['unformatted_time_created'] = log.time.created;
@@ -257,47 +288,51 @@ export default {
 
       // Add the item to our audit logs
       this.items.push(flat);
-
-      this.requestUpdates(log.id);
     },
-    requestUpdates(id) {
-      const headers = {
-        'Content-Type': 'application/json',
+    addUpdate(update, id) {
+      let ret = {
+        id,
+        'netID': '',
+        'location': '',
+        'event': '',
+        'time.created':
+            new Date(update.created_time).toDateString() + ' ' +
+            new Date(update.created_time)
+                .toLocaleTimeString('en-US'),
+        'time.ended': '',
+        'food.served': update.text,
+        'food.allergens': '',
+        'bringContainers': '',
+        'host.netID': '',
+        'host.userAgent': '',
+        'ended': '',
+        '_rowVariant': 'update',
       };
 
-      axios.get('/updates/?parent_notification=' + id, {headers})
+      ret = flatten(ret);
+      this.items.push(ret);
+    },
+    exportTable() {
+      const headers = {
+        'Accept': 'text/csv',
+      };
+
+      axios.get('/auditlog/', {headers})
           .then((response) => {
-            const data = response.data;
+            const result = response.data;
 
-            for (let i = 0; i < data.length; i++) {
-              axios.get('/updates/' + data[i].id + '/', {headers})
-                  .then((response) => {
-                    const update = response.data;
-                    const calc = id - (i+1)/(data.length +1);
-                    let ret = {
-                      'id': calc,
-                      'netID': '',
-                      'location': '',
-                      'event': '',
-                      'time.created':
-                          new Date(update.created_time).toDateString() + ' ' +
-                          new Date(update.created_time)
-                              .toLocaleTimeString('en-US'),
-                      'time.ended': '',
-                      'food.served': update.text,
-                      'food.allergens': '',
-                      'bringContainers': '',
-                      'host.netID': '',
-                      'host.userAgent': '',
-                      'ended': '',
-                      '_rowVariant': 'update',
-                      '_showDetails': false,
-                    };
+            // Define the content of our csv & encode the URI
+            const csv = 'data:text/csv;charset=utf-8,' + result;
+            const data = encodeURI(csv);
 
-                    ret = flatten(ret);
-                    this.items.push(ret);
-                  });
-            }
+            // Programmatically make a link to download the csv and click it
+            const link = document.createElement('a');
+
+            link.setAttribute('href', data);
+            link.setAttribute('download', 'auditlog.csv');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
@@ -319,7 +354,6 @@ export default {
       display: flex;
       justify-content: center;
     }
-
     #btn-nav .active {
       border: solid 1px black;
     }
