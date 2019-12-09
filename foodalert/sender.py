@@ -50,7 +50,7 @@ class Sender:
         text = "Food leftover from " + event + ".\n\n"
         time = datetime.strftime(message['time']['end'], "%I:%M %p")
         details = {
-            'Food served:' : foods,
+            'Food served:': foods,
             'End time:': time,
             'Location:': message['location'],
         }
