@@ -13,7 +13,7 @@ class SMSTest(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.recipients = ['+15099693178']
-        cls.message = "Hungry Husky Event: Test Event is Open"
+        cls.message = "UW Food Alert Event: Test Event is Open"
 
     @classmethod
     def tearDownClass(cls):
@@ -66,6 +66,7 @@ class SMSTest(TestCase):
             },
             'bring_container': True,
         }
+
         expected = ("Food leftover from UW Event.\n\n"
                     "Food served: Sandwitches\n"
                     "End time: 07:23 PM\n"

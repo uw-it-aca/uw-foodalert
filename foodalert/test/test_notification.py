@@ -117,10 +117,10 @@ class NotificationTest(TestCase):
         response = client.get('/notification/')
         self.assertEqual(response.status_code, 403)
 
-    def test_get_paginated_notification_list(self):
+    def test_get_paginated_audit_list(self):
         """
             tests that 'page' query returns a paginated version of
-            notification list
+            audit list including notifications and updates
         """
         # Host
         client = create_client_with_mock_saml(
@@ -166,8 +166,9 @@ class NotificationTest(TestCase):
             [audit_group]
         )
 
+        # test paginated response
         page = 2
-        response1 = client.get('/notification/?page={}'.format(page))
+        response1 = client.get('/auditlog/?page={}'.format(page))
         self.assertEqual(response1.status_code, 200)
         # check next page is 2
         self.assertEqual(response1.data['next']['page'], page + 1)
@@ -175,6 +176,60 @@ class NotificationTest(TestCase):
         self.assertEqual(response1.data['previous']['page'], page - 1)
         # check for results list
         self.assertIsInstance(response1.data['results'], list)
+
+    def test_get_csv_audit_list(self):
+        """
+            tests that audit list is returned as a csv depending on
+            Accept header passed
+        """
+        # Host
+        client = create_client_with_mock_saml(
+            self.user2,
+            [create_group]
+        )
+        self.test_data[2]["host"] = self.user2
+
+        # create multiple notifications
+        num_notifs = 35
+        for x in range(num_notifs):
+            # create notification
+            with generate_twilio_mock() as mock:
+                end_time = datetime.now().astimezone()+timedelta(seconds=3600)
+                response = client.post(
+                    "/notification/",
+                    data=self.data_to_payload_json(
+                        self.test_data[2],
+                        end_time.isoformat()
+                    ),
+                    content_type='application/json'
+                )
+                notif_id = response.data["id"]
+                self.assertEqual(response.status_code, 201)
+
+                # end notification
+                payload = {
+                    'text': 'No Food left!',
+                    'parent_notification_id': notif_id,
+                    'ended': True,
+                    }
+
+                response = client.post(
+                    "/updates/",
+                    payload,
+                    content_type='application/json'
+                )
+                self.assertEqual(response.status_code, 201)
+
+        # Audit
+        client = create_client_with_mock_saml(
+            self.user1,
+            [audit_group]
+        )
+
+        response1 = client.get('/auditlog/',
+                               HTTP_ACCEPT='text/csv')
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1._headers['content-type'][1], 'text/csv')
 
     def test_get_notification_list_with_host_netid(self):
         """

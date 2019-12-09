@@ -49,7 +49,7 @@
       </main>
     </div>
     <footer id="relative-footer" class="text-center" role="contentinfo">
-      <a href="mailto:help@uw.edu?subject=Hungry Husky support">
+      <a href="mailto:help@uw.edu?subject=UW Food Alert support">
         Contact support
       </a>
       <p>© 2019 University of Washington</p>

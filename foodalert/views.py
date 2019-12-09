@@ -1,5 +1,6 @@
 import urllib
 import logging
+import csv
 
 from django.shortcuts import render
 from django.template import loader
@@ -13,9 +14,12 @@ from django.contrib.auth.models import User
 
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.settings import api_settings
+from rest_framework_csv import renderers as r
+
 
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.request_validator import RequestValidator
@@ -27,7 +31,7 @@ from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
-        NotificationListSerializer
+        NotificationListSerializer, JSONAuditListSerializer
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -83,9 +87,6 @@ class NotificationList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         qs = Notification.objects.all()
-        # use pagination only when 'page' query param is present
-        if 'page' in self.request.query_params:
-            self.pagination_class = StandardPaginationResult
         if 'host_netid' in self.request.query_params:
             try:
                 user = User.objects.get(
@@ -253,7 +254,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().put(request, pk)
 
@@ -268,7 +271,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().patch(request, pk)
 
@@ -339,6 +344,8 @@ class AllergensList(generics.ListCreateAPIView):
 
 
 class SmsReciver(APIView):
+    permission_classes = [AllowAny]
+
     @csrf_exempt
     def post(self, request, format=None):
         validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
@@ -370,50 +377,128 @@ class SmsReciver(APIView):
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if not sub.number_verified:
-                if request.data['Body'] == "YES":
+                if request.data['Body'].upper() == "YES":
                     resp.message(
-                        'HungryHusky has verified your number.' +
-                        ' Your notifications are currently paused. ' +
-                        'Send RESUME to resume receiving notifications.'
+                        ('Thanks! Your number has been verified. You'
+                         ' will now receive notifications from UW Food Alert.')
                     )
                     sub.number_verified = True
                     sub.save()
                     return HttpResponse(resp)
-                elif request.data['Body'] == "NO":
-                    resp.message('HungryHusky has deleted your number')
-                    sub.sms_number = ''
-                    sub.save()
-                    return HttpResponse(resp)
-            if (request.data['Body'] == "RESUME" and
+            if (request.data['Body'].upper() == "RESUME" and
                sub.number_verified and not sub.send_sms):
-                resp.message('HungryHusky has resumed sending you' +
-                             ' more notifications. Send PAUSE to pause ' +
-                             'receiving notifications.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been resumed.')
+                )
                 sub.send_sms = True
                 sub.save()
-            elif (request.data['Body'] == "PAUSE" and
+            elif (request.data['Body'].upper() == "PAUSE" and
                   sub.number_verified and sub.send_sms):
-                resp.message('HungryHusky will not send any send you any' +
-                             ' more notifications. Send RESUME to resume ' +
-                             'receiving notifications.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been paused. Text "RESUME" when you'
+                     ' want to start receiving notifications again.')
+                )
                 sub.send_sms = False
                 sub.save()
             else:
                 resp.message(
-                    'HungryHusky did not understand that command.\n' +
-                    'The available commands are:\n' +
-                    (
-                        (
-                            "PAUSE: Pause reciving notifications."
-                            if sub.send_sms else
-                            "RESUME: Resume reciving notifications."
-                        )
-                        if sub.number_verified else
-                        "YES: To verify your number."
-                    )
+                    ('Sorry, UW Food Alert was unable to understand'
+                     ' your message.')
                 )
         except Subscription.DoesNotExist:
-            resp.message('HungryHusky does not have this number registered.')
+            resp.message('UW Food Alert does not have this number registered.')
             return HttpResponse(resp)
 
         return HttpResponse(resp)
+
+
+@method_decorator(login_required(), name='dispatch')
+class AuditList(generics.ListAPIView):
+    queryset = Notification.objects.all()
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)\
+        + (r.CSVRenderer, )
+    serializer_class = JSONAuditListSerializer
+    permission_classes = [AuditRead]
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['host__username', 'event']
+
+    def get_queryset(self):
+        qs = Notification.objects.all()
+        if 'page' in self.request.query_params:
+            self.pagination_class = StandardPaginationResult
+        return qs
+
+    def get(self, request, *args, **kwargs):
+        if 'HTTP_ACCEPT' in request.META:
+            if request.META['HTTP_ACCEPT'] == 'text/csv':
+                notifications = self.get_queryset()
+
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = (
+                    'attachment;filename="AuditLog.csv"'
+                )
+
+                csv.register_dialect("unix_newline", lineterminator="\n")
+                writer = csv.writer(response, dialect="unix_newline")
+                writer.writerow([
+                    'id', 'UW NetID', 'Location', 'Event',
+                    'Food Qualifications', 'Time Created', 'Time End',
+                    'Message', 'Allergens', 'Bring Container', 'Ended'
+                ])
+
+                for notif in notifications:
+                    allergens = [x.name for x in notif.allergens.all()]
+                    allergens = ' & '.join(allergens)
+
+                    qual = [
+                        x.internalName for x in notif.food_qualifications.all()
+                    ]
+                    qual = ' & '.join(qual)
+
+                    writer.writerow([
+                        notif.id,
+                        User.objects.get(pk=notif.host.id).username,
+                        notif.location,
+                        notif.event,
+                        qual,
+                        notif.created_time,
+                        notif.end_time,
+                        notif.food_served,
+                        allergens,
+                        notif.bring_container,
+                        notif.ended
+                    ])
+
+                    try:
+                        # get associated update list
+                        update_queryset = Update.objects.all()
+                        update_queryset = update_queryset.filter(
+                            parent_notification=notif
+                        )
+                    except Update.DoesNotExist:
+                        update_queryset = None
+
+                    for update in update_queryset:
+                        elem = {
+                            'text': update.text,
+                            'created_time': update.created_time
+                        }
+                        writer.writerow([
+                            notif.id,
+                            "",
+                            "",
+                            "",
+                            "",
+                            update.created_time,
+                            "",
+                            update.text,
+                            "",
+                            "",
+                            ""
+                        ])
+
+                return response
+        return super().get(self, request, *args, **kwargs)

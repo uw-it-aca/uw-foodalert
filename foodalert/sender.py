@@ -47,8 +47,10 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
+
         text = "Food leftover from " + event + ".\n\n"
         time = datetime.strftime(message['time']['end'], "%I:%M %p")
+
         details = {
             'Food served:' : foods,
             'End time:': time,
@@ -112,7 +114,7 @@ class AmazonSNSProvider(object):
                 response = self.client.publish(
                     PhoneNumber=recipient,
                     Message=sms_message,
-                    Subject='Hungry Husky Event',
+                    Subject='UW Food Alert Event',
                 )
                 successful.append(response)
             except Exception as error:

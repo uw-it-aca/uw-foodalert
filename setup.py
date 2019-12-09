@@ -12,11 +12,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'django<2.2',
+        'django<2.3',
         'django-webpack-loader',
         'UW-Django-SAML2<2.0',
         'psycopg2',
         'djangorestframework',
+        'djangorestframework-csv',
         'phonenumbers',
         'django-phonenumber-field',
         'parameterized',

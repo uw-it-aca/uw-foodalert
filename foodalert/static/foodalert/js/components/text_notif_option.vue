@@ -17,11 +17,11 @@
             <div v-if="serverData.verified" class="pt-1">
                 <span class="m-auto">
                   {{serverData.text}}
-                  <b-button block href="#" v-b-toggle="accord_id" variant="link"
-                    class="verified_link_btn p-0"
+                  <button v-b-toggle="accord_id" role="link"
+                    class="verified_link_btn btn btn-link px-0"
                     :aria-label="'Edit ' + type">
                     Edit
-                  </b-button>
+                  </button>
                 </span>
             </div>
             <div v-else>
@@ -478,7 +478,7 @@ export default {
     }
 
     .notif-option-card .text-unverified {
-        color: #E05018;
+        color: #D93900;
     }
 
     .notif-option-card .text-verified {
@@ -486,7 +486,7 @@ export default {
     }
 
     .notif-option-card .form-text.error-desp {
-        color: #E05018;
+        color: #D93900;
     }
 
     .notif-option-card .spinner-padding {
