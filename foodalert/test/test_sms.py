@@ -61,12 +61,13 @@ class SMSTest(TestCase):
                                          "%Y-%m-%dT%H:%M:%S.%f"),
             },
             'food': {
-                'served': 'Food',
+                'served': 'Sandwitches',
                 'allergens': ['wheat', 'fish', 'peanuts']
             },
             'bring_container': True,
         }
         expected = ("Food leftover from UW Event.\n\n"
+                    "Food served: Sandwitches\n"
                     "End time: 07:23 PM\n"
                     "Location: UW Campus\n"
                     "May contain: wheat, fish, peanuts\n\n"

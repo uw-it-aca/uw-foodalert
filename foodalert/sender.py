@@ -47,9 +47,10 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
-        text = foods + " leftover from " + event + ".\n\n"
+        text = "Food leftover from " + event + ".\n\n"
         time = datetime.strftime(message['time']['end'], "%I:%M %p")
         details = {
+            'Food served:' : foods,
             'End time:': time,
             'Location:': message['location'],
         }
