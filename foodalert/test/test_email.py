@@ -13,13 +13,13 @@ class EmailTest(TestCase):
     def setUpClass(cls):
         MailTemplate.objects.create(
             name="Test template",
-            subject="New Hungry Husky Event: Test Event is Open",
+            subject="New UW Food Alert Event: Test Event is Open",
             message="Just a quick test",
             slug="test",
         )
         MailTemplate.objects.create(
             name="Test template2",
-            subject="New Hungry Husky Event: {{event}} is Open",
+            subject="New UW Food Alert Event: {{event}} is Open",
             message="Serving: {{food}}, at {{location}}",
             slug="temp",
         )

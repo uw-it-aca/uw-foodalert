@@ -14,7 +14,7 @@ class Sender:
         if body[:6] == 'Update':
             MailTemplate.objects.create(
                 name="Food Alert Update",
-                subject="A Hungry Husky Event has posted an update",
+                subject="A UW Food Alert Event has posted an update",
                 message=body,
                 slug=time,
                 is_html=False,
@@ -22,7 +22,7 @@ class Sender:
         else:
             MailTemplate.objects.create(
                 name="Food Alert Notification",
-                subject="New Hungry Husky Event is Open",
+                subject="New UW Food Alert Event is Open",
                 message=body,
                 slug=time,
                 is_html=False,
@@ -46,7 +46,7 @@ class Sender:
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
-        text = "A new Hungry Husky Event: '" + event + "' has been posted! \n"
+        text = "A new UW Food Alert Event: '" + event + "' has been posted! \n"
         time = datetime.strftime(message['time']['end'], "%c")
         details = {
             'Food Served:': message['food']['served'],
@@ -107,7 +107,7 @@ class AmazonSNSProvider(object):
                 response = self.client.publish(
                     PhoneNumber=recipient,
                     Message=sms_message,
-                    Subject='Hungry Husky Event',
+                    Subject='UW Food Alert Event',
                 )
                 successful.append(response)
             except Exception as error:

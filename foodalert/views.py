@@ -31,8 +31,7 @@ from foodalert.models import Notification, Update, Subscription, Allergen
 from foodalert.serializers import NotificationDetailSerializer, \
         UpdateDetailSerializer, UpdateListSerializer, AllergenSerializer, \
         SubscriptionDetailSerializer, SubscriptionSerializer, \
-        NotificationListSerializer, JSONAuditListSerializer, \
-        CSVAuditListSerializer
+        NotificationListSerializer, JSONAuditListSerializer
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
@@ -245,7 +244,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().put(request, pk)
 
@@ -260,7 +261,9 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 not settings.DEBUG and request.data['sms_number'] != ''):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
-                "Reply YES/NO to verify/delete your number for HungryHusky"
+                ("You have registered this number with UW Food Alert to"
+                 " receive notifications when leftover food is available on"
+                 " campus. Reply YES to confirm.")
             )
         return super().patch(request, pk)
 
@@ -366,48 +369,36 @@ class SmsReciver(APIView):
             if not sub.number_verified:
                 if request.data['Body'].upper() == "YES":
                     resp.message(
-                        'HungryHusky has verified your number.' +
-                        ' Your notifications are currently paused. ' +
-                        'Send RESUME to resume receiving notifications.'
+                        ('Thanks! Your number has been verified. You'
+                         ' will now receive notifications from UW Food Alert.')
                     )
                     sub.number_verified = True
                     sub.save()
                     return HttpResponse(resp)
-                elif request.data['Body'].upper() == "NO":
-                    resp.message('HungryHusky has deleted your number')
-                    sub.sms_number = ''
-                    sub.save()
-                    return HttpResponse(resp)
             if (request.data['Body'].upper() == "RESUME" and
                sub.number_verified and not sub.send_sms):
-                resp.message('HungryHusky has resumed sending you' +
-                             ' more notifications. Send PAUSE to pause ' +
-                             'receiving notifications.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been resumed.')
+                )
                 sub.send_sms = True
                 sub.save()
             elif (request.data['Body'].upper() == "PAUSE" and
                   sub.number_verified and sub.send_sms):
-                resp.message('HungryHusky will not send any send you any' +
-                             ' more notifications. Send RESUME to resume ' +
-                             'receiving notifications.')
+                resp.message(
+                    ('Your notifications from UW Food Alert'
+                     ' have been paused. Text "RESUME" when you'
+                     ' want to start receiving notifications again.')
+                )
                 sub.send_sms = False
                 sub.save()
             else:
                 resp.message(
-                    'HungryHusky did not understand that command.\n' +
-                    'The available commands are:\n' +
-                    (
-                        (
-                            "PAUSE: Pause reciving notifications."
-                            if sub.send_sms else
-                            "RESUME: Resume reciving notifications."
-                        )
-                        if sub.number_verified else
-                        "YES: To verify your number."
-                    )
+                    ('Sorry, UW Food Alert was unable to understand'
+                     ' your message.')
                 )
         except Subscription.DoesNotExist:
-            resp.message('HungryHusky does not have this number registered.')
+            resp.message('UW Food Alert does not have this number registered.')
             return HttpResponse(resp)
 
         return HttpResponse(resp)
@@ -418,6 +409,7 @@ class AuditList(generics.ListAPIView):
     queryset = Notification.objects.all()
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES)\
         + (r.CSVRenderer, )
+    serializer_class = JSONAuditListSerializer
     permission_classes = [AuditRead]
 
     filter_backends = [filters.SearchFilter]
@@ -429,20 +421,15 @@ class AuditList(generics.ListAPIView):
             self.pagination_class = StandardPaginationResult
         return qs
 
-    def get_serializer_class(self):
-        if 'Accept' in self.request.META:
-            if self.request.META['Accept'] == 'text/csv':
-                return CSVAuditListSerializer
-        return JSONAuditListSerializer
-
     def get(self, request, *args, **kwargs):
         if 'HTTP_ACCEPT' in request.META:
             if request.META['HTTP_ACCEPT'] == 'text/csv':
                 notifications = self.get_queryset()
 
                 response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] = 'attachment;\
-                 filename="AuditLog.csv"'
+                response['Content-Disposition'] = (
+                    'attachment;filename="AuditLog.csv"'
+                )
 
                 csv.register_dialect("unix_newline", lineterminator="\n")
                 writer = csv.writer(response, dialect="unix_newline")
