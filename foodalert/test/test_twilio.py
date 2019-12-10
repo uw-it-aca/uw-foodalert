@@ -94,7 +94,7 @@ class TwilioTest(TestCase):
 
         with generate_twilio_request_validator_mock():
             client = Client()
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'YES'
@@ -126,7 +126,7 @@ class TwilioTest(TestCase):
 
         with generate_twilio_request_validator_mock():
             client = Client()
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'RESUME'
@@ -159,7 +159,7 @@ class TwilioTest(TestCase):
 
         with generate_twilio_request_validator_mock():
             client = Client()
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'PAUSE'
@@ -190,7 +190,7 @@ class TwilioTest(TestCase):
 
         with generate_twilio_request_validator_mock():
             client = Client()
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'TEST_MESSAGE'
@@ -223,7 +223,7 @@ class TwilioTest(TestCase):
 
         with generate_twilio_request_validator_mock():
             client = Client()
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': "+41524204243",
                 'Body': 'YES'

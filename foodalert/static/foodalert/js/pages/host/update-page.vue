@@ -131,7 +131,7 @@ export default {
       'Content-Type': 'application/json',
     };
 
-    axios.get('/notification/?host_netid=' + this.netID, {headers})
+    axios.get('/api/v1/notification/?host_netid=' + this.netID, {headers})
         .then((response) => {
           const data = response.data.filter(function(notif) {
             return notif.ended === false;
@@ -140,7 +140,7 @@ export default {
           if (data.length === 0) {
             this.$router.push({name: 'h-welcome'});
           } else {
-            axios.get('/notification/' + data[0]['id'] + '/',
+            axios.get('/api/v1/notification/' + data[0]['id'] + '/',
                 {headers})
                 .then((response) => {
                   this.state = response.data;
@@ -183,7 +183,7 @@ export default {
           'X-CSRFToken': csrftoken,
         };
 
-        axios.post('/updates/', data, {headers})
+        axios.post('/api/v1/updates/', data, {headers})
             .then(function(response) {
               this.$router.push({name: 'h-ended'});
             }.bind(this))
@@ -199,7 +199,7 @@ export default {
           'X-CSRFToken': csrftoken,
         };
 
-        axios.post('/updates/', data, {headers})
+        axios.post('/api/v1/updates/', data, {headers})
             .then(function(response) {
               this.privNotifText = 'Your update was sent.';
               this.$refs.notifBox.notificationState = true;

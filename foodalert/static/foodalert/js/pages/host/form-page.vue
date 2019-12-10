@@ -366,7 +366,7 @@ export default {
         'X-CSRFToken': csrftoken,
       };
 
-      axios.post('/notification/', data, {headers})
+      axios.post('/api/v1/notification/', data, {headers})
           .then(function(response) {
             this.$router.push({name: 'h-update', params: {
               notificationText: 'Your notification was sent.',
@@ -406,7 +406,7 @@ export default {
     };
 
     axios.get(
-        '/notification/?host_netid=' + this.netID,
+        '/api/v1/notification/?host_netid=' + this.netID,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
@@ -419,7 +419,7 @@ export default {
         this.$children[0].$data.showUpdateOverlay = false;
       }
     }).catch((error) => this.showErrorPage(error.response, 'h-form'));
-    axios.get('/allergen/', {headers}).then((result) => {
+    axios.get('/api/v1/allergen/', {headers}).then((result) => {
       this.allergens = [];
       result.data.forEach((allergen)=>{
         this.allergens.push(allergen.name);

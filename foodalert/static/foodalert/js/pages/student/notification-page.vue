@@ -100,11 +100,11 @@ export default {
         'Content-Type': 'application/json',
       };
 
-      axios.get('/subscription/?netID=' + this.netID, {headers})
+      axios.get('/api/v1/subscription/?netID=' + this.netID, {headers})
           .then(this.getSubID)
           .then((data) => {
             if (this.subid) {
-              const url = '/subscription/' + this.subid + '/';
+              const url = '/api/v1/subscription/' + this.subid + '/';
 
               axios.get(url, {headers})
                   .then((response) => {
@@ -126,7 +126,11 @@ export default {
                 'sms_number': '',
               };
 
-              axios.post('/subscription/', postData, {'headers': postHeaders})
+              axios.post(
+                  '/api/v1/subscription/',
+                  postData,
+                  {'headers': postHeaders},
+              )
                   .then((response) => {
                     this.subid = response.data.id;
                     this.$children[0].$data.showUpdateOverlay = false;

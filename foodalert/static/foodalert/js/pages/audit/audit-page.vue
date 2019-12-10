@@ -142,7 +142,7 @@ export default {
         {key: 'ended', label: 'Host ended event'},
       ],
       req: null,
-      baseURL: '/auditlog/',
+      baseURL: '/api/v1/auditlog/',
       currentPage: null,
       totalPages: null,
       nextPage: null,
@@ -317,7 +317,7 @@ export default {
         'Accept': 'text/csv',
       };
 
-      axios.get('/auditlog/', {headers})
+      axios.get(this.baseURL, {headers})
           .then((response) => {
             const result = response.data;
 
