@@ -16,10 +16,10 @@ class Sender:
 
         if body[:6] == 'Update':
             email_name += "Update"
-            email_subject += "Update for Food in " + location
+            email_subject += "Update for Food in {}".format(location)
         else:
             email_name += "Notification"
-            email_subject += "Food Available in " + location
+            email_subject += "Food Available in {}".format(location)
 
         MailTemplate.objects.create(
             name=email_name,
@@ -48,7 +48,7 @@ class Sender:
         event = message['event']
         foods = message['food']['served']
 
-        text = "Food leftover from " + event + ".\n\n"
+        text = "Food leftover from {}.\n\n".format(event)
         time = datetime.strftime(message['time']['end'], "%I:%M %p")
 
         details = {
@@ -57,11 +57,11 @@ class Sender:
             'Location:': message['location'],
         }
         for title, desc in details.items():
-            text += title + ' ' + desc + '\n'
+            text += "{} {}\n".format(title, desc)
         if len(message['food']['allergens']) > 0:
             text += 'May contain: '
             for allergen in message['food']['allergens']:
-                text += allergen + ", "
+                text += "{}, ".format(allergen)
             text = text[:-2]
             text += '\n\n'
         if message['bring_container']:
