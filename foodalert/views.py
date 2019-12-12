@@ -131,13 +131,18 @@ class NotificationList(generics.ListCreateAPIView):
 
                 if not settings.DEBUG:
                     if settings.FOODALERT_USE_SMS == "twilio" and\
-                       sms_recipients != []:
+                       sms_recipients:
                         Sender.send_twilio_sms(sms_recipients, message)
                     elif settings.FOODALERT_USE_SMS == "amazon":
                         Sender.send_amazon_sms(sms_recipients, message)
 
-                if email_recipients != []:
+                if email_recipients:
                     Sender.send_email(message, email_recipients, slug)
+                else:
+                    logging.StreamHandler("Email Recipient list is empty")
+
+                if not sms_recipients:
+                    logging.StreamHandler("SMS Recipient list is empty")
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
