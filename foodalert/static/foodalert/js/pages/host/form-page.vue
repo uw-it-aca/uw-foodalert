@@ -344,7 +344,8 @@ export default {
       }
 
       const tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      const localISOTime = (new Date(datetime - tzoffset)).toISOString().slice(0, -1);
+      var localISOTime = (new Date(datetime - tzoffset)).toISOString();
+      localISOTime = localISOTime.slice(0, -1);
 
       const data = {
         'netID': this.netID,
