@@ -343,11 +343,14 @@ export default {
         datetime.setDate(datetime.getDate() + 1);
       }
 
+      const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      const localISOTime = (new Date(datetime - tzoffset)).toISOString().slice(0, -1);
+
       const data = {
         'netID': this.netID,
         'location': this.form.location,
         'event': this.form.event,
-        'end_time': datetime.toISOString(),
+        'end_time': localISOTime,
         'food': {
           'served': this.form.food_served,
           'qualifications': this.food_qualifications,
