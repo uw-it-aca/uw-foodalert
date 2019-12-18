@@ -5,9 +5,9 @@
   "main": "webpack.config.js",
   "dependencies": {
     "@babel/core": "^7.4.4",
-    "babel-core": "^7.0.0-bridge.0",
     "@babel/preset-env": "^7.4.4",
     "axios": "^0.18.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.5",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.28",
@@ -19,6 +19,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "libphonenumber-js": "^1.7.5",
+    "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "popper.js": "^1.14.4",
     "sass": "^1.10.4",
