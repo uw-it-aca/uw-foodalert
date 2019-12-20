@@ -336,7 +336,6 @@ export default {
     submitAndNext() {
       const splitTime = this.form.end_time.split(/:/);
       const datetime = new Date();
-      const moment = require('moment');
 
       datetime.setHours(splitTime[0], splitTime[1]);
 
@@ -344,14 +343,11 @@ export default {
         datetime.setDate(datetime.getDate() + 1);
       }
 
-      const formatter = 'YYYY-MM-DD[T]HH:mm:ss';
-      const localTime = moment(datetime).format(formatter);
-
       const data = {
         'netID': this.netID,
         'location': this.form.location,
         'event': this.form.event,
-        'end_time': localTime,
+        'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
           'qualifications': this.food_qualifications,

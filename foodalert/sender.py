@@ -6,7 +6,8 @@ from django.conf import settings
 import boto3
 from twilio.rest import Client
 import dateutil.parser
-from datetime import datetime
+import datetime
+from django.utils import timezone
 
 
 class Sender:
@@ -49,11 +50,14 @@ class Sender:
         foods = message['food']['served']
 
         text = "Food leftover from {}.\n\n".format(event)
-        time = datetime.strftime(message['time']['end'], "%I:%M %p")
+
+        local_time = timezone.localtime(message['time']['end'])
+
+        formatted_time = local_time.strftime("%I:%M %p")
 
         details = {
             'Food served:': foods,
-            'End time:': time,
+            'End time:': formatted_time,
             'Location:': message['location'],
         }
         for title, desc in details.items():
