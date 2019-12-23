@@ -52,7 +52,6 @@ class Sender:
         text = "Food leftover from {}.\n\n".format(event)
 
         local_time = timezone.localtime(message['time']['end'])
-
         formatted_time = local_time.strftime("%I:%M %p")
 
         details = {

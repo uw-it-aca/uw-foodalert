@@ -57,8 +57,8 @@ class SMSTest(TestCase):
             'location': 'UW Campus',
             'event': 'UW Event',
             'time': {
-                'end': datetime.strptime('2018-09-13T19:23:06.508534',
-                                         "%Y-%m-%dT%H:%M:%S.%f"),
+                'end': datetime.strptime('2019-12-13T20:23:06.200-+0000',
+                                         "%Y-%m-%dT%H:%M:%S.%f-%z"),
             },
             'food': {
                 'served': 'Sandwitches',
@@ -69,7 +69,7 @@ class SMSTest(TestCase):
 
         expected = ("Food leftover from UW Event.\n\n"
                     "Food served: Sandwitches\n"
-                    "End time: 07:23 PM\n"
+                    "End time: 12:23 PM\n"
                     "Location: UW Campus\n"
                     "May contain: wheat, fish, peanuts\n\n"
                     "You must bring a container.\n\n"
