@@ -1,5 +1,6 @@
 import os
 import json
+import pytz
 from copy import deepcopy
 from datetime import datetime, timedelta
 from unittest.mock import patch
@@ -365,10 +366,12 @@ class NotificationTest(TestCase):
         request is successful and the response json is matches the request
         data
         """
+        utc_zone = pytz.utc
+
         self.test_data[2]["host"] = self.user2
 
         with generate_twilio_mock() as mock:
-            end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+            end_time = datetime.now().astimezone(utc_zone)
 
             # Audit
             client = create_client_with_mock_saml(
@@ -466,10 +469,12 @@ class NotificationTest(TestCase):
         has an notification that has ended. The first one should cause an
         error 409 and the second one should return with a 201
         """
+        utc_zone = pytz.utc
+
         self.test_data[2]["host"] = self.user1
         self.test_data[3]["host"] = self.user2
 
-        end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+        end_time = datetime.now().astimezone(utc_zone)
         payload_data_2 = self.data_to_payload_json(
             self.test_data[2],
             end_time.isoformat()
