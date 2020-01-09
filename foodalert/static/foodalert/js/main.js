@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import BootstrapVue from 'bootstrap-vue';
+import VueAnalytics from 'vue-analytics';
 
 import '../css/custom.scss';
 
@@ -9,7 +10,6 @@ Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 
 require('../css/styles.css');
-
 
 const components = window.vueData.components;
 
@@ -60,6 +60,20 @@ if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
     },
   });
 }
+
+const ga_property_id = $("body").data("ga-property-id");
+
+// Configure VueAnalytics
+Vue.use(VueAnalytics, {
+  id: ga_property_id,
+  router,
+  set: [
+    { field: 'anonymizeIp', value: true }
+  ],
+  // debug: {
+  //   sendHitTask: false
+  // }
+});
 
 export const vm = new Vue({
   render: (createElement) => createElement('router-view'),

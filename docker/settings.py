@@ -5,6 +5,7 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+GA_PROPERTY_ID = os.getenv('GA_PROPERTY_ID', None)
 
 SECRET_KEY = os.getenv('DJANGO_SECRET', None)
 
