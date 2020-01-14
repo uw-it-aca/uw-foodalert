@@ -61,18 +61,22 @@ if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
   });
 }
 
-const ga_property_id = $("body").data("ga-property-id");
+const body = document.querySelector("#body");
+
+const ga_key = body.dataset.gaKey;
+const debug_mode = body.dataset.debugMode;
 
 // Configure VueAnalytics
 Vue.use(VueAnalytics, {
-  id: ga_property_id,
+  id: ga_key,
   router,
   set: [
     { field: 'anonymizeIp', value: true }
   ],
-  // debug: {
-  //   sendHitTask: false
-  // }
+  debug: {
+    enabled: debug_mode,
+    sendHitTask: !debug_mode
+  }
 });
 
 export const vm = new Vue({

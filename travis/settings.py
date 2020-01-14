@@ -81,3 +81,5 @@ FOODALERT_AUTHZ_GROUPS = {
 SAFE_EMAIL_RECIPIENT = 'notarealaddress@uw.edu'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
+
+GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")

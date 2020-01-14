@@ -329,7 +329,8 @@ class HomeView(TemplateView):
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
         context['logout_url'] = settings.LOGOUT_URL
-        context['ga_property_id'] = settings.GA_PROPERTY_ID
+        context['ga_key'] = settings.GOOGLE_ANALYTICS_KEY
+        context['debug_mode'] = settings.DEBUG
         return context
 
 

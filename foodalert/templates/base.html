@@ -8,10 +8,9 @@
             var netid = '{{ netid }}';
             var logoutUrl = "{{ logout_url }}"
         </script>
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
     </head>
-    <body data-ga-property-id="{{ ga_property_id }}">
+    <body id="body" data-ga-key="{{ ga_key }}" data-debug-mode="{{ debug_mode }}">
         <div id="app"></div>
 
         {% render_bundle 'base' %}
