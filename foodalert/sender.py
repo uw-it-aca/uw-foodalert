@@ -31,7 +31,7 @@ class Sender:
 
         send_db_mail(
             slug=time,
-            recipient=settings.FA_DISPLAYED_EMAIL_RECIPIENT,
+            recipient=[],
             bcc=recipients,
             use_celery=False
         )
