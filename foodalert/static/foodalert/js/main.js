@@ -61,22 +61,22 @@ if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
   });
 }
 
-const body = document.querySelector("#body");
+const body = document.querySelector('#body');
 
-const ga_key = body.dataset.gaKey;
-const debug_mode = body.dataset.debugMode;
+const gaKey = body.dataset.gaKey;
+const debugMode = body.dataset.debugMode;
 
 // Configure VueAnalytics
 Vue.use(VueAnalytics, {
-  id: ga_key,
+  id: gaKey,
   router,
   set: [
-    { field: 'anonymizeIp', value: true }
+    {field: 'anonymizeIp', value: true},
   ],
   debug: {
-    enabled: debug_mode,
-    sendHitTask: !debug_mode
-  }
+    enabled: debugMode,
+    sendHitTask: !debugMode,
+  },
 });
 
 export const vm = new Vue({
