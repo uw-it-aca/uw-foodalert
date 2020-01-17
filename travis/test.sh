@@ -13,6 +13,7 @@ source bin/activate
 # install test tooling
 pip install pycodestyle coverage
 apt-get install -y nodejs npm gcc-4.8 unixodbc-dev
+npm install .
 npm install eslint eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y eslint-config-stylelint
 
 function run_test {
