@@ -1,41 +1,41 @@
-sudo: false
-language: minimal
-dist: xenial
-matrix:
-  include:
-    - language: python
-      python: 3.6
-      cache: pip
-      addons:
-        apt:
-          update: true
-          packages:
-            - libxmlsec1-dev
-        postgresql: "9.4"
-      install:
-        - pip install coverage
-        - pip install python-coveralls
-        - pip install pycodestyle
-        - pip install . 
-      before_script:
-        - psql -c 'create database travis_ci_test;' -U postgres
-        - cp travis/manage.py manage.py
-        - python manage.py migrate --noinput
-      script:
-        - pycodestyle foodalert/ --exclude=migrations
-        - coverage run --source=foodalert/ --omit=foodalert/migrations/* manage.py test foodalert
-      after_script:
-        - coveralls
-    - language: node_js
-      node_js: 8.15.1
-      cache: npm
-      install:
-        - npm install eslint eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y eslint-config-stylelint
-      script:
-        - ./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js/
-        - npx webpack
-    # - language: minimal
-    #   services:
-    #     - docker
-    #   script:
-    #     - docker-compose -f docker-compose.test.yml up --build taster
+sudo: required
+
+language: python
+python:
+  - 3.6
+
+services:
+  - docker
+
+os:
+  - linux
+
+env:
+  global:
+    - RELEASE_NAME="uw-foodalert"
+    - DJANGO_APP="foodalert"
+    - COMMIT_HASH="$(git rev-parse --short=7 HEAD)"
+    - IMAGE_TAG="${RELEASE_NAME}:${COMMIT_HASH}"
+
+install:
+  - docker build -t "$IMAGE_TAG" .
+
+before_script:
+  - pip install coverage
+  - pip install coveralls
+
+script:
+  - docker run -u root -it -v /tmp:/coverage -e DJANGO_APP="$DJANGO_APP" -e "ENV=localdev" "$IMAGE_TAG" bash -c ". ./travis/test.sh"
+
+after_success:
+  - cp /tmp/.coverage.* .
+  - coverage combine
+  - coveralls
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [[ "$TRAVIS_BRANCH" =~ ^(develop|master)$ ]]; then
+    curl -Ls ${DEPLOY_SCRIPT_BASE}/travis-ci/deploy.sh | bash;
+    fi
+
+cache:
+  directories:
+    - "$HOME/helm"
+    - "$HOME/kubeval"
