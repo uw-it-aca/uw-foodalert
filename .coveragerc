@@ -1,0 +1,8 @@
+[run]
+source = foodalert
+parallel = True
+
+[paths]
+source =
+    foodalert/
+    /app/foodalert/
