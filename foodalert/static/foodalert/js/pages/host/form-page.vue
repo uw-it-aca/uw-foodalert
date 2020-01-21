@@ -125,6 +125,12 @@
               <time-picker timeID="end-time" v-model="form.end_time"
                         startWithCurrent labelbyID="end-time-label" v-else>
               </time-picker>
+              <b-form-text id="end-time-warning" text-variant="info"
+                  style="font-size: 14px; font-weight: 800;"
+                  v-if="form.end_time && endTimeBeforeCurrent()">
+                  <p> Warning: End Time is before current time. </p>
+                  <p> End Time is set to be {{ endTimeBeforeCurrent() }} TOMORROW. </p>
+              </b-form-text>
             </b-col>
           </b-row>
         </label>
@@ -297,6 +303,18 @@ export default {
 
       return msg;
     },
+    endTimeBeforeCurrent() {
+      const splitTime = this.form.end_time.split(/:/);
+      const datetime = new Date();
+
+      datetime.setHours(splitTime[0], splitTime[1]);
+      console.log(datetime)
+
+      if (datetime < new Date()) {
+        return this.formatedTimeToStr();
+      }
+      return null;
+    },
     onSubmit(evt) {
       evt.preventDefault();
 
@@ -326,9 +344,11 @@ export default {
 
       if (hours === 0) {
         hours = 12;
+      } else if (hours === 12) {
+        timeExt = 'PM'
       } else if (hours > 12) {
         hours -= 12;
-        timeExt = 'PM';
+        timeExt = 'PM'
       }
 
       return hours + ':' + mins + ' ' + timeExt;
@@ -339,7 +359,7 @@ export default {
 
       datetime.setHours(splitTime[0], splitTime[1]);
 
-      if (datetime < new Date()) {
+      if (datetime <= new Date()) {
         datetime.setDate(datetime.getDate() + 1);
       }
 
