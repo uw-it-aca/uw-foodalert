@@ -371,7 +371,7 @@ class NotificationTest(TestCase):
         self.test_data[2]["host"] = self.user2
 
         with generate_twilio_mock() as mock:
-            end_time = datetime.now().astimezone(utc_zone)
+            end_time = datetime.now().astimezone(utc_zone)+timedelta(seconds=3600)
 
             # Audit
             client = create_client_with_mock_saml(
@@ -474,7 +474,7 @@ class NotificationTest(TestCase):
         self.test_data[2]["host"] = self.user1
         self.test_data[3]["host"] = self.user2
 
-        end_time = datetime.now().astimezone(utc_zone)
+        end_time = datetime.now().astimezone(utc_zone)+timedelta(seconds=3600)
         payload_data_2 = self.data_to_payload_json(
             self.test_data[2],
             end_time.isoformat()
@@ -737,6 +737,7 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 403)
+
 
     """
     Helper functions
