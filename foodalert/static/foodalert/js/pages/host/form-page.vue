@@ -306,16 +306,12 @@ export default {
       return msg;
     },
     checkEndTime() {
-      this.endTimeBeforeCurrent = false;
-
       const splitTime = this.form.end_time.split(/:/);
       const datetime = new Date();
 
       datetime.setHours(splitTime[0], splitTime[1]);
-
-      if (datetime <= new Date()) {
-        this.endTimeBeforeCurrent = true;
-      }
+      
+      this.endTimeBeforeCurrent = datetime <= new Date();
     },
     onSubmit(evt) {
       evt.preventDefault();
