@@ -1,4 +1,4 @@
-FROM acait/django-container:1.0.10 as django
+FROM acait/django-container:1.0.17 as django
 
 USER root
 RUN apt-get update
