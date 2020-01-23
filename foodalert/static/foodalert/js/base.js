@@ -103,6 +103,7 @@ window.vueData.routes = [
         component: UnauthzTemplate,
         name: 's-notifications',
         meta: {title: 'Unauthorized Page'},
+        props: true,
       },
       {
         path: 'signup',
