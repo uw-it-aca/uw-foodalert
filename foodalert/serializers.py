@@ -131,7 +131,6 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
         ret["end_time"] = dateutil.parser.parse(data["end_time"])
 
         utc = pytz.utc
-        
         if ret["end_time"] <= datetime.now().astimezone(utc):
             raise ValidationError({
                 "Bad Request": "End time must be after current time"
