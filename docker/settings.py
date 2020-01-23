@@ -5,7 +5,6 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 SECRET_KEY = os.getenv('DJANGO_SECRET', None)
 
 if os.getenv('ENV', 'localdev') == "localdev":
