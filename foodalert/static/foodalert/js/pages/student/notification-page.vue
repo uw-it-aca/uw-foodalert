@@ -104,6 +104,7 @@ export default {
       // check if user has agreed to responsibilities
       if (!this.agree) {
         this.$router.push({name: 's-welcome'});
+
         return;
       }
 
