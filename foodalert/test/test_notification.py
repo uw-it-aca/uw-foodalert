@@ -371,7 +371,8 @@ class NotificationTest(TestCase):
         self.test_data[2]["host"] = self.user2
 
         with generate_twilio_mock() as mock:
-            end_time = datetime.now().astimezone(utc_zone)+timedelta(seconds=3600)
+            end_time = datetime.now().astimezone(utc_zone)\
+                + timedelta(seconds=3600)
 
             # Audit
             client = create_client_with_mock_saml(
@@ -647,6 +648,41 @@ class NotificationTest(TestCase):
 
         self.test_data[2]["host"] = None
 
+    def test_post_end_time_before_current_time(self):
+        """
+        Attempt to post payload with end time before or same as current time.
+        Expects 403 error
+        """
+
+        end_time1 = (datetime.now().astimezone() - timedelta(seconds=3600))\
+            .isoformat()
+        end_time2 = (datetime.now().astimezone()).isoformat()
+        self.test_data[2]["host"] = self.user2
+
+        payload1 = self.data_to_payload_json(self.test_data[2], end_time1)
+        payload2 = self.data_to_payload_json(self.test_data[2], end_time2)
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group]
+        )
+
+        response = client.post(
+            "/api/v1/notification/",
+            data=payload1,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        response = client.post(
+            "/api/v1/notification/",
+            data=payload2,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        self.test_data[2]["host"] = None
+
     """
     PATCH tests
     """
@@ -737,7 +773,6 @@ class NotificationTest(TestCase):
                 content_type='application/json'
             )
         self.assertEqual(response.status_code, 403)
-
 
     """
     Helper functions
