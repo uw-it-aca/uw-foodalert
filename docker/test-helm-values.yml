@@ -61,6 +61,10 @@ environmentVariablesSecrets:
     name: EMAIL_HOST_PASSWORD
     secretName: foodalert-eval-email
     secretKey: email_host_password
+  emailDefaultFromEmail:
+    name: DEFAULT_FROM_EMAIL
+    secretName: foodalert-eval-email
+    secretKey: default_from_email
   spCert:
     name: SP_CERT
     secretName: foodalert.aca-aws.s.uw.edu
@@ -68,5 +72,9 @@ environmentVariablesSecrets:
   djangoSecret:
     name: DJANGO_SECRET
     secretName: foodalert-eval-django-secret
+    secretKey: secret
+  googleSecret:
+    name: GOOGLE_ANALYTICS_KEY
+    secretName: foodalert-eval-google-secret
     secretKey: secret
 
