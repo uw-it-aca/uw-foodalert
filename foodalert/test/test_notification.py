@@ -1,5 +1,6 @@
 import os
 import json
+import pytz
 from copy import deepcopy
 from datetime import datetime, timedelta
 from unittest.mock import patch
@@ -365,10 +366,13 @@ class NotificationTest(TestCase):
         request is successful and the response json is matches the request
         data
         """
+        utc_zone = pytz.utc
+
         self.test_data[2]["host"] = self.user2
 
         with generate_twilio_mock() as mock:
-            end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+            end_time = datetime.now().astimezone(utc_zone)\
+                + timedelta(seconds=3600)
 
             # Audit
             client = create_client_with_mock_saml(
@@ -466,10 +470,12 @@ class NotificationTest(TestCase):
         has an notification that has ended. The first one should cause an
         error 409 and the second one should return with a 201
         """
+        utc_zone = pytz.utc
+
         self.test_data[2]["host"] = self.user1
         self.test_data[3]["host"] = self.user2
 
-        end_time = datetime.now().astimezone() + timedelta(seconds=3600)
+        end_time = datetime.now().astimezone(utc_zone)+timedelta(seconds=3600)
         payload_data_2 = self.data_to_payload_json(
             self.test_data[2],
             end_time.isoformat()
@@ -639,6 +645,41 @@ class NotificationTest(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 403)
+
+        self.test_data[2]["host"] = None
+
+    def test_post_end_time_before_current_time(self):
+        """
+        Attempt to post payload with end time before or same as current time.
+        Expects 403 error
+        """
+
+        end_time1 = (datetime.now().astimezone() - timedelta(seconds=3600))\
+            .isoformat()
+        end_time2 = (datetime.now().astimezone()).isoformat()
+        self.test_data[2]["host"] = self.user2
+
+        payload1 = self.data_to_payload_json(self.test_data[2], end_time1)
+        payload2 = self.data_to_payload_json(self.test_data[2], end_time2)
+
+        client = create_client_with_mock_saml(
+            self.test_data[2]["host"],
+            [create_group]
+        )
+
+        response = client.post(
+            "/api/v1/notification/",
+            data=payload1,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        response = client.post(
+            "/api/v1/notification/",
+            data=payload2,
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
 
         self.test_data[2]["host"] = None
 

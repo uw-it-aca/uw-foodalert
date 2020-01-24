@@ -123,8 +123,17 @@
               </div>
 
               <time-picker timeID="end-time" v-model="form.end_time"
-                        startWithCurrent labelbyID="end-time-label" v-else>
+                        startWithCurrent labelbyID="end-time-label"
+                        v-on:input="checkEndTime" v-else>
               </time-picker>
+              <b-form-text id="end-time-warning" text-variant="primary"
+                  style="font-size: 14px; font-weight: 800;"
+                  v-if="endTimeBeforeCurrent">
+                  <p> Warning: End Time is before current time. </p>
+                  <p>
+                    End Time is set to be {{ formatedTimeToStr() }} TOMORROW.
+                  </p>
+              </b-form-text>
             </b-col>
           </b-row>
         </label>
@@ -266,6 +275,7 @@ export default {
       allergens: [],
       show: true,
       isMobile: false,
+      endTimeBeforeCurrent: false,
     };
   },
   methods: {
@@ -297,6 +307,14 @@ export default {
 
       return msg;
     },
+    checkEndTime() {
+      const splitTime = this.form.end_time.split(/:/);
+      const datetime = new Date();
+
+      datetime.setHours(splitTime[0], splitTime[1]);
+
+      this.endTimeBeforeCurrent = datetime <= new Date();
+    },
     onSubmit(evt) {
       evt.preventDefault();
 
@@ -326,6 +344,8 @@ export default {
 
       if (hours === 0) {
         hours = 12;
+      } else if (hours === 12) {
+        timeExt = 'PM';
       } else if (hours > 12) {
         hours -= 12;
         timeExt = 'PM';
@@ -336,22 +356,18 @@ export default {
     submitAndNext() {
       const splitTime = this.form.end_time.split(/:/);
       const datetime = new Date();
-      const moment = require('moment');
 
       datetime.setHours(splitTime[0], splitTime[1]);
 
-      if (datetime < new Date()) {
+      if (datetime <= new Date()) {
         datetime.setDate(datetime.getDate() + 1);
       }
-
-      const formatter = 'YYYY-MM-DD[T]HH:mm:ss';
-      const localTime = moment(datetime).format(formatter);
 
       const data = {
         'netID': this.netID,
         'location': this.form.location,
         'event': this.form.event,
-        'end_time': localTime,
+        'end_time': datetime.toISOString(),
         'food': {
           'served': this.form.food_served,
           'qualifications': this.food_qualifications,

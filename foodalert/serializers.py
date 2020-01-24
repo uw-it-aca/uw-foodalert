@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 import dateutil.parser
+import pytz
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -128,6 +129,12 @@ class NotificationDetailSerializer(serializers.ModelSerializer):
 
         ret["created_time"] = datetime.now().astimezone()
         ret["end_time"] = dateutil.parser.parse(data["end_time"])
+
+        utc = pytz.utc
+        if ret["end_time"] <= datetime.now().astimezone(utc):
+            raise ValidationError({
+                "Bad Request": "End time must be after current time"
+            })
 
         if "allergens" in data["food"] and data["food"]["allergens"] != []:
             ret["allergens"] = data["food"]["allergens"]
