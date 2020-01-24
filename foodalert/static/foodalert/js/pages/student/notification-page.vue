@@ -60,6 +60,7 @@ export default {
   },
   props: {
     bid: String,
+    agree: Boolean,
   },
   data() {
     return {
@@ -99,6 +100,13 @@ export default {
       const headers = {
         'Content-Type': 'application/json',
       };
+
+      // check if user has agreed to responsibilities
+      if (!this.agree) {
+        this.$router.push({name: 's-welcome'});
+
+        return;
+      }
 
       axios.get('/api/v1/subscription/?netID=' + this.netID, {headers})
           .then(this.getSubID)

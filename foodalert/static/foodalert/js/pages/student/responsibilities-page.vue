@@ -84,7 +84,10 @@ export default {
         return;
       }
 
-      this.$router.push({name: 's-notifications'});
+      this.$router.push({
+        name: 's-notifications',
+        params: {agree: true},
+      });
     },
     inputValid(fieldValue) {
       if (this.enableValidation.indexOf(fieldValue) !== -1) {

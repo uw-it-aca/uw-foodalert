@@ -31,7 +31,10 @@ export default {
     axios.get('/api/v1/subscription/?netID=' + this.netID, {headers})
         .then((result) => {
           if (result.data.length) {
-            this.$router.push({name: 's-notifications'});
+            this.$router.push({
+              name: 's-notifications',
+              params: {agree: true},
+            });
           } else {
             this.$children[0].$children[0].$data.showUpdateOverlay = false;
           }
