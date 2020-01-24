@@ -36,6 +36,17 @@ WEBPACK_LOADER = {
     }
 }
 
+LOGGING['handlers']['file'] = {
+    'level':'INFO',
+    'class':'logging.FileHandler',
+    'filename':'/app/foodalert.log',
+}
+
+LOGGING['loggers'][''] = {
+    'handlers': ['stdout', 'stderr', 'file'],
+    'level': 'DEBUG'
+}
+
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
 # SETTING FOR WHICH SMS TO USE
