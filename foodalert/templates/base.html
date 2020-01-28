@@ -10,7 +10,7 @@
         </script>
 
     </head>
-    <body id="body" data-ga-key="{{ ga_key }}" data-debug-mode="{{ debug_mode }}">
+    <body id="body" data-ga-key="{{ ga_key }}" data-debug-mode="{{ debug_mode|lower }}">
         <div id="app"></div>
 
         {% render_bundle 'base' %}

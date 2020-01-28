@@ -75,7 +75,6 @@ Vue.use(VueAnalytics, {
   ],
   debug: {
     enabled: debugMode,
-    sendHitTask: !debugMode,
   },
 });
 
