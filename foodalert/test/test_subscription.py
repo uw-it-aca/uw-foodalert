@@ -438,9 +438,8 @@ class SubscriptionTest(TestCase):
             'sms_number': sms
         }
 
-        diff_sms = sms.replace(sms[-1], sms[-1] + 1)
         payload2 = {
-            'sms_number': diff_sms
+            'sms_number': "+41524204244"
         }
         with generate_twilio_mock() as mock:
             response = self.client.patch('/subscription/{}/'.format(sub.id),
