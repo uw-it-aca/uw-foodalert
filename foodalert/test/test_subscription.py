@@ -427,7 +427,7 @@ class SubscriptionTest(TestCase):
     @parameterized.expand(VERIFIED_TEST_CASES)
     @transaction.atomic
     def test_verified_patch_change_sms(self, email='', sms='',
-                                email_verified='', number_verified=''):
+                                       email_verified='', number_verified=''):
         """
         If user has verified their number, the verified state should only be
         set to false when the sms number changes.
@@ -443,7 +443,7 @@ class SubscriptionTest(TestCase):
         payload1 = {
             'sms_number': sms
         }
-        
+
         diff_sms = sms.replace(sms[-1], sms[-1] + 1)
         payload2 = {
             'sms_number': diff_sms
@@ -459,8 +459,8 @@ class SubscriptionTest(TestCase):
 
             # change sms
             response2 = self.client.patch('/subscription/{}/'.format(sub.id),
-                                           data=json.dumps(payload2),
-                                           content_type='application/json')
+                                          data=json.dumps(payload2),
+                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
             data = response2.json()
             self.assertEqual(payload2['sms_number'], data['sms_number'])
