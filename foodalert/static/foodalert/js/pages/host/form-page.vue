@@ -115,6 +115,7 @@
                 <b-form-input id="end-time" aria-describedby="end-time-feedback"
                   v-model="form.end_time"
                   :state="inputValid('end_time')"
+                  @change="checkEndTime"
                   type="time" class="standard-placeholder" size="lg">
                 </b-form-input>
                 <b-form-invalid-feedback id="end-time-feedback" role="alert">
