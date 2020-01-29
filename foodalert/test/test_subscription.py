@@ -463,7 +463,7 @@ class SubscriptionTest(TestCase):
             self.assertEqual(200, response.status_code)
             data = response2.json()
             self.assertEqual(payload2['sms_number'], data['sms_number'])
-            self.assertFalse(sub.number_verified)
+            self.assertFalse(data['number_verified'])
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
