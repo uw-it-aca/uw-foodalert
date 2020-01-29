@@ -424,6 +424,48 @@ class SubscriptionTest(TestCase):
             self.assertEqual(valid_payload['send_sms'], data['send_sms'])
             self.assertEqual(valid_payload['send_email'], data['send_email'])
 
+    @parameterized.expand(VERIFIED_TEST_CASES)
+    @transaction.atomic
+    def test_verified_patch_change_sms(self, email='', sms='',
+                                email_verified='', number_verified=''):
+        """
+        If user has verified their number, the verified state should only be
+        set to false when the sms number changes.
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms,
+            email_verified=email_verified,
+            number_verified=number_verified,
+        )
+        # patch with the same sms should not change verified state
+        payload1 = {
+            'sms_number': sms
+        }
+        
+        diff_sms = sms.replace(sms[-1], sms[-1] + 1)
+        payload2 = {
+            'sms_number': diff_sms
+        }
+        with generate_twilio_mock() as mock:
+            response = self.client.patch('/subscription/{}/'.format(sub.id),
+                                         data=json.dumps(payload1),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertEqual(payload1['sms_number'], data['sms_number'])
+            self.assertTrue(sub.number_verified)
+
+            # change sms
+            response2 = self.client.patch('/subscription/{}/'.format(sub.id),
+                                           data=json.dumps(payload2),
+                                           content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response2.json()
+            self.assertEqual(payload2['sms_number'], data['sms_number'])
+            self.assertFalse(sub.number_verified)
+
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_unverified_patch_subscription(self, email='', sms=''):
