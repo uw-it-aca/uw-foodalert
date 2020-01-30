@@ -437,7 +437,7 @@ class SubscriptionTest(TestCase):
             email=email,
             sms_number=sms,
             email_verified=email_verified,
-            number_verified=number_verified,
+            number_verified=True,
         )
         # patch with the same sms should not change verified state
         payload1 = {
@@ -448,13 +448,14 @@ class SubscriptionTest(TestCase):
             'sms_number': "+41524204244"
         }
         with generate_twilio_mock() as mock:
+            # patch with the same number should not change anything
             response = self.client.patch('/subscription/{}/'.format(sub.id),
                                          data=json.dumps(payload1),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
             data = response.json()
             self.assertEqual(payload1['sms_number'], data['sms_number'])
-            self.assertTrue(sub.number_verified)
+            self.assertTrue(data['number_verified'])
 
             # change sms
             response2 = self.client.patch('/subscription/{}/'.format(sub.id),
@@ -464,6 +465,10 @@ class SubscriptionTest(TestCase):
             data = response2.json()
             self.assertEqual(payload2['sms_number'], data['sms_number'])
             self.assertFalse(data['number_verified'])
+
+            # verify model was updated
+            sub = Subscription.objects.get(pk=sub.id)
+            self.assertFalse(sub.number_verified)
 
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
