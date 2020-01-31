@@ -226,8 +226,9 @@ class SubscriptionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'netid', 'sms_number', 'number_verified', 'email',
-                  'send_sms', 'email_verified', 'send_email')
-        read_only_fields = ("number_verified", 'email_verified', 'email')
+                  'send_sms', 'email_verified', 'send_email', 'twilio_stop')
+        read_only_fields = ("number_verified", 'email_verified',
+                            'email', 'twilio_stop')
 
     def to_internal_value(self, data):
         obj = self.context['view'].get_object()
@@ -269,6 +270,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                 "sms_number": str(update.sms_number),
                 "number_verified": update.number_verified,
                 "send_sms": update.send_sms,
+                "twilio_stop": update.twilio_stop,
             }
         else:
             return {
