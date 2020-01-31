@@ -33,6 +33,7 @@ class Subscription(models.Model):
     sms_number = PhoneNumberField(blank=True)
     number_verified = models.BooleanField(default=False)
     send_sms = models.BooleanField(default=False)
+    twilio_stop = models.BooleanField(default=False)
 
     @property
     def netid(self):
