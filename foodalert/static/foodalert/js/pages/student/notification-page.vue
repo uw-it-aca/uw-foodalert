@@ -8,25 +8,33 @@
         Select how you will like to receive notifications.
         Please choose at least one.
       </p>
-      <text-notif accord_id="text" type="text"
-        label="Enter a phone number" :subid="subid"
-        :serverData="{ text: notif_info.sms_number,
-          verified: notif_info.number_verified,
-          send_sms: notif_info.send_sms}"
-        :requestUpdate="requestUpdate"
-        errorDesc="Carrier rates may apply">
-        <template #disclaimer>
-          Only US numbers are supported at this time. Carrier rates may apply.
-        </template>
-        <template #update-note>
-          Remove or update your phone number.
-        </template>
-        <template #unverifNotifText>
-          We sent a verification text to {{notif_info.sms_number}}.
-          Please reply YES to finish signup.
-          <br />
-        </template>
-      </text-notif>
+      <div v-bind:class="{'overlay': (notif_info.twilio_stop)}">
+        <text-notif accord_id="text" type="text"
+          label="Enter a phone number" :subid="subid"
+          :serverData="{ text: notif_info.sms_number,
+            verified: notif_info.number_verified,
+            send_sms: notif_info.send_sms}"
+          :requestUpdate="requestUpdate"
+          errorDesc="Carrier rates may apply">
+          <template #disclaimer>
+            Only US numbers are supported at this time. Carrier rates may apply.
+          </template>
+          <template #update-note>
+            Remove or update your phone number.
+          </template>
+          <template #unverifNotifText>
+            We sent a verification text to {{notif_info.sms_number}}.
+            Please reply YES to finish signup.
+            <br />
+          </template>
+          <template #twilio-warning>
+            <b-form-text text-variant="primary" style="font-size: 14px; font-weight: 800;">
+              Warning: Please respond back to our messages with 'Start' to
+              resume your subscription
+            </b-form-text>
+          </template>
+        </text-notif>
+      </div>
 
       <email-notif accord_id="email" type="email"
         label="Enter an email" :subid="subid"
@@ -72,6 +80,7 @@ export default {
         sms_number: '',
         number_verified: false,
         send_sms: false,
+        twilio_stop: false,
       },
       subid: undefined,
     };
@@ -116,6 +125,7 @@ export default {
 
               axios.get(url, {headers})
                   .then((response) => {
+                    console.log(response.data)
                     response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
                     this.$children[0].$data.showUpdateOverlay = false;
@@ -155,6 +165,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.notif_info.twilio_stop)
     this.$children[0].$data.showUpdateOverlay = true;
     this.requestUpdate();
   },
@@ -176,5 +187,9 @@ export default {
     }
     .notif-disabled {
         opacity: 0.5;
+    }
+    div .overlay {
+      background-color: gray;
+      opacity: .7;
     }
 </style>

@@ -4,6 +4,7 @@
       <b-row>
         <b-col cols="8">
           <strong>Text</strong>
+          <!-- verified state-->
           <span v-if="serverData.text != ''">
             &#xb7;
             <span v-if="!serverData.verified" class="text-unverified">
@@ -13,26 +14,39 @@
               Verified
             </span>
           </span>
+          <!-- end of verified state -->
+
+          <!-- uncollapsed view of text notif component -->
           <div v-if="!isOpen">
+            <!-- verified uncollapsed view -->
             <div v-if="serverData.verified" class="pt-1">
                 <span class="m-auto">
                   {{serverData.text}}
                   <button v-b-toggle="accord_id" role="link"
                     class="verified_link_btn btn btn-link px-0"
-                    :aria-label="'Edit ' + type">
+                    :aria-label="'Edit ' + type"
+                    :disabled="serverData.twilio_stop">
                     Edit
                   </button>
                 </span>
+                <slot v-if="serverData.twilio_stop" name="twilio-warning">
+                </slot>
             </div>
+            <!-- end of verified uncollapsed view -->
+
+            <!-- unverified uncollapsed view -->
             <div v-else>
-              <div v-if="!isOpen">
                 <br/>
+                <!-- no number view -->
                 <div v-if="serverData.text === ''">
                   <b-button block href="#" v-b-toggle="accord_id" variant="link"
                     class="toggle_link_btn p-0" v-if="serverData.text == ''">
                     Add number
                   </b-button>
                 </div>
+                <!-- end of no number view -->
+
+                <!-- number entered view -->
                 <div v-else>
                   <slot v-if="serverData.text !== ''" name="unverifNotifText">
                   </slot>
@@ -56,10 +70,12 @@
                     </b-spinner>
                   </b-button>
                 </div>
-              </div>
+                <!-- end of number entered view -->
             </div>
+            <!-- end of unverified uncollapse view -->
           </div>
         </b-col>
+        <!-- right side controls -->
         <b-col cols="4">
           <div v-if="!isOpen">
             <b-form-checkbox v-model="serverData.send_sms"
@@ -67,7 +83,7 @@
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
                   :aria-label="'enable  '+type"
-                  :disabled="!serverData.verified" switch>
+                  :disabled="!serverData.verified || serverData.twilio_stop" switch>
             </b-form-checkbox>
           </div>
           <div v-else>
@@ -89,8 +105,11 @@
             </b-button>
           </div>
         </b-col>
+        <!-- end of right side controls -->
       </b-row>
     </b-container>
+
+    <!-- collapse view -->
     <b-collapse :id="accord_id" accordion="my-accordion"
                 role="tabpanel" v-model="isOpen" @show="focusCollapse">
       <b-card-body>
@@ -98,6 +117,7 @@
           <b-row>
             <b-col cols="12">
               <b-card-text>
+                <!-- new number form -->
                 <b-form v-if="serverData.text == ''"
                         @submit.prevent="getNewState(spinners.verify);
                         updateMode=false">
@@ -133,6 +153,9 @@
                     Verify
                   </b-button>
                 </b-form>
+                <!-- end of new number form -->
+
+                <!-- update number form -->
                 <b-form v-else
                         @submit.prevent="getNewState(spinners.update)"
                         @reset.prevent="deleteData(spinners.delete)">
@@ -179,12 +202,14 @@
                     Delete
                   </b-button>
                 </b-form>
+                <!-- end of update number form -->
               </b-card-text>
             </b-col>
           </b-row>
         </b-container>
       </b-card-body>
     </b-collapse>
+    <!-- end of collapse view -->
   </b-card>
 </template>
 
