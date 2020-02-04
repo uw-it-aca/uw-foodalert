@@ -385,6 +385,7 @@ class SmsReciver(APIView):
                          ' will now receive notifications from UW Food Alert.')
                     )
                     sub.number_verified = True
+                    sub.send_sms = True
                     sub.save()
                     return HttpResponse(resp)
             if (request.data['Body'].upper() == "RESUME" and
