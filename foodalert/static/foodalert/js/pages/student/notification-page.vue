@@ -28,7 +28,8 @@
             <br />
           </template>
           <template #twilio-warning>
-            <b-form-text text-variant="primary" style="font-size: 14px; font-weight: 800;">
+            <b-form-text text-variant="primary"
+              style="font-size: 14px; font-weight: 800;">
               Warning: Please respond back to our messages with 'Start' to
               resume your subscription
             </b-form-text>
@@ -125,7 +126,6 @@ export default {
 
               axios.get(url, {headers})
                   .then((response) => {
-                    console.log(response.data)
                     response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
                     this.$children[0].$data.showUpdateOverlay = false;
@@ -165,7 +165,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.notif_info.twilio_stop)
     this.$children[0].$data.showUpdateOverlay = true;
     this.requestUpdate();
   },

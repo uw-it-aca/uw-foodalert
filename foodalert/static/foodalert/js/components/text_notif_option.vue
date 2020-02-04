@@ -83,7 +83,8 @@
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
                   :aria-label="'enable  '+type"
-                  :disabled="!serverData.verified || serverData.twilio_stop" switch>
+                  :disabled="!serverData.verified || serverData.twilio_stop"
+                  switch>
             </b-form-checkbox>
           </div>
           <div v-else>
