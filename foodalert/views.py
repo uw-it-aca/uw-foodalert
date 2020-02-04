@@ -405,11 +405,13 @@ class SmsReciver(APIView):
                 sub.send_sms = False
                 sub.save()
             elif (request.data['Body'].upper() == "STOP" and
-                  sub.number_verified and sub.send_sms):
+                  sub.number_verified):
                 sub.send_sms = False
+                sub.twilio_stop = True
                 sub.save()
             elif (request.data['Body'].upper() == "START" and
-                  sub.number_verified and not sub.send_sms):
+                  sub.number_verified):
+                sub.twilio_stop = False
                 sub.send_sms = True
                 sub.save()
             else:
