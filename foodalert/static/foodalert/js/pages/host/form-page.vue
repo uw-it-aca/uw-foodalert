@@ -181,7 +181,7 @@
 
         <h2 class="h2">Preview</h2>
         <preview-box>
-          <span>{{concatinateMessage()}}</span>
+          <span class='pre-formatted'>{{concatinateMessage()}}</span>
           <br />
           <br />
           End time:
@@ -287,20 +287,20 @@ export default {
       el.removeAttribute('tabIndex');
     },
     concatinateMessage() {
-      let msg = '';
-
-      if (this.form.food_served) {
-        msg += this.form.food_served;
-      } else {
-        msg += this.placeholderForm.food_served;
-      }
-
-      msg += ' from ';
+      let msg = 'Food available: ';
 
       if (this.form.event) {
         msg += this.form.event;
       } else {
         msg += this.placeholderForm.event;
+      }
+
+      msg += '\n';
+      
+      if (this.form.food_served) {
+        msg += this.form.food_served;
+      } else {
+        msg += this.placeholderForm.food_served;
       }
 
       msg += '.';
@@ -466,3 +466,10 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.pre-formatted {
+  white-space: pre;
+}
+</style>
