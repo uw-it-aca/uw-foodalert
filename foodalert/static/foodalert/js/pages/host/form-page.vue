@@ -296,7 +296,7 @@ export default {
       }
 
       msg += '\n';
-      
+
       if (this.form.food_served) {
         msg += this.form.food_served;
       } else {
