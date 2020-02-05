@@ -194,8 +194,7 @@
             <br />
             May contain:
             <span v-for="(list, index) in form.allergens" :key="list">
-              <span>{{list}}</span>
-              <span v-if="index+1 < form.allergens.length">, </span>
+              <span>{{list}}</span><span v-if="index+1 < form.allergens.length">, </span>
             </span>
           </span>
           <br />
