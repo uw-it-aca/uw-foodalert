@@ -450,7 +450,8 @@ class SubscriptionTest(TestCase):
 
         with generate_twilio_mock() as mock:
             # patch with the same number should not change anything
-            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
+            response = self.client.patch('/api/v1/subscription/{}/'
+                                         .format(sub.id),
                                          data=json.dumps(payload1),
                                          content_type='application/json')
             self.assertEqual(200, response.status_code)
@@ -459,9 +460,10 @@ class SubscriptionTest(TestCase):
             self.assertTrue(data['number_verified'])
 
             # change sms
-            response = self.client.patch('/api/v1/subscription/{}/'.format(sub.id),
-                                          data=json.dumps(payload2),
-                                          content_type='application/json')
+            response = self.client.patch('/api/v1/subscription/{}/'
+                                         .format(sub.id),
+                                         data=json.dumps(payload2),
+                                         content_type='application/json')
             self.assertEqual(200, response.status_code)
             data = response.json()
             self.assertEqual(payload2['sms_number'], data['sms_number'])
