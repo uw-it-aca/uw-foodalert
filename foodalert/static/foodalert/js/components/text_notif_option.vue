@@ -24,8 +24,7 @@
                   {{serverData.text}}
                   <button v-b-toggle="accord_id" role="link"
                     class="verified_link_btn btn btn-link px-0"
-                    :aria-label="'Edit ' + type"
-                    :disabled="serverData.twilio_stop">
+                    :aria-label="'Edit ' + type">
                     Edit
                   </button>
                 </span>
