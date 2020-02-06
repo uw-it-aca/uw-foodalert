@@ -194,7 +194,7 @@ class TwilioTest(TestCase):
             client = Client()
 
             # test stop
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'Stop'
@@ -205,7 +205,7 @@ class TwilioTest(TestCase):
             self.assertFalse(sub.send_sms)
 
             # test start
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'Start'
@@ -240,7 +240,7 @@ class TwilioTest(TestCase):
             client = Client()
 
             # test stop
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'Stop'
@@ -251,7 +251,7 @@ class TwilioTest(TestCase):
             self.assertFalse(sub.send_sms)
 
             # test start
-            response = client.post('/sms/', data={
+            response = client.post('/api/v1/sms/', data={
                 'AccountSid': 'test_sid',
                 'From': str(sub.sms_number),
                 'Body': 'Start'
