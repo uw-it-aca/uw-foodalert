@@ -258,6 +258,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
+            Subscription.objects.get(pk=pk).twilio_stop = False
         return super().put(request, pk)
 
     def patch(self, request, pk):
@@ -275,6 +276,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
+            Subscription.objects.get(pk=pk).twilio_stop = False
         return super().patch(request, pk)
 
 
