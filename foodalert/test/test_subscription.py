@@ -424,6 +424,55 @@ class SubscriptionTest(TestCase):
             self.assertEqual(valid_payload['send_sms'], data['send_sms'])
             self.assertEqual(valid_payload['send_email'], data['send_email'])
 
+    @parameterized.expand(VERIFIED_TEST_CASES)
+    @transaction.atomic
+    def test_verified_patch_change_sms(self, email='', sms='',
+                                       email_verified='', number_verified=''):
+        """
+        If user has verified their number, the verified state should only be
+        set to false when the sms number changes.
+        """
+        sub = Subscription.objects.create(
+            user=self.user,
+            email=email,
+            sms_number=sms,
+            email_verified=email_verified,
+            number_verified=True,
+        )
+        # patch with the same sms should not change verified state
+        payload1 = {
+            'sms_number': sms
+        }
+
+        payload2 = {
+            'sms_number': "+41524204244"
+        }
+
+        with generate_twilio_mock() as mock:
+            # patch with the same number should not change anything
+            response = self.client.patch('/api/v1/subscription/{}/'
+                                         .format(sub.id),
+                                         data=json.dumps(payload1),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertEqual(payload1['sms_number'], data['sms_number'])
+            self.assertTrue(data['number_verified'])
+
+            # change sms
+            response = self.client.patch('/api/v1/subscription/{}/'
+                                         .format(sub.id),
+                                         data=json.dumps(payload2),
+                                         content_type='application/json')
+            self.assertEqual(200, response.status_code)
+            data = response.json()
+            self.assertEqual(payload2['sms_number'], data['sms_number'])
+            self.assertFalse(data['number_verified'])
+
+            # verify model was updated
+            sub = Subscription.objects.get(pk=sub.id)
+            self.assertFalse(sub.number_verified)
+
     @parameterized.expand(VALID_TEST_CASES)
     @transaction.atomic
     def test_unverified_patch_subscription(self, email='', sms=''):
