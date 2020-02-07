@@ -36,6 +36,7 @@ INVALID_TEST_CASES = [
     param(),
 ]
 
+
 @override_settings(DEBUG=False)
 class SubscriptionTest(TestCase):
     @classmethod
