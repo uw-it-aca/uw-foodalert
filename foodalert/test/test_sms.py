@@ -67,8 +67,8 @@ class SMSTest(TestCase):
             'bring_container': True,
         }
 
-        expected = ("Food leftover from UW Event.\n\n"
-                    "Food served: Sandwitches\n"
+        expected = ("Food available: UW Event\n"
+                    "Sandwitches\n\n"
                     "End time: 12:23 PM\n"
                     "Location: UW Campus\n"
                     "May contain: wheat, fish, peanuts\n\n"

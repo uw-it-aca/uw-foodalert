@@ -140,7 +140,8 @@ class NotificationList(generics.ListCreateAPIView):
                     Sender.send_email(message,
                                       email_recipients,
                                       slug,
-                                      data['location'])
+                                      data['location'],
+                                      data['event'])
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -231,7 +232,8 @@ class UpdateList(generics.ListCreateAPIView):
                     message,
                     email_recipients,
                     slug,
-                    parent.location
+                    parent.location,
+                    parent.event
                 )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)

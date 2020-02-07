@@ -11,16 +11,16 @@ from django.utils import timezone
 
 
 class Sender:
-    def send_email(body, recipients, time, location):
+    def send_email(body, recipients, time, location, event):
         email_name = "Food Alert "
         email_subject = "[UW Food Alert] "
 
         if body[:6] == 'Update':
             email_name += "Update"
-            email_subject += "Update for Food in {}".format(location)
+            email_subject += "Update: {}, {}".format(event, location)
         else:
             email_name += "Notification"
-            email_subject += "Food Available in {}".format(location)
+            email_subject += "Food Available: {}, {}".format(event, location)
 
         MailTemplate.objects.create(
             name=email_name,
@@ -49,13 +49,13 @@ class Sender:
         event = message['event']
         foods = message['food']['served']
 
-        text = "Food leftover from {}.\n\n".format(event)
+        text = "Food available: {}\n".format(event)
+        text += "{}\n\n".format(foods)
 
         local_time = timezone.localtime(message['time']['end'])
         formatted_time = local_time.strftime("%I:%M %p")
 
         details = {
-            'Food served:': foods,
             'End time:': formatted_time,
             'Location:': message['location'],
         }
