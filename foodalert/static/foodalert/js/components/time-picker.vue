@@ -3,28 +3,34 @@
     <b-input-group :id="timeID" :aria-labelledby="labelbyID"
       :aria-describedby="timeID + '-feedback'">
         <b-form-select v-model="hourSelected"
-            aria-label="Enter hours" :state="(hourSelected == '--' && showInvalidTimeError) ? false : null"
+            aria-label="Enter hours"
+            :state="(hourSelected == '--' && showInvalidTimeError)?false:null"
             :options="hourOptions" size="lg"
             @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="minuteSelected"
-            aria-label="Enter minutes" :state="(minuteSelected == '--' && showInvalidTimeError) ? false : null"
+            aria-label="Enter minutes"
+            :state="(minuteSelected=='--'&&showInvalidTimeError)?false:null"
             :options="minuteOptions" size="lg"
             @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="periodSelected"
-            aria-label="Enter AM/PM" :state="(periodSelected == '--' && showInvalidTimeError) ? false : null"
+            aria-label="Enter AM/PM"
+            :state="(periodSelected=='--'&&showInvalidTimeError)?false:null"
             :options="periodOptions"
             size="lg"
             @change="updateTime()">
         </b-form-select>
     </b-input-group>
-    <b-form-invalid-feedback :id="timeID + '-feedback'" role="alert" :state="formValidity">
+    <b-form-invalid-feedback :id="timeID + '-feedback'"
+      role="alert" :state="formValidity">
       <div class="text-primary" v-if="endTimeBeforeCurrent">
-        <slot name="timeBeforeWarning" style="font-size: 14px; font-weight: 800;">
+        <slot name="timeBeforeWarning"
+          style="font-size: 14px; font-weight: 800;">
         </slot>
       </div>
-      <slot name="invalidTimeWarning" v-else-if="invalidTime && showInvalidTimeError">
+      <slot name="invalidTimeWarning"
+        v-else-if="invalidTime && showInvalidTimeError">
       </slot>
     </b-form-invalid-feedback>
   </div>
@@ -67,12 +73,13 @@ export default {
   },
   methods: {
     updateTime() {
-      if (this.selectedTimeInDateTime == null) {
+      if (this.selectedTimeInDateTime === null) {
         this.$emit('input', null);
       } else {
         this.$emit(
-          'input',
-          this.selectedTimeInDateTime.getHours() + ':' + String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0')
+            'input',
+            this.selectedTimeInDateTime.getHours() + ':' +
+            String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0'),
         );
       }
     },
@@ -91,10 +98,12 @@ export default {
     }
   },
   computed: {
-    invalidTime: function() {
-      return this.hourSelected == '--' || this.minuteSelected == '--' || this.periodSelected == '--';
+    invalidTime() {
+      return (this.hourSelected === '--' ||
+        this.minuteSelected === '--' ||
+        this.periodSelected === '--');
     },
-    selectedTimeInDateTime: function() {
+    selectedTimeInDateTime() {
       if (!this.invalidTime) {
         const datetime = new Date();
         let hour = this.hourSelected;
@@ -108,6 +117,7 @@ export default {
             hour += 12;
           }
         }
+
         datetime.setHours(hour, this.minuteSelected);
 
         return datetime;
@@ -115,20 +125,21 @@ export default {
         return null;
       }
     },
-    endTimeBeforeCurrent: function() {
-      if (this.selectedTimeInDateTime == null) {
+    endTimeBeforeCurrent() {
+      if (this.selectedTimeInDateTime === null) {
         return false;
       } else {
         return this.selectedTimeInDateTime <= new Date();
-      } 
+      }
     },
-    formValidity: function() {
-      if (this.endTimeBeforeCurrent || (this.invalidTime && this.showInvalidTimeError)) {
+    formValidity() {
+      if (this.endTimeBeforeCurrent ||
+        (this.invalidTime && this.showInvalidTimeError)) {
         return false;
       } else {
         return null;
       }
-    }
+    },
   },
 };
 </script>
