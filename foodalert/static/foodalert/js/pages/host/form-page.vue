@@ -122,8 +122,10 @@
                 </b-form-invalid-feedback>
               </div>
 
-              <time-picker timeID="end-time" v-model="form.end_time" ref="end_time"
-                        labelbyID="end-time-label" :showInvalidTimeError="enableValidation.end_time" v-else>
+              <time-picker timeID="end-time" v-model="form.end_time"
+                        ref="end_time" labelbyID="end-time-label"
+                        :showInvalidTimeError="enableValidation.end_time"
+                        v-else>
                 <template v-slot:timeBeforeWarning>
                   <p> Warning: End Time is before current time. </p>
                   <p>
@@ -131,7 +133,10 @@
                   </p>
                 </template>
                 <template v-slot:invalidTimeWarning>
-                  <p> Please enter the time at which this food service will be over. </p>
+                  <p>
+                    Please enter the time at which this food service will
+                    be over.
+                  </p>
                 </template>
               </time-picker>
             </b-col>
@@ -328,7 +333,7 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      if (this.form.end_time != null) {
+      if (this.form.end_time !== null) {
         const splitTime = this.form.end_time.split(/:| /);
         let hours = parseInt(splitTime[0]);
         const mins = splitTime[1];
@@ -345,8 +350,8 @@ export default {
 
         return hours + ':' + mins + ' ' + timeExt;
       }
+
       return '--:-- --';
-      
     },
     submitAndNext() {
       const splitTime = this.form.end_time.split(/:/);
