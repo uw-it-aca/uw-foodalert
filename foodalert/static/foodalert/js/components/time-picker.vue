@@ -1,22 +1,33 @@
 <template>
-    <b-input-group :id="timeID" :aria-labelledby="labelbyID">
+  <div class="time-picker-root">
+    <b-input-group :id="timeID" :aria-labelledby="labelbyID"
+      :aria-describedby="timeID + '-feedback'">
         <b-form-select v-model="hourSelected"
-            aria-label="Enter hours"
+            aria-label="Enter hours" :state="(hourSelected == '--' && showInvalidTimeError) ? false : null"
             :options="hourOptions" size="lg"
             @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="minuteSelected"
-            aria-label="Enter minutes"
+            aria-label="Enter minutes" :state="(minuteSelected == '--' && showInvalidTimeError) ? false : null"
             :options="minuteOptions" size="lg"
             @change="updateTime()">
         </b-form-select>
         <b-form-select v-model="periodSelected"
-            aria-label="Enter AM/PM"
+            aria-label="Enter AM/PM" :state="(periodSelected == '--' && showInvalidTimeError) ? false : null"
             :options="periodOptions"
             size="lg"
             @change="updateTime()">
         </b-form-select>
     </b-input-group>
+    <b-form-invalid-feedback :id="timeID + '-feedback'" role="alert" :state="formValidity">
+      <div class="text-primary" v-if="endTimeBeforeCurrent">
+        <slot name="timeBeforeWarning" style="font-size: 14px; font-weight: 800;">
+        </slot>
+      </div>
+      <slot name="invalidTimeWarning" v-else-if="invalidTime && showInvalidTimeError">
+      </slot>
+    </b-form-invalid-feedback>
+  </div>
 </template>
 
 <script>
@@ -26,24 +37,29 @@ export default {
     timeID: String,
     startWithCurrent: Boolean,
     labelbyID: String,
+    showInvalidTimeError: Boolean,
   },
   data() {
-    const _hourOptions = Array(12);
+    const _hourOptions = Array(13);
 
-    for (let i = 0; i < 12; i++) {
-      _hourOptions[i] = i + 1;
+    _hourOptions[0] = '--';
+
+    for (let i = 1; i < _hourOptions.length; i++) {
+      _hourOptions[i] = i;
     }
 
-    const _minuteOptions = Array(60);
+    const _minuteOptions = Array(61);
 
-    for (let i = 0; i < 60; i++) {
-      _minuteOptions[i] = (((i < 10) ? '0' : '') + i);
+    _minuteOptions[0] = '--';
+
+    for (let i = 1; i < _minuteOptions.length; i++) {
+      _minuteOptions[i] = ((((i - 1) < 10) ? '0' : '') + (i - 1));
     }
 
     return {
       hourOptions: _hourOptions,
       minuteOptions: _minuteOptions,
-      periodOptions: ['AM', 'PM'],
+      periodOptions: ['--', 'AM', 'PM'],
       hourSelected: null,
       minuteSelected: null,
       periodSelected: null,
@@ -51,19 +67,14 @@ export default {
   },
   methods: {
     updateTime() {
-      let hour = this.hourSelected;
-
-      if (this.periodSelected === 'AM') {
-        if (this.hourSelected === 12) {
-          hour = 0;
-        }
+      if (this.selectedTimeInDateTime == null) {
+        this.$emit('input', null);
       } else {
-        if (this.hourSelected !== 12) {
-          hour += 12;
-        }
+        this.$emit(
+          'input',
+          this.selectedTimeInDateTime.getHours() + ':' + String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0')
+        );
       }
-
-      this.$emit('input', hour + ':' + this.minuteSelected);
     },
   },
   beforeMount() {
@@ -75,6 +86,48 @@ export default {
       this.periodSelected = semiFormattedTime[3];
 
       this.updateTime();
+    } else {
+      this.hourSelected = this.minuteSelected = this.periodSelected = '--';
+    }
+  },
+  computed: {
+    invalidTime: function() {
+      return this.hourSelected == '--' || this.minuteSelected == '--' || this.periodSelected == '--';
+    },
+    selectedTimeInDateTime: function() {
+      if (!this.invalidTime) {
+        const datetime = new Date();
+        let hour = this.hourSelected;
+
+        if (this.periodSelected === 'AM') {
+          if (this.hourSelected === 12) {
+            hour = 0;
+          }
+        } else {
+          if (this.hourSelected !== 12) {
+            hour += 12;
+          }
+        }
+        datetime.setHours(hour, this.minuteSelected);
+
+        return datetime;
+      } else {
+        return null;
+      }
+    },
+    endTimeBeforeCurrent: function() {
+      if (this.selectedTimeInDateTime == null) {
+        return false;
+      } else {
+        return this.selectedTimeInDateTime <= new Date();
+      } 
+    },
+    formValidity: function() {
+      if (this.endTimeBeforeCurrent || (this.invalidTime && this.showInvalidTimeError)) {
+        return false;
+      } else {
+        return null;
+      }
     }
   },
 };
