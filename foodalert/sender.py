@@ -66,7 +66,8 @@ class Sender:
             for allergen in message['food']['allergens']:
                 text += "{}, ".format(allergen)
             text = text[:-2]
-            text += '\n\n'
+            text += '\n'
+        text += '\n'
         if message['bring_container']:
             text += 'You must bring a container.\n\n'
 
