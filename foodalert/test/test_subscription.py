@@ -1,6 +1,6 @@
 import os
 import json
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from rest_framework.test import APIRequestFactory, force_authenticate
 from parameterized import parameterized, param
 from django.db import connection, transaction
@@ -37,6 +37,7 @@ INVALID_TEST_CASES = [
 ]
 
 
+@override_settings(DEBUG=False)
 class SubscriptionTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -458,6 +459,7 @@ class SubscriptionTest(TestCase):
             data = response.json()
             self.assertEqual(payload1['sms_number'], data['sms_number'])
             self.assertTrue(data['number_verified'])
+            mock.assert_not_called()
 
             # change sms
             response = self.client.patch('/api/v1/subscription/{}/'
@@ -468,6 +470,7 @@ class SubscriptionTest(TestCase):
             data = response.json()
             self.assertEqual(payload2['sms_number'], data['sms_number'])
             self.assertFalse(data['number_verified'])
+            mock.assert_called()
 
             # verify model was updated
             sub = Subscription.objects.get(pk=sub.id)

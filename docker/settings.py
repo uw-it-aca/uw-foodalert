@@ -45,7 +45,7 @@ LOGGING['handlers']['file'] = {
 }
 
 LOGGING['loggers'][''] = {
-    'handlers': ['stdout', 'stderr', 'file'],
+    'handlers': ['file'],
     'level': 'DEBUG'
 }
 
