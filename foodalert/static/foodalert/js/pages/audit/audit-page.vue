@@ -363,7 +363,7 @@ export default {
     .table-update>:nth-child(4) {
       border-top: none;
     }
-    .tr:not(.table-update){
-      border-top: 1px solid black;
+    tbody tr:not(.table-update){
+      border-top: 2px solid #878787;
     }
 </style>
