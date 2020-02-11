@@ -378,6 +378,9 @@ class SmsReciver(APIView):
 
         resp = MessagingResponse()
 
+        opt_out_commands = ['STOP', 'STOPALL', 'UNSUBSCRIBE', 'CANCEL',
+                            'END', 'QUIT']
+
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if not sub.number_verified:
@@ -406,7 +409,7 @@ class SmsReciver(APIView):
                 )
                 sub.send_sms = False
                 sub.save()
-            elif (request.data['Body'].upper() == "STOP" and
+            elif (request.data['Body'].upper() in opt_out_commands and
                   sub.number_verified):
                 sub.send_sms = False
                 sub.twilio_stop = True
