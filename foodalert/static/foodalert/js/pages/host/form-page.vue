@@ -13,7 +13,7 @@
           We will send your notification to UW Food Alert Subscribers.
         </p>
         <preview-box>
-          <span>{{concatinateMessage()}}</span>
+          <span class="pre-formatted">{{concatinateMessage()}}</span>
           <br />
 
           <br />
@@ -183,28 +183,34 @@
 
         <h2 class="h2">Preview</h2>
         <preview-box>
-          <span class='pre-formatted'>{{concatinateMessage()}}</span>
-          <br />
-          <br />
-          End time:
-          <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
-          <span v-else>--:-- --</span>
-          <br />
-          Location: <span v-if="form.location">{{form.location}}</span>
-          <span v-else>{{placeholderForm.location}}</span>
-          <span v-if="form.allergens.length != 0">
-            <br />
-            May contain:
-            <span v-for="(list, index) in form.allergens" :key="list">
-              <span>{{list}}</span><span
-              v-if="index+1<form.allergens.length">, </span>
-            </span>
-          </span>
-          <br />
-          <p v-if="form.bring_container" class="mb-0">
-            <br />
-            You must bring a food storage container.
+          <p v-if="!form.event || !form.food_served || !form.location"
+              class="preview-pretext">
+            Describe your event above to see a preview of the notification.
           </p>
+          <div v-else>
+            <span class='pre-formatted'>{{concatinateMessage()}}</span>
+            <br />
+            <br />
+            End time:
+            <span v-if="form.end_time">{{formatedTimeToStr()}}</span>
+            <span v-else>--:-- --</span>
+            <br />
+            Location: <span v-if="form.location">{{form.location}}</span>
+            <span v-else>{{placeholderForm.location}}</span>
+            <span v-if="form.allergens.length != 0">
+              <br />
+              May contain:
+              <span v-for="(list, index) in form.allergens" :key="list">
+                <span>{{list}}</span><span
+                v-if="index+1<form.allergens.length">, </span>
+              </span>
+            </span>
+            <br />
+            <p v-if="form.bring_container" class="mb-0">
+              <br />
+              You must bring a food storage container.
+            </p>
+          </div>
         </preview-box>
         <!--b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
@@ -472,6 +478,12 @@ export default {
 <style>
 
 .pre-formatted {
-  white-space: pre;
+  white-space: pre-line;
+}
+
+.preview-pretext {
+  text-align: center;
+  font-style: italic;
+  margin: auto;
 }
 </style>
