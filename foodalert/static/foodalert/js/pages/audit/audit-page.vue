@@ -358,8 +358,8 @@ export default {
       border: solid 1px black;
     }
     .table-update>:nth-child(1),
-    .table-update>:nth-child(2), 
-    .table-update>:nth-child(3), 
+    .table-update>:nth-child(2),
+    .table-update>:nth-child(3),
     .table-update>:nth-child(4) {
       border-top: none;
     }
