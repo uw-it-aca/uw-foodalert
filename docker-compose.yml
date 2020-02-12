@@ -12,6 +12,9 @@ services:
       - db
     environment:
       AUTH: ${AUTH:-SAML_MOCK}
+      DJANGO_LOGIN_USERNAME: ${DJANGO_LOGIN_USERNAME:-javerage}
+      DJANGO_LOGIN_PASSWORD: ${DJANGO_LOGIN_PASSWORD:-javerage}
+      DJANGO_LOGIN_EMAIL: ${DJANGO_LOGIN_EMAIL:-javerage@uw.edu}
       DATABASE_DB_NAME: postgres
       DATABASE_USERNAME: postgres
       DATABASE_HOSTNAME: ${DATABASE_HOSTNAME:-db}
