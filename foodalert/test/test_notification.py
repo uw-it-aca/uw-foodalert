@@ -94,9 +94,13 @@ class NotificationTest(TestCase):
 
         self.assertEqual(len(response.json()), 2)
 
+        # reverse order of list
+        check = self.test_data[:2]
+        check.reverse()
+
         self.assertEqual(
             response.json(),
-            [self.data_to_list_represent(data) for data in self.test_data[:2]]
+            [self.data_to_list_represent(data) for data in check]
         )
 
         client = create_client_with_mock_saml(self.user1, [audit_group])
@@ -107,7 +111,7 @@ class NotificationTest(TestCase):
 
         self.assertEqual(
             response.json(),
-            [self.data_to_list_represent(data) for data in self.test_data[:2]]
+            [self.data_to_list_represent(data) for data in check]
         )
 
         client = create_client_with_mock_saml(self.user1, [create_group])
@@ -430,11 +434,15 @@ class NotificationTest(TestCase):
             # Assert that the json of the notification is correct
             self.assertEqual(len(actual_json), 3)
 
+            # reverse order of list --- notification list ordered by most
+            # recent notification created
+            check = self.test_data[:3]
+            check.reverse()
+
             expected_reponse_json = json.dumps([
                 self.data_to_list_represent(data)
-                for data in self.test_data[:3]])
+                for data in check])
             self.assertEqual(expected_reponse_json, json.dumps(actual_json))
-
         self.test_data[2]["host"] = None
 
     def test_post_malformed_notification(self):
