@@ -38,7 +38,7 @@
         </div>
       </main>
       <main id="standard-body"
-        class="mt-md-5 mt-3"
+        class="mt-md-5 mt-3 w-100"
         v-bind:class="pageSizeClass"
         v-show="!showUpdateOverlay">
         <h1 id="standard-heading">
