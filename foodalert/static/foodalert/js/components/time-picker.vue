@@ -1,27 +1,39 @@
 <template>
-  <div class="time-picker-root">
-    <b-input-group :id="timeID" :aria-labelledby="labelbyID"
-      :aria-describedby="timeID + '-feedback'">
-        <b-form-select v-model="hourSelected"
-            aria-label="Enter hours"
-            :state="(hourSelected == '--' && showInvalidTimeError)?false:null"
-            :options="hourOptions" size="lg"
-            @change="updateTime()">
-        </b-form-select>
-        <b-form-select v-model="minuteSelected"
-            aria-label="Enter minutes"
-            :state="(minuteSelected=='--'&&showInvalidTimeError)?false:null"
-            :options="minuteOptions" size="lg"
-            @change="updateTime()">
-        </b-form-select>
-        <b-form-select v-model="periodSelected"
-            aria-label="Enter AM/PM"
-            :state="(periodSelected=='--'&&showInvalidTimeError)?false:null"
-            :options="periodOptions"
-            size="lg"
-            @change="updateTime()">
-        </b-form-select>
-    </b-input-group>
+ <div class="time-picker-root">
+    <div class="time-picker-mobile" v-if="displayMobileTime">
+      <b-form-input :id="timeID" aria-describedby="end-time-feedback"
+        v-model="mobileTime"
+        @change="updateTime()"
+        type="time" class="standard-placeholder" size="lg">
+      </b-form-input>
+      <b-form-invalid-feedback id="end-time-feedback" role="alert">
+        Please enter the time at which this food service will be over.
+      </b-form-invalid-feedback>
+    </div>
+    <div class="time-picker-desktop" v-else>
+      <b-input-group :id="timeID" :aria-labelledby="labelbyID"
+        :aria-describedby="timeID + '-feedback'">
+          <b-form-select v-model="hourSelected"
+              aria-label="Enter hours"
+              :state="(hourSelected == '--' && showInvalidTimeError)?false:null"
+              :options="hourOptions" size="lg"
+              @change="updateTime()">
+          </b-form-select>
+          <b-form-select v-model="minuteSelected"
+              aria-label="Enter minutes"
+              :state="(minuteSelected=='--'&&showInvalidTimeError)?false:null"
+              :options="minuteOptions" size="lg"
+              @change="updateTime()">
+          </b-form-select>
+          <b-form-select v-model="periodSelected"
+              aria-label="Enter AM/PM"
+              :state="(periodSelected=='--'&&showInvalidTimeError)?false:null"
+              :options="periodOptions"
+              size="lg"
+              @change="updateTime()">
+          </b-form-select>
+      </b-input-group>
+    </div>
     <b-form-invalid-feedback :id="timeID + '-feedback'"
       role="alert" :state="formValidity">
       <div class="text-primary" v-if="endTimeBeforeCurrent">
@@ -29,11 +41,10 @@
           style="font-size: 14px; font-weight: 800;">
         </slot>
       </div>
-      <slot name="invalidTimeWarning"
-        v-else-if="invalidTime && showInvalidTimeError">
+      <slot name="invalidTimeWarning" v-else>
       </slot>
     </b-form-invalid-feedback>
-  </div>
+ </div>
 </template>
 
 <script>
@@ -44,6 +55,7 @@ export default {
     startWithCurrent: Boolean,
     labelbyID: String,
     showInvalidTimeError: Boolean,
+    displayMobileTime: Boolean,
   },
   data() {
     const _hourOptions = Array(13);
@@ -69,6 +81,7 @@ export default {
       hourSelected: null,
       minuteSelected: null,
       periodSelected: null,
+      mobileTime: null,
     };
   },
   methods: {
@@ -99,28 +112,42 @@ export default {
   },
   computed: {
     invalidTime() {
+      if (this.displayMobileTime) {
+        return this.mobileTime === null || this.mobileTime === '';
+      }
+
       return (this.hourSelected === '--' ||
         this.minuteSelected === '--' ||
         this.periodSelected === '--');
     },
     selectedTimeInDateTime() {
       if (!this.invalidTime) {
-        const datetime = new Date();
-        let hour = this.hourSelected;
+        if (!this.displayMobileTime) {
+          const datetime = new Date();
+          let hour = this.hourSelected;
 
-        if (this.periodSelected === 'AM') {
-          if (this.hourSelected === 12) {
-            hour = 0;
+          if (this.periodSelected === 'AM') {
+            if (this.hourSelected === 12) {
+              hour = 0;
+            }
+          } else {
+            if (this.hourSelected !== 12) {
+              hour += 12;
+            }
           }
+
+          datetime.setHours(hour, this.minuteSelected);
+
+          return datetime;
         } else {
-          if (this.hourSelected !== 12) {
-            hour += 12;
-          }
+          const datetime = new Date();
+          const hour = parseInt(this.mobileTime.split(':')[0]);
+          const minutes = parseInt(this.mobileTime.split(':')[1]);
+
+          datetime.setHours(hour, minutes);
+
+          return datetime;
         }
-
-        datetime.setHours(hour, this.minuteSelected);
-
-        return datetime;
       } else {
         return null;
       }

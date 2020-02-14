@@ -112,22 +112,10 @@
           </p>
           <b-row>
             <b-col sm=12 md=8>
-              <div v-if="isMobile">
-                <b-form-input id="end-time" aria-describedby="end-time-feedback"
-                  v-model="form.end_time"
-                  :state="inputValid('end_time')"
-                  @change="checkEndTime"
-                  type="time" class="standard-placeholder" size="lg">
-                </b-form-input>
-                <b-form-invalid-feedback id="end-time-feedback" role="alert">
-                  Please enter the time at which this food service will be over.
-                </b-form-invalid-feedback>
-              </div>
-
               <time-picker timeID="end-time" v-model="form.end_time"
                         ref="end_time" labelbyID="end-time-label"
                         :showInvalidTimeError="enableValidation.end_time"
-                        v-else>
+                        :displayMobileTime="isMobile">
                 <template v-slot:timeBeforeWarning>
                   <p> Warning: End Time is before current time. </p>
                   <p>
