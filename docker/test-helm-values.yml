@@ -45,6 +45,10 @@ environmentVariablesSecrets:
     name: TWILIO_NOTIFY_SERVICE_ID
     secretName: foodalert-eval-twillio
     secretKey: service_sid
+  twilioFromNumber:
+    name: TWILIO_FROM_NUMBER
+    secretName: foodalert-eval-twilio
+    secretKey: twilio_from_number
   emailSafeEmail:
     name: SAFE_EMAIL_RECIPIENT
     secretName: foodalert-eval-email

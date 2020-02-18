@@ -333,6 +333,7 @@ class HomeView(TemplateView):
         context['logout_url'] = settings.LOGOUT_URL
         context['ga_key'] = settings.GOOGLE_ANALYTICS_KEY
         context['debug_mode'] = settings.DEBUG
+        context['twilio_number'] = settings.TWILIO_ACCOUNT_SID
         return context
 
 
