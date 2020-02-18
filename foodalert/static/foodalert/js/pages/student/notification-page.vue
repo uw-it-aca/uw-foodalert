@@ -30,9 +30,9 @@
           <template #twilio-warning>
             <b-form-text text-variant="primary"
               style="font-size: 14px; font-weight: 800;">
-              Warning: Please respond back to our messages 
-              <span v-if="twilioNumber!='NONE'">at {{twilioNumber}}</span>
-              with 'Start' to
+              Warning: Please respond back to our messages
+              <span v-if="twilioNumber!='NONE'"> at {{twilioNumber}}</span>
+               with 'Start' to
               resume your subscription
             </b-form-text>
           </template>
@@ -86,6 +86,7 @@ export default {
         twilio_stop: false,
       },
       subid: undefined,
+      twilioNumber: twilioNumber,
     };
   },
   methods: {
