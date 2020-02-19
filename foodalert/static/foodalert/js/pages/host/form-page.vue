@@ -100,7 +100,7 @@
             <b-form-invalid-feedback id="location-feedback" role="alert">
               Please enter the location of your event.
             </b-form-invalid-feedback>
-            </label>
+          </label>
         </div>
 
         <label class="standard-label mb-0 w-100"
@@ -112,30 +112,23 @@
           </p>
           <b-row>
             <b-col sm=12 md=8>
-              <div v-if="isMobile">
-                <b-form-input id="end-time" aria-describedby="end-time-feedback"
-                  v-model="form.end_time"
-                  :state="inputValid('end_time')"
-                  @change="checkEndTime"
-                  type="time" class="standard-placeholder" size="lg">
-                </b-form-input>
-                <b-form-invalid-feedback id="end-time-feedback" role="alert">
-                  Please enter the at which this food service will be over.
-                </b-form-invalid-feedback>
-              </div>
-
               <time-picker timeID="end-time" v-model="form.end_time"
-                        startWithCurrent labelbyID="end-time-label"
-                        v-on:input="checkEndTime" v-else>
-              </time-picker>
-              <b-form-text id="end-time-warning" text-variant="primary"
-                  style="font-size: 14px; font-weight: 800;"
-                  v-if="endTimeBeforeCurrent">
+                        ref="end_time" labelbyID="end-time-label"
+                        :showInvalidTimeError="enableValidation.end_time"
+                        :displayMobileTime="isMobile">
+                <template v-slot:timeBeforeWarning>
                   <p> Warning: End Time is before current time. </p>
                   <p>
                     End Time is set to be {{ formatedTimeToStr() }} TOMORROW.
                   </p>
-              </b-form-text>
+                </template>
+                <template v-slot:invalidTimeWarning>
+                  <p>
+                    Please enter the time at which this food service will
+                    be over.
+                  </p>
+                </template>
+              </time-picker>
             </b-col>
           </b-row>
         </label>
@@ -270,20 +263,19 @@ export default {
         event: false,
         food_served: false,
         location: false,
-        end_time: true,
+        end_time: false,
         // bring_container: false,
       },
       enableValidation: {
         location: false,
         event: false,
         food_served: false,
-        end_time: true,
+        end_time: false,
         // bring_container: false,
       },
       allergens: [],
       show: true,
       isMobile: false,
-      endTimeBeforeCurrent: false,
     };
   },
   methods: {
@@ -315,14 +307,6 @@ export default {
 
       return msg;
     },
-    checkEndTime() {
-      const splitTime = this.form.end_time.split(/:/);
-      const datetime = new Date();
-
-      datetime.setHours(splitTime[0], splitTime[1]);
-
-      this.endTimeBeforeCurrent = datetime <= new Date();
-    },
     onSubmit(evt) {
       evt.preventDefault();
 
@@ -345,21 +329,25 @@ export default {
       this.$bvModal.show('submitconfirmation');
     },
     formatedTimeToStr() {
-      const splitTime = this.form.end_time.split(/:| /);
-      let hours = parseInt(splitTime[0]);
-      const mins = splitTime[1];
-      let timeExt = 'AM';
+      if (this.form.end_time !== null) {
+        const splitTime = this.form.end_time.split(/:| /);
+        let hours = parseInt(splitTime[0]);
+        const mins = splitTime[1];
+        let timeExt = 'AM';
 
-      if (hours === 0) {
-        hours = 12;
-      } else if (hours === 12) {
-        timeExt = 'PM';
-      } else if (hours > 12) {
-        hours -= 12;
-        timeExt = 'PM';
+        if (hours === 0) {
+          hours = 12;
+        } else if (hours === 12) {
+          timeExt = 'PM';
+        } else if (hours > 12) {
+          hours -= 12;
+          timeExt = 'PM';
+        }
+
+        return hours + ':' + mins + ' ' + timeExt;
       }
 
-      return hours + ':' + mins + ' ' + timeExt;
+      return '--:-- --';
     },
     submitAndNext() {
       const splitTime = this.form.end_time.split(/:/);
@@ -426,7 +414,6 @@ export default {
   },
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    this.formValidate.end_time = !this.isMobile;
 
     this.$children[0].$data.showUpdateOverlay = true;
     const headers = {
