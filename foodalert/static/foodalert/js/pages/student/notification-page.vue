@@ -31,7 +31,7 @@
             <b-form-text text-variant="primary"
               style="font-size: 14px; font-weight: 800;">
               Warning: Please respond back to our messages
-              <span v-if="twilioNum!='NONE'"> at {{twilioNumber}}</span>
+              <span v-if="twilioNumber!='NONE'"> at {{twilioNumber}}</span>
                with 'Start' to
               resume your subscription
             </b-form-text>
