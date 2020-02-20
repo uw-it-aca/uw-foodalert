@@ -63,6 +63,7 @@ class NotificationTest(TestCase):
         )
 
     def setUp(self):
+        # creates two notification objects using mock data files
         self.test_data = deepcopy(self.real_data["notifications"])
         create_notification_from_data(self.test_data[0], self.user1)
         create_notification_from_data(self.test_data[1], self.user2)
@@ -94,7 +95,8 @@ class NotificationTest(TestCase):
 
         self.assertEqual(len(response.json()), 2)
 
-        # reverse order of list
+        # reverse order of list --- notifications are returned ordered
+        # by most recent created date
         check = self.test_data[:2]
         check.reverse()
 
