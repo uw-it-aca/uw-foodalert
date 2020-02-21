@@ -357,4 +357,13 @@ export default {
     #btn-nav .active {
       border: solid 1px black;
     }
+    .table-update>:nth-child(1),
+    .table-update>:nth-child(2),
+    .table-update>:nth-child(3),
+    .table-update>:nth-child(4) {
+      border-top: none;
+    }
+    tbody tr:not(.table-update){
+      border-top: 2px solid #878787;
+    }
 </style>

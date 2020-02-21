@@ -19,6 +19,9 @@ class Notification(models.Model):
     host_user_agent = models.TextField(blank=False)
     ended = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('-created_time',)
+
 
 class FoodQualification(models.Model):
     internalName = models.CharField(max_length=20, blank=False, unique=True)
@@ -45,6 +48,9 @@ class Update(models.Model):
                                             blank=False,
                                             on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('created_time',)
 
 
 class Allergen(models.Model):
