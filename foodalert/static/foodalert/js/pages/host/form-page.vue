@@ -176,7 +176,8 @@
 
         <h2 class="h2">Preview</h2>
         <preview-box>
-          <p v-if="!form.event || !form.food_served || !form.location"
+          <p v-if="!form.event || !form.food_served ||
+              !form.location || !form.end_time"
               class="preview-pretext">
             Describe your event above to see a preview of the notification.
           </p>
