@@ -257,6 +257,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
+            Subscription.objects.get(pk=pk).twilio_stop = False
         return super().put(request, pk)
 
     def patch(self, request, pk):
@@ -271,6 +272,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
+            Subscription.objects.get(pk=pk).twilio_stop = False
         return super().patch(request, pk)
 
 
@@ -327,6 +329,7 @@ class HomeView(TemplateView):
         context['logout_url'] = settings.LOGOUT_URL
         context['ga_key'] = settings.GOOGLE_ANALYTICS_KEY
         context['debug_mode'] = settings.DEBUG
+        context['twilio_number'] = settings.TWILIO_FROM_NUMBER
         return context
 
 
@@ -372,6 +375,9 @@ class SmsReciver(APIView):
 
         resp = MessagingResponse()
 
+        opt_out_commands = ['STOP', 'STOPALL', 'UNSUBSCRIBE', 'CANCEL',
+                            'END', 'QUIT']
+
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
             if not sub.number_verified:
@@ -400,6 +406,16 @@ class SmsReciver(APIView):
                      ' want to start receiving notifications again.')
                 )
                 sub.send_sms = False
+                sub.save()
+            elif (request.data['Body'].upper() in opt_out_commands and
+                  sub.number_verified):
+                sub.send_sms = False
+                sub.twilio_stop = True
+                sub.save()
+            elif (request.data['Body'].upper() == "START" and
+                  sub.number_verified):
+                sub.twilio_stop = False
+                sub.send_sms = True
                 sub.save()
             else:
                 resp.message(

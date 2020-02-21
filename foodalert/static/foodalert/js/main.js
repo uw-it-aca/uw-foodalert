@@ -28,9 +28,11 @@ router.beforeEach((to, from, next) => {
 
 /* global netid*/
 /* global logoutUrl*/
+/* global twilioNumber*/
 if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
   const _netID = netid;
   const _logoutUrl = logoutUrl;
+  const _twilioNumber = twilioNumber;
 
   Vue.mixin({
     data() {
@@ -40,6 +42,9 @@ if (typeof netid !== 'undefined' && typeof logoutUrl !== 'undefined') {
         },
         get logoutUrl() {
           return _logoutUrl;
+        },
+        get twilioNumber() {
+          return _twilioNumber;
         },
       };
     },
