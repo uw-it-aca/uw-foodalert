@@ -8,7 +8,7 @@
         Select how you will like to receive notifications.
         Please choose at least one.
       </p>
-      <div v-bind:class="{'overlay': (notif_info.twilio_stop)}">
+      <div id="text-notif-option">
         <text-notif accord_id="text" type="text"
           label="Enter a phone number" :subid="subid"
           :serverData="{ text: notif_info.sms_number,
@@ -132,6 +132,14 @@ export default {
                     response.data = this.stripSms(response.data);
                     this.notif_info = response.data;
                     this.$children[0].$data.showUpdateOverlay = false;
+
+                    // dynamically update text notif component
+                    var textNotif = document.getElementById("text-notif-option");
+                    if (this.notif_info.twilio_stop) {
+                      textNotif.classList.add('overlay');
+                    } else {
+                      textNotif.classList.remove('overlay');
+                    }
                   })
                   .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
