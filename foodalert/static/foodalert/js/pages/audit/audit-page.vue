@@ -182,7 +182,7 @@ export default {
 
         results.innerText = count + word;
       } else {
-        document.getElementById('pagination').classList.remove('d-none');
+        document.getElementById('btn-nav').classList.remove('d-none');
         this.prevPage = response.data.previous.page;
         this.nextPage = response.data.next.page;
         // add specific page buttons
