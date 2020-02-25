@@ -133,11 +133,12 @@ export default {
                     this.$children[0].$data.showUpdateOverlay = false;
 
                     // dynamically update text notif component
-                    var textNotif = document.getElementById("text-notif-option");
+                    const el = document.getElementById('text-notif-option');
+
                     if (this.notif_info.twilio_stop) {
-                      textNotif.classList.add('overlay');
+                      el.classList.add('overlay');
                     } else {
-                      textNotif.classList.remove('overlay');
+                      el.classList.remove('overlay');
                     }
                   })
                   .catch((error) =>
