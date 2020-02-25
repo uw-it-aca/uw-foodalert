@@ -374,8 +374,9 @@ class SmsReciver(APIView):
 
         try:
             sub = Subscription.objects.get(sms_number=request.data['From'])
+            request_body = request.data['Body'].upper().strip()
             if not sub.number_verified:
-                if request.data['Body'].upper() == "YES":
+                if request_body == "YES":
                     resp.message(
                         ('Thanks! Your number has been verified. You'
                          ' will now receive notifications from UW Food Alert.')
@@ -384,7 +385,7 @@ class SmsReciver(APIView):
                     sub.send_sms = True
                     sub.save()
                     return HttpResponse(resp)
-            if (request.data['Body'].upper() == "RESUME" and
+            if (request_body == "RESUME" and
                sub.number_verified and not sub.send_sms):
                 resp.message(
                     ('Your notifications from UW Food Alert'
@@ -392,7 +393,7 @@ class SmsReciver(APIView):
                 )
                 sub.send_sms = True
                 sub.save()
-            elif (request.data['Body'].upper() == "PAUSE" and
+            elif (request_body == "PAUSE" and
                   sub.number_verified and sub.send_sms):
                 resp.message(
                     ('Your notifications from UW Food Alert'
