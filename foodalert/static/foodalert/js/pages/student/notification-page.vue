@@ -132,14 +132,7 @@ export default {
                     this.notif_info = response.data;
                     this.$children[0].$data.showUpdateOverlay = false;
 
-                    // dynamically update text notif component
-                    const el = document.getElementById('text-notif-option');
-
-                    if (this.notif_info.twilio_stop) {
-                      el.classList.add('overlay');
-                    } else {
-                      el.classList.remove('overlay');
-                    }
+                    this.checkOverlay();
                   })
                   .catch((error) =>
                     this.showErrorPage(error.response, 's-notifications'));
@@ -174,6 +167,17 @@ export default {
             this.showErrorPage(error.response, 's-notifications');
           });
     },
+    checkOverlay() {
+      // dynamically update text notif component
+      const el = document.getElementById('text-notif-option');
+
+      if (this.notif_info.twilio_stop) {
+        el.classList.add('overlay');
+      } else {
+        el.classList.remove('overlay');
+      }
+
+    }
   },
   mounted() {
     this.$children[0].$data.showUpdateOverlay = true;
