@@ -177,8 +177,7 @@ export default {
       } else {
         el.classList.remove('overlay');
       }
-
-    }
+    },
   },
   mounted() {
     this.$children[0].$data.showUpdateOverlay = true;
