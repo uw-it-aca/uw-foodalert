@@ -258,8 +258,8 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " campus. Reply YES to confirm.")
             )
 
-            Subscription.objects.get(pk=pk).twilio_stop = False
-            Subscription.objects.get(pk=pk).save()
+            sub.twilio_stop = False
+            sub.save()
 
         return super().put(request, pk)
 
@@ -276,8 +276,8 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                  " campus. Reply YES to confirm.")
             )
 
-            Subscription.objects.get(pk=pk).twilio_stop = False
-            Subscription.objects.get(pk=pk).save()
+            sub.twilio_stop = False
+            sub.save()
 
         return super().patch(request, pk)
 
