@@ -13,7 +13,8 @@
           label="Enter a phone number" :subid="subid"
           :serverData="{ text: notif_info.sms_number,
             verified: notif_info.number_verified,
-            send_sms: notif_info.send_sms}"
+            send_sms: notif_info.send_sms,
+            twilio_stop: notif_info.twilio_stop}"
           :requestUpdate="requestUpdate"
           errorDesc="Carrier rates may apply">
           <template #disclaimer>
