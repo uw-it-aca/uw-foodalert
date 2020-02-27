@@ -246,35 +246,35 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsSelf]
 
     def put(self, request, pk):
+        sub = Subscription.objects.get(pk=pk)
         if ('sms_number' in request.data and not settings.DEBUG and
                 request.data['sms_number'] != '' and
-                (not Subscription.objects.get(pk=pk).number_verified or
-                 request.data['sms_number'] !=
-                 Subscription.objects.get(pk=pk).sms_number)):
+                (not sub.number_verified or
+                 request.data['sms_number'] != sub.sms_number)):
             Sender.send_twilio_sms(
                 request.data['sms_number'],
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
-            Subscription.objects.get(pk=pk).twilio_stop = False
-            Subscription.objects.get(pk=pk).save()
+            sub.twilio_stop = False
+            sub.save()
         return super().put(request, pk)
 
     def patch(self, request, pk):
+        sub = Subscription.objects.get(pk=pk)
         if ('sms_number' in request.data and not settings.DEBUG and
                 request.data['sms_number'] != '' and
-                (not Subscription.objects.get(pk=pk).number_verified or
-                 request.data['sms_number'] !=
-                 Subscription.objects.get(pk=pk).sms_number)):
+                (not sub.number_verified or
+                 request.data['sms_number'] != sub.sms_number)):
             Sender.send_twilio_sms(
                 [request.data['sms_number']],
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm.")
             )
-            Subscription.objects.get(pk=pk).twilio_stop = False
-            Subscription.objects.get(pk=pk).save()
+            sub.twilio_stop = False
+            sub.save()
         return super().patch(request, pk)
 
 
