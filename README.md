@@ -32,10 +32,10 @@ Use docker-compose to build the app container:
 `docker-compose build app`
 
 ### Running the tests
-THIS SECTION NEEDS UPDATING
 This app has two test suites. One for the python backend and one for the JS frontend.
 
-To run the python tests: `docker-compose run --rm app python manage.py test foodalert --settings=sampleproj.settings.base`.
+To run the python tests: `docker-compose run --rm app bin/python manage.py test foodalert`.
+To run the JS frontend tests: `./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js`.
 
 Both commands must be run from repository root
 
