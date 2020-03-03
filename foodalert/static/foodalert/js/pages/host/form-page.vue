@@ -304,8 +304,6 @@ export default {
         msg += this.placeholderForm.food_served;
       }
 
-      msg += '.';
-
       return msg;
     },
     onSubmit(evt) {
