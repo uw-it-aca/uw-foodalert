@@ -13,7 +13,7 @@ Before you set up your local build you should have the following installed:
 * Docker
 
 ### Installing
-First, clone this github repository:
+First, clone this github repository and checkout **develop** branch:
 
 `git clone https://github.com/uw-it-aca/uw-foodalert.git`
 
