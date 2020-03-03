@@ -17,25 +17,17 @@ First, clone this github repository:
 
 `git clone https://github.com/uw-it-aca/uw-foodalert.git`
 
-Then navigate into the repository's root directory and install node dependencies:
+Then navigate into the repository's root directory and use docker-compose to build the app container:
 
 `cd uw-foodalert`
-
-`npm install .`
-
-Run Webpack to compile the project's frontend code:
-
-`npx webpack`
-
-Use docker-compose to build the app container:
 
 `docker-compose build app`
 
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
 
-To run the python tests: `docker-compose run --rm app bin/python manage.py test foodalert`.
-To run the JS frontend tests: `./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js`.
+- To run the python tests: `docker-compose run --rm app bin/python manage.py test foodalert`.
+- To run the JS frontend tests: `./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js`.
 
 Both commands must be run from repository root
 
@@ -53,7 +45,9 @@ To contribute to the project, create a branch off of develop to make your change
 
 For all of your commits, please write out a description of the changes made and the rationale behind their implementation in the commit details.
 
-Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being acceptd, run these locally before pushing (it may be worth setting up a git hook). 
+Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being accepted, run these locally before pushing (it may be worth setting up a git hook). 
+
+To run pycodestyle: `pycodestyle foodalert/ --exclude=migrations,static` in the root directory
 
 ### Webpack
 
