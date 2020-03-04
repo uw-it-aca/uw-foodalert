@@ -13,15 +13,26 @@ Before you set up your local build you should have the following installed:
 * Docker
 
 ### Installing
-First, clone this github repository and checkout **develop** branch:
+First, clone this github repository, navigate into the repository's root directory and checkout **develop** branch:
 
 `git clone https://github.com/uw-it-aca/uw-foodalert.git`
 
-Then navigate into the repository's root directory and use docker-compose to build the app container:
-
 `cd uw-foodalert`
 
+`git checkout develop`
+
+Then copy the environment settings into `.env` file:
+
+`cp sample.env .env`
+
+Then use docker-compose to build the app container:
+
 `docker-compose build app`
+
+### Running the app
+To run the app simply execute `docker-compose up` from the repository's root directory.
+
+Or to run the app with build, execute `docker-compose up --build`.
 
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
@@ -30,9 +41,6 @@ This app has two test suites. One for the python backend and one for the JS fron
 - To run the JS frontend tests: `./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js`.
 
 Both commands must be run from repository root
-
-### Running the app
-To run the app simply execute `docker-compose up` from the repository's root directory.
 
 ## Contributing
 
