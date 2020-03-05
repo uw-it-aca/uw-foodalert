@@ -23,10 +23,7 @@
                     No food left at {{state.location}}.
                   </span>
                   <span v-else-if="selected == 'otherUpdate'">
-                      <span v-if="otherText == ''">
-                        We've moved to HUB 120.
-                      </span>
-                      <span v-else> {{otherText}}. </span>
+                      {{otherText}}.
                   </span>
                   Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
@@ -71,8 +68,8 @@
                 No food left at {{state.location}}.
               </span>
               <span v-else-if="selected == 'otherUpdate'">
-                  <span v-if="otherText == ''"> We've moved to HUB 120.</span>
-                  <span v-else> {{otherText}}.</span>
+                  <span v-if="otherText == ''"><i>YOUR MESSAGE.</i></span>
+                  <span v-else> {{otherText}}. </span>
               </span>
               Re: {{state.food.served}} leftover from {{state.event}}...
           </preview-box>
