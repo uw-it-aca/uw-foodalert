@@ -44,7 +44,7 @@ class Subscription(models.Model):
 
 
 class Update(models.Model):
-    text = models.CharField(max_length=200, blank=False)
+    text = models.CharField(max_length=150, blank=False)
     parent_notification = models.ForeignKey('Notification',
                                             blank=False,
                                             on_delete=models.CASCADE)
