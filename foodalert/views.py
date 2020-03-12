@@ -37,8 +37,18 @@ from foodalert.utils.permissions import *
 
 # Create your views here.
 
-create_group = settings.FOODALERT_AUTHZ_GROUPS['create']
-audit_group = settings.FOODALERT_AUTHZ_GROUPS['audit']
+foodalert_authz_groups = getattr(settings, 'FOODALERT_AUTHZ_GROUPS', None)
+
+if foodalert_authz_groups is None:
+    raise ImproperlyConfigured("You haven't set 'FOODALERT_AUTHZ_GROUPS'.")
+
+create_group = foodalert_authz_groups['create']
+audit_group = foodalert_authz_groups['audit']
+
+debug_mode = getattr(settings, 'DEBUG', None)
+
+if debug_mode is None:
+    raise ImproperlyConfigured("You haven't set 'DEBUG'.")
 
 logger = logging.getLogger('django.request')
 
@@ -129,11 +139,18 @@ class NotificationList(generics.ListCreateAPIView):
 
                 message = Sender.format_message(data)
 
-                if not settings.DEBUG:
-                    if settings.FOODALERT_USE_SMS == "twilio" and\
+                if not debug_mode:
+                    foodalert_use_sms = \
+                        getattr(settings, 'FOODALERT_USE_SMS', None)
+
+                    if foodalert_use_sms is None:
+                        raise ImproperlyConfigured("You haven't set
+                                                   'FOODALERT_USE_SMS'.")
+
+                    if foodalert_use_sms == "twilio" and\
                        sms_recipients != []:
                         Sender.send_twilio_sms(sms_recipients, message)
-                    elif settings.FOODALERT_USE_SMS == "amazon":
+                    elif foodalert_use_sms == "amazon":
                         Sender.send_amazon_sms(sms_recipients, message)
 
                 if email_recipients != []:
@@ -211,13 +228,20 @@ class UpdateList(generics.ListCreateAPIView):
                 if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
 
-            if not settings.DEBUG:
-                if settings.FOODALERT_USE_SMS == "twilio" and\
+            if not debug_mode:
+                foodalert_use_sms = \
+                    getattr(settings, 'FOODALERT_USE_SMS', None)
+
+                if foodalert_use_sms is None:
+                    raise ImproperlyConfigured("You haven't set
+                                               'FOODALERT_USE_SMS'.")
+
+                if foodalert_use_sms == "twilio" and\
                    sms_recipients != []:
                     Sender.send_twilio_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                elif settings.FOODALERT_USE_SMS == "amazon":
+                elif foodalert_use_sms == "amazon":
                     Sender.send_amazon_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
@@ -247,7 +271,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, pk):
         sub = Subscription.objects.get(pk=pk)
-        if ('sms_number' in request.data and not settings.DEBUG and
+        if ('sms_number' in request.data and not debug_mode and
                 request.data['sms_number'] != '' and
                 (not sub.number_verified or
                  request.data['sms_number'] != sub.sms_number)):
@@ -263,7 +287,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, pk):
         sub = Subscription.objects.get(pk=pk)
-        if ('sms_number' in request.data and not settings.DEBUG and
+        if ('sms_number' in request.data and not debug_mode and
                 request.data['sms_number'] != '' and
                 (not sub.number_verified or
                  request.data['sms_number'] != sub.sms_number)):
@@ -328,10 +352,15 @@ class HomeView(TemplateView):
         context['netid'] = self.request.user
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
-        context['logout_url'] = settings.LOGOUT_URL
-        context['ga_key'] = settings.GOOGLE_ANALYTICS_KEY
-        context['debug_mode'] = settings.DEBUG
-        context['twilio_number'] = settings.TWILIO_FROM_NUMBER
+        context['logout_url'] = getattr(settings, 'LOGOUT_URL', None)
+        context['ga_key'] = getattr(settings, 'GOOGLE_ANALYTICS_KEY', ' ')
+        context['debug_mode'] = debug_mode
+        context['twilio_number'] = \
+            getattr(settings, 'TWILIO_FROM_NUMBER', 'NONE')
+
+        if context['logout_url'] is None:
+            raise ImproperlyConfigured("You haven't set 'LOGOUT_URL'.")
+
         return context
 
 
@@ -351,7 +380,11 @@ class SmsReciver(APIView):
 
     @csrf_exempt
     def post(self, request, format=None):
-        validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
+        twilio_auth_token = getattr(settings, 'TWILIO_AUTH_TOKEN', None)
+        if twilio_auth_token is None:
+            raise ImproperlyConfigured("You haven't set 'TWILIO_AUTH_TOKEN'.")
+
+        validator = RequestValidator(twilio_auth_token)
         url = "{}://{}{}".format(
             request.META.get(
                 'HTTP_X_SCHEME',
