@@ -144,8 +144,8 @@ class NotificationList(generics.ListCreateAPIView):
                         getattr(settings, 'FOODALERT_USE_SMS', None)
 
                     if foodalert_use_sms is None:
-                        raise ImproperlyConfigured("You haven't set
-                                                   'FOODALERT_USE_SMS'.")
+                        raise ImproperlyConfigured("You haven't set " +
+                                                   "'FOODALERT_USE_SMS'.")
 
                     if foodalert_use_sms == "twilio" and\
                        sms_recipients != []:
@@ -233,8 +233,8 @@ class UpdateList(generics.ListCreateAPIView):
                     getattr(settings, 'FOODALERT_USE_SMS', None)
 
                 if foodalert_use_sms is None:
-                    raise ImproperlyConfigured("You haven't set
-                                               'FOODALERT_USE_SMS'.")
+                    raise ImproperlyConfigured("You haven't set " +
+                                               "'FOODALERT_USE_SMS'.")
 
                 if foodalert_use_sms == "twilio" and\
                    sms_recipients != []:

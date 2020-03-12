@@ -100,8 +100,8 @@ class TwilioSender(object):
         twilio_notify_service_id = \
             getattr(settings, 'TWILIO_NOTIFY_SERVICE_ID', None)
         if twilio_notify_service_id is None:
-            raise ImproperlyConfigured("You haven't set
-                                       'TWILIO_NOTIFY_SERVICE_ID'.")
+            raise ImproperlyConfigured("You haven't set " +
+                                       "'TWILIO_NOTIFY_SERVICE_ID'.")
 
         sms = self.c.notify.services(twilio_notify_service_id) \
                     .notifications.create(
@@ -118,8 +118,8 @@ class AmazonSNSProvider(object):
         if aws_key_id is None:
             raise ImproperlyConfigured("You haven't set 'AWS_ACCESS_KEY_ID'.")
         if aws_secret_key is None:
-            raise ImproperlyConfigured("You haven't set
-                                       'AWS_SECRET_ACCESS_KEY'.")
+            raise ImproperlyConfigured("You haven't set " +
+                                       "'AWS_SECRET_ACCESS_KEY'.")
 
         self.client = boto3.client(
             'sns',
