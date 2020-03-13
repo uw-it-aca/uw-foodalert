@@ -20,14 +20,14 @@
               <preview-box>
                   Update:
                   <span v-if="selected == 'noFoodUpdate'">
-                    No food left at {{state.location}}
+                    No food left at {{state.location}}.
                   </span>
                   <span v-else-if="selected == 'otherUpdate'">
                       <span v-if="otherText == ''">
-                        We've moved to HUB 120
+                        We've moved to HUB 120.
                       </span>
-                      <span v-else> {{otherText}} </span>
-                  </span>.
+                      <span v-else> {{otherText}}. </span>
+                  </span>
                   Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
           </b-modal>
@@ -68,12 +68,12 @@
           <preview-box>
               Update:
               <span v-if="selected == 'noFoodUpdate'">
-                No food left at {{state.location}}
+                No food left at {{state.location}}.
               </span>
               <span v-else-if="selected == 'otherUpdate'">
-                  <span v-if="otherText == ''"> We've moved to HUB 120 </span>
-                  <span v-else> {{otherText}}</span>
-              </span>.
+                  <span v-if="otherText == ''"> We've moved to HUB 120.</span>
+                  <span v-else> {{otherText}}.</span>
+              </span>
               Re: {{state.food.served}} leftover from {{state.event}}...
           </preview-box>
       </template>
