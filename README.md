@@ -9,7 +9,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 Before you set up your local build you should have the following installed:
-* NodeJS
 * Docker
 
 ### Installing
@@ -30,9 +29,15 @@ Then use docker-compose to build the app container:
 `docker-compose build app`
 
 ### Running the app
-To run the app simply execute `docker-compose up` from the repository's root directory.
 
-Or to run the app with build, execute `docker-compose up --build`.
+If you made changes to one of the following files:
+- Dockerfile
+- docker-compose.yml
+- docker/settings.py
+
+you need to run the app with build, execute `docker-compose up --build`.
+
+Otherwise, simply execute `docker-compose up`.
 
 ### Running the tests
 This app has two test suites. One for the python backend and one for the JS frontend.
@@ -56,12 +61,6 @@ For all of your commits, please write out a description of the changes made and 
 Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being accepted, run these locally before pushing (it may be worth setting up a git hook). 
 
 To run pycodestyle: `pycodestyle foodalert/ --exclude=migrations,static` in the root directory
-
-### Webpack
-
-During development, you may find it convenient to have webpack watching your files in the background and compiling them as they change. To do this, run: 
-
-`npx webpack --watch`
 
 ### Documentation
 
