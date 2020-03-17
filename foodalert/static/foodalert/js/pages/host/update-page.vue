@@ -20,12 +20,12 @@
               <preview-box>
                   Update:
                   <span v-if="selected == 'noFoodUpdate'">
-                    No food left at {{state.location}}.
+                    No food left! The event: {{state.event}} has ended and is
+                    no longer serving food.
                   </span>
                   <span v-else-if="selected == 'otherUpdate'">
-                      {{otherText}}.
+                      {{otherText}}
                   </span>
-                  Re: {{state.food.served}} leftover from {{state.event}}...
               </preview-box>
           </b-modal>
           <p class="p pb-3">
@@ -63,15 +63,20 @@
           </b-form>
           <h2 class="h2">Preview</h2>
           <preview-box>
-              Update:
-              <span v-if="selected == 'noFoodUpdate'">
-                No food left at {{state.location}}.
-              </span>
-              <span v-else-if="selected == 'otherUpdate'">
-                  <span v-if="otherText == ''"><i>YOUR MESSAGE.</i></span>
-                  <span v-else> {{otherText}}. </span>
-              </span>
-              Re: {{state.food.served}} leftover from {{state.event}}...
+            <p v-if="selected == 'otherUpdate' && otherText == ''"
+              class="preview-pretext">
+                Enter your message above to see a preview of the notification.
+            </p>
+            <div v-else>
+                Update:
+                <span v-if="selected == 'noFoodUpdate'">
+                  No food left! The event: {{state.event}} has ended and
+                  is no longer serving food.
+                </span>
+                <span v-else-if="selected == 'otherUpdate'">
+                    <span> {{otherText}} </span>
+                </span>
+            </div>
           </preview-box>
       </template>
       <template #navigation>
@@ -226,5 +231,11 @@ export default {
 
     #other-message {
         margin-top: 10px;
+    }
+
+    .preview-pretext {
+      text-align: center;
+      font-style: italic;
+      margin: auto;
     }
 </style>
