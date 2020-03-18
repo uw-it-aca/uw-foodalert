@@ -47,9 +47,6 @@ audit_group = foodalert_authz_groups['audit']
 
 debug_mode = getattr(settings, 'DEBUG', None)
 
-if debug_mode is None:
-    raise ImproperlyConfigured("You haven't set 'DEBUG'.")
-
 logger = logging.getLogger('django.request')
 
 
