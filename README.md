@@ -9,38 +9,43 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 Before you set up your local build you should have the following installed:
-* NodeJS
 * Docker
 
 ### Installing
-First, clone this github repository:
+First, clone this github repository, navigate into the repository's root directory and checkout **develop** branch:
 
 `git clone https://github.com/uw-it-aca/uw-foodalert.git`
 
-Then navigate into the repository's root directory and install node dependencies:
-
 `cd uw-foodalert`
 
-`npm install .`
+`git checkout develop`
 
-Run Webpack to compile the project's frontend code:
+Then copy the environment settings into `.env` file:
 
-`npx webpack`
+`cp sample.env .env`
 
-Use docker-compose to build the app container:
+Then use docker-compose to build the app container:
 
 `docker-compose build app`
 
+### Running the app
+
+If you made changes to one of the following files:
+- Dockerfile
+- docker-compose.yml
+- docker/settings.py
+
+you need to run the app with build, execute `docker-compose up --build`.
+
+Otherwise, simply execute `docker-compose up`.
+
 ### Running the tests
-THIS SECTION NEEDS UPDATING
 This app has two test suites. One for the python backend and one for the JS frontend.
 
-To run the python tests: `docker-compose run --rm app python manage.py test foodalert --settings=sampleproj.settings.base`.
+- To run the python tests: `docker-compose run --rm app bin/python manage.py test foodalert`.
+- To run the JS frontend tests: `./node_modules/.bin/eslint --ext .js,.vue foodalert/static/foodalert/js`.
 
 Both commands must be run from repository root
-
-### Running the app
-To run the app simply execute `docker-compose up` from the repository's root directory.
 
 ## Contributing
 
@@ -53,13 +58,9 @@ To contribute to the project, create a branch off of develop to make your change
 
 For all of your commits, please write out a description of the changes made and the rationale behind their implementation in the commit details.
 
-Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being acceptd, run these locally before pushing (it may be worth setting up a git hook). 
+Once you have finished work on a branch, push it to gihub and submit a pull request for review by one of the project's maintainers. For the branch to be merged, both sets of unit tests should pass along with a pycodestyle check. To improves likelihood of your pull request being accepted, run these locally before pushing (it may be worth setting up a git hook). 
 
-### Webpack
-
-During development, you may find it convenient to have webpack watching your files in the background and compiling them as they change. To do this, run: 
-
-`npx webpack --watch`
+To run pycodestyle: `pycodestyle foodalert/ --exclude=migrations,static` in the root directory
 
 ### Documentation
 
