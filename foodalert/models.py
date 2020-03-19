@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Notification(models.Model):
-    location = models.CharField(max_length=100, blank=False)
+    location = models.CharField(max_length=200, blank=False)
     event = models.CharField(max_length=40, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(blank=True, null=True)
@@ -44,7 +44,7 @@ class Subscription(models.Model):
 
 
 class Update(models.Model):
-    text = models.CharField(max_length=100, blank=False)
+    text = models.CharField(max_length=150, blank=False)
     parent_notification = models.ForeignKey('Notification',
                                             blank=False,
                                             on_delete=models.CASCADE)
