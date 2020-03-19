@@ -329,13 +329,24 @@ export default {
             const link = document.createElement('a');
 
             link.setAttribute('href', data);
-            link.setAttribute('download', 'auditlog.csv');
+            link.setAttribute('download', this.formattedFileName());
             document.body.appendChild(link);
             link.click();
             link.remove();
           })
           .catch((error) => this.showErrorPage(error.response,
               'a-audit'));
+    },
+    formattedFileName() {
+      const date = new Date();
+      const strDate = date.getFullYear() + '-' + (date.getMonth() + 1) +
+                      '-' + date.getDate();
+      let strTime = date.toLocaleString('en-US',
+          {hour: 'numeric', minute: 'numeric', hour12: true});
+
+      strTime = strTime.replace(':', '');
+
+      return strDate + ' ' + strTime + ' Food Alert audit log.csv';
     },
   },
   beforeMount() {
