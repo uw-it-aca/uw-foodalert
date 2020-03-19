@@ -357,9 +357,6 @@ class HomeView(TemplateView):
         context['twilio_number'] = \
             getattr(settings, 'TWILIO_FROM_NUMBER', 'NONE')
 
-        if context['logout_url'] is None:
-            raise ImproperlyConfigured("You haven't set 'LOGOUT_URL'.")
-
         return context
 
 
