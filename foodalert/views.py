@@ -47,7 +47,7 @@ if foodalert_authz_groups is None:
 create_group = foodalert_authz_groups['create']
 audit_group = foodalert_authz_groups['audit']
 
-debug_mode = getattr(settings, 'DEBUG', None)
+debug_mode = getattr(settings, 'DEBUG')
 
 logger = logging.getLogger('django.request')
 
@@ -351,7 +351,7 @@ class HomeView(TemplateView):
         context['netid'] = self.request.user
         context['send'] = is_member_of_group(self.request, create_group)
         context['audit'] = is_member_of_group(self.request, audit_group)
-        context['logout_url'] = getattr(settings, 'LOGOUT_URL', None)
+        context['logout_url'] = getattr(settings, 'LOGOUT_URL')
         context['ga_key'] = getattr(settings, 'GOOGLE_ANALYTICS_KEY', ' ')
         context['debug_mode'] = debug_mode
         context['twilio_number'] = \
