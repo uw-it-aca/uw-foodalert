@@ -6,6 +6,7 @@ from foodalert.test.test_update import UpdateTest
 from foodalert.test.test_email import EmailTest
 from foodalert.test.test_twilio import TwilioTest
 from foodalert.test.test_sms import SMSTest
+from foodalert.test.test_settings import MissingSettingTest
 
 # Create your tests here.
 

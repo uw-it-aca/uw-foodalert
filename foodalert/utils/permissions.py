@@ -5,6 +5,8 @@ from uw_saml.utils import is_member_of_group
 from foodalert.models import Notification, Update, Allergen,\
         Subscription
 
+from django.core.exceptions import ImproperlyConfigured
+
 foodalert_authz_groups = getattr(settings, 'FOODALERT_AUTHZ_GROUPS', None)
 if foodalert_authz_groups is None:
     raise ImproperlyConfigured("You haven't set 'FOODALERT_AUTHZ_GROUPS'.")

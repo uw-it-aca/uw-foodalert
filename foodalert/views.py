@@ -35,6 +35,8 @@ from foodalert.serializers import NotificationDetailSerializer, \
 from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
+from django.core.exceptions import ImproperlyConfigured
+
 # Create your views here.
 
 foodalert_authz_groups = getattr(settings, 'FOODALERT_AUTHZ_GROUPS', None)
