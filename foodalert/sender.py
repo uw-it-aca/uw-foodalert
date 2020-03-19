@@ -9,6 +9,8 @@ import dateutil.parser
 import datetime
 from django.utils import timezone
 
+from django.core.exceptions import ImproperlyConfigured
+
 
 class Sender:
     def send_email(body, recipients, time, location, event):
@@ -78,8 +80,13 @@ class Sender:
 
 
 class TwilioSender(object):
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
+    account_sid = getattr(settings, 'TWILIO_ACCOUNT_SID', None)
+    auth_token = getattr(settings, 'TWILIO_AUTH_TOKEN', None)
+    if account_sid is None:
+        raise ImproperlyConfigured("You haven't set 'TWILIO_ACCOUNT_SID'.")
+    if auth_token is None:
+        raise ImproperlyConfigured("You haven't set 'TWILIO_AUTH_TOKEN'.")
+
     c = Client(account_sid, auth_token)
 
     def send_message(self, recipients, message):
@@ -92,7 +99,13 @@ class TwilioSender(object):
                 }
             ))
 
-        sms = self.c.notify.services(settings.TWILIO_NOTIFY_SERVICE_ID) \
+        twilio_notify_service_id = \
+            getattr(settings, 'TWILIO_NOTIFY_SERVICE_ID', None)
+        if twilio_notify_service_id is None:
+            raise ImproperlyConfigured("You haven't set " +
+                                       "'TWILIO_NOTIFY_SERVICE_ID'.")
+
+        sms = self.c.notify.services(twilio_notify_service_id) \
                     .notifications.create(
                         body=message,
                         to_binding=bindings
@@ -102,10 +115,18 @@ class TwilioSender(object):
 
 class AmazonSNSProvider(object):
     def __init__(self):
+        aws_key_id = getattr(settings, 'AWS_ACCESS_KEY_ID', None)
+        aws_secret_key = getattr(settings, 'AWS_SECRET_ACCESS_KEY', None)
+        if aws_key_id is None:
+            raise ImproperlyConfigured("You haven't set 'AWS_ACCESS_KEY_ID'.")
+        if aws_secret_key is None:
+            raise ImproperlyConfigured("You haven't set " +
+                                       "'AWS_SECRET_ACCESS_KEY'.")
+
         self.client = boto3.client(
             'sns',
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            aws_access_key_id=aws_key_id,
+            aws_secret_access_key=aws_secret_key,
             region_name='us-west-2'
         )
 
