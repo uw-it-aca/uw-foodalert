@@ -18,7 +18,7 @@ from foodalert.models import Notification, Allergen, Subscription, \
 from foodalert.serializers import NotificationDetailSerializer
 from foodalert.views import NotificationDetail, NotificationList
 from foodalert.test.test_utils import create_notification_from_data,\
-    generate_amazon_mock, generate_twilio_mock,\
+    generate_twilio_mock,\
     create_user_from_data, create_client_with_mock_saml
 
 RESOURCE_DIR = os.path.join(os.path.dirname(foodalert.__file__),
@@ -557,19 +557,18 @@ class NotificationTest(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
-        with patch.multiple(settings, FOODALERT_USE_SMS="amazon"):
-            with generate_amazon_mock() as mock:
-                for key in proper_payload:
-                    incomplete_payload[key] = proper_payload[key]
-                    response = client.post(
-                        "/api/v1/notification/",
-                        data=json.dumps(incomplete_payload),
-                        content_type='application/json'
-                    )
-                    if incomplete_payload != proper_payload:
-                        self.assertEqual(response.status_code, 400)
-                    else:
-                        self.assertEqual(response.status_code, 201)
+        with generate_twilio_mock() as mock:
+            for key in proper_payload:
+                incomplete_payload[key] = proper_payload[key]
+                response = client.post(
+                    "/api/v1/notification/",
+                    data=json.dumps(incomplete_payload),
+                    content_type='application/json'
+                )
+                if incomplete_payload != proper_payload:
+                    self.assertEqual(response.status_code, 400)
+                else:
+                    self.assertEqual(response.status_code, 201)
 
         self.test_data[2]["host"] = None
 

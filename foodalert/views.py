@@ -139,18 +139,8 @@ class NotificationList(generics.ListCreateAPIView):
                 message = Sender.format_message(data)
 
                 if not debug_mode:
-                    foodalert_use_sms = \
-                        getattr(settings, 'FOODALERT_USE_SMS', None)
-
-                    if foodalert_use_sms is None:
-                        raise ImproperlyConfigured("You haven't set " +
-                                                   "'FOODALERT_USE_SMS'.")
-
-                    if foodalert_use_sms == "twilio" and\
-                       sms_recipients != []:
+                    if sms_recipients != []:
                         Sender.send_twilio_sms(sms_recipients, message)
-                    elif foodalert_use_sms == "amazon":
-                        Sender.send_amazon_sms(sms_recipients, message)
 
                 if email_recipients != []:
                     Sender.send_email(message,
@@ -228,22 +218,11 @@ class UpdateList(generics.ListCreateAPIView):
                     sms_recipients.append(str(sub.sms_number))
 
             if not debug_mode:
-                foodalert_use_sms = \
-                    getattr(settings, 'FOODALERT_USE_SMS', None)
-
-                if foodalert_use_sms is None:
-                    raise ImproperlyConfigured("You haven't set " +
-                                               "'FOODALERT_USE_SMS'.")
-
-                if foodalert_use_sms == "twilio" and\
-                   sms_recipients != []:
+                if sms_recipients != []:
                     Sender.send_twilio_sms(sms_recipients,
                                            parent.event +
                                            ' Update: ' + data['text'])
-                elif foodalert_use_sms == "amazon":
-                    Sender.send_amazon_sms(sms_recipients,
-                                           parent.event +
-                                           ' Update: ' + data['text'])
+
             if email_recipients != []:
                 message = (
                     'Update: ' + data['text'] + '\n\n'

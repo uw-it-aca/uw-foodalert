@@ -7,7 +7,7 @@ from django.test import Client
 from twilio.request_validator import RequestValidator
 
 from foodalert.models import Notification, Allergen, Update, FoodQualification
-from foodalert.sender import TwilioSender, Sender, AmazonSNSProvider
+from foodalert.sender import TwilioSender, Sender
 
 
 def create_notification_from_data(data, user):
@@ -84,12 +84,3 @@ def generate_twilio_request_validator_mock():
         new_callable=PropertyMock,
         return_value=PropertyMock(return_value=True)
     )
-
-
-def generate_amazon_mock():
-    ret = {
-        'failed': [],
-        'successful': ['test']
-    }
-    return patch.object(AmazonSNSProvider, 'send_message',
-                        return_value=ret)

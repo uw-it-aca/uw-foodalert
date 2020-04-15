@@ -43,10 +43,6 @@ class Sender:
         sender = TwilioSender()
         return sender.send_message(recipient, message, **kwargs)
 
-    def send_amazon_sms(recipient, message, **kwargs):
-        sender = AmazonSNSProvider()
-        return sender.send_message(message, recipient, **kwargs)
-
     def format_message(message):
         event = message['event']
         foods = message['food']['served']
@@ -111,42 +107,3 @@ class TwilioSender(object):
                         to_binding=bindings
                     )
         return sms
-
-
-class AmazonSNSProvider(object):
-    def __init__(self):
-        aws_key_id = getattr(settings, 'AWS_ACCESS_KEY_ID', None)
-        aws_secret_key = getattr(settings, 'AWS_SECRET_ACCESS_KEY', None)
-        if aws_key_id is None:
-            raise ImproperlyConfigured("You haven't set 'AWS_ACCESS_KEY_ID'.")
-        if aws_secret_key is None:
-            raise ImproperlyConfigured("You haven't set " +
-                                       "'AWS_SECRET_ACCESS_KEY'.")
-
-        self.client = boto3.client(
-            'sns',
-            aws_access_key_id=aws_key_id,
-            aws_secret_access_key=aws_secret_key,
-            region_name='us-west-2'
-        )
-
-    def send_message(self, sms_message, recipients):
-        failed = []
-        successful = []
-
-        for recipient in recipients:
-            try:
-                response = self.client.publish(
-                    PhoneNumber=recipient,
-                    Message=sms_message,
-                    Subject='UW Food Alert Event',
-                )
-                successful.append(response)
-            except Exception as error:
-                failed.append(error.response)
-
-        return {'failed': failed, 'successful': successful}
-
-
-class AmazonSNSError(Exception):
-    pass
