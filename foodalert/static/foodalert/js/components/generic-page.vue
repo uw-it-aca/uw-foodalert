@@ -86,7 +86,7 @@ export default {
   },
   mounted() {
     this.$nextTick(
-        function() {
+        () => {
           document.activeElement.blur();
           const newFocus = document.querySelector('h1');
 
@@ -97,13 +97,13 @@ export default {
 
           window.addEventListener('resize', this.updateHeightOfPage);
           this.updateHeightOfPage();
-        }.bind(this),
+        },
     );
   },
   methods: {
     updateHeightOfPage() {
       document.querySelector('.page').style.minHeight =
-        window.innerHeight + 'px';
+        `${window.innerHeight}px`;
     },
   },
 };

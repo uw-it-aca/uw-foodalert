@@ -35,7 +35,7 @@ export default {
     };
 
     axios.get(
-        '/api/v1/notification/?host_netid=' + this.netID,
+        `/api/v1/notification/?host_netid=${this.netID}`,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);

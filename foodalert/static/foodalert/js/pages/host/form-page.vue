@@ -310,18 +310,18 @@ export default {
       evt.preventDefault();
 
       // triping all input validators
-      Object.keys(this.enableValidation).forEach(function(key) {
+      Object.keys(this.enableValidation).forEach((key) => {
         this.enableValidation[key] = true;
-      }.bind(this));
+      });
 
       let flag = false;
 
-      Object.keys(this.formValidate).forEach(function(key) {
+      Object.keys(this.formValidate).forEach((key) => {
         if (this.formValidate[key] === false && flag !== true) {
           flag = true;
           this.$refs[key].$el.focus();
         }
-      }.bind(this));
+      });
 
       if (flag) return;
 
@@ -343,7 +343,7 @@ export default {
           timeExt = 'PM';
         }
 
-        return hours + ':' + mins + ' ' + timeExt;
+        return `${hours}:${mins} ${timeExt}`;
       }
 
       return '--:-- --';
@@ -382,11 +382,11 @@ export default {
       };
 
       axios.post('/api/v1/notification/', data, {headers})
-          .then(function(response) {
+          .then((response) => {
             this.$router.push({name: 'h-update', params: {
               notificationText: 'Your notification was sent.',
             }});
-          }.bind(this))
+          })
           .catch((error) => this.showErrorPage(error.response, 'h-form'));
     },
     inputValid(fieldName) {
@@ -420,7 +420,7 @@ export default {
     };
 
     axios.get(
-        '/api/v1/notification/?host_netid=' + this.netID,
+        `/api/v1/notification/?host_netid=${this.netID}`,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);

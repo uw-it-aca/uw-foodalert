@@ -133,16 +133,16 @@ export default {
       'Content-Type': 'application/json',
     };
 
-    axios.get('/api/v1/notification/?host_netid=' + this.netID, {headers})
+    axios.get(`/api/v1/notification/?host_netid=${this.netID}`, {headers})
         .then((response) => {
-          const data = response.data.filter(function(notif) {
+          const data = response.data.filter((notif) => {
             return notif.ended === false;
           });
 
           if (data.length === 0) {
             this.$router.push({name: 'h-welcome'});
           } else {
-            axios.get('/api/v1/notification/' + data[0]['id'] + '/',
+            axios.get(`/api/v1/notification/${data[0].id}/`,
                 {headers})
                 .then((response) => {
                   this.state = response.data;
@@ -174,8 +174,8 @@ export default {
     sendUpdate() {
       if (this.selected === 'noFoodUpdate') {
         const data = {
-          'text': 'No Food left! The event: ' + this.state.event +
-                  ' has ended and is no longer serving food',
+          'text': `No Food left! The event: ${this.state.event 
+                  } has ended and is no longer serving food`,
           'parent_notification_id': this.state.id,
           'ended': true,
         };
@@ -186,9 +186,9 @@ export default {
         };
 
         axios.post('/api/v1/updates/', data, {headers})
-            .then(function(response) {
+            .then((response) => {
               this.$router.push({name: 'h-ended'});
-            }.bind(this))
+            })
             .catch((error) => this.showErrorPage(error.response, 'h-update'));
       } else {
         const data = {
@@ -202,10 +202,10 @@ export default {
         };
 
         axios.post('/api/v1/updates/', data, {headers})
-            .then(function(response) {
+            .then((response) => {
               this.privNotifText = 'Your update was sent.';
               this.$refs.notifBox.notificationState = true;
-            }.bind(this))
+            })
             .catch((error) => this.showErrorPage(error.response, 'h-update'));
       }
 
