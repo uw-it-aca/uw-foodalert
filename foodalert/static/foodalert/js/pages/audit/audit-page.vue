@@ -227,7 +227,7 @@ export default {
 
       // default to load current page if no url passed
       if (!url) {
-        url = `${this.baseURL  }?page=${  this.currentPage}`;
+        url = `${this.baseURL}?page=${this.currentPage}`;
       }
 
       axios.get(url, {headers})
@@ -274,9 +274,9 @@ export default {
 
       // Make datetimes readable
       log.time.created = `${new Date(log.time.created).toDateString() 
-        } ${  new Date(log.time.created).toLocaleTimeString('en-US')}`;
+        } ${new Date(log.time.created).toLocaleTimeString('en-US')}`;
       log.time.end = `${new Date(log.time.end).toDateString() 
-        } ${  new Date(log.time.end).toLocaleTimeString('en-US')}`;
+        } ${new Date(log.time.end).toLocaleTimeString('en-US')}`;
 
       // format food qualifications and allergens
       log.food.qualifications = log.food.qualifications.join(', ');
@@ -295,9 +295,8 @@ export default {
         'location': '',
         'event': '',
         'time.created':
-            `${new Date(update.created_time).toDateString()  } ${ 
-            new Date(update.created_time)
-                .toLocaleTimeString('en-US')}`,
+            `${new Date(update.created_time).toDateString()} ${ 
+            new Date(update.created_time).toLocaleTimeString('en-US')}`,
         'time.ended': '',
         'food.served': update.text,
         'food.allergens': '',
@@ -321,7 +320,7 @@ export default {
             const result = response.data;
 
             // Define the content of our csv & encode the URI
-            const csv = `data:text/csv;charset=utf-8,${  result}`;
+            const csv = `data:text/csv;charset=utf-8,${result}`;
             const data = encodeURI(csv);
 
             // Programmatically make a link to download the csv and click it
@@ -338,19 +337,19 @@ export default {
     },
     formattedFileName() {
       const date = new Date();
-      const strDate = `${date.getFullYear()  }-${  date.getMonth() + 1 
-                      }-${  date.getDate()}`;
+      const strDate = `${date.getFullYear()}-${date.getMonth() + 1 
+                      }-${date.getDate()}`;
       let strTime = date.toLocaleString('en-US',
           {hour: 'numeric', minute: 'numeric', hour12: true});
 
       strTime = strTime.replace(':', '');
 
-      return `${strDate  } ${  strTime  } Food Alert audit log.csv`;
+      return `${strDate} ${strTime} Food Alert audit log.csv`;
     },
   },
   beforeMount() {
     this.currentPage = 1;
-    this.requestLogs(`${this.baseURL  }?page=1`);
+    this.requestLogs(`${this.baseURL}?page=1`);
   },
 };
 </script>

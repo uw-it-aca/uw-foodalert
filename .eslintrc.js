@@ -24,6 +24,6 @@ module.exports = {
   ],
   'rules': {
     'node/no-unsupported-features/es-syntax': 'off',
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
   },
 };
