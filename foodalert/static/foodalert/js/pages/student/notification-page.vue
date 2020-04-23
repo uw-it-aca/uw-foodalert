@@ -99,12 +99,12 @@ export default {
     },
     stripSms(data) {
       // strips sms of the +1
-      if (data['sms_number']) {
-        let num = data['sms_number'];
+      if (data.sms_number) {
+        let num = data.sms_number;
 
         num = num.replace('+1', '');
         num = new AsYouType('US').input(num);
-        data['sms_number'] = num;
+        data.sms_number = num;
       }
 
       return data;
@@ -121,11 +121,11 @@ export default {
         return;
       }
 
-      axios.get('/api/v1/subscription/?netID=' + this.netID, {headers})
+      axios.get(`/api/v1/subscription/?netID=${this.netID}`, {headers})
           .then(this.getSubID)
           .then((data) => {
             if (this.subid) {
-              const url = '/api/v1/subscription/' + this.subid + '/';
+              const url = `/api/v1/subscription/${this.subid}/`;
 
               axios.get(url, {headers})
                   .then((response) => {
@@ -143,7 +143,7 @@ export default {
                 'X-CSRFToken': csrftoken,
               };
               const postData = {
-                'email': this.netID + '@uw.edu',
+                'email': `${this.netID}@uw.edu`,
                 'sms_number': '',
               };
 

@@ -151,14 +151,14 @@ export default {
       this.$router.push({name: 'h-food-service'});
     },
     uncheckCheckbox(pos) {
-      setTimeout(function() {
+      setTimeout(() => {
         document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
           return val !== document.querySelectorAll('input')[pos]._value;
         });
 
         if (!this.validateOn) this.validateOn = true;
-      }.bind(this), 100);
+      }, 100);
     },
   },
   data() {
@@ -175,7 +175,7 @@ export default {
     };
 
     axios.get(
-        '/api/v1/notification/?host_netid=' + this.netID,
+        `/api/v1/notification/?host_netid=${this.netID}`,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);

@@ -264,9 +264,9 @@ export default {
       let input = '';
 
       if (this.serverData.text === '') {
-        input = this.type + '-add-input';
+        input = `${this.type}-add-input`;
       } else {
-        input = this.type + '-update-input';
+        input = `${this.type}-update-input`;
       }
 
       const el = document.getElementById(input);
@@ -278,7 +278,9 @@ export default {
     formatter(value, event) {
       if (this.type === 'text') {
         return this.numberFormatter(value, event);
-      } else if (this.type === 'email') {
+      }
+
+      if (this.type === 'email') {
         return value;
       }
     },
@@ -354,7 +356,7 @@ export default {
       // make patch request if subid is set; post if not
       if (validInput) {
         if (this.subid) {
-          const url = '/api/v1/subscription/' + this.subid + '/';
+          const url = `/api/v1/subscription/${this.subid}/`;
 
           axios.patch(url, data, {headers})
               .then((response) => {
@@ -412,7 +414,7 @@ export default {
         input = 'phone number';
       }
 
-      this.errorMsg = 'Invalid ' + input + '. Please enter a new one';
+      this.errorMsg = `Invalid ${input}. Please enter a new one`;
       spinnerOpt.state = false;
       this.validateOn = true;
     },
@@ -429,7 +431,7 @@ export default {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken,
       };
-      const url = '/api/v1/subscription/' + this.subid + '/';
+      const url = `/api/v1/subscription/${this.subid}/`;
 
       axios.patch(url, data, {headers})
           .then(this.requestUpdate)

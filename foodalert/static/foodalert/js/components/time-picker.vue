@@ -91,8 +91,8 @@ export default {
       } else {
         this.$emit(
             'input',
-            this.selectedTimeInDateTime.getHours() + ':' +
-            String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0'),
+            `${this.selectedTimeInDateTime.getHours()}:${
+            String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0')}`,
         );
       }
     },
@@ -130,42 +130,40 @@ export default {
             if (this.hourSelected === 12) {
               hour = 0;
             }
-          } else {
-            if (this.hourSelected !== 12) {
+          } else if (this.hourSelected !== 12) {
               hour += 12;
-            }
           }
 
           datetime.setHours(hour, this.minuteSelected);
 
           return datetime;
-        } else {
-          const datetime = new Date();
-          const hour = parseInt(this.mobileTime.split(':')[0]);
-          const minutes = parseInt(this.mobileTime.split(':')[1]);
-
-          datetime.setHours(hour, minutes);
-
-          return datetime;
         }
-      } else {
-        return null;
+ 
+        const datetime = new Date();
+        const hour = parseInt(this.mobileTime.split(':')[0]);
+        const minutes = parseInt(this.mobileTime.split(':')[1]);
+
+        datetime.setHours(hour, minutes);
+
+        return datetime;
       }
+
+      return null;
     },
     endTimeBeforeCurrent() {
       if (this.selectedTimeInDateTime === null) {
         return false;
-      } else {
-        return this.selectedTimeInDateTime <= new Date();
       }
+ 
+      return this.selectedTimeInDateTime <= new Date();
     },
     formValidity() {
       if (this.endTimeBeforeCurrent ||
         (this.invalidTime && this.showInvalidTimeError)) {
         return false;
-      } else {
-        return null;
       }
+ 
+      return null;
     },
   },
 };

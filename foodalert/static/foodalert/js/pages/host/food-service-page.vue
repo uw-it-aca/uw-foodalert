@@ -107,9 +107,9 @@ export default {
     getNextPage() {
       if (this.selected.length === 0) {
         this.validateOn = false;
-        setTimeout(function() {
+        setTimeout(() => {
           this.validateOn = true;
-        }.bind(this), 1);
+        }, 1);
 
         return;
       }
@@ -131,14 +131,14 @@ export default {
       this.$router.push({name: 'h-welcome'});
     },
     uncheckCheckbox(pos) {
-      setTimeout(function() {
+      setTimeout(() => {
         document.querySelectorAll('input')[pos].checked = false;
         this.selected = this.selected.filter((val) => {
           return val !== document.querySelectorAll('input')[pos]._value;
         });
 
         if (!this.validateOn) this.validateOn = true;
-      }.bind(this), 1);
+      }, 1);
     },
   },
   data() {
@@ -155,7 +155,7 @@ export default {
     };
 
     axios.get(
-        '/api/v1/notification/?host_netid=' + this.netID,
+        `/api/v1/notification/?host_netid=${this.netID}`,
         {headers},
     ).then((result) => {
       result.data = result.data.filter((d)=>!d.ended);
