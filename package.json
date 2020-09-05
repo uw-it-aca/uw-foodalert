@@ -19,7 +19,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "libphonenumber-js": "^1.7.5",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "popper.js": "^1.14.4",
     "sass": "^1.10.4",
     "sass-loader": "^7.1.0",
