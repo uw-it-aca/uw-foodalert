@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'django<2.3',
-        'django-webpack-loader',
+        'django-webpack-loader==0.7.0',
         'UW-Django-SAML2<2.0',
         'psycopg2',
         'djangorestframework',
