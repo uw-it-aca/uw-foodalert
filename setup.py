@@ -15,7 +15,7 @@ setup(
         'django<2.3',
         'django-webpack-loader==0.7.0',
         'UW-Django-SAML2<2.0',
-        'psycopg2',
+        'psycopg2>=2.8,<2.9',
         'djangorestframework',
         'djangorestframework-csv',
         'phonenumbers',
