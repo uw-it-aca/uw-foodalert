@@ -52,7 +52,7 @@
       <a href="mailto:help@uw.edu?subject=UW Food Alert support">
         Contact support
       </a>
-      <p>© 2019 University of Washington</p>
+      <p>© {{ new Date().getFullYear() }} University of Washington</p>
     </footer>
   </div>
 </template>
