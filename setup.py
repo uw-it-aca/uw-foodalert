@@ -16,10 +16,10 @@ setup(
         'django-webpack-loader==0.7.0',
         'UW-Django-SAML2<2.0',
         'psycopg2>=2.8,<2.9',
-        'djangorestframework==3.11.0',
+        'djangorestframework==3.11.2', # breaks >= 3.12.0
         'djangorestframework-csv',
         'phonenumbers',
-        'django-phonenumber-field==4.0.0',
+        'django-phonenumber-field',
         'parameterized',
         'django-db-mailer',
         'premailer',
