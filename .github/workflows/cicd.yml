@@ -75,11 +75,11 @@ jobs:
         with:
           python-version: 3.6
 
-      - name: Run Python Linters
-        uses: uw-it-aca/actions/python-linters@main
-        with:
-          app_name: ${DJANGO_APP}
-          exclude_paths: 'migrations'
+#      - name: Run Python Linters
+#        uses: uw-it-aca/actions/python-linters@main
+#        with:
+#          app_name: ${DJANGO_APP}
+#          exclude_paths: 'migrations'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
