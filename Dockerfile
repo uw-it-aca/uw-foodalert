@@ -1,15 +1,12 @@
-FROM acait/django-container:1.0.21 as django
+FROM gcr.io/uwit-mci-axdd/django-container:1.3.3 as app-container
 
 USER root
 RUN apt-get update
 RUN apt-get install -y libpq-dev
 RUN apt-get install -y postgresql-client-10
-ADD docker/info.conf /tmp/info.conf
-RUN cp /tmp/info.conf /etc/apache2/conf-enabled/
-ADD docker/log_forensic.conf /tmp/log_forensic.conf
-RUN cp /tmp/log_forensic.conf /etc/apache2/conf-enabled/
 USER acait
 
+ADD --chown=acait:acait foodalert/VERSION /app/foodalert/
 ADD --chown=acait:acait setup.py /app/
 ADD --chown=acait:acait requirements.txt /app/
 ADD --chown=acait:acait README.md /app/
@@ -20,6 +17,7 @@ ADD --chown=acait:acait docker /app/project/
 RUN . /app/bin/activate && pip install -r requirements.txt
 
 ADD --chown=acait:acait . /app/
+ADD --chown=acait:acait docker/ project/
 
 RUN rm -rf /app/foodalert/static/foodalert/bundles && mkdir /app/foodalert/static/foodalert/bundles
 
@@ -30,7 +28,7 @@ RUN npm install .
 RUN npx webpack
 
 
-FROM django
+FROM app-container
 
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/ /static/
