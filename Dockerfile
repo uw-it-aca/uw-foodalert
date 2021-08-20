@@ -27,6 +27,7 @@ WORKDIR /app/
 RUN npm install .
 RUN npx webpack
 
+FROM gcr.io/uwit-mci-axdd/django-test-container:1.3.3 as app-test-container
 
 FROM app-container
 
