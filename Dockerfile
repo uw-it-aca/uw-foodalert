@@ -35,5 +35,5 @@ COPY --chown=acait:acait --from=wpack /app/foodalert/static/webpack-stats.json /
 
 FROM gcr.io/uwit-mci-axdd/django-test-container:1.3.3 as app-test-container
 
-COPY --from=0 /app/ /app/
-COPY --from=0 /static/ /static/
+COPY --from=app-container /app/ /app/
+COPY --from=app-container /static/ /static/
