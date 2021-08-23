@@ -12,6 +12,7 @@ ADD --chown=acait:acait requirements.txt /app/
 ADD --chown=acait:acait README.md /app/
 
 ADD --chown=acait:acait docker/scripts /scripts/
+ADD --chown=acait:acait docker /app/project/
 
 RUN . /app/bin/activate && pip install -r requirements.txt
 
@@ -26,10 +27,13 @@ WORKDIR /app/
 RUN npm install .
 RUN npx webpack
 
-FROM gcr.io/uwit-mci-axdd/django-test-container:1.3.3 as app-test-container
-
 FROM app-container
 
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/foodalert/bundles/* /app/foodalert/static/foodalert/bundles/
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/ /static/
 COPY --chown=acait:acait --from=wpack /app/foodalert/static/webpack-stats.json /app/foodalert/static/webpack-stats.json
+
+FROM gcr.io/uwit-mci-axdd/django-test-container:1.3.3 as app-test-container
+
+COPY --from=0 /app/ /app/
+COPY --from=0 /static/ /static/
