@@ -35,7 +35,7 @@ database:
   engine: postgres
   name: foodalert_test
   hostname: foodalert-db-service
-  secretName: test.scout.uw.edu-sql-secrets
+  secretName: test.foodalert.uw.edu-sql-secrets
 repo: foodalert
 instance: test
 image:
@@ -72,9 +72,9 @@ externalSecrets:
 environmentVariablesSecrets:
   djangoSecret:
     name: DJANGO_SECRET
-    secretName: test.scout.uw.edu-secrets
+    secretName: test.foodalert.uw.edu-secrets
     secretKey: django-secret
   googleAnalyticsKey:
     name: GOOGLE_ANALYTICS_KEY
-    secretName: test.scout.uw.edu-secrets
+    secretName: test.foodalert.uw.edu-secrets
     secretKey: google-analytics-key
