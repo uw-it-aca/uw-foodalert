@@ -46,6 +46,8 @@ memcached:
 cronjob:
   enabled: false
 environmentVariables:
+  - name: AUTH
+    value: SAML
   - name: CLUSTER_CNAME
     value: test.foodalert.uw.edu
   - name: ENV
