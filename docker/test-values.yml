@@ -63,7 +63,7 @@ externalSecrets:
         - name: google-analytics-key
           property: google-analytics-key
     - name: test.foodalert.uw.edu-sql-secrets
-      externalKey: axdd/kv/data/foodalert/sql-secrets
+      externalKey: axdd/kv/data/foodalert/test/sql-secrets
       data:
         - name: username
           property: username
