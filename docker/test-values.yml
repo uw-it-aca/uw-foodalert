@@ -39,7 +39,7 @@ database:
 repo: uw-foodalert
 instance: test
 image:
-  repository: gcr.io/uwit-mci-axdd/foodalert
+  repository: gcr.io/uwit-mci-axdd/uw-foodalert
   tag: IMAGE_TAG
 memcached:
   enabled: false
