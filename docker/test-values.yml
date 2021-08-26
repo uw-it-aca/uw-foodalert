@@ -71,6 +71,16 @@ externalSecrets:
           property: username
         - name: password
           property: password
+    - name: test.foodalert.uw.edu-ic-certs
+      externalKey: axdd/kv/data/foodalert/test/ic-certs
+      data:
+        - name: test.foodalert.uw.edu-ic.cert
+          property: test.foodalert.uw.edu-ic.cert
+    - name: test.foodalert.uw.edu-uw-idp-cert
+      externalKey: axdd/kv/data/idp-cert
+      data:
+        - name: uw-idp-cert
+          property: cert
 environmentVariablesSecrets:
   djangoSecret:
     name: DJANGO_SECRET
@@ -80,3 +90,11 @@ environmentVariablesSecrets:
     name: GOOGLE_ANALYTICS_KEY
     secretName: test.foodalert.uw.edu-secrets
     secretKey: google-analytics-key
+  samlSPCert:
+    name: SP_CERT
+    secretName: test.foodalert.uw.edu-ic-certs
+    secretKey: test.foodalert.uw.edu-ic.cert
+  samlIDPCert:
+    name: IDP_CERT
+    secretName: test.foodalert.uw.edu-uw-idp-cert
+    secretKey: uw-idp-cert
