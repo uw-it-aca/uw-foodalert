@@ -4,16 +4,14 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS += [
-    'webpack_loader',
-    'foodalert',
-    'rest_framework',
-    'phonenumber_field',
-    'dbmail',
-    'premailer',
-    'django.contrib.sites'
+    "webpack_loader",
+    "foodalert",
+    "rest_framework",
+    "phonenumber_field",
+    "dbmail",
+    "premailer",
+    "django.contrib.sites",
 ]
 
 SITE_ID = 1
@@ -25,28 +23,16 @@ else:
 
 
 WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'foodalert/bundles/',  # must end with slash
-        'STATS_FILE': os.path.join(BASE_DIR,
-                                   'foodalert',
-                                   'static',
-                                   'webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "foodalert/bundles/",  # must end with slash
+        "STATS_FILE": os.path.join(
+            BASE_DIR, "foodalert", "static", "webpack-stats.json"
+        ),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }
-}
-
-LOGGING['handlers']['file'] = {
-    'level':'INFO',
-    'class':'logging.FileHandler',
-    'filename':'/app/foodalert.log',
-}
-
-LOGGING['loggers'][''] = {
-    'handlers': ['file'],
-    'level': 'DEBUG'
 }
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
@@ -59,11 +45,11 @@ TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "NONE")
 
 # SETTINGS FOR EMAIL BACKEND
 if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    EMAIL_HOST = 'localhost'
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    EMAIL_HOST = "localhost"
 else:
     SAFE_EMAIL_RECIPIENT = os.getenv("SAFE_EMAIL_RECIPIENT")
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = os.getenv("EMAIL_HOST")
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
@@ -72,29 +58,27 @@ else:
     EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 FOODALERT_AUTHZ_GROUPS = {
-    'create': os.getenv("FA_HOST_GROUP", 'u_test_host'),
-    'audit': os.getenv("FA_AUDIT_GROUP", 'u_test_admin')
+    "create": os.getenv("FA_HOST_GROUP", "u_test_host"),
+    "audit": os.getenv("FA_AUDIT_GROUP", "u_test_admin"),
 }
 
 if os.getenv("AUTH", "NONE") == "SAML_MOCK":
-    MOCK_SAML_ATTRIBUTES['isMemberOf'] = [
-        FOODALERT_AUTHZ_GROUPS['create'],
-        FOODALERT_AUTHZ_GROUPS['audit']
+    MOCK_SAML_ATTRIBUTES["isMemberOf"] = [
+        FOODALERT_AUTHZ_GROUPS["create"],
+        FOODALERT_AUTHZ_GROUPS["audit"],
     ]
 
 
-DEFAULT_RENDERER_CLASSES = (
-    'rest_framework.renderers.JSONRenderer',
-)
+DEFAULT_RENDERER_CLASSES = ("rest_framework.renderers.JSONRenderer",)
 
 if DEBUG:
     DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        "rest_framework.renderers.BrowsableAPIRenderer",
     )
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
     ),
-    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
+    "DEFAULT_RENDERER_CLASSES": DEFAULT_RENDERER_CLASSES,
 }
