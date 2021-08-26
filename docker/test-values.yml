@@ -29,7 +29,7 @@ externalService:
   enabled: true
   name: foodalert-db-service
   type: ClusterIP
-  serviceAddress: 172.18.2.2
+  serviceAddress: 172.18.1.246
   servicePort: 5432
 database:
   engine: postgres
