@@ -52,6 +52,8 @@ environmentVariables:
     value: test.foodalert.uw.edu
   - name: ENV
     value: test
+  - name: SAML_ENTITY_ID
+    value: https://test.foodalert.uw.edu/saml2
   - name: WEBSERVER
     value: nginx
 externalSecrets:
