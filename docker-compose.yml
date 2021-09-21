@@ -1,9 +1,12 @@
-version: '3'
+version: '3.7'
 
 services:
   app:
     restart: always
-    build: .
+    container_name: foodalert_app
+    build:
+      context: .
+      target: app-container
     volumes:
       - ./foodalert:/app/foodalert
       - ./docker/settings.py:/app/project/settings.py
@@ -45,13 +48,14 @@ services:
       timeout: 5s
       retries: 5
   devtools:
+    restart: always
     container_name: foodalert-devtools
-    image: node:8.15.1-jessie
-    working_dir: /devtools/uw-foodalert
+    image: node:14.5.0-stretch
     environment:
       ENV: localdev
     volumes:
       - ./package.json:/devtools/uw-foodalert/package.json
       - ./webpack.config.js:/devtools/uw-foodalert/webpack.config.js
       - ./foodalert:/devtools/uw-foodalert/foodalert
-    command: bash -c "yes yes | npm install; npx webpack --watch"
+    working_dir: /devtools/uw-foodalert
+    command: bash -c "yes yes | npm install; npx webpack --watch --mode=development"
