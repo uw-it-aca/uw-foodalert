@@ -92,14 +92,14 @@ environmentVariablesSecrets:
     name: DJANGO_SECRET
     secretName: test.foodalert.uw.edu-secrets
     secretKey: django-secret
-  faHostGroup:
-    name: FA_HOST_GROUP
-    secretName: test.foodalert.uw.edu-host-group
-    secretKey: host-group
   faAuditGroup:
     name: FA_AUDIT_GROUP
-    secretName: test.foodalert.uw.edu-audit-group
+    secretName: test.foodalert.uw.edu-secrets
     secretKey: audit-group
+  faHostGroup:
+    name: FA_HOST_GROUP
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: host-group
   googleAnalyticsKey:
     name: GOOGLE_ANALYTICS_KEY
     secretName: test.foodalert.uw.edu-secrets
