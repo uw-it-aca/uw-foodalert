@@ -98,7 +98,7 @@ environmentVariablesSecrets:
     secretKey: host-group
   faAuditGroup:
     name: FA_AUDIT_GROUP
-    secretName: test.fooalert.uw.edu-audit-group
+    secretName: test.foodalert.uw.edu-audit-group
     secretKey: audit-group
   googleAnalyticsKey:
     name: GOOGLE_ANALYTICS_KEY
