@@ -64,6 +64,10 @@ externalSecrets:
       data:
         - name: django-secret
           property: django-secret
+        - name: host-group
+          property: host-group
+        - name: audit-group
+          property: audit-group
         - name: google-analytics-key
           property: google-analytics-key
     - name: test.foodalert.uw.edu-sql-secrets
@@ -88,6 +92,14 @@ environmentVariablesSecrets:
     name: DJANGO_SECRET
     secretName: test.foodalert.uw.edu-secrets
     secretKey: django-secret
+  faHostGroup:
+    name: FA_HOST_GROUP
+    secretName: test.foodalert.uw.edu-host-group
+    secretKey: host-group
+  faAuditGroup:
+    name: FA_AUDIT_GROUP
+    secretName: test.fooalert.uw.edu-audit-group
+    secretKey: audit-group
   googleAnalyticsKey:
     name: GOOGLE_ANALYTICS_KEY
     secretName: test.foodalert.uw.edu-secrets
