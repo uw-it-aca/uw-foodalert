@@ -9,12 +9,14 @@ window.vueData.routes = [
   {
     path: '/a/',
     component: GenericTemplate,
+    redirect: {name: 'a-audit'},
     children: [
       {
         path: 'audit',
         component: UnauthzTemplate,
         name: 'a-audit',
-        meta: {title: 'Unauthorized Page'}},
+        meta: {title: 'Unauthorized Page'}
+      },
     ],
   },
   {
