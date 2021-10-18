@@ -14,6 +14,8 @@ source bin/activate
 # install test tooling
 npm install eslint-plugin-vue -g
 npm install eslint-config-google -g
+npm install eslint-plugin-vue-a11y -g
+npm install eslint-config-stylelint -g
 
 function run_test {
     echo "##########################"
