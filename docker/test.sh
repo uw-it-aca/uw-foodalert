@@ -11,6 +11,9 @@ trap catch ERR
 # start virtualenv
 source bin/activate
 
+# install test tooling
+npm install eslint-config-google eslint-plugin-vue eslint-plugin-vue-a11y eslint-config-stylelint
+
 function run_test {
     echo "##########################"
     echo "TEST: $1"
