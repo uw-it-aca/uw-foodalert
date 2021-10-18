@@ -26,7 +26,7 @@ function catch {
 }
 
 run_test "pycodestyle ${DJANGO_APP}/ --exclude=migrations,static"
-run_test "eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/"
+run_test "./node_modules/.bin/eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/"
 run_test "coverage run --source=${DJANGO_APP} --omit=*/migrations/*,${DJANGO_APP}/admin.py,${DJANGO_APP}/management/commands/* manage.py test ${DJANGO_APP}"
 
 # put generaged coverage result where it will get processed
