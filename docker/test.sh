@@ -12,7 +12,7 @@ trap catch ERR
 source bin/activate
 
 # install test tooling
-npm install eslint-plugin-vue -g
+npm install eslint-plugin-vue eslint-config-google eslint-plugin-vue-a11y eslint-config-stylelint -g
 
 function run_test {
     echo "##########################"
