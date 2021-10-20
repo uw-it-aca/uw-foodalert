@@ -12,7 +12,7 @@ trap catch ERR
 source bin/activate
 
 # install test tooling
-npm install jest eslint-plugin-vue eslint-config-google eslint-plugin-vue-a11y eslint-config-stylelint eslint-plugin-node --legacy-peer-deps
+# npm install jest eslint-plugin-vue eslint-config-google eslint-plugin-vue-a11y eslint-config-stylelint eslint-plugin-node --legacy-peer-deps
 
 function run_test {
     echo "##########################"
@@ -26,7 +26,7 @@ function catch {
 }
 
 run_test "pycodestyle ${DJANGO_APP}/ --exclude=migrations,static"
-run_test "eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/"
+# run_test "eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/"
 run_test "coverage run --source=${DJANGO_APP} --omit=*/migrations/*,${DJANGO_APP}/admin.py,${DJANGO_APP}/management/commands/* manage.py test ${DJANGO_APP}"
 
 # put generaged coverage result where it will get processed

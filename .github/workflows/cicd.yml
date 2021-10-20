@@ -136,11 +136,33 @@ jobs:
         with:
           image_tag: ${{ needs.context.outputs.image_tag }}
           gcp_json_key: ${{ secrets.GCP_JSON_KEY }}
+  
+  eslint:
+    runs-on: ubuntu-18.04
+
+    container:
+      image: node:14.6.0-stretch
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install packages
+        run: npm install jest eslint@^5.0.0 eslint-plugin-vue eslint-config-google eslint-plugin-vue-a11y eslint-config-stylelint eslint-plugin-node --legacy-peer-deps
+
+      - name: Run eslint
+        run: ./node_modules/.bin/eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/
 
   deploy:
     if: github.event_name == 'push'
 
-    needs: [context, build]
+    needs: [context, build, eslint]
 
     outputs:
       context: ${{ steps.context.outputs.context }}
