@@ -77,7 +77,7 @@
         <!-- right side controls -->
         <b-col cols="4">
           <div v-if="!isOpen">
-            <b-form-checkbox v-model="serverData.send_sms"
+            <b-form-checkbox v-model="sendSms"
                   @change="check($event)"
                   :name="type+'enable-switch'"
                   class="float-right mr-3"
@@ -438,6 +438,11 @@ export default {
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });
+    },
+  },
+  computed: {
+    sendSms() {
+      return this.serverData.send_sms;
     },
   },
   watch: {

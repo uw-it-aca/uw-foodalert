@@ -10,7 +10,7 @@
           <slot name="disclaimer">Placeholder disclaimer</slot>
         </b-col>
         <b-col cols="4">
-          <b-form-checkbox v-model="serverData.send_email"
+          <b-form-checkbox v-model="sendEmail"
             @change="check($event)"
             name="email-enable-switch"
             class="float-right mr-3"
@@ -59,6 +59,11 @@ export default {
           .catch((error) => {
             this.showErrorPage(error.response, 's-notifications');
           });
+    },
+  },
+  computed: {
+    sendEmail() {
+      return this.serverData.send_email;
     },
   },
 };

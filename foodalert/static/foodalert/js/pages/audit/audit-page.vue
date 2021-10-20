@@ -273,10 +273,10 @@ export default {
       log.unformatted_time_created = log.time.created;
 
       // Make datetimes readable
-      log.time.created = `${new Date(log.time.created).toDateString() 
-        } ${new Date(log.time.created).toLocaleTimeString('en-US')}`;
-      log.time.end = `${new Date(log.time.end).toDateString() 
-        } ${new Date(log.time.end).toLocaleTimeString('en-US')}`;
+      log.time.created = `${new Date(log.time.created).toDateString()
+      } ${new Date(log.time.created).toLocaleTimeString('en-US')}`;
+      log.time.end = `${new Date(log.time.end).toDateString()
+      } ${new Date(log.time.end).toLocaleTimeString('en-US')}`;
 
       // format food qualifications and allergens
       log.food.qualifications = log.food.qualifications.join(', ');
@@ -295,8 +295,8 @@ export default {
         'location': '',
         'event': '',
         'time.created':
-            `${new Date(update.created_time).toDateString()} ${ 
-            new Date(update.created_time).toLocaleTimeString('en-US')}`,
+            `${new Date(update.created_time).toDateString()} ${
+              new Date(update.created_time).toLocaleTimeString('en-US')}`,
         'time.ended': '',
         'food.served': update.text,
         'food.allergens': '',
@@ -337,8 +337,8 @@ export default {
     },
     formattedFileName() {
       const date = new Date();
-      const strDate = `${date.getFullYear()}-${date.getMonth() + 1 
-                      }-${date.getDate()}`;
+      const strDate = `${date.getFullYear()}-${date.getMonth() + 1
+      }-${date.getDate()}`;
       let strTime = date.toLocaleString('en-US',
           {hour: 'numeric', minute: 'numeric', hour12: true});
 
