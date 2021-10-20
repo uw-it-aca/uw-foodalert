@@ -154,7 +154,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install packages
-        run: npm install jest eslint@^5.0.0 eslint-plugin-vue eslint-config-google eslint-plugin-vue-a11y eslint-plugin-node
+        run: npm install .
 
       - name: Run eslint
         run: ./node_modules/.bin/eslint --ext .js,.vue ${DJANGO_APP}/static/${DJANGO_APP}/js/
