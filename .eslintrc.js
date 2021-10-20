@@ -8,7 +8,6 @@ module.exports = {
     'plugin:vue/essential',
     'google',
     'plugin:vue-a11y/recommended',
-    'stylelint',
     'plugin:node/recommended'
   ],
   'globals': {
