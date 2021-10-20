@@ -15,7 +15,7 @@ window.vueData.routes = [
         path: 'audit',
         component: UnauthzTemplate,
         name: 'a-audit',
-        meta: {title: 'Unauthorized Page'}
+        meta: {title: 'Unauthorized Page'},
       },
     ],
   },

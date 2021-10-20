@@ -92,7 +92,9 @@ export default {
         this.$emit(
             'input',
             `${this.selectedTimeInDateTime.getHours()}:${
-            String(this.selectedTimeInDateTime.getMinutes()).padStart(2, '0')}`,
+              String(
+                  this.selectedTimeInDateTime.getMinutes()
+              ).padStart(2, '0')}`,
         );
       }
     },
@@ -131,14 +133,14 @@ export default {
               hour = 0;
             }
           } else if (this.hourSelected !== 12) {
-              hour += 12;
+            hour += 12;
           }
 
           datetime.setHours(hour, this.minuteSelected);
 
           return datetime;
         }
- 
+
         const datetime = new Date();
         const hour = parseInt(this.mobileTime.split(':')[0]);
         const minutes = parseInt(this.mobileTime.split(':')[1]);
@@ -154,7 +156,7 @@ export default {
       if (this.selectedTimeInDateTime === null) {
         return false;
       }
- 
+
       return this.selectedTimeInDateTime <= new Date();
     },
     formValidity() {
@@ -162,7 +164,7 @@ export default {
         (this.invalidTime && this.showInvalidTimeError)) {
         return false;
       }
- 
+
       return null;
     },
   },

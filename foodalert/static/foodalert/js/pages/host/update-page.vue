@@ -174,8 +174,8 @@ export default {
     sendUpdate() {
       if (this.selected === 'noFoodUpdate') {
         const data = {
-          'text': `No Food left! The event: ${this.state.event 
-                  } has ended and is no longer serving food`,
+          'text': `No Food left! The event: ${this.state.event
+          } has ended and is no longer serving food`,
           'parent_notification_id': this.state.id,
           'ended': true,
         };
