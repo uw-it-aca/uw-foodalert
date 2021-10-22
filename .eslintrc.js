@@ -25,5 +25,8 @@ module.exports = {
     'node/no-unsupported-features/es-syntax': 'off',
     'no-unused-vars': 'off',
     'prefer-regex-literals': 'off',
+    'vue/valid-v-slot': ['error', {
+      allowModifiers: true,
+    }],
   },
 };
