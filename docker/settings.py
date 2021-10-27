@@ -54,8 +54,8 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
-    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+    EMAIL_SSL_CERTFILE = os.getenv("EMAIL_SSL_CERTFILE", "")
+    EMAIL_SSL_KEYFILE = os.getenv("EMAIL_SSL_KEYFILE", "")
 
 FOODALERT_AUTHZ_GROUPS = {
     "create": os.getenv("FA_HOST_GROUP", "u_test_host"),
