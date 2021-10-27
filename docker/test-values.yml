@@ -45,6 +45,11 @@ memcached:
   enabled: false
 cronjob:
   enabled: false
+certs:
+  mounted: true
+  certPath: /certs/test.foodalert.uw.edu-uwca.cert
+  keyPath: /certs/test.foodalert.uw.edu-uwca.key
+  secretName: test.foodalert.uw.edu-uwca-certs
 environmentVariables:
   - name: AUTH
     value: SAML
@@ -70,6 +75,18 @@ externalSecrets:
           property: audit-group
         - name: google-analytics-key
           property: google-analytics-key
+        - name: email-host
+          property: email-host
+        - name: default-from-email
+          property: default-from-email
+        - name: twilio-account-sid
+          property: twilio-account-sid
+        - name: twilio-auth-token
+          property: twilio-auth-token
+        - name: twilio-notify-service-id
+          property: twilio-notify-service-id
+        - name: twilio-from-number
+          property: twilio-from-number
     - name: test.foodalert.uw.edu-sql-secrets
       externalKey: axdd/kv/data/foodalert/test/sql-secrets
       data:
@@ -77,6 +94,13 @@ externalSecrets:
           property: username
         - name: password
           property: password
+    - name: test.foodalert.uw.edu-uwca-certs
+      externalKey: axdd/kv/data/foodalert/test/uwca-certs
+      data:
+        - name: test.foodalert.uw.edu-uwca.cert
+          property: test.foodalert.uw.edu-uwca.cert
+        - name: test.foodalert.uw.edu-uwca.key
+          property: test.foodalert.uw.edu-uwca.key
     - name: test.foodalert.uw.edu-ic-certs
       externalKey: axdd/kv/data/foodalert/test/ic-certs
       data:
@@ -104,6 +128,30 @@ environmentVariablesSecrets:
     name: GOOGLE_ANALYTICS_KEY
     secretName: test.foodalert.uw.edu-secrets
     secretKey: google-analytics-key
+  emailHost:
+    name: EMAIL_HOST
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: email-host
+  defaultFromEmail:
+    name: DEFAULT_FROM_EMAIL
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: default-from-email
+  twilioAccountSid:
+    name: TWILIO_ACCOUNT_SID
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: twilio-account-sid
+  twilioAuthToken:
+    name: TWILIO_AUTH_TOKEN
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: twilio-auth-token
+  twilioNotifyServiceId:
+    name: TWILIO_NOTIFY_SERVICE_ID
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: twilio-notify-service-id
+  twilioFromNumber:
+    name: TWILIO_FROM_NUMBER
+    secretName: test.foodalert.uw.edu-secrets
+    secretKey: twilio-from-number
   samlSPCert:
     name: SP_CERT
     secretName: test.foodalert.uw.edu-ic-certs
