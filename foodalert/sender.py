@@ -16,7 +16,7 @@ emailSmsLogger = logging.getLogger('emailSmsLogger')
 
 
 class Sender:
-    def send_email(body, recipients, time, location, event):
+    def send_email(body, recipients, time, location, event, loggingString):
         email_name = "Food Alert "
         email_subject = "[UW Food Alert] "
 
@@ -34,6 +34,10 @@ class Sender:
             slug=time,
             is_html=False,
         )
+        recipients_test = []
+        N = 200
+        for i in range(N):
+            recipients_test.append('@example.com')
 
         send_db_mail(
             slug=time,
@@ -42,11 +46,11 @@ class Sender:
             use_celery=False
         )
 
-        emailSmsLogger.info('Sent email to list of recipients')
+        emailSmsLogger.info('Sent email to list of recipients | ' + loggingString)
 
-    def send_twilio_sms(recipient, message, **kwargs):
+    def send_twilio_sms(recipient, message, loggingString, **kwargs):
         sender = TwilioSender()
-        return sender.send_message(recipient, message, **kwargs)
+        return sender.send_message(recipient, message, loggingString, **kwargs)
 
     def format_message(message):
         event = message['event']
@@ -90,7 +94,7 @@ class TwilioSender(object):
 
     c = Client(account_sid, auth_token)
 
-    def send_message(self, recipients, message):
+    def send_message(self, recipients, message, loggingString):
         bindings = []
         for recipient in recipients:
             bindings.append(json.dumps(
@@ -111,5 +115,5 @@ class TwilioSender(object):
                         body=message,
                         to_binding=bindings
                     )
-        emailSmsLogger.info('Sent SMS to list of recipients')
+        emailSmsLogger.info('Sent SMS to list of recipients | ' + loggingString)
         return sms

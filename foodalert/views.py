@@ -131,28 +131,29 @@ class NotificationList(generics.ListCreateAPIView):
 
                 email_recipients = []
                 sms_recipients = []
+                log_message = 'Notification: <id={}>'.format(data['id'])
                 for sub in Subscription.objects.all():
-                    log_message = 'Notification: <id={}>'.format(data['id'])
                     if sub.send_email:
                         email_recipients.append(sub.email)
-                        emailSmsLogger.info('ADDED TO EMAIL LIST ' + log_message + ' Email: <{}>'.format(sub.email))
+                        emailSmsLogger.info('Added to email list | ' + log_message + ' Email: <{}>'.format(sub.email))
                     
                     if sub.send_sms:
                         sms_recipients.append(str(sub.sms_number))
-                        emailSmsLogger.info('ADDED TO SMS LIST ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
+                        emailSmsLogger.info('Added to SMS list | ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
 
                 message = Sender.format_message(data)
                 
                 if not debug_mode:
                     if sms_recipients != []:
-                        Sender.send_twilio_sms(sms_recipients, message)
+                        Sender.send_twilio_sms(sms_recipients, message, log_message)
 
                 if email_recipients != []:
                     Sender.send_email(message,
                                       email_recipients,
                                       slug,
                                       data['location'],
-                                      data['event'])
+                                      data['event'],
+                                      log_message)
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -216,21 +217,22 @@ class UpdateList(generics.ListCreateAPIView):
 
             email_recipients = []
             sms_recipients = []
+            log_message = 'Update: <id={}> ParentNotification: <id={}>'.format(data['id'], data['parent_notification_id'])
             for sub in Subscription.objects.all():
-                log_message = 'Update: <id={}> ParentNotification: <id={}>'.format(data['id'], data['parent_notification_id'])
                 if sub.send_email:
                     email_recipients.append(sub.email)
-                    emailSmsLogger.info('ADDED TO EMAIL LIST ' + log_message + ' Email: <{}>'.format(sub.email))
+                    emailSmsLogger.info('Added to email list | ' + log_message + ' Email: <{}>'.format(sub.email))
                 
                 if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
-                    emailSmsLogger.info('ADDED TO SMS LIST ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
+                    emailSmsLogger.info('Added to SMS list | ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
 
             if not debug_mode:
                 if sms_recipients != []:
                     Sender.send_twilio_sms(sms_recipients,
                                            parent.event +
-                                           ' Update: ' + data['text'])
+                                           ' Update: ' + data['text'],
+                                           log_message)
 
             if email_recipients != []:
                 message = (
@@ -244,7 +246,8 @@ class UpdateList(generics.ListCreateAPIView):
                     email_recipients,
                     slug,
                     parent.location,
-                    parent.event
+                    parent.event,
+                    log_message
                 )
 
             return Response(
