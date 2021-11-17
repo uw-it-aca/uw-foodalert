@@ -123,7 +123,6 @@ class NotificationList(generics.ListCreateAPIView):
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
                 data = serializer.data
-                print('data: ' + str(data))
 
                 # Remove characters we can't store in db properly
                 slug = str(data['time']['created'])
@@ -211,7 +210,6 @@ class UpdateList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
-            print(str(data))
             slug = str(data['created_time'])
             for ch in [' ', ':', '+']:
                 slug = slug.replace(ch, '')
