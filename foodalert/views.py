@@ -135,17 +135,28 @@ class NotificationList(generics.ListCreateAPIView):
                 for sub in Subscription.objects.all():
                     if sub.send_email:
                         email_recipients.append(sub.email)
-                        emailSmsLogger.info('Added to email list | ' + log_message + ' Email: <{}>'.format(sub.email))
-                    
+                        emailSmsLogger.info(
+                            'Added to email list | ' +
+                            log_message +
+                            ' Email: <{}>'.format(sub.email)
+                        )
                     if sub.send_sms:
                         sms_recipients.append(str(sub.sms_number))
-                        emailSmsLogger.info('Added to SMS list | ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
+                        emailSmsLogger.info(
+                            'Added to SMS list | '+
+                            log_message +
+                            ' Phone: <{}>'.format(str(sub.sms_number))
+                        )
 
                 message = Sender.format_message(data)
-                
+
                 if not debug_mode:
                     if sms_recipients != []:
-                        Sender.send_twilio_sms(sms_recipients, message, log_message)
+                        Sender.send_twilio_sms(
+                            sms_recipients,
+                            message,
+                            log_message
+                        )
 
                 if email_recipients != []:
                     Sender.send_email(message,
@@ -217,15 +228,26 @@ class UpdateList(generics.ListCreateAPIView):
 
             email_recipients = []
             sms_recipients = []
-            log_message = 'Update: <pk={}> ParentNotification: <pk={}>'.format(data['id'], data['parent_notification_id'])
+            log_message = 'Update: <pk={}> ParentNotification: <pk={}>'.format
+            (
+                data['id'],
+                data['parent_notification_id']
+            )
             for sub in Subscription.objects.all():
                 if sub.send_email:
                     email_recipients.append(sub.email)
-                    emailSmsLogger.info('Added to email list | ' + log_message + ' Email: <{}>'.format(sub.email))
-                
+                    emailSmsLogger.info(
+                        'Added to email list | ' +
+                        log_message +
+                        ' Email: <{}>'.format(sub.email)
+                    )
                 if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
-                    emailSmsLogger.info('Added to SMS list | ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
+                    emailSmsLogger.info(
+                        'Added to SMS list | ' +
+                        log_message +
+                        ' Phone: <{}>'.format(str(sub.sms_number))
+                    )
 
             if not debug_mode:
                 if sms_recipients != []:
@@ -247,7 +269,7 @@ class UpdateList(generics.ListCreateAPIView):
                     slug,
                     parent.location,
                     parent.event,
-                    log_message
+                    log_message,
                 )
 
             return Response(
@@ -271,7 +293,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm."),
-                 'Subscription <pk={}> (Confirmation Text)'.format(pk)
+                 'Subscription <pk={}> (Confirmation Text)'.format(pk),
             )
             sub.twilio_stop = False
             sub.save()
@@ -288,7 +310,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm."),
-                 'Subscription <pk={}> (Confirmation Text)'.format(pk)
+                 'Subscription <pk={}> (Confirmation Text)'.format(pk),
             )
             sub.twilio_stop = False
             sub.save()

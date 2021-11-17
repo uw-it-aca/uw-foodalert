@@ -42,7 +42,10 @@ class Sender:
             use_celery=False
         )
 
-        emailSmsLogger.info('Sent email to list of recipients | ' + loggingString)
+        emailSmsLogger.info(
+            'Sent email to list of recipients | ' +
+            loggingString
+        )
 
     def send_twilio_sms(recipient, message, loggingString, **kwargs):
         sender = TwilioSender()
