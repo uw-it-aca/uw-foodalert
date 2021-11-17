@@ -1,6 +1,7 @@
 from .base_settings import *
 import os
 import sys
+import logging.config
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -34,6 +35,30 @@ WEBPACK_LOADER = {
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }
 }
+
+# LOGGING CONFIGURATION
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '\x1b[38;5;39m' + '%(name)-12s | %(message)s' + '\x1b[0m'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        }
+    },
+    'loggers': {
+        'emailSmsLogger': {
+            'level': 'INFO',
+            'handlers': ['console'],
+            'propagate': False,
+        }
+    }
+})
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 

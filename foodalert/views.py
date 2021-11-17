@@ -50,6 +50,7 @@ audit_group = foodalert_authz_groups['audit']
 debug_mode = getattr(settings, 'DEBUG')
 
 logger = logging.getLogger('django.request')
+emailSmsLogger = logging.getLogger('emailSmsLogger')
 
 
 # Override pagination settings
@@ -122,6 +123,7 @@ class NotificationList(generics.ListCreateAPIView):
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
                 data = serializer.data
+                print('data: ' + str(data))
 
                 # Remove characters we can't store in db properly
                 slug = str(data['time']['created'])
@@ -131,13 +133,17 @@ class NotificationList(generics.ListCreateAPIView):
                 email_recipients = []
                 sms_recipients = []
                 for sub in Subscription.objects.all():
+                    log_message = 'Notification: <id={}>'.format(data['id'])
                     if sub.send_email:
                         email_recipients.append(sub.email)
+                        emailSmsLogger.info('ADDED TO EMAIL LIST ' + log_message + ' Email: <{}>'.format(sub.email))
+                    
                     if sub.send_sms:
                         sms_recipients.append(str(sub.sms_number))
+                        emailSmsLogger.info('ADDED TO SMS LIST ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
 
                 message = Sender.format_message(data)
-
+                
                 if not debug_mode:
                     if sms_recipients != []:
                         Sender.send_twilio_sms(sms_recipients, message)
@@ -205,6 +211,7 @@ class UpdateList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
+            print(str(data))
             slug = str(data['created_time'])
             for ch in [' ', ':', '+']:
                 slug = slug.replace(ch, '')
@@ -212,10 +219,14 @@ class UpdateList(generics.ListCreateAPIView):
             email_recipients = []
             sms_recipients = []
             for sub in Subscription.objects.all():
+                log_message = 'Update: <id={}> ParentNotification: <id={}>'.format(data['id'], data['parent_notification_id'])
                 if sub.send_email:
                     email_recipients.append(sub.email)
+                    emailSmsLogger.info('ADDED TO EMAIL LIST ' + log_message + ' Email: <{}>'.format(sub.email))
+                
                 if sub.send_sms:
                     sms_recipients.append(str(sub.sms_number))
+                    emailSmsLogger.info('ADDED TO SMS LIST ' + log_message + ' Phone: <{}>'.format(str(sub.sms_number)))
 
             if not debug_mode:
                 if sms_recipients != []:
@@ -237,6 +248,7 @@ class UpdateList(generics.ListCreateAPIView):
                     parent.location,
                     parent.event
                 )
+
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 

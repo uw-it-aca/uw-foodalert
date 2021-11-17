@@ -1,4 +1,5 @@
 import json
+import logging
 
 from dbmail import send_db_mail
 from dbmail.models import MailTemplate
@@ -10,6 +11,8 @@ import datetime
 from django.utils import timezone
 
 from django.core.exceptions import ImproperlyConfigured
+
+emailSmsLogger = logging.getLogger('emailSmsLogger')
 
 
 class Sender:
@@ -38,6 +41,8 @@ class Sender:
             bcc=recipients,
             use_celery=False
         )
+
+        emailSmsLogger.info('Sent email to list of recipients')
 
     def send_twilio_sms(recipient, message, **kwargs):
         sender = TwilioSender()
@@ -106,4 +111,5 @@ class TwilioSender(object):
                         body=message,
                         to_binding=bindings
                     )
+        emailSmsLogger.info('Sent SMS to list of recipients')
         return sms
