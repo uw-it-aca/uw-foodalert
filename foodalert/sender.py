@@ -34,10 +34,6 @@ class Sender:
             slug=time,
             is_html=False,
         )
-        recipients_test = []
-        N = 200
-        for i in range(N):
-            recipients_test.append('@example.com')
 
         send_db_mail(
             slug=time,
@@ -115,5 +111,5 @@ class TwilioSender(object):
                         body=message,
                         to_binding=bindings
                     )
-        emailSmsLogger.info('Sent SMS to list of recipients | ' + loggingString)
+        emailSmsLogger.info('Sent SMS to recipient(s) | ' + loggingString)
         return sms

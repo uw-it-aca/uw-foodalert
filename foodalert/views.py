@@ -131,7 +131,7 @@ class NotificationList(generics.ListCreateAPIView):
 
                 email_recipients = []
                 sms_recipients = []
-                log_message = 'Notification: <id={}>'.format(data['id'])
+                log_message = 'Notification: <pk={}>'.format(data['id'])
                 for sub in Subscription.objects.all():
                     if sub.send_email:
                         email_recipients.append(sub.email)
@@ -217,7 +217,7 @@ class UpdateList(generics.ListCreateAPIView):
 
             email_recipients = []
             sms_recipients = []
-            log_message = 'Update: <id={}> ParentNotification: <id={}>'.format(data['id'], data['parent_notification_id'])
+            log_message = 'Update: <pk={}> ParentNotification: <pk={}>'.format(data['id'], data['parent_notification_id'])
             for sub in Subscription.objects.all():
                 if sub.send_email:
                     email_recipients.append(sub.email)
@@ -270,7 +270,8 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 request.data['sms_number'],
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
-                 " campus. Reply YES to confirm.")
+                 " campus. Reply YES to confirm."),
+                 'Subscription <pk={}> (Confirmation Text)'.format(pk)
             )
             sub.twilio_stop = False
             sub.save()
@@ -286,7 +287,8 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 [request.data['sms_number']],
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
-                 " campus. Reply YES to confirm.")
+                 " campus. Reply YES to confirm."),
+                 'Subscription <pk={}> (Confirmation Text)'.format(pk)
             )
             sub.twilio_stop = False
             sub.save()
