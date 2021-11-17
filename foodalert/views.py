@@ -143,7 +143,7 @@ class NotificationList(generics.ListCreateAPIView):
                     if sub.send_sms:
                         sms_recipients.append(str(sub.sms_number))
                         emailSmsLogger.info(
-                            'Added to SMS list | '+
+                            'Added to SMS list | ' +
                             log_message +
                             ' Phone: <{}>'.format(str(sub.sms_number))
                         )
@@ -293,7 +293,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm."),
-                 'Subscription <pk={}> (Confirmation Text)'.format(pk),
+                'Subscription <pk={}> (Confirmation Text)'.format(pk),
             )
             sub.twilio_stop = False
             sub.save()
@@ -310,7 +310,7 @@ class SubscriptionDetail(generics.RetrieveUpdateDestroyAPIView):
                 ("You have registered this number with UW Food Alert to"
                  " receive notifications when leftover food is available on"
                  " campus. Reply YES to confirm."),
-                 'Subscription <pk={}> (Confirmation Text)'.format(pk),
+                'Subscription <pk={}> (Confirmation Text)'.format(pk),
             )
             sub.twilio_stop = False
             sub.save()
