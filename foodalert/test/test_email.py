@@ -1,3 +1,5 @@
+# Copyright 2021 UW-IT, University of Washington
+# SPDX-License-Identifier: Apache-2.0
 from django.test import TestCase, Client
 from django.test.utils import override_settings
 from django.db import connection
@@ -5,6 +7,7 @@ from django.conf import settings
 from unittest.mock import patch, Mock
 from dbmail import send_db_mail
 from dbmail.models import MailTemplate, MailLog, MailLogEmail
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 
 
