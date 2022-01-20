@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
@@ -36,6 +37,8 @@ from foodalert.sender import Sender
 from foodalert.utils.permissions import *
 
 from django.core.exceptions import ImproperlyConfigured
+
+from django_dbq.models import Job
 
 # Create your views here.
 
@@ -123,31 +126,9 @@ class NotificationList(generics.ListCreateAPIView):
                 headers = self.get_success_headers(serializer.data)
                 data = serializer.data
 
-                # Remove characters we can't store in db properly
-                slug = str(data['time']['created'])
-                for ch in [' ', ':', '+']:
-                    slug = slug.replace(ch, '')
-
-                email_recipients = []
-                sms_recipients = []
-                for sub in Subscription.objects.all():
-                    if sub.send_email:
-                        email_recipients.append(sub.email)
-                    if sub.send_sms:
-                        sms_recipients.append(str(sub.sms_number))
-
-                message = Sender.format_message(data)
-
-                if not debug_mode:
-                    if sms_recipients != []:
-                        Sender.send_twilio_sms(sms_recipients, message)
-
-                if email_recipients != []:
-                    Sender.send_email(message,
-                                      email_recipients,
-                                      slug,
-                                      data['location'],
-                                      data['event'])
+                # Queue up the sending of emails and texts
+                Job.objects.create(name='queue_messages',
+                                   workspace={'data': data, 'update': False})
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -205,38 +186,11 @@ class UpdateList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
-            slug = str(data['created_time'])
-            for ch in [' ', ':', '+']:
-                slug = slug.replace(ch, '')
+            parent_dict = model_to_dict(parent)
+            # Queue up the sending of emails and texts
+            Job.objects.create(name='queue_messages',
+                               workspace={'data': data, 'update': True, 'location': parent_dict['location'], 'event': parent_dict['event']})
 
-            email_recipients = []
-            sms_recipients = []
-            for sub in Subscription.objects.all():
-                if sub.send_email:
-                    email_recipients.append(sub.email)
-                if sub.send_sms:
-                    sms_recipients.append(str(sub.sms_number))
-
-            if not debug_mode:
-                if sms_recipients != []:
-                    Sender.send_twilio_sms(sms_recipients,
-                                           parent.event +
-                                           ' Update: ' + data['text'])
-
-            if email_recipients != []:
-                message = (
-                    'Update: ' + data['text'] + '\n\n'
-                    'Thanks,\n'
-                    'UW Food Alert'
-                )
-
-                Sender.send_email(
-                    message,
-                    email_recipients,
-                    slug,
-                    parent.location,
-                    parent.event
-                )
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
 

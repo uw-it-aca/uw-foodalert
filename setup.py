@@ -30,6 +30,7 @@ setup(
         'user-agents',
         'django-user-agents',
         'python-dateutil',
+        'django-db-queue<2.0.0'
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',

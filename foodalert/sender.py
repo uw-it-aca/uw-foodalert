@@ -13,21 +13,11 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 class Sender:
-    def send_email(body, recipients, time, location, event):
-        email_name = "Food Alert "
-        email_subject = "[UW Food Alert] "
-
-        if body[:6] == 'Update':
-            email_name += "Update"
-            email_subject += "Update: {}, {}".format(event, location)
-        else:
-            email_name += "Notification"
-            email_subject += "Food Available: {}, {}".format(event, location)
-
+    def send_email(email, recipients, time):
         MailTemplate.objects.create(
-            name=email_name,
-            subject=email_subject,
-            message=body,
+            name=email['name'],
+            subject=email['subject'],
+            message=email['body'],
             slug=time,
             is_html=False,
         )
@@ -50,6 +40,7 @@ class Sender:
         text = "Food available: {}\n".format(event)
         text += "{}\n\n".format(foods)
 
+        print(message['time']['end'] + 'HELLO??')
         local_time = timezone.localtime(message['time']['end'])
         formatted_time = local_time.strftime("%I:%M %p")
 

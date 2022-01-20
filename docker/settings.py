@@ -12,6 +12,7 @@ INSTALLED_APPS += [
     "dbmail",
     "premailer",
     "django.contrib.sites",
+    "django_dbq"
 ]
 
 SITE_ID = 1
@@ -21,6 +22,17 @@ if os.getenv("ENV") == "localdev":
 else:
     DEBUG = False
 
+JOBS = {
+    "queue_messages": {
+        "tasks": ["foodalert.jobs.queue_messages"],
+    },
+    "send_email": {
+        "tasks": ["foodalert.jobs.send_email"],
+    },
+    "send_sms": {
+        "tasks": ["foodalert.jobs.send_sms"],
+    },
+}
 
 WEBPACK_LOADER = {
     "DEFAULT": {
