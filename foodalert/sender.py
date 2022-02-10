@@ -40,7 +40,6 @@ class Sender:
         text = "Food available: {}\n".format(event)
         text += "{}\n\n".format(foods)
 
-        print(message['time']['end'] + 'HELLO??')
         local_time = timezone.localtime(message['time']['end'])
         formatted_time = local_time.strftime("%I:%M %p")
 
@@ -61,7 +60,7 @@ class Sender:
             text += 'You must bring a container.\n\n'
 
         text += 'Thanks,\n'
-        text += 'UW Food Alert'
+        text += 'UW Food Alert' 
 
         return text
 

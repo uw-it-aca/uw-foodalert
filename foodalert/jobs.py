@@ -1,5 +1,6 @@
 import time
 import logging
+from dateutil import parser
 from django.conf import settings
 from django_dbq.models import Job
 from foodalert.models import Subscription
@@ -40,7 +41,7 @@ def queue_messages(job):
     sms = job.workspace['event'] + ' Update: ' + data['text']
 
     # Time
-    slug = str(data['created_time'])
+    slug = data['created_time']
     
   else:
     # Notification
@@ -48,15 +49,14 @@ def queue_messages(job):
     # Email formatting
     email['name'] = "Food Alert Notification"
     email['subject'] = "[UW Food Alert] Food Available: {}, {}".format(data['event'], data['location'])
-    print('HERE')
-    print(data)
+    data['time']['end'] = parser.parse(data['time']['end'])
     email['body'] = Sender.format_message(data)
 
     # SMS formatting
     sms = email['body'] # Text message is the same as the body of the email
 
     # Time
-    slug = str(data['time']['created'])
+    slug = data['time']['created']
 
   for ch in [' ', ':', '+']:
       slug = slug.replace(ch, '')
@@ -69,17 +69,11 @@ def queue_messages(job):
                                                  'sms': sms})
 
 def send_email(job):
-  if debug_mode:
-    logger.info('Not sending emails while in debug mode')
-    logger.info(job.workspace)
-  else:
-    recipients, email, time = job.workspace['recipients'], job.workspace['email'], job.workspace['time']
-    Sender.send_email(recipients, email, time)
+  Sender.send_email(job.workspace['email'], job.workspace['recipients'], job.workspace['time'])
 
 def send_sms(job):
   if debug_mode:
     logger.info('Not sending sms while in debug mode')
     logger.info(job.workspace)
   else:
-    recipients, sms = job.workspace['recipients'], job.workspace['sms']
-    Sender.send_twilio_sms(recipients, sms)
+    Sender.send_twilio_sms(job.workspace['recipients'], job.workspace['sms'])
