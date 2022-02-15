@@ -36,17 +36,17 @@ def queue_messages(job):
         email['name'] = "Food Alert Update"
         subj = "[UW Food Alert] Update: {}, {}"
         email['subject'] = subj.format(job.workspace['event'],
-                                        job.workspace['location'])
+                                       job.workspace['location'])
         email['body'] = ('Update: ' + data['text'] + '\n\n'
-                        'Thanks,\n'
-                        'UW Food Alert')
+                         'Thanks,\n'
+                         'UW Food Alert')
 
         # SMS formatting
         sms = job.workspace['event'] + ' Update: ' + data['text']
 
         # Time
         slug = data['created_time']
-        
+
     else:
         # Notification
 
@@ -58,7 +58,8 @@ def queue_messages(job):
         email['body'] = Sender.format_message(data)
 
         # SMS formatting
-        sms = email['body'] # Text message is the same as the body of the email
+        sms = email['body']
+        # Text message is the same as the body of the email
 
         # Time
         slug = data['time']['created']
@@ -68,18 +69,20 @@ def queue_messages(job):
 
     # Queue up the actual sending of email/sms
     Job.objects.create(name='send_email',
-                        workspace={'recipients': email_recipients,
-                                    'email': email,
-                                    'time': slug})
+                       workspace={'recipients': email_recipients,
+                                  'email': email,
+                                  'time': slug})
 
     Job.objects.create(name='send_sms',
-                        workspace={'recipients': sms_recipients,
-                                    'sms': sms})
+                       workspace={'recipients': sms_recipients,
+                                  'sms': sms})
+
 
 def send_email(job):
     Sender.send_email(job.workspace['email'],
-                        job.workspace['recipients'],
-                        job.workspace['time'])
+                      job.workspace['recipients'],
+                      job.workspace['time'])
+
 
 def send_sms(job):
     if debug_mode:
@@ -87,4 +90,4 @@ def send_sms(job):
         logger.info(job.workspace)
     else:
         Sender.send_twilio_sms(job.workspace['recipients'],
-                                job.workspace['sms'])
+                               job.workspace['sms'])
