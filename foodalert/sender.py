@@ -60,7 +60,7 @@ class Sender:
             text += 'You must bring a container.\n\n'
 
         text += 'Thanks,\n'
-        text += 'UW Food Alert' 
+        text += 'UW Food Alert'
 
         return text
 

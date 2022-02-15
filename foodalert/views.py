@@ -127,12 +127,15 @@ class NotificationList(generics.ListCreateAPIView):
                 data = serializer.data
 
                 data_copy = data.copy()
-                data_copy['time']['created'] = str(data_copy['time']['created'])
-                data_copy['time']['end'] = str(data_copy['time']['end'])
+                time_created = data_copy['time']['created']
+                time_end = data_copy['time']['end']
+                data_copy['time']['created'] = str(time_created)
+                data_copy['time']['end'] = str(time_end)
 
                 # Queue up the sending of emails and texts
                 Job.objects.create(name='queue_messages',
-                                   workspace={'data': data_copy, 'update': False})
+                                   workspace={'data': data_copy,
+                                              'update': False})
 
                 return Response(
                     data, status=status.HTTP_201_CREATED, headers=headers)
@@ -190,13 +193,16 @@ class UpdateList(generics.ListCreateAPIView):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
-            
+
             data_copy = data.copy()
             data_copy['created_time'] = str(data_copy['created_time'])
             parent_dict = model_to_dict(parent)
             # Queue up the sending of emails and texts
             Job.objects.create(name='queue_messages',
-                               workspace={'data': data_copy, 'update': True, 'location': parent_dict['location'], 'event': parent_dict['event']})
+                               workspace={'data': data_copy,
+                                          'update': True,
+                                          'location': parent_dict['location'],
+                                          'event': parent_dict['event']})
 
             return Response(
                 data, status=status.HTTP_201_CREATED, headers=headers)
