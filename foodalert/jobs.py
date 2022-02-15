@@ -45,7 +45,7 @@ def queue_messages(job):
         sms = job.workspace['event'] + ' Update: ' + data['text']
 
         # Time
-        slug = data['created_time']
+        slug = job.workspace['created_time']
 
     else:
         # Notification
@@ -54,7 +54,7 @@ def queue_messages(job):
         email['name'] = "Food Alert Notification"
         subj = "[UW Food Alert] Food Available: {}, {}"
         email['subject'] = subj.format(data['event'], data['location'])
-        data['time']['end'] = parser.parse(data['time']['end'])
+        data['time']['end'] = parser.parse(job.workspace['time_end'])
         email['body'] = Sender.format_message(data)
 
         # SMS formatting
@@ -62,7 +62,7 @@ def queue_messages(job):
         # Text message is the same as the body of the email
 
         # Time
-        slug = data['time']['created']
+        slug = job.workspace['time_created']
 
     for ch in [' ', ':', '+']:
         slug = slug.replace(ch, '')

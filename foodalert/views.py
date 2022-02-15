@@ -1,3 +1,4 @@
+import copy
 import urllib
 import logging
 import csv
@@ -126,15 +127,14 @@ class NotificationList(generics.ListCreateAPIView):
                 headers = self.get_success_headers(serializer.data)
                 data = serializer.data
 
-                data_copy = data.copy()
-                time_created = data_copy['time']['created']
-                time_end = data_copy['time']['end']
-                data_copy['time']['created'] = str(time_created)
-                data_copy['time']['end'] = str(time_end)
+                time_created = str(data['time']['created'])
+                time_end = str(data['time']['end'])
 
                 # Queue up the sending of emails and texts
                 Job.objects.create(name='queue_messages',
-                                   workspace={'data': data_copy,
+                                   workspace={'data': data,
+                                              'time_created': time_created,
+                                              'time_end': time_end,
                                               'update': False})
 
                 return Response(
@@ -194,13 +194,13 @@ class UpdateList(generics.ListCreateAPIView):
             headers = self.get_success_headers(serializer.data)
             data = serializer.data
 
-            data_copy = data.copy()
-            data_copy['created_time'] = str(data_copy['created_time'])
+            created_time = str(data['created_time'])
             parent_dict = model_to_dict(parent)
             # Queue up the sending of emails and texts
             Job.objects.create(name='queue_messages',
-                               workspace={'data': data_copy,
+                               workspace={'data': data,
                                           'update': True,
+                                          'created_time': created_time,
                                           'location': parent_dict['location'],
                                           'event': parent_dict['event']})
 
