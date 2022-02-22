@@ -1,4 +1,3 @@
-import copy
 import urllib
 import logging
 import csv
