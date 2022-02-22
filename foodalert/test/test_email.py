@@ -10,7 +10,6 @@ from django.conf import settings
 from unittest.mock import patch, Mock
 from dbmail import send_db_mail
 from dbmail.models import MailTemplate, MailLog, MailLogEmail
-from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 
 
