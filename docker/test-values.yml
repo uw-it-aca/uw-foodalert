@@ -45,6 +45,16 @@ memcached:
   enabled: false
 cronjob:
   enabled: false
+daemon:
+  enabled: true
+  daemons:
+    # for processing email/text jobs in background and removing when done
+    - name: delete-old-jobs
+      command: ["/scripts/management_daemon.sh"]
+      args: ['--cron', '0 */72 * * *', "delete_old_jobs"]
+    - name: process-jobs
+      command: ["/scripts/management_daemon.sh"]
+      args: ['--cron', '* * * * *', "process_jobs", '3']
 certs:
   mounted: true
   certPath: /certs/test.foodalert.uw.edu-uwca.cert
