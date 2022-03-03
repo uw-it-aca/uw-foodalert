@@ -9,7 +9,8 @@
     <template #body>
       <p>
         Your generosity means that fewer people have to worry about food
-        insecurity at UW. It also contributes to reducing the UW's overall food waste.
+        insecurity at UW. It also contributes to reducing the UW's
+        overall food waste.
       </p>
       <p>
         Please visit UW Food Alert next time you have leftover food to share.
