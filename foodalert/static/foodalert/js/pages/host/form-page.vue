@@ -56,7 +56,6 @@
               >{{ 40 - form.event.length }}
               </span>
             </span>
-            
             <b-form-input id="event-name" ref="event" maxlength="40"
               v-model="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
