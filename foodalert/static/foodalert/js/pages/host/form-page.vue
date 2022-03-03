@@ -48,7 +48,15 @@
 
         <div>
           <label class="standard-label w-100 mb-0" for="event-name">
-            Event name
+            <span class="d-flex">
+              Event name
+              <span
+                class="ml-auto"
+                style="font-size: 14px; font-weight: 400;"
+              >{{ 40 - form.event.length }}
+              </span>
+            </span>
+            
             <b-form-input id="event-name" ref="event" maxlength="40"
               v-model="form.event" :state="inputValid('event')"
               :placeholder="placeholderForm.event"
@@ -65,17 +73,25 @@
           <label id="food-label" class="standard-label mb-0 w-100"
             for="food-description">
             Describe the food
-            <p id="food-clarification" class="mb-2"
-               style="font-size: 14px; font-weight: 400;">
-              Tell people about your
-              food and the approximate quantity.</p>
+            <span class="d-flex">
+              <span id="food-clarification"
+                style="font-size: 14px; font-weight: 400;">
+                Tell people about your
+                food and the approximate quantity.
+              </span>
+              <span class="ml-auto"
+                 style="font-size: 14px; font-weight: 400;"
+              >
+                {{ 200 - form.food_served.length }}
+              </span>
+            </span>
             <b-form-textarea id="food-description" ref="food_served"
                             maxlength="200"
                             aria-describedby="food-clarification"
                             v-model="form.food_served"
                             :state="inputValid('food_served')"
                             :placeholder="placeholderForm.food_served"
-                            class="standard-placeholder" size="lg"
+                            class="standard-placeholder mt-2" size="lg"
                             @blur="enableValidation.food_served=true"
                             rows="3"
                             max-rows="8">
@@ -89,7 +105,15 @@
 
         <div>
           <label id="location-label" class="standard-label w-100 mb-0"
-            for="location">Location
+            for="location">
+            <span class="d-flex">
+              Location
+              <span
+                class="ml-auto"
+                style="font-size: 14px; font-weight: 400;"
+              >{{ 200 - form.location.length }}
+              </span>
+            </span>
             <b-form-input id="location"
               ref="location" maxlength="200"
               v-model="form.location" :state="inputValid('location')"
