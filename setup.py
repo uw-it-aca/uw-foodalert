@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'django==1.11',
+        'django==2.2.28',
     ],
     license='Apache License, Version 2.0',
     description='A Django app to ...',
